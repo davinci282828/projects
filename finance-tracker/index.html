@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Finance Tracker</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <span class="brand-icon">&#9672;</span>
+        <h1 class="brand-name">FinanceTracker</h1>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary btn-sm" id="btn-export">Export JSON</button>
+        <button class="btn btn-secondary btn-sm" id="btn-import-trigger">Import JSON</button>
+        <input type="file" id="import-file" accept=".json" style="display:none" />
+        <button class="btn btn-primary btn-sm" id="btn-add-transaction">+ Add Transaction</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="app-nav">
+    <ul class="nav-list">
+      <li><button class="nav-btn active" data-section="dashboard">Dashboard</button></li>
+      <li><button class="nav-btn" data-section="transactions">Transactions</button></li>
+      <li><button class="nav-btn" data-section="charts">Charts</button></li>
+      <li><button class="nav-btn" data-section="budgets">Budgets</button></li>
+    </ul>
+  </nav>
+
+  <main class="app-main">
+
+    <!-- DASHBOARD SECTION -->
+    <section id="section-dashboard" class="section active">
+      <div class="section-header">
+        <h2>Dashboard</h2>
+        <span class="section-subtitle" id="dashboard-period">This Month</span>
+      </div>
+      <div class="summary-grid">
+        <div class="card summary-card">
+          <div class="summary-label">Total Balance</div>
+          <div class="summary-value" id="summary-balance">$0.00</div>
+          <div class="summary-trend" id="summary-balance-trend"></div>
+        </div>
+        <div class="card summary-card income">
+          <div class="summary-label">Monthly Income</div>
+          <div class="summary-value" id="summary-income">$0.00</div>
+        </div>
+        <div class="card summary-card expense">
+          <div class="summary-label">Monthly Expenses</div>
+          <div class="summary-value" id="summary-expenses">$0.00</div>
+        </div>
+        <div class="card summary-card savings">
+          <div class="summary-label">Savings Rate</div>
+          <div class="summary-value" id="summary-savings">0%</div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-header">
+            <h3>Recent Transactions</h3>
+            <button class="btn btn-ghost btn-sm" data-section="transactions" id="view-all-btn">View All</button>
+          </div>
+          <div id="recent-transactions-list" class="transaction-list compact"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3>Expense Breakdown</h3>
+          </div>
+          <canvas id="dashboard-pie-chart" width="300" height="220"></canvas>
+          <div id="dashboard-pie-legend" class="chart-legend"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRANSACTIONS SECTION -->
+    <section id="section-transactions" class="section">
+      <div class="section-header">
+        <h2>Transactions</h2>
+        <button class="btn btn-primary btn-sm" id="btn-add-transaction-2">+ Add Transaction</button>
+      </div>
+
+      <div class="card filter-card">
+        <div class="filter-row">
+          <div class="form-group">
+            <label for="filter-category">Category</label>
+            <select id="filter-category" class="form-control">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="filter-type">Type</label>
+            <select id="filter-type" class="form-control">
+              <option value="">All Types</option>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="filter-date-from">From</label>
+            <input type="date" id="filter-date-from" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="filter-date-to">To</label>
+            <input type="date" id="filter-date-to" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="filter-sort">Sort By</label>
+            <select id="filter-sort" class="form-control">
+              <option value="date-desc">Date (Newest)</option>
+              <option value="date-asc">Date (Oldest)</option>
+              <option value="amount-desc">Amount (High)</option>
+              <option value="amount-asc">Amount (Low)</option>
+            </select>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btn-clear-filters">Clear Filters</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="transactions-count" class="table-meta"></div>
+        <div class="table-wrapper">
+          <table class="data-table" id="transactions-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th class="text-right">Amount</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="transactions-tbody">
+              <tr><td colspan="6" class="empty-state">No transactions yet. Add your first one!</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHARTS SECTION -->
+    <section id="section-charts" class="section">
+      <div class="section-header">
+        <h2>Charts &amp; Analytics</h2>
+      </div>
+      <div class="charts-grid">
+        <div class="card">
+          <div class="card-header">
+            <h3>Monthly Income vs Expenses</h3>
+            <span class="chart-subtitle">Last 6 months</span>
+          </div>
+          <canvas id="bar-chart" width="560" height="300"></canvas>
+          <div id="bar-chart-legend" class="chart-legend horizontal"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3>Expense by Category</h3>
+          </div>
+          <canvas id="pie-chart" width="340" height="280"></canvas>
+          <div id="pie-chart-legend" class="chart-legend"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUDGETS SECTION -->
+    <section id="section-budgets" class="section">
+      <div class="section-header">
+        <h2>Budget Management</h2>
+        <button class="btn btn-primary btn-sm" id="btn-set-budget">Set Budget</button>
+      </div>
+      <div id="budgets-grid" class="budgets-grid"></div>
+    </section>
+
+  </main>
+
+  <!-- ADD/EDIT TRANSACTION MODAL -->
+  <div id="modal-transaction" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-transaction-title" hidden>
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modal-transaction-title">Add Transaction</h3>
+        <button class="modal-close" data-modal="modal-transaction" aria-label="Close">&times;</button>
+      </div>
+      <form id="form-transaction" class="modal-form" novalidate>
+        <input type="hidden" id="edit-transaction-id" />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tx-type">Type <span class="required">*</span></label>
+            <select id="tx-type" class="form-control" required>
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="tx-amount">Amount <span class="required">*</span></label>
+            <input type="number" id="tx-amount" class="form-control" placeholder="0.00" min="0.01" step="0.01" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="tx-description">Description <span class="required">*</span></label>
+          <input type="text" id="tx-description" class="form-control" placeholder="What was this for?" maxlength="100" required />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="tx-category">Category <span class="required">*</span></label>
+            <select id="tx-category" class="form-control" required>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="tx-date">Date <span class="required">*</span></label>
+            <input type="date" id="tx-date" class="form-control" required />
+          </div>
+        </div>
+        <div id="form-errors" class="form-errors" hidden></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-modal="modal-transaction">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-transaction">Save Transaction</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SET BUDGET MODAL -->
+  <div id="modal-budget" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-budget-title" hidden>
+    <div class="modal-box modal-box-sm">
+      <div class="modal-header">
+        <h3 id="modal-budget-title">Set Budget</h3>
+        <button class="modal-close" data-modal="modal-budget" aria-label="Close">&times;</button>
+      </div>
+      <form id="form-budget" class="modal-form" novalidate>
+        <div class="form-group">
+          <label for="budget-category">Category <span class="required">*</span></label>
+          <select id="budget-category" class="form-control" required>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="budget-limit">Monthly Limit <span class="required">*</span></label>
+          <input type="number" id="budget-limit" class="form-control" placeholder="0.00" min="1" step="0.01" required />
+        </div>
+        <div id="budget-form-errors" class="form-errors" hidden></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-modal="modal-budget">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Budget</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
