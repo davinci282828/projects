@@ -23,9 +23,9 @@ header{display:flex;gap:14px;align-items:flex-start;justify-content:space-betwee
 .dot{width:8px;height:8px;border-radius:999px;background:#64748b}
 .dot.ok{background:#22c55e}.dot.warn{background:#f59e0b}.dot.bad{background:#ef4444}
 .row{display:grid;grid-template-columns:1.3fr .7fr;gap:12px;margin-top:12px}
-@media (max-width:900px){.row{grid-template-columns:1fr}}
+@media(max-width:900px){.row{grid-template-columns:1fr}}
 .widgets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-@media (max-width:640px){.widgets{grid-template-columns:1fr}}
+@media(max-width:640px){.widgets{grid-template-columns:1fr}}
 .widget{border:1px solid var(--line);background:rgba(16,24,35,.45);border-radius:14px;padding:10px 12px;box-shadow:var(--shadow)}
 .widget .k{color:var(--muted);font-size:12px}
 .widget .v{font-size:18px;font-weight:800;margin-top:2px}
@@ -33,24 +33,20 @@ header{display:flex;gap:14px;align-items:flex-start;justify-content:space-betwee
 .summary{border:1px solid var(--line);background:rgba(16,24,35,.45);border-radius:14px;padding:10px 12px;box-shadow:var(--shadow);display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
 .summary b{font-weight:800}
 .small{color:var(--muted);font-size:12px}
-
-.progress{margin-top:10px;padding:8px;background:rgba(16,24,35,.45);border:1px solid var(--line);border-radius:10px;font-size:12px;color:var(--muted)}
+.progress{margin-top:10px;padding:8px 10px;background:rgba(16,24,35,.45);border:1px solid var(--line);border-radius:10px;font-size:12px;color:var(--muted)}
 .progress-bar{margin-top:4px;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
 .progress-fill{height:100%;background:#2b8cff;border-radius:2px;width:0%;transition:width .3s ease}
-
-.sector{margin-top:20px}
-.sector:first-child{margin-top:12px}
+.sector{margin-top:20px}.sector:first-child{margin-top:12px}
 .sector-header{color:var(--muted);font-size:13px;font-weight:600;margin-bottom:10px;padding-left:2px;letter-spacing:.3px;text-transform:uppercase}
 .grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
-@media (max-width:1100px){.grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
-@media (max-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media (max-width:700px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-
+@media(max-width:1100px){.grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:700px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .card{position:relative;border-radius:14px;padding:10px 10px 8px;border:1px solid rgba(255,255,255,.10);box-shadow:0 10px 22px rgba(0,0,0,.28);transition:transform .13s ease,filter .13s ease,border-color .13s ease;min-height:98px;overflow:hidden;opacity:0;transform:translateY(6px);animation:in .28s ease forwards;cursor:pointer}
 @keyframes in{to{opacity:1;transform:translateY(0)}}
 .card:hover{transform:translateY(-2px);filter:saturate(1.06);border-color:rgba(255,255,255,.18)}
-.card.expanded{border-color:#2b8cff;transform:scale(1.02);z-index:10}
+.card.expanded{border-color:#2b8cff;z-index:10}
 .sym{font-size:16px;font-weight:900;letter-spacing:.5px}
 .price{margin-top:2px;font-size:14px;font-weight:750}
 .delta{margin-top:2px;font-size:12px;color:rgba(255,255,255,.86)}
@@ -61,18 +57,9 @@ header{display:flex;gap:14px;align-items:flex-start;justify-content:space-betwee
 .spark svg{width:100%;height:22px;display:block}
 .spark polyline{fill:none;stroke:rgba(255,255,255,.82);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .card.muted{filter:saturate(.2) brightness(.95)}
-
 .detail{display:none;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.1);font-size:12px;color:var(--muted)}
 .detail.show{display:block}
-.detail-row{display:flex;justify-content:space-between;margin-bottom:4px}
-.detail-row:last-child{margin-bottom:0}
-
-.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:20;display:none;align-items:center;justify-content:center;padding:20px}
-.overlay.show{display:flex}
-.modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;max-width:400px;width:100%;box-shadow:var(--shadow)}
-.modal-header{font-size:18px;font-weight:700;margin-bottom:15px;display:flex;justify-content:space-between;align-items:center}
-.modal-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:0}
-
+.detail-row{display:flex;justify-content:space-between;margin-bottom:3px}
 .notice{margin-top:10px;color:var(--muted);font-size:12px}
 kbd{font:12px ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;color:#d5deea;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);padding:2px 6px;border-radius:8px}
 </style>
@@ -98,12 +85,10 @@ kbd{font:12px ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono
       <button id="refresh" class="btn">Refresh</button>
     </div>
   </header>
-
   <div class="progress" id="progress" style="display:none">
-    <div>Loading: <span id="progressText">Starting...</span></div>
+    <div id="progressText">Starting...</div>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   </div>
-
   <div class="row">
     <div class="summary">
       <div>
@@ -113,674 +98,298 @@ kbd{font:12px ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono
       <button id="copy" class="btn" title="Copy snapshot">Copy snapshot</button>
     </div>
     <div class="widgets">
-      <div class="widget" id="fngW">
-        <div class="k">Fear &amp; Greed</div>
-        <div class="v" id="fngV">—</div>
-        <div class="s" id="fngS">—</div>
-      </div>
-      <div class="widget" id="goldW">
-        <div class="k">Gold (XAU/USD)</div>
-        <div class="v" id="goldV">—</div>
-        <div class="s" id="goldS">—</div>
-      </div>
-      <div class="widget" id="silverW">
-        <div class="k">Silver (XAG/USD)</div>
-        <div class="v" id="silverV">—</div>
-        <div class="s" id="silverS">—</div>
-      </div>
+      <div class="widget" id="fngW"><div class="k">Fear &amp; Greed</div><div class="v" id="fngV">—</div><div class="s" id="fngS">—</div></div>
+      <div class="widget" id="goldW"><div class="k">Gold (XAU/USD)</div><div class="v" id="goldV">—</div><div class="s" id="goldS">—</div></div>
+      <div class="widget" id="silverW"><div class="k">Silver (XAG/USD)</div><div class="v" id="silverV">—</div><div class="s" id="silverS">—</div></div>
     </div>
   </div>
-
   <div id="sectors"></div>
-
-  <div class="notice">
-    Click any card for details · <kbd>R</kbd> refresh · <kbd>C</kbd> copy snapshot
-  </div>
+  <div class="notice">Click any card for details · <kbd>R</kbd> refresh · <kbd>C</kbd> copy snapshot</div>
 </div>
-
-<div class="overlay" id="overlay">
-  <div class="modal">
-    <div class="modal-header">
-      <span id="modalTitle">Details</span>
-      <button class="modal-close" id="modalClose">×</button>
-    </div>
-    <div id="modalContent"></div>
-  </div>
-</div>
-
 <script>
-const HARDCODED_AV_KEY = '12MUDMVP4BGMRBQA';
-
-const state = {
-  stocks: {},
-  cryptos: {},
-  widgets: { fng: {}, gold: {}, silver: {} },
-  expanded: null,
-  loading: { quotes: 0, sparklines: 0, total: 0 }
-};
+const AV_KEY = new URLSearchParams(location.search).get('key')
+  || new URLSearchParams(location.search).get('av_key')
+  || '12MUDMVP4BGMRBQA';
 
 const SECTORS = {
-  'Tech': ['AAPL', 'MSFT', 'NVDA', 'GOOGL', 'AMZN', 'META'],
-  'Trading/Finance': ['HOOD', 'SPY', 'QQQ'],
-  'Energy/AI Infra': ['OKLO', 'IREN', 'NBIS', 'PLTR'],
-  'Healthcare': ['OSCR', 'MOH'],
-  'Speculative': ['TSLA', 'MSTR', 'RKLB'],
-  'Crypto': ['BTC', 'ETH', 'SOL']
+  'Tech':['AAPL','MSFT','NVDA','GOOGL','AMZN','META'],
+  'Trading / Finance':['HOOD','SPY','QQQ'],
+  'Energy / AI Infra':['OKLO','IREN','NBIS','PLTR'],
+  'Healthcare':['OSCR','MOH'],
+  'Speculative':['TSLA','MSTR','RKLB'],
+  'Crypto':['BTC','ETH','SOL']
 };
+const ALL_STOCKS = Object.values(SECTORS).flat().filter(s=>!['BTC','ETH','SOL'].includes(s));
+const CRYPTO_MAP = {BTC:'bitcoin',ETH:'ethereum',SOL:'solana'};
+const CACHE_KEY = 'portfolio_pulse_v2';
+const CACHE_TTL = 5*60*1000; // 5 min
 
-const ALL_STOCKS = Object.values(SECTORS).flat().filter(s => !['BTC', 'ETH', 'SOL'].includes(s));
-const CRYPTOS = ['BTC', 'ETH', 'SOL'];
+const state = {stocks:{},cryptos:{},widgets:{fng:{},gold:{},silver:{}},expanded:null};
 
-function getAvKey() {
-  const params = new URLSearchParams(location.search);
-  return params.get('key') || params.get('av_key') || HARDCODED_AV_KEY;
+/* ── Cache ─────────────────────────────── */
+function saveCache(){
+  try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),stocks:state.stocks,cryptos:state.cryptos,widgets:state.widgets}))}catch(e){}
+}
+function loadCache(){
+  try{
+    const raw=localStorage.getItem(CACHE_KEY);
+    if(!raw)return false;
+    const c=JSON.parse(raw);
+    if(Date.now()-c.ts>30*60*1000)return false; // stale >30 min
+    Object.assign(state.stocks,c.stocks||{});
+    Object.assign(state.cryptos,c.cryptos||{});
+    Object.assign(state.widgets,c.widgets||{});
+    return true;
+  }catch(e){return false}
 }
 
-function updateProgress(text, current, total) {
-  const prog = document.getElementById('progress');
-  const fill = document.getElementById('progressFill');
-  const textEl = document.getElementById('progressText');
-  
-  if (current === 0 && total === 0) {
-    prog.style.display = 'none';
-    return;
-  }
-  
-  prog.style.display = 'block';
-  textEl.textContent = text;
-  fill.style.width = total > 0 ? `${(current / total) * 100}%` : '0%';
-  
-  if (current >= total) {
-    setTimeout(() => prog.style.display = 'none', 1000);
-  }
+/* ── Helpers ───────────────────────────── */
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function fetchJSON(url){const r=await fetch(url);if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}
+function setStatus(t,c='ok'){document.getElementById('statusText').textContent=t;document.getElementById('statusDot').className='dot '+c}
+function showProgress(text,cur,total){
+  const p=document.getElementById('progress'),f=document.getElementById('progressFill'),t=document.getElementById('progressText');
+  if(!total){p.style.display='none';return}
+  p.style.display='block';t.textContent=text;f.style.width=`${(cur/total)*100}%`;
 }
 
-function setStatus(text, type = 'ok') {
-  document.getElementById('statusText').textContent = text;
-  document.getElementById('statusDot').className = `dot ${type}`;
+function fmt(price,prefix='$'){
+  if(price==null||isNaN(price))return '—';
+  if(Math.abs(price)>=1e6)return prefix+(price/1e6).toFixed(1)+'M';
+  if(Math.abs(price)>=1e3)return prefix+price.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+  if(Math.abs(price)<1)return prefix+price.toFixed(4);
+  return prefix+price.toFixed(2);
+}
+function fmtCap(c){if(!c)return'—';if(c>=1e12)return'$'+(c/1e12).toFixed(1)+'T';if(c>=1e9)return'$'+(c/1e9).toFixed(1)+'B';if(c>=1e6)return'$'+(c/1e6).toFixed(1)+'M';return'$'+(c/1e3).toFixed(0)+'K'}
+function cardBg(pct){
+  if(pct>0){const i=Math.min(pct/5,1)*.15;return`linear-gradient(135deg,rgba(34,197,94,${i}),rgba(16,24,35,.65))`}
+  if(pct<0){const i=Math.min(Math.abs(pct)/5,1)*.15;return`linear-gradient(135deg,rgba(239,68,68,${i}),rgba(16,24,35,.65))`}
+  return'rgba(16,24,35,.65)';
+}
+function sparkSvg(prices){
+  if(!prices||prices.length<2)return'';
+  const mn=Math.min(...prices),mx=Math.max(...prices),rng=mx-mn,W=100,H=20;
+  if(rng===0)return`<svg viewBox="0 0 ${W} ${H}"><polyline points="${prices.map((_,i)=>`${i/(prices.length-1)*W},${H/2}`).join(' ')}"/></svg>`;
+  const pts=prices.map((p,i)=>`${i/(prices.length-1)*W},${H-(p-mn)/rng*H}`).join(' ');
+  return`<svg viewBox="0 0 ${W} ${H}"><polyline points="${pts}"/></svg>`;
 }
 
-async function fetchJSON(url) {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  return response.json();
+/* ── API Fetchers ──────────────────────── */
+async function avFetch(fn,params){
+  const url=`https://www.alphavantage.co/query?function=${fn}&${params}&apikey=${AV_KEY}`;
+  const j=await fetchJSON(url);
+  if(j['Note']||j['Information'])throw new Error('Rate limited');
+  if(j['Error Message'])throw new Error('Invalid');
+  return j;
 }
 
-async function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+async function fetchStock(sym){
+  try{
+    const j=await avFetch('GLOBAL_QUOTE',`symbol=${sym}`);
+    const q=j['Global Quote'];if(!q||!q['05. price'])throw new Error('No data');
+    return{price:+q['05. price'],change:+q['09. change'],pct:parseFloat(q['10. change percent']),
+      high:+q['03. high']||null,low:+q['04. low']||null,volume:q['06. volume']||null,
+      prevClose:+q['08. previous close']||null,ts:Date.now()};
+  }catch(e){return{error:e.message}}
 }
 
-async function fetchFNG() {
-  try {
-    const j = await fetchJSON("https://api.alternative.me/fng/?limit=1&format=json");
-    const d = j?.data?.[0];
-    const value = d ? Number(d.value) : null;
-    const cls = d?.value_classification || "";
-    const label = cls || "—";
-    let color = "rgba(255,255,255,.14)";
-    if (/Extreme Fear/i.test(label)) color = "rgba(239,68,68,.45)";
-    else if (/^Fear/i.test(label)) color = "rgba(245,158,11,.45)";
-    else if (/Neutral/i.test(label)) color = "rgba(148,163,184,.35)";
-    else if (/^Greed/i.test(label)) color = "rgba(34,197,94,.45)";
-    else if (/Extreme Greed/i.test(label)) color = "rgba(34,197,94,.55)";
-    state.widgets.fng = { value: isFinite(value) ? value : null, label, color };
-  } catch (e) {
-    state.widgets.fng = { value: null, label: "Unavailable" };
-  }
+async function fetchMetal(from,to){
+  try{
+    const j=await avFetch('FX_DAILY',`from_symbol=${from}&to_symbol=${to}`);
+    const s=j['Time Series (FX Daily)'];if(!s)throw new Error('No data');
+    const keys=Object.keys(s);const p=+s[keys[0]]['4. close'],pp=+s[keys[1]]['4. close'];
+    return{price:p,change:p-pp,pct:(p-pp)/pp*100,ts:Date.now()};
+  }catch(e){return{error:e.message}}
 }
 
-async function fetchMetal(from, to) {
-  const key = getAvKey();
-  try {
-    const url = `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${from}&to_symbol=${to}&apikey=${key}`;
-    const j = await fetchJSON(url);
-    
-    if (j["Error Message"] || j["Note"]) {
-      throw new Error("Rate limited or invalid");
+async function fetchCryptos(){
+  try{
+    const ids=Object.values(CRYPTO_MAP).join(',');
+    const j=await fetchJSON(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true&include_market_cap=true`);
+    for(const[sym,id]of Object.entries(CRYPTO_MAP)){
+      const d=j[id];
+      if(!d)continue;
+      state.cryptos[sym]={price:d.usd,pct:d.usd_24h_change,change:d.usd*(d.usd_24h_change/100),marketCap:d.usd_market_cap,ts:Date.now()};
     }
-    
-    const series = j["Time Series (FX Daily)"];
-    if (!series) throw new Error("No data");
-    
-    const latest = Object.keys(series)[0];
-    const data = series[latest];
-    const price = parseFloat(data["4. close"]);
-    const prev = Object.values(series)[1];
-    const prevPrice = prev ? parseFloat(prev["4. close"]) : price;
-    const change = price - prevPrice;
-    const pct = ((change / prevPrice) * 100);
-    
-    return {
-      price,
-      change,
-      pct,
-      updated: new Date().toISOString()
-    };
-  } catch (e) {
-    return { error: e.message };
-  }
-}
-
-async function fetchStock(symbol) {
-  const key = getAvKey();
-  try {
-    const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${key}`;
-    const j = await fetchJSON(url);
-    
-    if (j["Error Message"] || j["Note"]) {
-      throw new Error("Rate limited");
+  }catch(e){console.warn('CoinGecko prices failed',e)}
+  // sparklines — one call, different endpoint
+  try{
+    for(const[sym,id]of Object.entries(CRYPTO_MAP)){
+      try{
+        const s=await fetchJSON(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=7&interval=daily`);
+        if(state.cryptos[sym])state.cryptos[sym].sparkline=s.prices?.slice(-5)?.map(p=>p[1])||[];
+      }catch(e){}
+      await sleep(1500); // gentle CoinGecko spacing
     }
-    
-    const quote = j["Global Quote"];
-    if (!quote) throw new Error("No data");
-    
-    const price = parseFloat(quote["05. price"]);
-    const change = parseFloat(quote["09. change"]);
-    const pct = parseFloat(quote["10. change percent"].replace('%', ''));
-    
-    return {
-      price,
-      change,
-      pct,
-      high: parseFloat(quote["03. high"]) || null,
-      low: parseFloat(quote["04. low"]) || null,
-      volume: quote["06. volume"] || null,
-      prevClose: parseFloat(quote["08. previous close"]) || null,
-      updated: new Date().toISOString()
-    };
-  } catch (e) {
-    return { error: e.message };
+  }catch(e){}
+}
+
+async function fetchFNG(){
+  try{
+    const j=await fetchJSON('https://api.alternative.me/fng/?limit=1&format=json');
+    const d=j?.data?.[0];const v=d?Number(d.value):null;const label=d?.value_classification||'—';
+    let color='rgba(255,255,255,.14)';
+    if(/Extreme Fear/i.test(label))color='rgba(239,68,68,.45)';
+    else if(/^Fear/i.test(label))color='rgba(245,158,11,.45)';
+    else if(/Neutral/i.test(label))color='rgba(148,163,184,.35)';
+    else if(/^Greed/i.test(label))color='rgba(34,197,94,.45)';
+    else if(/Extreme Greed/i.test(label))color='rgba(34,197,94,.55)';
+    state.widgets.fng={value:isFinite(v)?v:null,label,color};
+  }catch(e){state.widgets.fng={value:null,label:'Unavailable'}}
+}
+
+/* ── Rendering ─────────────────────────── */
+function renderCard(sym){
+  const isCrypto=!!CRYPTO_MAP[sym];
+  const d=isCrypto?state.cryptos[sym]:state.stocks[sym];
+  if(!d)return`<div class="card muted"><div class="sym">${sym}</div><div class="price" style="color:var(--muted)">Loading…</div></div>`;
+  if(d.error)return`<div class="card muted"><div class="sym">${sym}</div><div class="price" style="color:var(--muted)">—</div><div class="delta"><span class="muted">${d.error}</span></div></div>`;
+  const pc=d.pct>=0?'#22c55e':'#ef4444';const pfx=d.pct>=0?'+':'';
+  const spark=d.sparkline?sparkSvg(d.sparkline):'';
+  const stale=d.ts&&(Date.now()-d.ts>CACHE_TTL)?'<span class="tag stale">cached</span>':'';
+  return`<div class="card" style="background:${cardBg(d.pct)}" data-sym="${sym}" data-type="${isCrypto?'crypto':'stock'}">
+    ${stale}<div class="sym">${sym}</div>
+    <div class="price">${fmt(d.price)}</div>
+    <div class="delta" style="color:${pc}">${pfx}${d.pct?.toFixed(2)}%</div>
+    ${spark?`<div class="spark">${spark}</div>`:''}
+    <div class="detail" id="det-${sym}"></div></div>`;
+}
+
+function renderSectors(){
+  const c=document.getElementById('sectors');c.innerHTML='';
+  for(const[name,syms]of Object.entries(SECTORS)){
+    const sec=document.createElement('div');sec.className='sector';
+    const hdr=document.createElement('div');hdr.className='sector-header';hdr.textContent=name;
+    const grid=document.createElement('div');grid.className='grid';
+    syms.forEach(s=>grid.innerHTML+=renderCard(s));
+    sec.append(hdr,grid);c.appendChild(sec);
   }
+  attachCardClicks();
 }
 
-async function fetchStockDaily(symbol) {
-  const key = getAvKey();
-  try {
-    const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=compact&apikey=${key}`;
-    const j = await fetchJSON(url);
-    
-    if (j["Error Message"] || j["Note"]) {
-      throw new Error("Rate limited");
-    }
-    
-    const series = j["Time Series (Daily)"];
-    if (!series) throw new Error("No data");
-    
-    const dates = Object.keys(series).slice(0, 5);
-    const prices = dates.map(date => parseFloat(series[date]["4. close"]));
-    
-    // Calculate 52-week range from available data
-    const allPrices = Object.values(series).map(d => parseFloat(d["4. close"]));
-    const high52w = Math.max(...allPrices);
-    const low52w = Math.min(...allPrices);
-    
-    return {
-      sparkline: prices,
-      high52w,
-      low52w
-    };
-  } catch (e) {
-    return { error: e.message };
-  }
-}
-
-async function fetchCrypto(id) {
-  try {
-    const url = `https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd&include_24hr_change=true&include_market_cap=true`;
-    const j = await fetchJSON(url);
-    
-    const data = j[id];
-    if (!data) throw new Error("No data");
-    
-    const sparkUrl = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=7&interval=daily`;
-    const sparkData = await fetchJSON(sparkUrl);
-    const prices = sparkData.prices?.slice(-5)?.map(p => p[1]) || [];
-    
-    return {
-      price: data.usd,
-      change: data.usd * (data.usd_24h_change / 100),
-      pct: data.usd_24h_change,
-      sparkline: prices,
-      marketCap: data.usd_market_cap,
-      updated: new Date().toISOString()
-    };
-  } catch (e) {
-    return { error: e.message };
-  }
-}
-
-function generateSparkline(prices) {
-  if (!prices || prices.length < 2) return '';
-  
-  const min = Math.min(...prices);
-  const max = Math.max(...prices);
-  const range = max - min;
-  const width = 100;
-  const height = 20;
-  
-  if (range === 0) {
-    return `<svg viewBox="0 0 ${width} ${height}"><polyline points="${prices.map((_, i) => `${(i / (prices.length - 1)) * width},${height/2}`).join(' ')}"/></svg>`;
-  }
-  
-  const points = prices.map((price, i) => {
-    const x = (i / (prices.length - 1)) * width;
-    const y = height - ((price - min) / range) * height;
-    return `${x},${y}`;
-  }).join(' ');
-  
-  return `<svg viewBox="0 0 ${width} ${height}"><polyline points="${points}"/></svg>`;
-}
-
-function formatPrice(price, prefix = '$') {
-  if (price >= 1000000) return prefix + (price / 1000000).toFixed(1) + 'M';
-  if (price >= 1000) return prefix + (price / 1000).toFixed(1) + 'K';
-  if (price < 1) return prefix + price.toFixed(4);
-  return prefix + price.toFixed(2);
-}
-
-function formatMarketCap(cap) {
-  if (!cap) return '—';
-  if (cap >= 1e12) return '$' + (cap / 1e12).toFixed(1) + 'T';
-  if (cap >= 1e9) return '$' + (cap / 1e9).toFixed(1) + 'B';
-  if (cap >= 1e6) return '$' + (cap / 1e6).toFixed(1) + 'M';
-  return '$' + (cap / 1e3).toFixed(1) + 'K';
-}
-
-function getCardBackground(pct) {
-  if (pct > 0) {
-    const intensity = Math.min(pct / 5, 1) * 0.15;
-    return `linear-gradient(135deg, rgba(34,197,94,${intensity}), rgba(16,24,35,.65))`;
-  } else if (pct < 0) {
-    const intensity = Math.min(Math.abs(pct) / 5, 1) * 0.15;
-    return `linear-gradient(135deg, rgba(239,68,68,${intensity}), rgba(16,24,35,.65))`;
-  }
-  return 'rgba(16,24,35,.65)';
-}
-
-function createCard(symbol, data, type = 'stock') {
-  if (data.error) {
-    return `
-      <div class="card muted">
-        <div class="sym">${symbol}</div>
-        <div class="price" style="color: var(--muted)">Error</div>
-        <div class="delta"><span class="muted">${data.error}</span></div>
-      </div>
-    `;
-  }
-  
-  const bgStyle = `background: ${getCardBackground(data.pct)}`;
-  const pctColor = data.pct >= 0 ? '#22c55e' : '#ef4444';
-  const changePrefix = data.pct >= 0 ? '+' : '';
-  
-  const sparkline = data.sparkline ? generateSparkline(data.sparkline) : '';
-  
-  return `
-    <div class="card" style="${bgStyle}" data-symbol="${symbol}" data-type="${type}">
-      <div class="sym">${symbol}</div>
-      <div class="price">${formatPrice(data.price)}</div>
-      <div class="delta" style="color: ${pctColor}">
-        ${changePrefix}${data.pct?.toFixed(2)}% <span class="muted">(${formatPrice(data.change, data.change >= 0 ? '+$' : '-$', Math.abs(data.change))})</span>
-      </div>
-      ${sparkline ? `<div class="spark">${sparkline}</div>` : ''}
-      <div class="detail" id="detail-${symbol}"></div>
-    </div>
-  `;
-}
-
-function showDetail(symbol, data, type) {
-  const detail = document.getElementById(`detail-${symbol}`);
-  if (!detail) return;
-  
-  let content = '';
-  
-  if (type === 'stock') {
-    content = `
-      <div class="detail-row"><span>52W High:</span><span>${data.high52w ? formatPrice(data.high52w) : '—'}</span></div>
-      <div class="detail-row"><span>52W Low:</span><span>${data.low52w ? formatPrice(data.low52w) : '—'}</span></div>
-      <div class="detail-row"><span>Volume:</span><span>${data.volume ? Number(data.volume).toLocaleString() : '—'}</span></div>
-      <div class="detail-row"><span>Prev Close:</span><span>${data.prevClose ? formatPrice(data.prevClose) : '—'}</span></div>
-    `;
-  } else {
-    content = `
-      <div class="detail-row"><span>Market Cap:</span><span>${formatMarketCap(data.marketCap)}</span></div>
-      <div class="detail-row"><span>24h Vol:</span><span>—</span></div>
-    `;
-  }
-  
-  detail.innerHTML = content;
-  detail.classList.add('show');
-}
-
-function hideDetail(symbol) {
-  const detail = document.getElementById(`detail-${symbol}`);
-  if (detail) {
-    detail.classList.remove('show');
-  }
-}
-
-function renderSectors() {
-  const container = document.getElementById('sectors');
-  container.innerHTML = '';
-  
-  Object.entries(SECTORS).forEach(([sectorName, symbols]) => {
-    const sectorDiv = document.createElement('div');
-    sectorDiv.className = 'sector';
-    
-    const header = document.createElement('div');
-    header.className = 'sector-header';
-    header.textContent = sectorName;
-    
-    const grid = document.createElement('div');
-    grid.className = 'grid';
-    grid.id = `sector-${sectorName.replace(/[^a-zA-Z0-9]/g, '')}`;
-    
-    sectorDiv.appendChild(header);
-    sectorDiv.appendChild(grid);
-    container.appendChild(sectorDiv);
-    
-    // Render cards for this sector
-    symbols.forEach(symbol => {
-      const isCrypto = CRYPTOS.includes(symbol);
-      const data = isCrypto ? state.cryptos[symbol] : state.stocks[symbol];
-      if (data) {
-        grid.innerHTML += createCard(symbol, data, isCrypto ? 'crypto' : 'stock');
-      }
-    });
-  });
-  
-  // Add click handlers
-  document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', (e) => {
+function attachCardClicks(){
+  document.querySelectorAll('.card[data-sym]').forEach(card=>{
+    card.onclick=e=>{
       e.stopPropagation();
-      const symbol = card.dataset.symbol;
-      const type = card.dataset.type;
-      
-      if (state.expanded === symbol) {
-        // Collapse
-        card.classList.remove('expanded');
-        hideDetail(symbol);
-        state.expanded = null;
-      } else {
-        // Collapse previously expanded
-        if (state.expanded) {
-          const prevCard = document.querySelector(`[data-symbol="${state.expanded}"]`);
-          if (prevCard) {
-            prevCard.classList.remove('expanded');
-            hideDetail(state.expanded);
-          }
-        }
-        
-        // Expand this one
-        card.classList.add('expanded');
-        const data = type === 'crypto' ? state.cryptos[symbol] : state.stocks[symbol];
-        showDetail(symbol, data, type);
-        state.expanded = symbol;
+      const sym=card.dataset.sym,type=card.dataset.type;
+      if(state.expanded===sym){card.classList.remove('expanded');const det=document.getElementById('det-'+sym);if(det)det.classList.remove('show');state.expanded=null;return}
+      // collapse prev
+      if(state.expanded){const p=document.querySelector(`[data-sym="${state.expanded}"]`);if(p)p.classList.remove('expanded');const pd=document.getElementById('det-'+state.expanded);if(pd)pd.classList.remove('show')}
+      card.classList.add('expanded');state.expanded=sym;
+      const d=type==='crypto'?state.cryptos[sym]:state.stocks[sym];
+      const det=document.getElementById('det-'+sym);if(!det||!d||d.error)return;
+      if(type==='stock'){
+        det.innerHTML=`<div class="detail-row"><span>Day High:</span><span>${d.high?fmt(d.high):'—'}</span></div>
+          <div class="detail-row"><span>Day Low:</span><span>${d.low?fmt(d.low):'—'}</span></div>
+          <div class="detail-row"><span>Volume:</span><span>${d.volume?Number(d.volume).toLocaleString():'—'}</span></div>
+          <div class="detail-row"><span>Prev Close:</span><span>${d.prevClose?fmt(d.prevClose):'—'}</span></div>`;
+      }else{
+        det.innerHTML=`<div class="detail-row"><span>Market Cap:</span><span>${fmtCap(d.marketCap)}</span></div>`;
       }
-    });
-  });
-  
-  // Click outside to collapse
-  document.addEventListener('click', (e) => {
-    if (state.expanded && !e.target.closest('.card')) {
-      const card = document.querySelector(`[data-symbol="${state.expanded}"]`);
-      if (card) {
-        card.classList.remove('expanded');
-        hideDetail(state.expanded);
-        state.expanded = null;
-      }
-    }
+      det.classList.add('show');
+    };
   });
 }
 
-function updateWidgets() {
-  // Fear & Greed
-  const fngV = document.getElementById('fngV');
-  const fngS = document.getElementById('fngS');
-  const fngW = document.getElementById('fngW');
-  if (state.widgets.fng.value !== null) {
-    fngV.textContent = state.widgets.fng.value;
-    fngS.textContent = state.widgets.fng.label;
-    if (state.widgets.fng.color) {
-      fngW.style.background = state.widgets.fng.color;
-    }
-  } else {
-    fngV.textContent = '—';
-    fngS.textContent = state.widgets.fng.label || 'Error';
+function updateWidgets(){
+  const{fng,gold,silver}=state.widgets;
+  document.getElementById('fngV').textContent=fng.value!=null?fng.value:'—';
+  document.getElementById('fngS').textContent=fng.label||'—';
+  if(fng.color)document.getElementById('fngW').style.background=fng.color;
+  for(const[key,data]of[['gold',gold],['silver',silver]]){
+    const vEl=document.getElementById(key+'V'),sEl=document.getElementById(key+'S'),wEl=document.getElementById(key+'W');
+    if(data?.price){vEl.textContent=fmt(data.price);const pc=data.pct>=0?'#22c55e':'#ef4444';const pfx=data.pct>=0?'+':'';sEl.innerHTML=`<span style="color:${pc}">${pfx}${data.pct.toFixed(2)}%</span>`;wEl.style.background=cardBg(data.pct)}
+    else if(data?.error){vEl.textContent='—';sEl.textContent='Loading…'}
+    else{vEl.textContent='—';sEl.textContent='Pending'}
   }
-  
-  // Gold & Silver
-  ['gold', 'silver'].forEach(metal => {
-    const data = state.widgets[metal];
-    const vEl = document.getElementById(`${metal}V`);
-    const sEl = document.getElementById(`${metal}S`);
-    const wEl = document.getElementById(`${metal}W`);
-    
-    if (data.price) {
-      vEl.textContent = formatPrice(data.price);
-      const pctColor = data.pct >= 0 ? '#22c55e' : '#ef4444';
-      const prefix = data.pct >= 0 ? '+' : '';
-      sEl.innerHTML = `<span style="color: ${pctColor}">${prefix}${data.pct.toFixed(2)}%</span>`;
-      wEl.style.background = getCardBackground(data.pct);
-    } else if (data.error) {
-      vEl.textContent = '—';
-      sEl.textContent = data.error;
-    }
-  });
 }
 
-function updateSummary() {
-  const allData = [...Object.values(state.stocks), ...Object.values(state.cryptos)];
-  const validData = allData.filter(d => d.price && !d.error);
-  
-  if (validData.length === 0) return;
-  
-  const positive = validData.filter(d => d.pct > 0).length;
-  const negative = validData.filter(d => d.pct < 0).length;
-  const neutral = validData.length - positive - negative;
-  
-  let mood = '📊 Mixed';
-  if (positive > negative * 1.5) mood = '🟢 Bullish';
-  else if (negative > positive * 1.5) mood = '🔴 Bearish';
-  
-  document.getElementById('mood').textContent = mood;
-  document.getElementById('counts').textContent = `${positive}↗ ${negative}↘ ${neutral}→`;
-  
-  const sortedByPct = [...validData].sort((a, b) => b.pct - a.pct);
-  const best = sortedByPct[0];
-  const worst = sortedByPct[sortedByPct.length - 1];
-  
-  document.getElementById('best').textContent = best ? `${getSymbolForData(best)} +${best.pct.toFixed(2)}%` : '—';
-  document.getElementById('worst').textContent = worst ? `${getSymbolForData(worst)} ${worst.pct.toFixed(2)}%` : '—';
+function updateSummary(){
+  const all=[...Object.entries(state.stocks),...Object.entries(state.cryptos)];
+  const valid=all.filter(([_,d])=>d?.price&&!d.error);
+  if(!valid.length)return;
+  const pos=valid.filter(([_,d])=>d.pct>0).length,neg=valid.filter(([_,d])=>d.pct<0).length;
+  let mood='📊 Mixed';if(pos>neg*1.5)mood='🟢 Bullish';else if(neg>pos*1.5)mood='🔴 Bearish';
+  document.getElementById('mood').textContent=mood;
+  document.getElementById('counts').textContent=`${pos}↗ ${neg}↘ ${valid.length-pos-neg}→`;
+  const sorted=[...valid].sort((a,b)=>b[1].pct-a[1].pct);
+  document.getElementById('best').textContent=sorted[0]?`${sorted[0][0]} +${sorted[0][1].pct.toFixed(2)}%`:'—';
+  const w=sorted[sorted.length-1];document.getElementById('worst').textContent=w?`${w[0]} ${w[1].pct.toFixed(2)}%`:'—';
 }
 
-function getSymbolForData(data) {
-  // Find symbol by reference
-  for (const [symbol, stockData] of Object.entries(state.stocks)) {
-    if (stockData === data) return symbol;
-  }
-  for (const [symbol, cryptoData] of Object.entries(state.cryptos)) {
-    if (cryptoData === data) return symbol;
-  }
-  return '—';
-}
+/* ── Main Refresh ──────────────────────── */
+async function refresh(){
+  setStatus('Loading…','warn');
+  showProgress('Starting…',0,1);
 
-async function loadStockQuotes() {
-  setStatus('Loading quotes...', 'warn');
+  // Phase 0: Non-rate-limited APIs in parallel
+  await Promise.all([fetchFNG(), fetchCryptos()]);
+  updateWidgets();renderSectors();updateSummary();
+
+  // Phase 1: Stock quotes (AV, 5/min)
+  const totalSteps = ALL_STOCKS.length + 2; // +2 for metals
+  let done = 0;
   const batchSize = 5;
-  let completed = 0;
-  
-  for (let i = 0; i < ALL_STOCKS.length; i += batchSize) {
-    const batch = ALL_STOCKS.slice(i, i + batchSize);
-    
-    await Promise.all(batch.map(async (symbol) => {
-      const data = await fetchStock(symbol);
-      state.stocks[symbol] = data;
-      completed++;
-      updateProgress(`Quotes: ${completed}/${ALL_STOCKS.length}`, completed, ALL_STOCKS.length);
+
+  for(let i=0;i<ALL_STOCKS.length;i+=batchSize){
+    if(i>0) await sleep(13000); // 13s safety margin
+    const batch=ALL_STOCKS.slice(i,i+batchSize);
+    await Promise.all(batch.map(async sym=>{
+      const d=await fetchStock(sym);
+      if(!d.error) state.stocks[sym]=d;
+      else if(!state.stocks[sym]) state.stocks[sym]=d; // don't overwrite cached with error
+      done++;
+      showProgress(`Stocks: ${done}/${ALL_STOCKS.length} · Metals pending`,done,totalSteps);
     }));
-    
-    if (i + batchSize < ALL_STOCKS.length) {
-      await sleep(12000); // 12s between batches (5 calls per minute limit)
-    }
+    renderSectors();updateSummary();saveCache();
   }
+
+  // Phase 2: Metals (2 more AV calls)
+  await sleep(13000);
+  const gold=await fetchMetal('XAU','USD');
+  if(!gold.error)state.widgets.gold=gold;
+  done++;showProgress(`Gold ✓ · Silver pending`,done,totalSteps);updateWidgets();
+
+  await sleep(13000);
+  const silver=await fetchMetal('XAG','USD');
+  if(!silver.error)state.widgets.silver=silver;
+  done++;showProgress(`Done`,done,totalSteps);updateWidgets();
+
+  saveCache();
+  setStatus('Complete','ok');
+  document.getElementById('last').textContent=new Date().toLocaleTimeString();
+  setTimeout(()=>showProgress('',0,0),1000);
 }
 
-async function loadStockSparklines() {
-  setStatus('Loading sparklines...', 'warn');
-  const batchSize = 5;
-  let completed = 0;
-  
-  for (let i = 0; i < ALL_STOCKS.length; i += batchSize) {
-    const batch = ALL_STOCKS.slice(i, i + batchSize);
-    
-    await Promise.all(batch.map(async (symbol) => {
-      const data = await fetchStockDaily(symbol);
-      if (state.stocks[symbol] && !data.error) {
-        state.stocks[symbol].sparkline = data.sparkline;
-        state.stocks[symbol].high52w = data.high52w;
-        state.stocks[symbol].low52w = data.low52w;
-      }
-      completed++;
-      updateProgress(`Sparklines: ${completed}/${ALL_STOCKS.length}`, completed, ALL_STOCKS.length);
-    }));
-    
-    renderSectors(); // Re-render with new sparklines
-    
-    if (i + batchSize < ALL_STOCKS.length) {
-      await sleep(12000); // 12s between batches
-    }
+/* ── Copy Snapshot ─────────────────────── */
+function copySnapshot(){
+  const lines=[`Portfolio Pulse — ${new Date().toLocaleString()}`,''];
+  for(const[name,syms]of Object.entries(SECTORS)){
+    const items=syms.map(s=>[s,state.stocks[s]||state.cryptos[s]]).filter(([_,d])=>d?.price&&!d.error);
+    if(!items.length)continue;
+    lines.push(name+':');
+    items.forEach(([s,d])=>{const pfx=d.pct>=0?'+':'';lines.push(`  ${s}: ${fmt(d.price)} (${pfx}${d.pct.toFixed(2)}%)`)});
+    lines.push('');
   }
+  const{fng,gold,silver}=state.widgets;
+  if(fng.value!=null)lines.push(`Fear & Greed: ${fng.value} (${fng.label})`);
+  if(gold?.price)lines.push(`Gold: ${fmt(gold.price)} (${gold.pct>=0?'+':''}${gold.pct.toFixed(2)}%)`);
+  if(silver?.price)lines.push(`Silver: ${fmt(silver.price)} (${silver.pct>=0?'+':''}${silver.pct.toFixed(2)}%)`);
+  navigator.clipboard.writeText(lines.join('\n'));
+  setStatus('Copied!','ok');setTimeout(()=>setStatus('Complete','ok'),1500);
 }
 
-async function loadCryptos() {
-  const cryptoIds = { BTC: 'bitcoin', ETH: 'ethereum', SOL: 'solana' };
-  
-  for (const [symbol, id] of Object.entries(cryptoIds)) {
-    const data = await fetchCrypto(id);
-    state.cryptos[symbol] = data;
-  }
-}
+/* ── Events ────────────────────────────── */
+document.getElementById('refresh').onclick=refresh;
+document.getElementById('copy').onclick=copySnapshot;
+document.addEventListener('click',e=>{if(state.expanded&&!e.target.closest('.card')){const c=document.querySelector(`[data-sym="${state.expanded}"]`);if(c)c.classList.remove('expanded');const d=document.getElementById('det-'+state.expanded);if(d)d.classList.remove('show');state.expanded=null}});
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='r'||e.key==='R'){e.preventDefault();refresh()}if(e.key==='c'||e.key==='C'){e.preventDefault();copySnapshot()}});
+let autoIv=null;document.getElementById('auto').onchange=e=>{if(e.target.checked)autoIv=setInterval(refresh,5*60*1000);else{clearInterval(autoIv);autoIv=null}};
+function tick(){document.getElementById('now').textContent=new Date().toLocaleString()}tick();setInterval(tick,1000);
 
-async function loadWidgets() {
-  // Only fetch FNG here (different API, no rate limit)
-  await fetchFNG();
-}
-
-async function loadMetals() {
-  // Gold and Silver use AV API — must be sequenced in the rate limit queue
-  state.widgets.gold = await fetchMetal('XAU', 'USD');
-  await sleep(12000);
-  state.widgets.silver = await fetchMetal('XAG', 'USD');
-  updateWidgets();
-}
-
-async function refresh() {
-  setStatus('Loading...', 'warn');
-  updateProgress('Starting...', 0, 1);
-  
-  try {
-    // Load non-AV data first (no rate limit)
-    await Promise.all([loadWidgets(), loadCryptos()]);
-    updateWidgets();
-    renderSectors(); // Show crypto cards immediately
-    
-    // Load metals first (2 AV calls), then stock quotes
-    await loadMetals();
-    
-    // Load stock quotes (rate limited)
-    await loadStockQuotes();
-    renderSectors();
-    updateSummary();
-    
-    // Load sparklines (rate limited)
-    await loadStockSparklines();
-    
-    setStatus('Complete', 'ok');
-    document.getElementById('last').textContent = new Date().toLocaleTimeString();
-    
-  } catch (error) {
-    console.error(error);
-    setStatus('Error', 'bad');
-  }
-  
-  updateProgress('', 0, 0);
-}
-
-function copySnapshot() {
-  const allData = [...Object.entries(state.stocks), ...Object.entries(state.cryptos)];
-  const validData = allData.filter(([_, data]) => data.price && !data.error);
-  
-  let text = `Portfolio Pulse Snapshot - ${new Date().toLocaleString()}\n\n`;
-  
-  // Add summary
-  const positive = validData.filter(([_, d]) => d.pct > 0).length;
-  const negative = validData.filter(([_, d]) => d.pct < 0).length;
-  text += `Market mood: ${positive}↗ ${negative}↘ ${validData.length - positive - negative}→\n\n`;
-  
-  // Add by sectors
-  Object.entries(SECTORS).forEach(([sectorName, symbols]) => {
-    const sectorData = symbols.map(s => [s, state.stocks[s] || state.cryptos[s]])
-                            .filter(([_, d]) => d && d.price && !d.error);
-    
-    if (sectorData.length > 0) {
-      text += `${sectorName}:\n`;
-      sectorData.forEach(([symbol, data]) => {
-        const prefix = data.pct >= 0 ? '+' : '';
-        text += `  ${symbol}: ${formatPrice(data.price)} (${prefix}${data.pct.toFixed(2)}%)\n`;
-      });
-      text += '\n';
-    }
-  });
-  
-  // Add widgets
-  if (state.widgets.fng.value !== null) {
-    text += `Fear & Greed: ${state.widgets.fng.value} (${state.widgets.fng.label})\n`;
-  }
-  if (state.widgets.gold.price) {
-    text += `Gold: ${formatPrice(state.widgets.gold.price)} (${state.widgets.gold.pct >= 0 ? '+' : ''}${state.widgets.gold.pct.toFixed(2)}%)\n`;
-  }
-  if (state.widgets.silver.price) {
-    text += `Silver: ${formatPrice(state.widgets.silver.price)} (${state.widgets.silver.pct >= 0 ? '+' : ''}${state.widgets.silver.pct.toFixed(2)}%)\n`;
-  }
-  
-  navigator.clipboard.writeText(text);
-  setStatus('Copied!', 'ok');
-  setTimeout(() => setStatus('Complete', 'ok'), 1500);
-}
-
-// Event listeners
-document.getElementById('refresh').addEventListener('click', refresh);
-document.getElementById('copy').addEventListener('click', copySnapshot);
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'r' || e.key === 'R') {
-    e.preventDefault();
-    refresh();
-  } else if (e.key === 'c' || e.key === 'C') {
-    e.preventDefault();
-    copySnapshot();
-  }
-});
-
-// Auto-refresh
-let autoInterval = null;
-document.getElementById('auto').addEventListener('change', (e) => {
-  if (e.target.checked) {
-    autoInterval = setInterval(refresh, 5 * 60 * 1000);
-  } else if (autoInterval) {
-    clearInterval(autoInterval);
-    autoInterval = null;
-  }
-});
-
-// Update time display
-function updateTime() {
-  document.getElementById('now').textContent = new Date().toLocaleString();
-}
-updateTime();
-setInterval(updateTime, 1000);
-
-// Initial load
+/* ── Boot ──────────────────────────────── */
+const hadCache=loadCache();
+if(hadCache){renderSectors();updateWidgets();updateSummary();setStatus('Cached','warn');document.getElementById('last').textContent='cached'}
 refresh();
 </script>
 </body>
