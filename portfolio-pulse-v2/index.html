@@ -327,33 +327,51 @@ async function refresh(){
   updateWidgets();renderSectors();updateSummary();
 
   // Phase 1: Stock quotes (AV, 5/min)
-  const totalSteps = ALL_STOCKS.length + 2; // +2 for metals
   let done = 0;
-  const batchSize = 5;
+  const batchSize = 4; // conservative: 4/min leaves headroom
+  const failed = [];
 
   for(let i=0;i<ALL_STOCKS.length;i+=batchSize){
-    if(i>0) await sleep(13000); // 13s safety margin
+    if(i>0) await sleep(15000); // 15s for safety
     const batch=ALL_STOCKS.slice(i,i+batchSize);
     await Promise.all(batch.map(async sym=>{
       const d=await fetchStock(sym);
       if(!d.error) state.stocks[sym]=d;
-      else if(!state.stocks[sym]) state.stocks[sym]=d; // don't overwrite cached with error
+      else { failed.push(sym); if(!state.stocks[sym]) state.stocks[sym]=d; }
       done++;
-      showProgress(`Stocks: ${done}/${ALL_STOCKS.length} · Metals pending`,done,totalSteps);
+      showProgress(`Stocks: ${done}/${ALL_STOCKS.length}${failed.length?' · '+failed.length+' retrying':''}`,done,ALL_STOCKS.length+2);
     }));
     renderSectors();updateSummary();saveCache();
   }
 
-  // Phase 2: Metals (2 more AV calls)
-  await sleep(13000);
+  // Retry failed stocks
+  if(failed.length){
+    await sleep(15000);
+    showProgress(`Retrying ${failed.length} failed…`,done,ALL_STOCKS.length+2);
+    for(let i=0;i<failed.length;i+=batchSize){
+      if(i>0) await sleep(15000);
+      const batch=failed.slice(i,i+batchSize);
+      await Promise.all(batch.map(async sym=>{
+        const d=await fetchStock(sym);
+        if(!d.error) state.stocks[sym]=d;
+      }));
+      renderSectors();updateSummary();saveCache();
+    }
+  }
+
+  // Metals last (2 more AV calls)
+  await sleep(15000);
+  showProgress(`Loading Gold…`,ALL_STOCKS.length,ALL_STOCKS.length+2);
   const gold=await fetchMetal('XAU','USD');
   if(!gold.error)state.widgets.gold=gold;
-  done++;showProgress(`Gold ✓ · Silver pending`,done,totalSteps);updateWidgets();
+  updateWidgets();
 
-  await sleep(13000);
+  await sleep(15000);
+  showProgress(`Loading Silver…`,ALL_STOCKS.length+1,ALL_STOCKS.length+2);
   const silver=await fetchMetal('XAG','USD');
   if(!silver.error)state.widgets.silver=silver;
-  done++;showProgress(`Done`,done,totalSteps);updateWidgets();
+  updateWidgets();
+  showProgress(`Done`,ALL_STOCKS.length+2,ALL_STOCKS.length+2);
 
   saveCache();
   setStatus('Complete','ok');
