@@ -139,12 +139,12 @@ function createDrone(species) {
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
   const filter = audioCtx.createBiquadFilter();
-  osc.type = 'sine';
-  osc.frequency.value = species === 'A' ? 55 : 82.41; // A1, E2
+  osc.type = 'triangle';
+  osc.frequency.value = species === 'A' ? 220 : 330; // A3, E4 — audible on phone speakers
   filter.type = 'lowpass';
-  filter.frequency.value = 200;
+  filter.frequency.value = 1200;
   filter.Q.value = 2;
-  gain.gain.value = 0.12;
+  gain.gain.value = 0.15;
   osc.connect(filter);
   filter.connect(gain);
   gain.connect(masterGain);
@@ -164,14 +164,14 @@ function collisionGrain(x, y, energy, velDelta) {
 
   // Pitch from position (vertical) + energy
   const scaleIdx = Math.floor((y / H) * 5) % 5;
-  const octave = Math.floor((x / W) * 3) + 3; // octaves 3-5
+  const octave = Math.floor((x / W) * 3) + 4; // octaves 4-6 — higher for phone speakers
   const scale = epoch % 2 === 0 ? SCALES.minor : SCALES.major;
   const semitone = scale[scaleIdx];
   const freq = 440 * Math.pow(2, (semitone - 9) / 12 + (octave - 4));
 
   // Grain duration from energy
   const dur = 0.05 + energy * 0.15;
-  const vol = Math.min(0.25, 0.05 + energy * 0.12);
+  const vol = Math.min(0.45, 0.1 + energy * 0.25);
 
   // Waveform from velocity delta magnitude
   const osc = audioCtx.createOscillator();
