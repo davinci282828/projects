@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>008 — Collision Symphony</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0a0f; overflow: hidden; touch-action: none; }
+canvas { display: block; }
+#overlay {
+  position: fixed; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; z-index: 10;
+  background: rgba(10,10,15,0.92); color: #aaa; font-family: 'Georgia', serif;
+  cursor: pointer;
+}
+#overlay h1 { font-size: 2em; color: #ddd; margin-bottom: 0.5em; letter-spacing: 0.05em; }
+#overlay p { font-size: 1em; max-width: 500px; text-align: center; line-height: 1.6; opacity: 0.7; }
+#overlay .hint { margin-top: 1.5em; font-size: 0.8em; opacity: 0.4; }
+#info {
+  position: fixed; top: 12px; left: 12px; color: rgba(255,255,255,0.25);
+  font: 11px/1.4 monospace; pointer-events: none; z-index: 5;
+}
+#quote {
+  position: fixed; bottom: 40px; left: 0; right: 0; text-align: center;
+  color: rgba(255,255,255,0.15); font: italic 14px/1.6 Georgia, serif;
+  pointer-events: none; z-index: 5; transition: opacity 1.5s;
+}
+</style>
+</head>
+<body>
+<div id="overlay">
+  <h1>Collision Symphony</h1>
+  <p>Two species inhabit the same space but follow different laws.<br>
+  Sound exists only where they meet.</p>
+  <p class="hint">tap / click to begin<br>drag to attract · pinch/scroll to repel · keys 1/2 spawn species</p>
+</div>
+<canvas id="c"></canvas>
+<div id="info"></div>
+<div id="quote"></div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const info = document.getElementById('info');
+const quoteEl = document.getElementById('quote');
+
+let W, H, audioCtx, masterGain, reverbNode, compressor;
+let started = false;
+let mouse = { x: -1000, y: -1000, down: false };
+let repulse = 0; // scroll/pinch repulsion force
+let particles = [];
+let collisionGrains = [];
+let collisionTrails = [];
+let time = 0;
+let totalCollisions = 0;
+let epoch = 0;
+const EPOCH_DUR = 600; // frames
+
+// Species config
+const SPECIES = {
+  A: {
+    color: [80, 160, 255],    // blue family — orbital, gravitational
+    count: 35,
+    maxSpeed: 1.8,
+    behavior: 'orbital',       // orbit around center of mass
+    size: 4,
+    trail: 0.15
+  },
+  B: {
+    color: [255, 120, 80],    // amber family — linear, migratory
+    count: 35,
+    maxSpeed: 2.2,
+    behavior: 'migratory',     // move in waves, change direction
+    size: 3.5,
+    trail: 0.1
+  }
+};
+
+const quotes = [
+  "Meaning lives at the boundary between systems",
+  "Translation is always lossy — and always creative",
+  "Two languages, one sound — neither could make alone",
+  "The collision is the conversation",
+  "Incompatibility is the precondition for novelty",
+  "What emerges between us belongs to neither of us",
+  "Every interface is a site of creation and destruction",
+  "Silence within, music between",
+  "The species that cannot collide cannot speak",
+  "Difference is not noise — it is signal"
+];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+// --- Audio ---
+function initAudio() {
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  compressor = audioCtx.createDynamicsCompressor();
+  compressor.threshold.value = -24;
+  compressor.ratio.value = 6;
+  compressor.connect(audioCtx.destination);
+
+  // Convolver reverb
+  reverbNode = audioCtx.createConvolver();
+  const len = audioCtx.sampleRate * 2.5;
+  const buf = audioCtx.createBuffer(2, len, audioCtx.sampleRate);
+  for (let ch = 0; ch < 2; ch++) {
+    const d = buf.getChannelData(ch);
+    for (let i = 0; i < len; i++) {
+      d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (len * 0.25));
+    }
+  }
+  reverbNode.buffer = buf;
+  reverbNode.connect(compressor);
+
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0.6;
+  masterGain.connect(compressor);
+
+  // Wet path
+  const wetGain = audioCtx.createGain();
+  wetGain.gain.value = 0.35;
+  masterGain.connect(wetGain);
+  wetGain.connect(reverbNode);
+
+  // Ambient drones for each species (very quiet, provide harmonic bed)
+  createDrone('A');
+  createDrone('B');
+}
+
+const drones = {};
+function createDrone(species) {
+  const sp = SPECIES[species];
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  const filter = audioCtx.createBiquadFilter();
+  osc.type = 'sine';
+  osc.frequency.value = species === 'A' ? 55 : 82.41; // A1, E2
+  filter.type = 'lowpass';
+  filter.frequency.value = 200;
+  filter.Q.value = 2;
+  gain.gain.value = 0.04;
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(masterGain);
+  osc.start();
+  drones[species] = { osc, gain, filter };
+}
+
+// Pentatonic scales for collision grains
+const SCALES = {
+  minor: [0, 3, 5, 7, 10],      // C minor pentatonic
+  major: [0, 2, 4, 7, 9],        // C major pentatonic
+};
+
+function collisionGrain(x, y, energy, velDelta) {
+  if (!audioCtx) return;
+  const now = audioCtx.currentTime;
+
+  // Pitch from position (vertical) + energy
+  const scaleIdx = Math.floor((y / H) * 5) % 5;
+  const octave = Math.floor((x / W) * 3) + 3; // octaves 3-5
+  const scale = epoch % 2 === 0 ? SCALES.minor : SCALES.major;
+  const semitone = scale[scaleIdx];
+  const freq = 440 * Math.pow(2, (semitone - 9) / 12 + (octave - 4));
+
+  // Grain duration from energy
+  const dur = 0.05 + energy * 0.15;
+  const vol = Math.min(0.25, 0.05 + energy * 0.12);
+
+  // Waveform from velocity delta magnitude
+  const osc = audioCtx.createOscillator();
+  const types = ['sine', 'triangle', 'square', 'sawtooth'];
+  const typeIdx = Math.min(3, Math.floor(velDelta * 1.5));
+  osc.type = types[typeIdx];
+  osc.frequency.value = freq;
+
+  // Detune from collision angle
+  osc.detune.value = (Math.random() - 0.5) * 30;
+
+  const gain = audioCtx.createGain();
+  gain.gain.setValueAtTime(0, now);
+  gain.gain.linearRampToValueAtTime(vol, now + 0.005);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+  // Pan from x position
+  const pan = audioCtx.createStereoPanner();
+  pan.pan.value = (x / W) * 2 - 1;
+
+  osc.connect(gain);
+  gain.connect(pan);
+  pan.connect(masterGain);
+
+  osc.start(now);
+  osc.stop(now + dur + 0.01);
+
+  // Second harmonic for richer grains
+  if (energy > 0.5) {
+    const osc2 = audioCtx.createOscillator();
+    osc2.type = 'sine';
+    osc2.frequency.value = freq * (epoch % 3 === 0 ? 1.5 : 2);
+    const g2 = audioCtx.createGain();
+    g2.gain.setValueAtTime(0, now);
+    g2.gain.linearRampToValueAtTime(vol * 0.3, now + 0.008);
+    g2.gain.exponentialRampToValueAtTime(0.001, now + dur * 0.7);
+    osc2.connect(g2);
+    g2.connect(pan);
+    osc2.start(now);
+    osc2.stop(now + dur + 0.01);
+  }
+}
+
+// --- Particles ---
+class Particle {
+  constructor(species, x, y) {
+    this.species = species;
+    const sp = SPECIES[species];
+    this.x = x || Math.random() * W;
+    this.y = y || Math.random() * H;
+    this.vx = (Math.random() - 0.5) * sp.maxSpeed;
+    this.vy = (Math.random() - 0.5) * sp.maxSpeed;
+    this.size = sp.size * (0.8 + Math.random() * 0.4);
+    this.phase = Math.random() * Math.PI * 2;
+    this.collisionHeat = 0; // recent collision intensity
+    this.age = 0;
+    // Migratory wave params
+    this.wavePhase = Math.random() * Math.PI * 2;
+    this.waveAmp = 0.3 + Math.random() * 0.5;
+  }
+
+  update(others) {
+    const sp = SPECIES[this.species];
+    this.age++;
+    this.phase += 0.02;
+    this.collisionHeat *= 0.95;
+
+    if (this.species === 'A') {
+      this.updateOrbital(others);
+    } else {
+      this.updateMigratory(others);
+    }
+
+    // Mouse attraction/repulsion
+    if (mouse.down) {
+      const dx = mouse.x - this.x;
+      const dy = mouse.y - this.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) + 1;
+      if (dist < 200) {
+        const force = 0.3 / dist;
+        this.vx += dx * force;
+        this.vy += dy * force;
+      }
+    }
+
+    // Repulsion from scroll/pinch
+    if (repulse !== 0) {
+      const dx = this.x - mouse.x;
+      const dy = this.y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) + 1;
+      if (dist < 250) {
+        const force = repulse * 2 / dist;
+        this.vx += dx * force;
+        this.vy += dy * force;
+      }
+    }
+
+    // Speed limit
+    const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+    if (speed > sp.maxSpeed * 1.5) {
+      this.vx = (this.vx / speed) * sp.maxSpeed * 1.5;
+      this.vy = (this.vy / speed) * sp.maxSpeed * 1.5;
+    }
+
+    this.x += this.vx;
+    this.y += this.vy;
+
+    // Wrap
+    if (this.x < 0) this.x += W;
+    if (this.x > W) this.x -= W;
+    if (this.y < 0) this.y += H;
+    if (this.y > H) this.y -= H;
+  }
+
+  updateOrbital(others) {
+    // Orbital species: attracted to same-species center of mass, gentle orbiting
+    let cx = 0, cy = 0, count = 0;
+    let sepX = 0, sepY = 0;
+
+    for (const p of others) {
+      if (p === this) continue;
+      const dx = p.x - this.x;
+      const dy = p.y - this.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) + 1;
+
+      if (p.species === 'A') {
+        cx += p.x;
+        cy += p.y;
+        count++;
+        // Separation
+        if (dist < 30) {
+          sepX -= dx / dist;
+          sepY -= dy / dist;
+        }
+      }
+    }
+
+    if (count > 0) {
+      cx /= count; cy /= count;
+      const dx = cx - this.x;
+      const dy = cy - this.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) + 1;
+
+      // Cohesion toward center
+      this.vx += dx * 0.001;
+      this.vy += dy * 0.001;
+
+      // Tangential orbital force
+      const tangentX = -dy / dist;
+      const tangentY = dx / dist;
+      this.vx += tangentX * 0.08;
+      this.vy += tangentY * 0.08;
+    }
+
+    // Separation
+    this.vx += sepX * 0.15;
+    this.vy += sepY * 0.15;
+
+    // Gentle damping
+    this.vx *= 0.995;
+    this.vy *= 0.995;
+  }
+
+  updateMigratory(others) {
+    // Migratory species: move in waves, alignment-heavy, change direction periodically
+    let alignX = 0, alignY = 0, sepX = 0, sepY = 0, count = 0;
+
+    for (const p of others) {
+      if (p === this || p.species !== 'B') continue;
+      const dx = p.x - this.x;
+      const dy = p.y - this.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) + 1;
+
+      if (dist < 120) {
+        alignX += p.vx;
+        alignY += p.vy;
+        count++;
+        if (dist < 25) {
+          sepX -= dx / dist;
+          sepY -= dy / dist;
+        }
+      }
+    }
+
+    if (count > 0) {
+      alignX /= count; alignY /= count;
+      this.vx += (alignX - this.vx) * 0.05;
+      this.vy += (alignY - this.vy) * 0.05;
+    }
+
+    this.vx += sepX * 0.12;
+    this.vy += sepY * 0.12;
+
+    // Wave impulse — periodic directional shifts
+    const waveAngle = Math.sin(time * 0.003 + this.wavePhase) * Math.PI;
+    this.vx += Math.cos(waveAngle) * this.waveAmp * 0.02;
+    this.vy += Math.sin(waveAngle) * this.waveAmp * 0.02;
+
+    this.vx *= 0.99;
+    this.vy *= 0.99;
+  }
+
+  draw() {
+    const sp = SPECIES[this.species];
+    const heat = this.collisionHeat;
+    const r = sp.color[0] + (255 - sp.color[0]) * heat;
+    const g = sp.color[1] + (255 - sp.color[1]) * heat * 0.5;
+    const b = sp.color[2] + (255 - sp.color[2]) * heat * 0.3;
+    const alpha = 0.6 + heat * 0.4;
+
+    // Glow
+    if (heat > 0.1) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size * (2 + heat * 4), 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r|0},${g|0},${b|0},${heat * 0.15})`;
+      ctx.fill();
+    }
+
+    // Core
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size * (1 + heat * 0.5), 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${r|0},${g|0},${b|0},${alpha})`;
+    ctx.fill();
+  }
+}
+
+function init() {
+  particles = [];
+  for (let i = 0; i < SPECIES.A.count; i++) {
+    particles.push(new Particle('A'));
+  }
+  for (let i = 0; i < SPECIES.B.count; i++) {
+    particles.push(new Particle('B'));
+  }
+}
+
+function checkCollisions() {
+  const COLL_DIST = 20;
+  const grainBudget = 8; // max grains per frame
+  let grains = 0;
+
+  for (let i = 0; i < particles.length && grains < grainBudget; i++) {
+    for (let j = i + 1; j < particles.length && grains < grainBudget; j++) {
+      const a = particles[i], b = particles[j];
+      if (a.species === b.species) continue; // only inter-species
+
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < COLL_DIST) {
+        const energy = 1 - dist / COLL_DIST;
+        const velDx = a.vx - b.vx;
+        const velDy = a.vy - b.vy;
+        const velDelta = Math.sqrt(velDx * velDx + velDy * velDy);
+
+        // Only trigger grain if approaching (not already separating)
+        const approaching = (dx * velDx + dy * velDy) < 0;
+        if (!approaching) continue;
+
+        const mx = (a.x + b.x) / 2;
+        const my = (a.y + b.y) / 2;
+
+        // Collision grain
+        collisionGrain(mx, my, energy, velDelta);
+        grains++;
+        totalCollisions++;
+
+        // Visual trail
+        collisionTrails.push({
+          x: mx, y: my, energy, life: 1,
+          r: 220, g: 200, b: 255
+        });
+
+        // Heat up particles
+        a.collisionHeat = Math.min(1, a.collisionHeat + energy * 0.5);
+        b.collisionHeat = Math.min(1, b.collisionHeat + energy * 0.5);
+
+        // Gentle elastic bounce
+        const nx = dx / (dist + 0.01);
+        const ny = dy / (dist + 0.01);
+        const bounce = energy * 0.3;
+        a.vx += nx * bounce;
+        a.vy += ny * bounce;
+        b.vx -= nx * bounce;
+        b.vy -= ny * bounce;
+      }
+    }
+  }
+}
+
+function updateDrones() {
+  if (!audioCtx) return;
+  // Drone intensity based on species clustering
+  for (const sp of ['A', 'B']) {
+    const members = particles.filter(p => p.species === sp);
+    let avgHeat = 0;
+    members.forEach(p => avgHeat += p.collisionHeat);
+    avgHeat /= members.length || 1;
+
+    const drone = drones[sp];
+    drone.gain.gain.linearRampToValueAtTime(0.02 + avgHeat * 0.06, audioCtx.currentTime + 0.05);
+    drone.filter.frequency.linearRampToValueAtTime(150 + avgHeat * 600, audioCtx.currentTime + 0.05);
+  }
+}
+
+function drawTrails() {
+  for (let i = collisionTrails.length - 1; i >= 0; i--) {
+    const t = collisionTrails[i];
+    t.life -= 0.015;
+    if (t.life <= 0) { collisionTrails.splice(i, 1); continue; }
+
+    const size = (1 - t.life) * 30 + t.energy * 10;
+    ctx.beginPath();
+    ctx.arc(t.x, t.y, size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${t.r},${t.g},${t.b},${t.life * 0.08})`;
+    ctx.fill();
+
+    // Inner bright core
+    ctx.beginPath();
+    ctx.arc(t.x, t.y, size * 0.2, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${t.life * 0.15})`;
+    ctx.fill();
+  }
+}
+
+function drawConnections() {
+  // Draw faint connections between same-species neighbors
+  const MAX_DIST = 80;
+  ctx.lineWidth = 0.5;
+
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      if (particles[i].species !== particles[j].species) continue;
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < MAX_DIST) {
+        const alpha = (1 - dist / MAX_DIST) * 0.12;
+        const c = SPECIES[particles[i].species].color;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(${c[0]},${c[1]},${c[2]},${alpha})`;
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Draw bright lines between colliding inter-species pairs
+  for (const t of collisionTrails) {
+    if (t.life > 0.7) {
+      ctx.beginPath();
+      ctx.arc(t.x, t.y, 2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${t.life * 0.4})`;
+      ctx.fill();
+    }
+  }
+}
+
+// Quote cycling
+let currentQuote = 0;
+function cycleQuote() {
+  quoteEl.style.opacity = 0;
+  setTimeout(() => {
+    currentQuote = (currentQuote + 1) % quotes.length;
+    quoteEl.textContent = quotes[currentQuote];
+    quoteEl.style.opacity = 1;
+  }, 1500);
+}
+
+function updateInfo() {
+  const aCount = particles.filter(p => p.species === 'A').length;
+  const bCount = particles.filter(p => p.species === 'B').length;
+  info.textContent = `orbital: ${aCount}  migratory: ${bCount}  collisions: ${totalCollisions}  epoch: ${epoch}`;
+}
+
+// --- Main Loop ---
+function frame() {
+  time++;
+
+  // Epoch shift
+  if (time % EPOCH_DUR === 0) {
+    epoch++;
+    cycleQuote();
+    // Shift species behaviors slightly each epoch
+    SPECIES.A.maxSpeed = 1.5 + Math.sin(epoch * 0.7) * 0.5;
+    SPECIES.B.waveAmp = 0.3 + Math.cos(epoch * 0.5) * 0.3;
+  }
+
+  // Fade
+  ctx.fillStyle = 'rgba(10,10,15,0.12)';
+  ctx.fillRect(0, 0, W, H);
+
+  // Update
+  for (const p of particles) p.update(particles);
+  checkCollisions();
+  updateDrones();
+
+  // Draw
+  drawConnections();
+  drawTrails();
+  for (const p of particles) p.draw();
+
+  // Repulse decay
+  repulse *= 0.9;
+
+  if (time % 30 === 0) updateInfo();
+
+  requestAnimationFrame(frame);
+}
+
+// --- Input ---
+function getPos(e) {
+  if (e.touches) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  return { x: e.clientX, y: e.clientY };
+}
+
+function start() {
+  if (started) return;
+  started = true;
+  document.getElementById('overlay').style.display = 'none';
+  initAudio();
+  init();
+  quoteEl.textContent = quotes[0];
+  quoteEl.style.opacity = 1;
+  setInterval(cycleQuote, 12000);
+  frame();
+}
+
+document.getElementById('overlay').addEventListener('click', start);
+document.getElementById('overlay').addEventListener('touchstart', e => { e.preventDefault(); start(); });
+
+canvas.addEventListener('mousedown', e => { mouse.down = true; mouse.x = e.clientX; mouse.y = e.clientY; });
+canvas.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+canvas.addEventListener('mouseup', () => { mouse.down = false; });
+
+canvas.addEventListener('touchstart', e => {
+  e.preventDefault();
+  mouse.down = true;
+  const t = e.touches[0];
+  mouse.x = t.clientX; mouse.y = t.clientY;
+}, { passive: false });
+canvas.addEventListener('touchmove', e => {
+  e.preventDefault();
+  const t = e.touches[0];
+  mouse.x = t.clientX; mouse.y = t.clientY;
+}, { passive: false });
+canvas.addEventListener('touchend', e => { e.preventDefault(); mouse.down = false; }, { passive: false });
+
+// Scroll/pinch to repulse
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  repulse = Math.sign(e.deltaY) * 0.5;
+  mouse.x = e.clientX; mouse.y = e.clientY;
+}, { passive: false });
+
+// Keyboard: 1/2 to spawn species
+document.addEventListener('keydown', e => {
+  if (!started) return;
+  if (e.key === '1') {
+    particles.push(new Particle('A', mouse.x, mouse.y));
+  } else if (e.key === '2') {
+    particles.push(new Particle('B', mouse.x, mouse.y));
+  }
+});
+
+</script>
+</body>
+</html>
