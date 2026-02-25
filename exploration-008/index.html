@@ -595,6 +595,7 @@ function start() {
   started = true;
   document.getElementById('overlay').style.display = 'none';
   initAudio();
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
   init();
   quoteEl.textContent = quotes[0];
   quoteEl.style.opacity = 1;
