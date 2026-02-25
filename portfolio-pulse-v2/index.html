@@ -662,11 +662,16 @@ async function loadCryptos() {
 }
 
 async function loadWidgets() {
-  await Promise.all([
-    fetchFNG(),
-    fetchMetal('XAU', 'USD').then(data => state.widgets.gold = data),
-    fetchMetal('XAG', 'USD').then(data => state.widgets.silver = data)
-  ]);
+  // Only fetch FNG here (different API, no rate limit)
+  await fetchFNG();
+}
+
+async function loadMetals() {
+  // Gold and Silver use AV API — must be sequenced in the rate limit queue
+  state.widgets.gold = await fetchMetal('XAU', 'USD');
+  await sleep(12000);
+  state.widgets.silver = await fetchMetal('XAG', 'USD');
+  updateWidgets();
 }
 
 async function refresh() {
@@ -674,9 +679,13 @@ async function refresh() {
   updateProgress('Starting...', 0, 1);
   
   try {
-    // Load widgets and cryptos (no rate limit)
+    // Load non-AV data first (no rate limit)
     await Promise.all([loadWidgets(), loadCryptos()]);
     updateWidgets();
+    renderSectors(); // Show crypto cards immediately
+    
+    // Load metals first (2 AV calls), then stock quotes
+    await loadMetals();
     
     // Load stock quotes (rate limited)
     await loadStockQuotes();
