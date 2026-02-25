@@ -144,7 +144,7 @@ function createDrone(species) {
   filter.type = 'lowpass';
   filter.frequency.value = 200;
   filter.Q.value = 2;
-  gain.gain.value = 0.04;
+  gain.gain.value = 0.12;
   osc.connect(filter);
   filter.connect(gain);
   gain.connect(masterGain);
@@ -409,7 +409,7 @@ function init() {
 }
 
 function checkCollisions() {
-  const COLL_DIST = 20;
+  const COLL_DIST = 40;
   const grainBudget = 8; // max grains per frame
   let grains = 0;
 
@@ -595,7 +595,11 @@ function start() {
   started = true;
   document.getElementById('overlay').style.display = 'none';
   initAudio();
-  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+  if (audioCtx) {
+    audioCtx.resume().then(() => {
+      console.log('AudioContext resumed:', audioCtx.state);
+    }).catch(e => console.warn('Audio resume failed:', e));
+  }
   init();
   quoteEl.textContent = quotes[0];
   quoteEl.style.opacity = 1;
