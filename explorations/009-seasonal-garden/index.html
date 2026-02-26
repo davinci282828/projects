@@ -318,19 +318,19 @@ class Plant {
       ctx.globalAlpha = 0.4;
       ctx.beginPath();
       ctx.arc(this.drawX, this.y, 2, 0, Math.PI * 2);
-      ctx.fillStyle = `hsl(${this.baseHue}, 40%, 30%)`;
+      ctx.fillStyle = `hsl(${this.baseHue}, 50%, 45%)`;
       ctx.fill();
       ctx.globalAlpha = 1;
       return;
     }
 
-    const sat = this.phase === 'resonance' ? 70 : this.phase === 'decay' ? 30 + this.vitality * 30 : 50;
-    const lit = 30 + this.vitality * 30;
-    const alpha = 0.3 + this.vitality * 0.7;
+    const sat = this.phase === 'resonance' ? 85 : this.phase === 'decay' ? 40 + this.vitality * 40 : 65;
+    const lit = 45 + this.vitality * 35;
+    const alpha = 0.5 + this.vitality * 0.5;
 
     // Stem
     ctx.globalAlpha = alpha;
-    ctx.strokeStyle = `hsl(${(this.baseHue + 120) % 360}, 30%, ${20 + this.vitality * 15}%)`;
+    ctx.strokeStyle = `hsl(${(this.baseHue + 120) % 360}, 45%, ${30 + this.vitality * 25}%)`;
     ctx.lineWidth = 1 + this.size * 0.05;
     ctx.beginPath();
     ctx.moveTo(this.drawX, this.y + this.size * 0.5);
@@ -442,6 +442,12 @@ function start() {
   overlay.style.opacity = '0';
   setTimeout(() => overlay.style.display = 'none', 800);
   startAudio();
+  // Auto-seed garden so it's not empty
+  for (let i = 0; i < 20; i++) {
+    const x = W * 0.1 + Math.random() * W * 0.8;
+    const y = H * 0.2 + Math.random() * H * 0.6;
+    plants.push(new Plant(x, y));
+  }
 }
 
 canvas.addEventListener('mousedown', (e) => onPointer(e.clientX, e.clientY));
@@ -459,7 +465,7 @@ function drawSoil() {
     for (let x = 0; x < SOIL_RES; x++) {
       const s = soil[y][x];
       if (s.nutrient > 0.05) {
-        ctx.globalAlpha = s.nutrient * 0.15;
+        ctx.globalAlpha = s.nutrient * 0.3;
         ctx.fillStyle = `hsl(${s.hue}, 25%, 15%)`;
         ctx.fillRect(x * cellW, y * cellH, cellW, cellH);
       }
@@ -576,10 +582,10 @@ function loop(t) {
   const season = currentSeason();
   const sp = seasonProgress();
   let bgH, bgS, bgL;
-  if (season === 'spring') { bgH = 140; bgS = 8; bgL = 5 + sp * 2; }
-  else if (season === 'summer') { bgH = 45; bgS = 10; bgL = 7 + Math.sin(sp * Math.PI) * 2; }
-  else if (season === 'autumn') { bgH = 20; bgS = 8; bgL = 7 - sp * 3; }
-  else { bgH = 220; bgS = 5; bgL = 3 + Math.sin(sp * Math.PI * 0.5); }
+  if (season === 'spring') { bgH = 140; bgS = 12; bgL = 8 + sp * 4; }
+  else if (season === 'summer') { bgH = 45; bgS = 14; bgL = 10 + Math.sin(sp * Math.PI) * 3; }
+  else if (season === 'autumn') { bgH = 20; bgS = 12; bgL = 10 - sp * 4; }
+  else { bgH = 220; bgS = 8; bgL = 5 + Math.sin(sp * Math.PI * 0.5) * 2; }
 
   ctx.fillStyle = `hsl(${bgH}, ${bgS}%, ${bgL}%)`;
   ctx.fillRect(0, 0, W, H);
