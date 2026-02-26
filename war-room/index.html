@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>War Room — Ops Dashboard</title>
+  <style>
+    :root{
+      --bg:#0a0a0f;--text:#e5e7eb;--muted:#9aa3b2;--grid:rgba(255,255,255,.04);
+      --green:#22c55e;--amber:#f59e0b;--red:#ef4444;--blue:#3b82f6;
+      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      --sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      --r:14px
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);
+      background-image:
+        linear-gradient(to right,var(--grid) 1px,transparent 1px),
+        linear-gradient(to bottom,var(--grid) 1px,transparent 1px);
+      background-size:48px 48px;
+    }
+    .wrap{max-width:1080px;margin:0 auto;padding:16px}
+
+    .top{
+      border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg,rgba(34,197,94,.10),rgba(34,197,94,.02));
+      border-radius:calc(var(--r) + 2px);
+      padding:16px;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    .kicker{font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;font-size:12px;color:var(--muted)}
+    .title{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    h1{margin:6px 0 0;font-size:20px;line-height:1.15}
+
+    .badge{
+      font-family:var(--mono);font-size:12px;letter-spacing:.04em;
+      padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06)
+    }
+    .b-green{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.12);color:#c9f7d8}
+    .b-amber{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#ffe6b4}
+    .b-red{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.12);color:#ffd1d1}
+    .b-blue{border-color:rgba(59,130,246,.35);background:rgba(59,130,246,.12);color:#d1e4ff}
+
+    .meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+    .cell{padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.08)}
+    .label{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .value{margin-top:4px;font-size:14px}
+
+    .section{margin-top:16px}
+    .section h2{margin:0 0 10px;font-size:13px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#cbd5e1}
+
+    .grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:10px}
+    @media (min-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (min-width:980px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+    .card{
+      background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:var(--r);
+      padding:12px;
+      transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+    }
+    .card:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.16);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+
+    .row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+    .name{font-weight:600}
+    .sub{margin-top:4px;color:var(--muted);font-size:13px}
+    .kv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+    .kv .cell{padding:8px 10px;background:rgba(0,0,0,.20);border:1px solid rgba(255,255,255,.07)}
+    .kv .cell .value{font-family:var(--mono)}
+
+    .left-amber{border-left:4px solid rgba(245,158,11,.85)}
+    .left-red{border-left:4px solid rgba(239,68,68,.85)}
+    .left-green{border-left:4px solid rgba(34,197,94,.85)}
+    .left-blue{border-left:4px solid rgba(59,130,246,.85)}
+
+    ul.clean{list-style:disc;margin:0;padding:0 0 0 18px}
+
+    .mini-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:10px}
+    @media (min-width:760px){.mini-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+    table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:var(--r);border:1px solid rgba(255,255,255,.09)}
+    th,td{padding:10px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07)}
+    th{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#cbd5e1;background:rgba(255,255,255,.03)}
+    tr:hover td{background:rgba(255,255,255,.02)}
+    td{font-size:13px}
+    .mono{font-family:var(--mono)}
+
+    .timeline{display:grid;gap:10px}
+    .t-item{position:relative;padding-left:14px}
+    .t-item:before{content:"";position:absolute;left:0;top:12px;width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.14)}
+    .t-item .when{font-family:var(--mono);color:#cbd5e1}
+    .t-item .what{margin-top:2px;color:var(--muted)}
+
+    .footerbar{
+      margin-top:16px;padding:12px;
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:var(--r);
+      background:rgba(0,0,0,.18);
+      display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center
+    }
+    .footerbar .stats{font-family:var(--mono);color:#cbd5e1}
+    .gen{font-size:12px;color:var(--muted);font-family:var(--mono)}
+
+    @media (max-width:420px){
+      .wrap{padding:12px}
+      .meta{grid-template-columns:1fr}
+      .kv{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="top" aria-label="System Status Banner">
+      <div class="kicker">War Room — Single-Page Ops Dashboard</div>
+      <div class="title">
+        <h1>Mission Control Snapshot</h1>
+        <div class="badge b-green">SYSTEM STATE: NORMAL</div>
+      </div>
+
+      <div class="meta" role="list">
+        <div class="cell" role="listitem">
+          <div class="label">Since</div>
+          <div class="value" id="since">Feb 25, 2026</div>
+        </div>
+        <div class="cell" role="listitem">
+          <div class="label">Uptime</div>
+          <div class="value"><span class="mono" id="uptimeDays">1</span> day(s) since last incident</div>
+        </div>
+        <div class="cell" role="listitem">
+          <div class="label">Last updated</div>
+          <div class="value" id="lastUpdated">Feb 26, 2026 3:00 AM ET</div>
+        </div>
+        <div class="cell" role="listitem">
+          <div class="label">System State</div>
+          <div class="value"><span class="badge b-green" style="padding:2px 8px">NORMAL</span></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" aria-label="Cron Fleet">
+      <h2>2. Cron Fleet</h2>
+      <div id="cronGrid" class="grid" aria-live="polite"></div>
+    </section>
+
+    <section class="section" aria-label="Open Threads">
+      <h2>3. Open Threads</h2>
+      <div class="card left-amber">
+        <div class="value">
+          <ul class="clean">
+            <li>Slack Phase 1 build — awaiting Steven's "go"</li>
+            <li>Hero V2 direction — awaiting Steven's pick</li>
+            <li>Morning briefing cron — timeout bumped to 180s, testing tomorrow</li>
+            <li>OpenClaw 2026.2.24 update — awaiting approval</li>
+            <li>Bitrefill cards running low (~$20 remaining across 3 cards)</li>
+            <li>System prompt bloat audit — deferred</li>
+            <li>Linear walkthrough protocol — deployed but untested in production</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Financials">
+      <h2>4. Financials</h2>
+      <div class="mini-grid">
+        <div class="card left-red"><div class="name">Bitrefill Card #1</div><div class="sub">$46 (depleted)</div></div>
+        <div class="card left-amber"><div class="name">Bitrefill Card #2</div><div class="sub">$11.26 (low)</div></div>
+        <div class="card left-amber"><div class="name">Bitrefill Card #3</div><div class="sub">$9.01 (active)</div></div>
+        <div class="card left-green"><div class="name">Wallet</div><div class="sub">~$1,343 USDC.e + ~45 POL</div></div>
+        <div class="card left-green"><div class="name">OpenRouter</div><div class="sub">$49.81 credits</div></div>
+        <div class="card left-green"><div class="name">Venice</div><div class="sub">16M credits</div></div>
+      </div>
+    </section>
+
+    <section class="section" aria-label="YOLO Build History">
+      <h2>5. YOLO Build History</h2>
+      <table aria-label="Recent YOLO builds">
+        <thead>
+          <tr><th>Date</th><th>Build</th><th>Score</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">Feb 25</td><td>Portfolio Pulse</td><td class="mono">72</td><td class="mono">—</td></tr>
+          <tr><td class="mono">Feb 24</td><td>Memory Explorer</td><td class="mono">74</td><td class="mono">—</td></tr>
+          <tr><td class="mono">Feb 24</td><td>Cron Fleet Dashboard</td><td class="mono">70</td><td class="mono">—</td></tr>
+          <tr><td class="mono">Feb 24</td><td>Token Cost Dashboard</td><td class="mono">75</td><td class="mono">Steven: 7</td></tr>
+          <tr><td class="mono">Feb 26</td><td>War Room</td><td class="mono">—</td><td class="mono">building now</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" aria-label="Recent Incidents">
+      <h2>6. Recent Incidents</h2>
+      <div class="timeline">
+        <div class="card t-item left-green">
+          <div class="when">Feb 25 17:45</div>
+          <div class="what">YOLO test cron Anthropic 500 (resolved)</div>
+        </div>
+        <div class="card t-item left-green">
+          <div class="when">Feb 25 15:38</div>
+          <div class="what">Cron fleet health HOLD (resolved)</div>
+        </div>
+        <div class="card t-item left-blue">
+          <div class="when">Feb 22</div>
+          <div class="what">Gateway restart storm: 29 restarts, 13h outage (post-mortem complete)</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footerbar" aria-label="Quick Stats Footer">
+      <div class="stats">22 crons | 5 YOLO builds | 15 protocols | 23 skills | 11 rules | System: <span class="badge b-green" style="padding:2px 8px">NORMAL</span></div>
+      <div class="gen">Generated by Da Vinci • Feb 26, 2026 3:00 AM ET</div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Static snapshot data
+    const crons = [
+      {"name":"System Health Check","schedule":"Every 30m","status":"ok","lastRun":"15m ago","nextRun":"in 15m"},
+      {"name":"Morning Briefing","schedule":"10 AM weekdays","status":"error","lastRun":"17h ago","nextRun":"in 7h"},
+      {"name":"Nightly Exploration","schedule":"2 AM daily","status":"error","lastRun":"1h ago","nextRun":"in 23h"},
+      {"name":"Session Cleanup","schedule":"Every 5d","status":"error","lastRun":"1d ago","nextRun":"in 4d"},
+      {"name":"YOLO Nightly Build","schedule":"3 AM daily","status":"running","lastRun":"now","nextRun":"—"},
+      {"name":"silent-git-backup","schedule":"Every 6h","status":"ok","lastRun":"6h ago","nextRun":"in 28m"},
+      {"name":"Cron Fleet Health","schedule":"7 AM daily","status":"idle","lastRun":"—","nextRun":"in 4h"},
+      {"name":"Daily Security Audit","schedule":"8 AM daily","status":"ok","lastRun":"19h ago","nextRun":"in 5h"},
+      {"name":"AI Self-Improvement Digest","schedule":"8:30 AM daily","status":"ok","lastRun":"19h ago","nextRun":"in 5h"},
+      {"name":"OpenClaw Update Check","schedule":"9 AM daily","status":"ok","lastRun":"18h ago","nextRun":"in 6h"},
+      {"name":"Daily Workspace Report","schedule":"9 AM weekdays","status":"ok","lastRun":"18h ago","nextRun":"in 6h"},
+      {"name":"Memory Staleness Check","schedule":"10 AM daily","status":"ok","lastRun":"17h ago","nextRun":"in 7h"},
+      {"name":"Polymarket NO Janitor","schedule":"10:15 AM daily","status":"ok","lastRun":"17h ago","nextRun":"in 7h"},
+      {"name":"Market Close Summary","schedule":"4:30 PM weekdays","status":"ok","lastRun":"11h ago","nextRun":"in 13h"},
+      {"name":"Polymarket Evening Scanner","schedule":"9 PM daily","status":"ok","lastRun":"6h ago","nextRun":"in 18h"},
+      {"name":"Weekend Briefing","schedule":"Noon weekends","status":"ok","lastRun":"4d ago","nextRun":"in 2d"},
+      {"name":"X/Twitter Monitor","schedule":"Every 3d","status":"ok","lastRun":"11h ago","nextRun":"in 3d"},
+      {"name":"Weekly Skill Scout","schedule":"Mon 9 AM","status":"ok","lastRun":"3d ago","nextRun":"in 4d"},
+      {"name":"Weekly RALPH Audit","schedule":"Mon 9 AM","status":"idle","lastRun":"—","nextRun":"in 4d"},
+      {"name":"13F Filing Alert","schedule":"Mon 11 AM","status":"ok","lastRun":"3d ago","nextRun":"in 4d"},
+      {"name":"Quarterly Secret Rotation","schedule":"Quarterly","status":"idle","lastRun":"—","nextRun":"in 19d"}
+    ];
+
+    const phaseRank = (status) => (status === 'error' ? 0 : status === 'running' ? 1 : 2);
+
+    const toMinutes = (s) => {
+      if(!s || s.trim()==='—') return Number.POSITIVE_INFINITY;
+      const m = s.match(/in\s+(\d+)\s*([mhd])/i);
+      if(!m) return Number.POSITIVE_INFINITY;
+      const n = parseInt(m[1], 10);
+      const u = m[2].toLowerCase();
+      return u==='m' ? n : u==='h' ? n*60 : u==='d' ? n*1440 : Number.POSITIVE_INFINITY;
+    };
+
+    const badgeClass = (s) => s==='ok'?'b-green':s==='error'?'b-red':s==='running'?'b-amber':'b-blue';
+
+    const sorted = [...crons].sort((a,b)=>{
+      const pr = phaseRank(a.status) - phaseRank(b.status);
+      if (pr !== 0) return pr;
+      const t = toMinutes(a.nextRun) - toMinutes(b.nextRun);
+      if (t !== 0) return t;
+      return a.name.localeCompare(b.name);
+    });
+
+    const grid = document.getElementById('cronGrid');
+    const frag = document.createDocumentFragment();
+
+    for (const c of sorted){
+      const card = document.createElement('div');
+      card.className = 'card ' + (c.status==='error'?'left-red':c.status==='running'?'left-amber':c.status==='ok'?'left-green':'left-blue');
+      card.innerHTML = `
+        <div class="row">
+          <div>
+            <div class="name">${escapeHtml(c.name)}</div>
+            <div class="sub">${escapeHtml(c.schedule)}</div>
+          </div>
+          <div class="badge ${badgeClass(c.status)}">${escapeHtml(c.status.toUpperCase())}</div>
+        </div>
+        <div class="kv">
+          <div class="cell"><div class="label">Last run</div><div class="value">${escapeHtml(c.lastRun)}</div></div>
+          <div class="cell"><div class="label">Next run</div><div class="value">${escapeHtml(c.nextRun)}</div></div>
+        </div>
+      `.trim();
+      frag.appendChild(card);
+    }
+
+    grid.appendChild(frag);
+
+    // Uptime indicator (days since last incident)
+    (function(){
+      const lastIncident = new Date('2026-02-25T00:00:00-05:00');
+      const updated = new Date('2026-02-26T03:00:00-05:00');
+      const days = Math.max(0, Math.floor((updated - lastIncident) / (1000*60*60*24)));
+      document.getElementById('uptimeDays').textContent = String(days);
+    })();
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'",'&#39;');
+    }
+  </script>
+</body>
+</html>
