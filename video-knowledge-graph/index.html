@@ -141,17 +141,17 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); -web
 </nav>
 
 <div class="tabs">
-  <div class="tab active" data-panel="graph" onclick="showPanel('graph')">🔗 Graph</div>
-  <div class="tab" data-panel="themes" onclick="showPanel('themes')">Themes</div>
+  <div class="tab active" data-panel="themes" onclick="showPanel('themes')">Themes</div>
   <div class="tab" data-panel="speakers" onclick="showPanel('speakers')">Speakers</div>
   <div class="tab" data-panel="contradictions" onclick="showPanel('contradictions')">Contradictions</div>
   <div class="tab" data-panel="predictions" onclick="showPanel('predictions')">Predictions</div>
   <div class="tab" data-panel="videos" onclick="showPanel('videos')">Videos</div>
   <div class="tab" data-panel="quotes" onclick="showPanel('quotes')">Quotes</div>
+  <div class="tab" data-panel="graph" onclick="showPanel('graph')">🔗 Graph</div>
 </div>
 
 <!-- VISUAL GRAPH -->
-<div class="panel active" id="panel-graph">
+<div class="panel" id="panel-graph">
   <div style="position:relative;width:100%;background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
     <canvas id="graph-canvas" style="width:100%;display:block;"></canvas>
     <div id="graph-tooltip" style="display:none;position:absolute;background:var(--green-dark);color:var(--white);padding:12px 16px;border-radius:10px;font-size:13px;max-width:280px;line-height:1.5;pointer-events:none;z-index:10;box-shadow:0 4px 16px rgba(0,0,0,0.2);"></div>
@@ -168,7 +168,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); -web
 </div>
 
 <!-- META-THEMES -->
-<div class="panel" id="panel-themes">
+<div class="panel active" id="panel-themes">
   <input type="text" class="search-bar" placeholder="Search themes, speakers, topics...">
 
   <div class="theme-card" data-search="bottleneck physical energy manufacturing zoning musk martin">
