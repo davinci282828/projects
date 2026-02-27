@@ -1,0 +1,95 @@
+{
+  "meta_theses": [
+    {
+      "id": "mt-1",
+      "theme": "Bottleneck shifted from digital to physical",
+      "description": "Software/intelligence approaching sufficiency. Constraints now: energy, manufacturing, physical dexterity, zoning, infrastructure.",
+      "supported_by": ["em-2", "em2-3", "dm-1", "dm-2"],
+      "speakers": ["elon-musk", "david-martin"]
+    },
+    {
+      "id": "mt-2",
+      "theme": "Human value = authentic connection + judgment",
+      "description": "As AI handles information/production, human advantage is caring, empathy, taste, critical evaluation.",
+      "supported_by": ["pl-4", "ie-1", "da-6", "pl-1"],
+      "speakers": ["poshen-loh", "intent-engineering", "dario-amodei"]
+    },
+    {
+      "id": "mt-3",
+      "theme": "Gold is consensus hedge",
+      "description": "Opposing dollar frameworks both conclude: buy gold. Johnson (dollar + gold up together), Taleb (dollar declining, gold up).",
+      "supported_by": ["bj-1", "nt-1"],
+      "speakers": ["brent-johnson", "nassim-taleb"],
+      "note": "Agreement on conclusion despite disagreement on mechanism"
+    },
+    {
+      "id": "mt-4",
+      "theme": "Application layer wins",
+      "description": "Moats in regulated industries and domain expertise, not in building models or base infrastructure.",
+      "supported_by": ["da-3", "jy-2", "dm-1"],
+      "speakers": ["dario-amodei", "jeff-yan", "david-martin"]
+    },
+    {
+      "id": "mt-5",
+      "theme": "Race against time",
+      "description": "Multiple domains facing closing windows: DeFi before AI, steer AI before too powerful, preserve human thinking before atrophy, scale energy before chips outpace grid.",
+      "supported_by": ["jy-1", "da-1", "pl-3", "em-2"],
+      "speakers": ["jeff-yan", "dario-amodei", "poshen-loh", "elon-musk"]
+    }
+  ],
+  "contradictions": [
+    {
+      "id": "c-1",
+      "thesis_a": "bj-4",
+      "thesis_b": "nt-1",
+      "speaker_a": "brent-johnson",
+      "speaker_b": "nassim-taleb",
+      "description": "Johnson: US will always fund deficits, dollar strengthens. Taleb: Dollar losing reserve status, debt is a doom loop.",
+      "resolution": "Both agree gold goes up. Disagreement is on dollar trajectory — possibly different timeframes (short-term flows vs. long-term structural)."
+    },
+    {
+      "id": "c-2",
+      "thesis_a": "em-3",
+      "thesis_b": "pl-2",
+      "speaker_a": "elon-musk",
+      "speaker_b": "poshen-loh",
+      "description": "Musk: AI tutors (Grok) for personalized education in El Salvador. Loh: Kids without tech are more creative, tech atrophies mental fitness.",
+      "resolution": "Depends on implementation. AI as thinking partner vs. AI as answer machine. Loh's concern is valid if AI replaces struggle rather than scaffolding it."
+    },
+    {
+      "id": "c-3",
+      "thesis_a": "nt-2",
+      "thesis_b": "da-1",
+      "speaker_a": "nassim-taleb",
+      "speaker_b": "dario-amodei",
+      "description": "Taleb: Current AI leaders will go bankrupt (pioneer pattern). Amodei: Scaling laws keep working, current leaders have compounding advantage.",
+      "resolution": "Taleb's pattern is historical (IBM, Pan Am), but AI may be different — scaling laws create winner-take-all dynamics unlike previous tech revolutions."
+    }
+  ],
+  "testable_predictions": [
+    {
+      "id": "tp-1",
+      "claim": "Netherlands FSD approval March 20, 2026",
+      "speaker": "elon-musk",
+      "source": "yt_VvKV_ulseKc",
+      "test_date": "2026-03-20",
+      "status": "pending"
+    },
+    {
+      "id": "tp-2",
+      "claim": "FSD sleep-to-destination technical milestone 2026",
+      "speaker": "elon-musk",
+      "source": "yt_VvKV_ulseKc",
+      "test_date": "2026-12-31",
+      "status": "pending"
+    },
+    {
+      "id": "tp-3",
+      "claim": "China passes 3x US electricity output in 2026",
+      "speaker": "elon-musk",
+      "source": "yt_yxax4xpZus8",
+      "test_date": "2026-12-31",
+      "status": "pending"
+    }
+  ]
+}

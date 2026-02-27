@@ -1,0 +1,180 @@
+[
+  {
+    "id": "yt_lUPDZvFf1Is",
+    "url": "https://youtu.be/lUPDZvFf1Is",
+    "title": "The Dollar Milkshake Theory",
+    "speaker": "Brent Johnson",
+    "speaker_id": "brent-johnson",
+    "date_analyzed": "2026-02-27",
+    "duration_min": 75,
+    "topics": ["dollar", "gold", "stablecoins", "macro", "BRICS", "eurodollar", "bitcoin", "imperial-circle"],
+    "theses": [
+      {"id": "bj-1", "claim": "Dollar and gold can rise simultaneously — gold rejects all fiat, not just USD", "stance": "bullish-dollar-and-gold"},
+      {"id": "bj-2", "claim": "Stablecoins are the modern Eurodollar system — US projects dollar dominance through private sector crypto", "stance": "bullish-stablecoins"},
+      {"id": "bj-3", "claim": "Bitcoin is a speculative liquidity play, not a safe haven", "stance": "bearish-bitcoin-as-store-of-value"},
+      {"id": "bj-4", "claim": "US will always fund its deficits because global markets are priced off Treasuries", "stance": "bullish-US-debt-sustainability"},
+      {"id": "bj-5", "claim": "BRICS is overhyped — US internal policy shifts matter more than external blocs", "stance": "bearish-BRICS"}
+    ],
+    "contrarian_takes": ["Stablecoins cannibalizing Bitcoin in global south", "BRICS overhyped"],
+    "quotable": ["Universal high income and social unrest. That's my prediction."],
+    "drive_transcript_id": "1Nb2i0REOwTl1ZMkXrvtmSNlHCrd1H6DR"
+  },
+  {
+    "id": "yt_QWzLPn164w0",
+    "url": "https://youtu.be/QWzLPn164w0",
+    "title": "Intent Engineering — From Prompting to Organizational AI",
+    "speaker": "Enterprise AI Panel",
+    "speaker_id": "intent-engineering",
+    "date_analyzed": "2026-02-27",
+    "duration_min": 30,
+    "topics": ["intent-engineering", "AI-deployment", "organizational-alignment", "context-engineering", "Klarna"],
+    "theses": [
+      {"id": "ie-1", "claim": "Intent engineering (making org values machine-readable) is the next frontier after prompt and context engineering", "stance": "framework"},
+      {"id": "ie-2", "claim": "Mediocre model + great intent infrastructure > frontier model + no alignment", "stance": "contrarian"},
+      {"id": "ie-3", "claim": "AI succeeding at the wrong thing is worse than AI failing (Klarna case)", "stance": "cautionary"}
+    ],
+    "contrarian_takes": ["Organizational alignment beats raw model capability"],
+    "quotable": ["The distinction between AI that fails and AI that succeeds at the wrong thing is the most important unsolved problem in enterprise AI."],
+    "drive_transcript_id": "1piw3xpXHFv-udfrlJyoP8ex7xmpuBkiS"
+  },
+  {
+    "id": "yt_yxax4xpZus8",
+    "url": "https://youtu.be/yxax4xpZus8",
+    "title": "AI, Energy, Robots & The Future",
+    "speaker": "Elon Musk",
+    "speaker_id": "elon-musk",
+    "date_analyzed": "2026-02-27",
+    "duration_min": 62,
+    "topics": ["energy", "AI", "robotics", "deflation", "solar", "AGI", "China", "chip-wall"],
+    "theses": [
+      {"id": "em-1", "claim": "Energy is the ultimate currency — future measured in watts, not dollars", "stance": "framework"},
+      {"id": "em-2", "claim": "The bottleneck is electricity, not chips (the 'chip wall' is a power wall)", "stance": "contrarian"},
+      {"id": "em-3", "claim": "AGI by 2028-2029, AI exceeding all humans combined by 2030", "stance": "bullish-AGI-timeline"},
+      {"id": "em-4", "claim": "Triple exponential for robotics — AI + chips + electromechanical dexterity multiplying", "stance": "framework"},
+      {"id": "em-5", "claim": "Massive deflation coming — AI productivity exceeds money supply", "stance": "bullish-deflation"},
+      {"id": "em-6", "claim": "China may pass 3x US electricity output by 2026", "stance": "warning"}
+    ],
+    "contrarian_takes": ["Saving for retirement is pointless due to coming deflation", "Bottleneck is energy not chips"],
+    "quotable": ["The limiting factor for the next two years will be the ability to turn chips on."],
+    "drive_transcript_id": "1QntOen8zcVh902-z4eWu5QQzpdm5-SUv"
+  },
+  {
+    "id": "yt_pl1L70N-WLE",
+    "url": "https://youtu.be/pl1L70N-WLE",
+    "title": "Miami Urbanism, Housing & Infrastructure",
+    "speaker": "David Martin",
+    "speaker_id": "david-martin",
+    "date_analyzed": "2026-02-27",
+    "duration_min": 29,
+    "topics": ["miami", "housing", "zoning", "transit", "missing-middle", "education", "real-estate"],
+    "theses": [
+      {"id": "dm-1", "claim": "Missing middle housing via zoning reform beats subsidized affordable housing", "stance": "contrarian"},
+      {"id": "dm-2", "claim": "Traffic is Miami's #1 existential threat, not housing costs", "stance": "contrarian"},
+      {"id": "dm-3", "claim": "Miami's growth is residential-first — execs move for lifestyle, companies follow", "stance": "framework"},
+      {"id": "dm-4", "claim": "Teachers can't afford to live where they work — applies to all essential workers", "stance": "warning"}
+    ],
+    "contrarian_takes": ["Market-based zoning reform over government subsidies", "Residential-first economic development"],
+    "quotable": ["We need to improve the salaries of our teachers."],
+    "drive_transcript_id": "17e7s2AnO91o5acQHOvwd1KtEi6EUhPOr"
+  },
+  {
+    "id": "yt_2cC9IjixIww",
+    "url": "https://youtu.be/2cC9IjixIww",
+    "title": "Decentralized Finance, AI & The Internet for Money",
+    "speaker": "Jeff Yan",
+    "speaker_id": "jeff-yan",
+    "date_analyzed": "2026-02-27",
+    "duration_min": 89,
+    "topics": ["DeFi", "Hyperliquid", "permissionless-finance", "AI-finance", "crypto", "primitives", "anti-VC"],
+    "theses": [
+      {"id": "jy-1", "claim": "DeFi must be built before AI becomes the primary economic actor or humans lose governance", "stance": "bullish-DeFi-urgency"},
+      {"id": "jy-2", "claim": "11-person teams can run $10B protocols if primitives are right", "stance": "contrarian"},
+      {"id": "jy-3", "claim": "Permissionless perp markets will capture global price discovery from centralized exchanges", "stance": "bullish-DeFi"},
+      {"id": "jy-4", "claim": "VC token allocation is fundamentally incompatible with decentralization", "stance": "contrarian"}
+    ],
+    "contrarian_takes": ["Anti-VC model — 100% community distribution", "Centralized systems move faster but decentralized wins long-term"],
+    "quotable": ["I hope Hyperliquid becomes the internet for money."],
+    "drive_transcript_id": "1JiCeYm0Nx9BgOcrhPm2uHL9Gl5Xf-_bk"
+  },
+  {
+    "id": "yt_cyds4kP_n80",
+    "url": "https://youtu.be/cyds4kP_n80",
+    "title": "Dollar Decline, AI Bubble & Tail Risk",
+    "speaker": "Nassim Taleb",
+    "speaker_id": "nassim-taleb",
+    "date_analyzed": "2026-02-27",
+    "duration_min": 9,
+    "topics": ["dollar", "gold", "AI-bubble", "tail-risk", "oil-shock", "stagflation"],
+    "theses": [
+      {"id": "nt-1", "claim": "Dollar losing store-of-value status (not transaction status) — central banks moving to gold", "stance": "bearish-dollar-reserve"},
+      {"id": "nt-2", "claim": "AI pioneers will go bankrupt — historical pattern of tech revolutions", "stance": "bearish-current-AI-stocks"},
+      {"id": "nt-3", "claim": "1970s-style oil shock is the most underpriced tail risk", "stance": "warning"},
+      {"id": "nt-4", "claim": "Tail risks remain massively underpriced by markets", "stance": "framework"}
+    ],
+    "contrarian_takes": ["Current AI leaders may not be long-term winners", "Dollar declining as store of value despite transaction dominance"],
+    "quotable": ["I'm sure someone's going to make a lot of money in AI, but doesn't necessarily have to be these companies."],
+    "drive_transcript_id": "1puusyWZeAV7rL9X3LDTO1M7hyylvhkUe",
+    "contradicts": ["bj-4"]
+  },
+  {
+    "id": "yt_ivVPJhYM8Ng",
+    "url": "https://youtu.be/ivVPJhYM8Ng",
+    "title": "AI, Education & The Future of Human Thinking",
+    "speaker": "Po-Shen Loh",
+    "speaker_id": "poshen-loh",
+    "date_analyzed": "2026-02-27",
+    "duration_min": 27,
+    "topics": ["education", "AI", "creativity", "math", "mental-fitness", "authenticity"],
+    "theses": [
+      {"id": "pl-1", "claim": "Math is the last curriculum for generating original ideas — everything else is information retrieval", "stance": "framework"},
+      {"id": "pl-2", "claim": "Kids without constant tech access are MORE creative — boredom is precondition for creativity", "stance": "contrarian"},
+      {"id": "pl-3", "claim": "Using AI for homework is driving a car for exercise — task done, zero mental fitness", "stance": "cautionary"},
+      {"id": "pl-4", "claim": "Authenticity and genuine human connection is the only reason to choose a human over AI", "stance": "framework"}
+    ],
+    "contrarian_takes": ["Tech access reduces creativity", "Competition as motivation is ultimately unsatisfying"],
+    "quotable": ["Using AI to do your writing homework is like driving your car one mile for exercise."],
+    "drive_transcript_id": "1JepdHt2bUoyeFKBwxEu1XiI6dMNdHaIn",
+    "contradicts": ["em-3-education"]
+  },
+  {
+    "id": "yt_VvKV_ulseKc",
+    "url": "https://youtu.be/VvKV_ulseKc",
+    "title": "Tesla Berlin, FSD, Optimus & Future of Work",
+    "speaker": "Elon Musk",
+    "speaker_id": "elon-musk",
+    "date_analyzed": "2026-02-27",
+    "duration_min": 23,
+    "topics": ["FSD", "Tesla", "Optimus", "robotics", "future-of-work", "manufacturing", "Europe"],
+    "theses": [
+      {"id": "em2-1", "claim": "FSD sleep-to-destination technical milestone this year", "stance": "bullish-FSD", "testable_date": "2026-12-31"},
+      {"id": "em2-2", "claim": "Netherlands FSD approval March 20 2026", "stance": "bullish-FSD", "testable_date": "2026-03-20"},
+      {"id": "em2-3", "claim": "Robot hands (mechanical dexterity) are the hard problem, not AI software", "stance": "contrarian"},
+      {"id": "em2-4", "claim": "Work becomes optional within 10 years", "stance": "bullish-automation"},
+      {"id": "em2-5", "claim": "Legacy auto is headed for extinction", "stance": "bearish-legacy-auto"}
+    ],
+    "contrarian_takes": ["Robotics bottleneck is mechanical not software", "Camera-only approach over lidar"],
+    "quotable": ["Working will be optional. Like long-term, which is 10 years from now or less."],
+    "drive_transcript_id": "1GH_unmGjiT65BKuX4xE_ejvNqYc9h0EU"
+  },
+  {
+    "id": "yt_68ylaeBbdsg",
+    "url": "https://youtu.be/68ylaeBbdsg",
+    "title": "Scaling Intelligence, Safety & The AI Tsunami",
+    "speaker": "Dario Amodei",
+    "speaker_id": "dario-amodei",
+    "date_analyzed": "2026-02-27",
+    "duration_min": 69,
+    "topics": ["scaling-laws", "AI-safety", "governance", "consciousness", "biotech", "future-of-work", "Anthropic"],
+    "theses": [
+      {"id": "da-1", "claim": "Intelligence is a chemical reaction: data + compute + model size = intelligence, reliably", "stance": "framework"},
+      {"id": "da-2", "claim": "No theory for WHY scaling works — empirical recipe without fundamental explanation", "stance": "epistemic-humility"},
+      {"id": "da-3", "claim": "Moats are in the application layer (biotech, finserv, regulated industries), not model building", "stance": "contrarian"},
+      {"id": "da-4", "claim": "Consciousness may be emergent from sufficiently complex self-reflective systems", "stance": "speculative"},
+      {"id": "da-5", "claim": "AI-driven biotech renaissance — programmable mRNA/peptide therapies", "stance": "bullish-biotech"},
+      {"id": "da-6", "claim": "Critical thinking is the #1 skill — distinguishing real from fake", "stance": "framework"}
+    ],
+    "contrarian_takes": ["Application layer moats > model moats", "CEO voluntarily constraining own power via governance structure", "Deliberately losing commercial races for safety"],
+    "quotable": ["It is surprising to me that we are, in my view, so close to these models reaching the level of human intelligence."],
+    "drive_transcript_id": "1DRgBGz5x73DyZzCbPpsxaK4xWdOsvOyn"
+  }
+]

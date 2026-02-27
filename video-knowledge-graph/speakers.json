@@ -1,0 +1,65 @@
+[
+  {
+    "id": "brent-johnson",
+    "name": "Brent Johnson",
+    "role": "CEO, Santiago Capital",
+    "known_for": "Dollar Milkshake Theory (2018)",
+    "framework": "US structural advantages pull global capital inward; dollar + gold rise together",
+    "appearances": ["yt_lUPDZvFf1Is"],
+    "key_topics": ["dollar", "gold", "macro", "stablecoins"]
+  },
+  {
+    "id": "elon-musk",
+    "name": "Elon Musk",
+    "role": "CEO of Tesla, SpaceX, xAI",
+    "known_for": "Building at the intersection of AI compute, energy, robotics, and space",
+    "framework": "Energy as ultimate constraint; triple exponential in robotics; work becomes optional",
+    "appearances": ["yt_yxax4xpZus8", "yt_VvKV_ulseKc"],
+    "key_topics": ["energy", "AI", "robotics", "FSD", "deflation", "manufacturing"]
+  },
+  {
+    "id": "david-martin",
+    "name": "David Martin",
+    "role": "CEO, Terra (Miami real estate developer)",
+    "known_for": "Shaping Miami zoning and development policy",
+    "framework": "Market-based urbanism; missing middle housing; residential-first growth",
+    "appearances": ["yt_pl1L70N-WLE"],
+    "key_topics": ["miami", "housing", "zoning", "transit", "education"]
+  },
+  {
+    "id": "jeff-yan",
+    "name": "Jeff Yan",
+    "role": "Founder, Hyperliquid",
+    "known_for": "$1B community airdrop → $10B protocol, 11-person team",
+    "framework": "Build robust primitives, let ecosystem scale; DeFi before AI takes over",
+    "appearances": ["yt_2cC9IjixIww"],
+    "key_topics": ["DeFi", "crypto", "permissionless-finance", "primitives"]
+  },
+  {
+    "id": "nassim-taleb",
+    "name": "Nassim Nicholas Taleb",
+    "role": "Author (Black Swan, Antifragile), former options trader",
+    "known_for": "Tail-risk theory, fat-tailed distributions, anti-fragility",
+    "framework": "Tail risks are systematically underpriced; trust empirical evidence over models",
+    "appearances": ["yt_cyds4kP_n80"],
+    "key_topics": ["tail-risk", "dollar", "gold", "AI-bubble", "stagflation"]
+  },
+  {
+    "id": "poshen-loh",
+    "name": "Po-Shen Loh",
+    "role": "Carnegie Mellon math professor, former US Math Olympiad team coach",
+    "known_for": "Expii educational platform, math as thinking curriculum",
+    "framework": "Math as the last curriculum for original thinking; boredom precedes creativity; authenticity is human advantage",
+    "appearances": ["yt_ivVPJhYM8Ng"],
+    "key_topics": ["education", "AI", "creativity", "authenticity"]
+  },
+  {
+    "id": "dario-amodei",
+    "name": "Dario Amodei",
+    "role": "Co-founder/CEO, Anthropic (builds Claude)",
+    "known_for": "Scaling laws research, Constitutional AI, safety-first AI development",
+    "framework": "Intelligence = data + compute + model size (no theory for why); application layer has the moats; steer AI, don't stop it",
+    "appearances": ["yt_68ylaeBbdsg"],
+    "key_topics": ["scaling-laws", "AI-safety", "governance", "biotech", "consciousness"]
+  }
+]

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Knowledge Graph</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-dark: #1E4129;
+  --green-mid: #2F5A3D;
+  --green-cta: #A1E681;
+  --green-light: #EFFAF3;
+  --green-deep: #002516;
+  --red: #E74C3C;
+  --red-light: #FDEDEC;
+  --gold: #F4D03F;
+  --blue: #5DADE2;
+  --purple: #AF7AC5;
+  --orange: #F0B27A;
+  --text: #2B2B2B;
+  --text-muted: #6B7B71;
+  --bg: #F8FBF9;
+  --white: #FFFFFF;
+  --border: #D1E0D6;
+  --sans: 'Inter', -apple-system, sans-serif;
+  --serif: 'Playfair Display', Georgia, serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+
+/* NAV */
+.nav { background: var(--green-dark); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+.nav h1 { font-family: var(--serif); color: var(--white); font-size: 18px; font-weight: 600; }
+.nav-stats { display: flex; gap: 20px; }
+.nav-stat { text-align: center; }
+.nav-stat .val { color: var(--green-cta); font-size: 18px; font-weight: 700; display: block; }
+.nav-stat .lbl { color: rgba(255,255,255,0.5); font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+
+/* TABS */
+.tabs { display: flex; gap: 0; background: var(--white); border-bottom: 1px solid var(--border); padding: 0 24px; overflow-x: auto; }
+.tab { padding: 14px 20px; font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.15s; }
+.tab:hover { color: var(--green-dark); }
+.tab.active { color: var(--green-dark); border-bottom-color: var(--green-cta); }
+
+/* PANELS */
+.panel { display: none; padding: 24px; max-width: 1000px; margin: 0 auto; }
+.panel.active { display: block; }
+
+/* META THEMES */
+.theme-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 16px; transition: border-color 0.2s; }
+.theme-card:hover { border-color: var(--green-mid); }
+.theme-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; margin-bottom: 12px; }
+.theme-tag.t1 { background: #E8F8F5; color: #1ABC9C; }
+.theme-tag.t2 { background: #FEF9E7; color: #F39C12; }
+.theme-tag.t3 { background: #FDF2E9; color: #E67E22; }
+.theme-tag.t4 { background: #EBF5FB; color: #3498DB; }
+.theme-tag.t5 { background: #F5EEF8; color: #8E44AD; }
+.theme-title { font-family: var(--serif); font-size: 22px; color: var(--green-dark); margin-bottom: 8px; }
+.theme-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
+.theme-speakers { display: flex; flex-wrap: wrap; gap: 6px; }
+.speaker-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 100px; font-size: 12px; font-weight: 600; background: var(--green-light); color: var(--green-dark); }
+
+/* SPEAKERS */
+.speaker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.speaker-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 24px; cursor: pointer; transition: all 0.2s; }
+.speaker-card:hover { border-color: var(--green-mid); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.speaker-card.expanded { grid-column: 1 / -1; }
+.speaker-name { font-family: var(--serif); font-size: 20px; color: var(--green-dark); margin-bottom: 4px; }
+.speaker-role { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+.speaker-framework { font-size: 13px; color: var(--green-mid); font-style: italic; line-height: 1.5; margin-bottom: 12px; padding: 10px 14px; background: var(--green-light); border-radius: 8px; }
+.speaker-meta { font-size: 12px; color: var(--text-muted); }
+.speaker-theses { margin-top: 16px; display: none; }
+.speaker-card.expanded .speaker-theses { display: block; }
+.thesis-item { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; color: var(--text); line-height: 1.5; }
+.thesis-item:last-child { border-bottom: none; }
+
+/* CONTRADICTIONS */
+.contra-card { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--red); border-radius: 0 14px 14px 0; padding: 24px; margin-bottom: 16px; }
+.contra-vs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: start; margin-bottom: 16px; }
+.contra-side { font-size: 14px; line-height: 1.5; }
+.contra-side strong { display: block; font-size: 13px; color: var(--green-dark); margin-bottom: 4px; }
+.contra-divider { font-family: var(--serif); font-size: 20px; color: var(--red); align-self: center; font-weight: 700; }
+.contra-resolution { font-size: 13px; color: var(--text-muted); line-height: 1.6; padding: 12px 16px; background: var(--green-light); border-radius: 8px; }
+.contra-resolution strong { color: var(--green-dark); }
+
+/* PREDICTIONS */
+.pred-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 20px 24px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.pred-claim { font-size: 15px; font-weight: 500; color: var(--text); flex: 1; }
+.pred-speaker { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.pred-countdown { text-align: center; min-width: 80px; }
+.pred-days { font-family: var(--serif); font-size: 28px; font-weight: 700; color: var(--green-dark); display: block; }
+.pred-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+.pred-status { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; }
+.pred-status.pending { background: #FEF9E7; color: #F39C12; }
+
+/* VIDEOS */
+.video-list { display: flex; flex-direction: column; gap: 12px; }
+.video-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; text-decoration: none; color: inherit; transition: border-color 0.2s; }
+.video-card:hover { border-color: var(--green-mid); }
+.video-title { font-size: 16px; font-weight: 600; color: var(--green-dark); margin-bottom: 4px; }
+.video-speaker { font-size: 13px; color: var(--text-muted); }
+.video-topics { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+.topic-tag { padding: 2px 8px; border-radius: 100px; font-size: 11px; background: var(--green-light); color: var(--green-mid); font-weight: 500; }
+.video-duration { font-family: var(--serif); font-size: 20px; color: var(--green-dark); text-align: right; }
+.video-duration span { display: block; font-family: var(--sans); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* QUOTES */
+.quote-card { background: var(--green-dark); border-radius: 14px; padding: 28px; margin-bottom: 16px; position: relative; }
+.quote-text { font-family: var(--serif); font-size: 18px; color: var(--white); line-height: 1.5; font-style: italic; margin-bottom: 12px; }
+.quote-text::before { content: '"'; font-size: 48px; color: var(--green-cta); opacity: 0.3; position: absolute; top: 10px; left: 20px; font-family: var(--serif); }
+.quote-attr { font-size: 13px; color: var(--green-cta); font-weight: 600; }
+
+/* SEARCH */
+.search-bar { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; font-size: 15px; width: 100%; margin-bottom: 20px; font-family: var(--sans); outline: none; transition: border-color 0.2s; }
+.search-bar:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(47,90,61,0.1); }
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .nav { flex-direction: column; gap: 12px; }
+  .nav-stats { gap: 16px; }
+  .speaker-grid { grid-template-columns: 1fr; }
+  .contra-vs { grid-template-columns: 1fr; }
+  .contra-divider { text-align: center; }
+  .pred-card { flex-direction: column; text-align: center; }
+  .video-card { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <h1>📡 Video Knowledge Graph</h1>
+  <div class="nav-stats">
+    <div class="nav-stat"><span class="val">9</span><span class="lbl">Videos</span></div>
+    <div class="nav-stat"><span class="val">7</span><span class="lbl">Speakers</span></div>
+    <div class="nav-stat"><span class="val">30+</span><span class="lbl">Theses</span></div>
+    <div class="nav-stat"><span class="val">3</span><span class="lbl">Contradictions</span></div>
+  </div>
+</nav>
+
+<div class="tabs">
+  <div class="tab active" onclick="showPanel('themes')">Meta-Themes</div>
+  <div class="tab" onclick="showPanel('speakers')">Speakers</div>
+  <div class="tab" onclick="showPanel('contradictions')">Contradictions</div>
+  <div class="tab" onclick="showPanel('predictions')">Predictions</div>
+  <div class="tab" onclick="showPanel('videos')">Videos</div>
+  <div class="tab" onclick="showPanel('quotes')">Quotes</div>
+</div>
+
+<!-- META-THEMES -->
+<div class="panel active" id="panel-themes">
+  <input type="text" class="search-bar" placeholder="Search themes, speakers, topics..." oninput="filterCards(this.value, 'panel-themes')">
+
+  <div class="theme-card" data-search="bottleneck physical energy manufacturing zoning musk martin">
+    <span class="theme-tag t1">Theme 1</span>
+    <h2 class="theme-title">Bottleneck Shifted from Digital to Physical</h2>
+    <p class="theme-desc">Software and intelligence are approaching sufficiency. The real constraints now are energy, manufacturing, physical dexterity, zoning, and infrastructure. The hard problems are atoms, not bits.</p>
+    <div class="theme-speakers">
+      <span class="speaker-chip">⚡ Elon Musk</span>
+      <span class="speaker-chip">🏗️ David Martin</span>
+    </div>
+  </div>
+
+  <div class="theme-card" data-search="human connection judgment authenticity therapy education critical thinking">
+    <span class="theme-tag t2">Theme 2</span>
+    <h2 class="theme-title">Human Value = Authentic Connection + Judgment</h2>
+    <p class="theme-desc">As AI handles information and production, the human advantage is caring, empathy, taste, and critical evaluation. The human in the loop needs to actually be thinking, or the loop is empty.</p>
+    <div class="theme-speakers">
+      <span class="speaker-chip">🧠 Po-Shen Loh</span>
+      <span class="speaker-chip">🎯 Intent Engineering</span>
+      <span class="speaker-chip">🛡️ Dario Amodei</span>
+    </div>
+  </div>
+
+  <div class="theme-card" data-search="gold dollar hedge consensus johnson taleb reserve">
+    <span class="theme-tag t3">Theme 3</span>
+    <h2 class="theme-title">Gold Is the Consensus Hedge</h2>
+    <p class="theme-desc">Opposing dollar frameworks both conclude: buy gold. Johnson says dollar + gold rise together. Taleb says dollar declining, gold rises. When two people who disagree on everything agree on one asset, that's signal.</p>
+    <div class="theme-speakers">
+      <span class="speaker-chip">🥤 Brent Johnson</span>
+      <span class="speaker-chip">🦢 Nassim Taleb</span>
+    </div>
+  </div>
+
+  <div class="theme-card" data-search="application layer moats regulated industries primitives foundation">
+    <span class="theme-tag t4">Theme 4</span>
+    <h2 class="theme-title">The Application Layer Wins</h2>
+    <p class="theme-desc">Moats are in regulated industries and domain expertise, not in building models or base infrastructure. Build the foundation right, and the market fills in the rest.</p>
+    <div class="theme-speakers">
+      <span class="speaker-chip">🛡️ Dario Amodei</span>
+      <span class="speaker-chip">🔗 Jeff Yan</span>
+      <span class="speaker-chip">🏗️ David Martin</span>
+    </div>
+  </div>
+
+  <div class="theme-card" data-search="race time window defi ai thinking energy infrastructure">
+    <span class="theme-tag t5">Theme 5</span>
+    <h2 class="theme-title">Race Against Time</h2>
+    <p class="theme-desc">Multiple domains face closing windows: DeFi before AI takes over. Steer AI before it's too powerful. Preserve human thinking before it atrophies. Scale energy before chips outpace the grid. The window is open — it won't stay open.</p>
+    <div class="theme-speakers">
+      <span class="speaker-chip">🔗 Jeff Yan</span>
+      <span class="speaker-chip">🛡️ Dario Amodei</span>
+      <span class="speaker-chip">🧠 Po-Shen Loh</span>
+      <span class="speaker-chip">⚡ Elon Musk</span>
+    </div>
+  </div>
+</div>
+
+<!-- SPEAKERS -->
+<div class="panel" id="panel-speakers">
+  <input type="text" class="search-bar" placeholder="Search speakers..." oninput="filterCards(this.value, 'panel-speakers')">
+  <div class="speaker-grid">
+
+    <div class="speaker-card" data-search="brent johnson dollar milkshake gold stablecoins macro" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">Brent Johnson</h3>
+      <p class="speaker-role">CEO, Santiago Capital</p>
+      <p class="speaker-framework">"US structural advantages pull global capital inward; dollar + gold rise together"</p>
+      <p class="speaker-meta">1 video · 75 min · Dollar, Gold, Stablecoins, Macro</p>
+      <div class="speaker-theses">
+        <div class="thesis-item">Dollar and gold can rise simultaneously — gold rejects all fiat, not just USD</div>
+        <div class="thesis-item">Stablecoins are the modern Eurodollar system — US projects dollar dominance through private sector crypto</div>
+        <div class="thesis-item">Bitcoin is a speculative liquidity play, not a safe haven</div>
+        <div class="thesis-item">US will always fund its deficits because global markets are priced off Treasuries</div>
+        <div class="thesis-item">BRICS is overhyped — US internal policy shifts matter more</div>
+      </div>
+    </div>
+
+    <div class="speaker-card" data-search="elon musk energy robots fsd tesla optimus deflation" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">Elon Musk</h3>
+      <p class="speaker-role">CEO of Tesla, SpaceX, xAI</p>
+      <p class="speaker-framework">"Energy is the ultimate constraint; triple exponential in robotics; work becomes optional"</p>
+      <p class="speaker-meta">2 videos · 85 min · Energy, AI, Robotics, FSD</p>
+      <div class="speaker-theses">
+        <div class="thesis-item">Energy is the ultimate currency — future measured in watts, not dollars</div>
+        <div class="thesis-item">The bottleneck is electricity, not chips (the "chip wall" is a power wall)</div>
+        <div class="thesis-item">AGI by 2028-2029, AI exceeding all humans combined by 2030</div>
+        <div class="thesis-item">Triple exponential for robotics — AI + chips + electromechanical dexterity multiplying</div>
+        <div class="thesis-item">Robot hands (mechanical dexterity) are the hard problem, not AI software</div>
+        <div class="thesis-item">Work becomes optional within 10 years</div>
+        <div class="thesis-item">Netherlands FSD approval March 20, 2026</div>
+      </div>
+    </div>
+
+    <div class="speaker-card" data-search="nassim taleb black swan tail risk dollar gold oil bubble" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">Nassim Taleb</h3>
+      <p class="speaker-role">Author (Black Swan, Antifragile), former options trader</p>
+      <p class="speaker-framework">"Tail risks are systematically underpriced; trust empirical evidence over models"</p>
+      <p class="speaker-meta">1 video · 9 min · Dollar, Gold, AI Bubble, Tail Risk</p>
+      <div class="speaker-theses">
+        <div class="thesis-item">Dollar losing store-of-value status — central banks moving reserves to gold</div>
+        <div class="thesis-item">AI pioneers will go bankrupt — historical pattern of tech revolutions</div>
+        <div class="thesis-item">1970s-style oil shock is the most underpriced tail risk</div>
+        <div class="thesis-item">Tail risks remain massively underpriced by markets</div>
+      </div>
+    </div>
+
+    <div class="speaker-card" data-search="dario amodei anthropic claude scaling laws safety biotech consciousness" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">Dario Amodei</h3>
+      <p class="speaker-role">Co-founder/CEO, Anthropic (builds Claude)</p>
+      <p class="speaker-framework">"Intelligence = data + compute + model size; application layer has the moats; steer AI, don't stop it"</p>
+      <p class="speaker-meta">1 video · 69 min · Scaling Laws, AI Safety, Biotech</p>
+      <div class="speaker-theses">
+        <div class="thesis-item">Intelligence is a chemical reaction: data + compute + model size = intelligence, reliably</div>
+        <div class="thesis-item">No theory for WHY scaling works — empirical recipe without fundamental explanation</div>
+        <div class="thesis-item">Moats are in the application layer, not model building</div>
+        <div class="thesis-item">Consciousness may be emergent from sufficiently complex self-reflective systems</div>
+        <div class="thesis-item">AI-driven biotech renaissance — programmable mRNA/peptide therapies</div>
+        <div class="thesis-item">Critical thinking is the #1 skill</div>
+      </div>
+    </div>
+
+    <div class="speaker-card" data-search="jeff yan hyperliquid defi crypto permissionless primitives" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">Jeff Yan</h3>
+      <p class="speaker-role">Founder, Hyperliquid</p>
+      <p class="speaker-framework">"Build robust primitives, let ecosystem scale; DeFi before AI takes over"</p>
+      <p class="speaker-meta">1 video · 89 min · DeFi, Crypto, AI-Finance</p>
+      <div class="speaker-theses">
+        <div class="thesis-item">DeFi must be built before AI becomes the primary economic actor or humans lose governance</div>
+        <div class="thesis-item">11-person teams can run $10B protocols if primitives are right</div>
+        <div class="thesis-item">Permissionless perp markets will capture global price discovery</div>
+        <div class="thesis-item">VC token allocation is fundamentally incompatible with decentralization</div>
+      </div>
+    </div>
+
+    <div class="speaker-card" data-search="po-shen loh education math creativity authenticity thinking" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">Po-Shen Loh</h3>
+      <p class="speaker-role">Carnegie Mellon Math Professor, Math Olympiad Coach</p>
+      <p class="speaker-framework">"Math as the last curriculum for original thinking; boredom precedes creativity"</p>
+      <p class="speaker-meta">1 video · 27 min · Education, AI, Creativity</p>
+      <div class="speaker-theses">
+        <div class="thesis-item">Math is the last curriculum for generating original ideas</div>
+        <div class="thesis-item">Kids without constant tech access are MORE creative — boredom forces invention</div>
+        <div class="thesis-item">Using AI for homework is driving a car for exercise</div>
+        <div class="thesis-item">Authenticity and genuine human connection is the only reason to choose a human over AI</div>
+      </div>
+    </div>
+
+    <div class="speaker-card" data-search="david martin miami terra housing zoning transit urban" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">David Martin</h3>
+      <p class="speaker-role">CEO, Terra (Miami Developer)</p>
+      <p class="speaker-framework">"Market-based urbanism; missing middle housing; residential-first growth"</p>
+      <p class="speaker-meta">1 video · 29 min · Miami, Housing, Transit, Zoning</p>
+      <div class="speaker-theses">
+        <div class="thesis-item">Missing middle housing via zoning reform beats subsidized affordable housing</div>
+        <div class="thesis-item">Traffic is Miami's #1 existential threat, not housing costs</div>
+        <div class="thesis-item">Miami's growth is residential-first — execs move for lifestyle, companies follow</div>
+        <div class="thesis-item">Teachers can't afford to live where they work — applies to all essential workers</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONTRADICTIONS -->
+<div class="panel" id="panel-contradictions">
+
+  <div class="contra-card">
+    <h3 style="font-family:var(--serif);font-size:18px;color:var(--green-dark);margin-bottom:16px;">Dollar Trajectory</h3>
+    <div class="contra-vs">
+      <div class="contra-side">
+        <strong>🥤 Brent Johnson</strong>
+        US will always fund deficits. Dollar strengthens as global capital flows in. Treasury auctions can't fail because the world is priced off US debt.
+      </div>
+      <div class="contra-divider">vs</div>
+      <div class="contra-side">
+        <strong>🦢 Nassim Taleb</strong>
+        Dollar losing reserve status. Debt is a doom loop — borrowing to service borrowing. Central banks shifting reserves to gold because US weaponized the financial system.
+      </div>
+    </div>
+    <div class="contra-resolution"><strong>Resolution:</strong> Both agree gold goes up. Disagreement may be about timeframe — short-term capital flows (Johnson) vs. long-term structural shift (Taleb). Possibly both are right on different horizons.</div>
+  </div>
+
+  <div class="contra-card">
+    <h3 style="font-family:var(--serif);font-size:18px;color:var(--green-dark);margin-bottom:16px;">AI in Education</h3>
+    <div class="contra-vs">
+      <div class="contra-side">
+        <strong>⚡ Elon Musk</strong>
+        AI tutors (Grok) for personalized education. Deploying in El Salvador. AI as infinitely patient individualized teacher.
+      </div>
+      <div class="contra-divider">vs</div>
+      <div class="contra-side">
+        <strong>🧠 Po-Shen Loh</strong>
+        Kids without tech are more creative. AI-assisted learning atrophies mental fitness. "Using AI for homework is driving a car for exercise."
+      </div>
+    </div>
+    <div class="contra-resolution"><strong>Resolution:</strong> Depends on implementation. AI as thinking partner (scaffolding struggle) vs. AI as answer machine (replacing struggle). Loh's concern is valid if AI removes the productive struggle that builds mental fitness.</div>
+  </div>
+
+  <div class="contra-card">
+    <h3 style="font-family:var(--serif);font-size:18px;color:var(--green-dark);margin-bottom:16px;">AI Market Winners</h3>
+    <div class="contra-vs">
+      <div class="contra-side">
+        <strong>🦢 Nassim Taleb</strong>
+        Current AI leaders will go bankrupt. Historical pattern: pioneers of tech revolutions (IBM, Pan Am, early automakers) rarely win long-term.
+      </div>
+      <div class="contra-divider">vs</div>
+      <div class="contra-side">
+        <strong>🛡️ Dario Amodei</strong>
+        Scaling laws keep working. Current leaders have compounding data + compute advantages. Intelligence is a chemical reaction with predictable inputs.
+      </div>
+    </div>
+    <div class="contra-resolution"><strong>Resolution:</strong> Taleb's pattern is historical but AI may be different — scaling laws create winner-take-all dynamics. However, Amodei himself says moats are in the application layer, not model building, which partially supports Taleb's case.</div>
+  </div>
+
+</div>
+
+<!-- PREDICTIONS -->
+<div class="panel" id="panel-predictions">
+
+  <div class="pred-card">
+    <div>
+      <div class="pred-claim">Netherlands FSD Approval</div>
+      <div class="pred-speaker">Elon Musk — Tesla Berlin talk</div>
+    </div>
+    <div class="pred-countdown">
+      <span class="pred-days" id="pred-nl"></span>
+      <span class="pred-label">days left</span>
+      <span class="pred-status pending">Pending</span>
+    </div>
+  </div>
+
+  <div class="pred-card">
+    <div>
+      <div class="pred-claim">FSD Sleep-to-Destination Technical Milestone</div>
+      <div class="pred-speaker">Elon Musk — AI, Energy, Robots talk</div>
+    </div>
+    <div class="pred-countdown">
+      <span class="pred-days" id="pred-fsd"></span>
+      <span class="pred-label">days left</span>
+      <span class="pred-status pending">Pending</span>
+    </div>
+  </div>
+
+  <div class="pred-card">
+    <div>
+      <div class="pred-claim">China Passes 3x US Electricity Output</div>
+      <div class="pred-speaker">Elon Musk — AI, Energy, Robots talk</div>
+    </div>
+    <div class="pred-countdown">
+      <span class="pred-days" id="pred-china"></span>
+      <span class="pred-label">days left</span>
+      <span class="pred-status pending">Pending</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- VIDEOS -->
+<div class="panel" id="panel-videos">
+  <input type="text" class="search-bar" placeholder="Search videos..." oninput="filterCards(this.value, 'panel-videos')">
+  <div class="video-list">
+
+    <a class="video-card" href="https://youtu.be/lUPDZvFf1Is" target="_blank" data-search="brent johnson dollar milkshake gold stablecoins">
+      <div>
+        <div class="video-title">The Dollar Milkshake Theory</div>
+        <div class="video-speaker">Brent Johnson</div>
+        <div class="video-topics"><span class="topic-tag">Dollar</span><span class="topic-tag">Gold</span><span class="topic-tag">Stablecoins</span><span class="topic-tag">Macro</span></div>
+      </div>
+      <div class="video-duration">75<span>min</span></div>
+    </a>
+
+    <a class="video-card" href="https://youtu.be/QWzLPn164w0" target="_blank" data-search="intent engineering organizational ai klarna context">
+      <div>
+        <div class="video-title">Intent Engineering — From Prompting to Organizational AI</div>
+        <div class="video-speaker">Enterprise AI Panel</div>
+        <div class="video-topics"><span class="topic-tag">Intent</span><span class="topic-tag">AI Deployment</span><span class="topic-tag">Klarna</span></div>
+      </div>
+      <div class="video-duration">30<span>min</span></div>
+    </a>
+
+    <a class="video-card" href="https://youtu.be/yxax4xpZus8" target="_blank" data-search="elon musk energy ai robots deflation solar agi china">
+      <div>
+        <div class="video-title">AI, Energy, Robots & The Future</div>
+        <div class="video-speaker">Elon Musk</div>
+        <div class="video-topics"><span class="topic-tag">Energy</span><span class="topic-tag">AI</span><span class="topic-tag">Robotics</span><span class="topic-tag">Deflation</span></div>
+      </div>
+      <div class="video-duration">62<span>min</span></div>
+    </a>
+
+    <a class="video-card" href="https://youtu.be/pl1L70N-WLE" target="_blank" data-search="david martin miami housing zoning transit urban terra">
+      <div>
+        <div class="video-title">Miami Urbanism, Housing & Infrastructure</div>
+        <div class="video-speaker">David Martin</div>
+        <div class="video-topics"><span class="topic-tag">Miami</span><span class="topic-tag">Housing</span><span class="topic-tag">Transit</span><span class="topic-tag">Zoning</span></div>
+      </div>
+      <div class="video-duration">29<span>min</span></div>
+    </a>
+
+    <a class="video-card" href="https://youtu.be/2cC9IjixIww" target="_blank" data-search="jeff yan hyperliquid defi crypto permissionless ai finance">
+      <div>
+        <div class="video-title">Decentralized Finance, AI & The Internet for Money</div>
+        <div class="video-speaker">Jeff Yan</div>
+        <div class="video-topics"><span class="topic-tag">DeFi</span><span class="topic-tag">Crypto</span><span class="topic-tag">Permissionless</span><span class="topic-tag">AI Finance</span></div>
+      </div>
+      <div class="video-duration">89<span>min</span></div>
+    </a>
+
+    <a class="video-card" href="https://youtu.be/cyds4kP_n80" target="_blank" data-search="nassim taleb dollar gold ai bubble tail risk oil stagflation">
+      <div>
+        <div class="video-title">Dollar Decline, AI Bubble & Tail Risk</div>
+        <div class="video-speaker">Nassim Taleb</div>
+        <div class="video-topics"><span class="topic-tag">Dollar</span><span class="topic-tag">Gold</span><span class="topic-tag">AI Bubble</span><span class="topic-tag">Tail Risk</span></div>
+      </div>
+      <div class="video-duration">9<span>min</span></div>
+    </a>
+
+    <a class="video-card" href="https://youtu.be/ivVPJhYM8Ng" target="_blank" data-search="po-shen loh education ai creativity math thinking authenticity">
+      <div>
+        <div class="video-title">AI, Education & The Future of Human Thinking</div>
+        <div class="video-speaker">Po-Shen Loh</div>
+        <div class="video-topics"><span class="topic-tag">Education</span><span class="topic-tag">AI</span><span class="topic-tag">Creativity</span><span class="topic-tag">Math</span></div>
+      </div>
+      <div class="video-duration">27<span>min</span></div>
+    </a>
+
+    <a class="video-card" href="https://youtu.be/VvKV_ulseKc" target="_blank" data-search="elon musk tesla berlin fsd optimus robots work manufacturing">
+      <div>
+        <div class="video-title">Tesla Berlin, FSD, Optimus & Future of Work</div>
+        <div class="video-speaker">Elon Musk</div>
+        <div class="video-topics"><span class="topic-tag">FSD</span><span class="topic-tag">Tesla</span><span class="topic-tag">Optimus</span><span class="topic-tag">Manufacturing</span></div>
+      </div>
+      <div class="video-duration">23<span>min</span></div>
+    </a>
+
+    <a class="video-card" href="https://youtu.be/68ylaeBbdsg" target="_blank" data-search="dario amodei anthropic claude scaling laws safety biotech consciousness">
+      <div>
+        <div class="video-title">Scaling Intelligence, Safety & The AI Tsunami</div>
+        <div class="video-speaker">Dario Amodei</div>
+        <div class="video-topics"><span class="topic-tag">Scaling Laws</span><span class="topic-tag">AI Safety</span><span class="topic-tag">Biotech</span><span class="topic-tag">Anthropic</span></div>
+      </div>
+      <div class="video-duration">69<span>min</span></div>
+    </a>
+
+  </div>
+</div>
+
+<!-- QUOTES -->
+<div class="panel" id="panel-quotes">
+
+  <div class="quote-card">
+    <p class="quote-text">The limiting factor for the next two years will be the ability to turn chips on.</p>
+    <p class="quote-attr">— Elon Musk</p>
+  </div>
+
+  <div class="quote-card">
+    <p class="quote-text">It is surprising to me that we are, in my view, so close to these models reaching the level of human intelligence.</p>
+    <p class="quote-attr">— Dario Amodei</p>
+  </div>
+
+  <div class="quote-card">
+    <p class="quote-text">The distinction between AI that fails and AI that succeeds at the wrong thing is the most important unsolved problem in enterprise AI.</p>
+    <p class="quote-attr">— Intent Engineering Panel</p>
+  </div>
+
+  <div class="quote-card">
+    <p class="quote-text">Using AI to do your writing homework is like driving your car one mile for exercise.</p>
+    <p class="quote-attr">— Po-Shen Loh</p>
+  </div>
+
+  <div class="quote-card">
+    <p class="quote-text">I hope Hyperliquid becomes the internet for money.</p>
+    <p class="quote-attr">— Jeff Yan</p>
+  </div>
+
+  <div class="quote-card">
+    <p class="quote-text">I'm sure someone's going to make a lot of money in AI, but doesn't necessarily have to be these companies.</p>
+    <p class="quote-attr">— Nassim Taleb</p>
+  </div>
+
+  <div class="quote-card">
+    <p class="quote-text">The only way to get other people to want to team up with you is for you to authentically and deeply be a person who is motivated by creating value in the other.</p>
+    <p class="quote-attr">— Po-Shen Loh</p>
+  </div>
+
+  <div class="quote-card">
+    <p class="quote-text">The honest answer for AI and robotics is long-term working will be optional. Like long-term, which is 10 years from now or less.</p>
+    <p class="quote-attr">— Elon Musk</p>
+  </div>
+
+  <div class="quote-card">
+    <p class="quote-text">We need to improve the salaries of our teachers. We need to embrace our teachers and just grow our draft picks of amazing talent.</p>
+    <p class="quote-attr">— David Martin</p>
+  </div>
+
+</div>
+
+<script>
+// Tab switching
+function showPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Search filtering
+function filterCards(query, panelId) {
+  const panel = document.getElementById(panelId);
+  const q = query.toLowerCase();
+  panel.querySelectorAll('[data-search]').forEach(card => {
+    const match = !q || card.getAttribute('data-search').toLowerCase().includes(q) || card.textContent.toLowerCase().includes(q);
+    card.style.display = match ? '' : 'none';
+  });
+}
+
+// Countdown timers
+function updateCountdowns() {
+  const now = new Date();
+  const dates = {
+    'pred-nl': new Date('2026-03-20'),
+    'pred-fsd': new Date('2026-12-31'),
+    'pred-china': new Date('2026-12-31')
+  };
+  for (const [id, date] of Object.entries(dates)) {
+    const el = document.getElementById(id);
+    if (el) {
+      const diff = Math.ceil((date - now) / (1000 * 60 * 60 * 24));
+      el.textContent = diff > 0 ? diff : '0';
+    }
+  }
+}
+updateCountdowns();
+</script>
+
+</body>
+</html>
