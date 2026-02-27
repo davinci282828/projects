@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-02-27T09:29:19.761608",
+  "generated_at": "2026-02-27T09:44:19.507365",
   "models": {
     "claude-opus-4-6": {
-      "input": 0.004959999999999929,
-      "output": 6.075299999999998,
-      "total": 101.38452224999997,
-      "calls": 728,
-      "tokens_in": 992,
-      "tokens_out": 243012,
-      "cache_read": 65064612
+      "input": 0.005164999999999924,
+      "output": 6.522074999999998,
+      "total": 104.39507824999994,
+      "calls": 761,
+      "tokens_in": 1033,
+      "tokens_out": 260883,
+      "cache_read": 69745889
     },
     "moonshotai/kimi-k2.5": {
-      "input": 3.6634374,
-      "output": 0.26146199999999997,
-      "total": 3.9248994000000006,
-      "calls": 290,
-      "tokens_in": 6105729,
-      "tokens_out": 87154,
-      "cache_read": 4449123
+      "input": 3.6778793999999997,
+      "output": 0.26051699999999994,
+      "total": 3.9383964000000007,
+      "calls": 288,
+      "tokens_in": 6129799,
+      "tokens_out": 86839,
+      "cache_read": 4384291
     },
     "claude-sonnet-4-20250514": {
       "input": 0.0002760000000000001,
@@ -41,34 +41,7 @@
       "input": 0,
       "output": 0,
       "total": 0,
-      "calls": 1346,
-      "tokens_in": 0,
-      "tokens_out": 0,
-      "cache_read": 0
-    },
-    "delivery-mirror": {
-      "input": 0,
-      "output": 0,
-      "total": 0,
-      "calls": 16,
-      "tokens_in": 0,
-      "tokens_out": 0,
-      "cache_read": 0
-    },
-    "gateway-injected": {
-      "input": 0,
-      "output": 0,
-      "total": 0,
-      "calls": 3,
-      "tokens_in": 0,
-      "tokens_out": 0,
-      "cache_read": 0
-    },
-    "gemini-2.0-flash": {
-      "input": 0,
-      "output": 0,
-      "total": 0,
-      "calls": 2,
+      "calls": 1377,
       "tokens_in": 0,
       "tokens_out": 0,
       "cache_read": 0
@@ -78,206 +51,148 @@
     "2026-02-17": {
       "claude-opus-4-6": {
         "total": 0.08001025,
-        "calls": 4,
-        "tokens_in": 6,
-        "tokens_out": 845
+        "calls": 4
       },
       "unknown": {
         "total": 0,
-        "calls": 7,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 7
       }
     },
     "2026-02-18": {
       "claude-opus-4-6": {
         "total": 0.342498,
-        "calls": 6,
-        "tokens_in": 10,
-        "tokens_out": 971
+        "calls": 6
       },
       "delivery-mirror": {
         "total": 0,
-        "calls": 1,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 1
       },
       "unknown": {
         "total": 0,
-        "calls": 6,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 6
       }
     },
     "2026-02-19": {
       "claude-sonnet-4-20250514": {
         "total": 0.94283025,
-        "calls": 27,
-        "tokens_in": 92,
-        "tokens_out": 12958
+        "calls": 27
       },
       "claude-opus-4-6": {
         "total": 0.11699425000000001,
-        "calls": 2,
-        "tokens_in": 4,
-        "tokens_out": 139
+        "calls": 2
       },
       "unknown": {
         "total": 0,
-        "calls": 29,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 29
       }
     },
     "2026-02-21": {
       "gpt-4o": {
         "total": 0.33322250000000003,
-        "calls": 16,
-        "tokens_in": 48569,
-        "tokens_out": 1740
+        "calls": 16
       },
       "gateway-injected": {
         "total": 0,
-        "calls": 3,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 3
       },
       "unknown": {
         "total": 0,
-        "calls": 11,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 11
       }
     },
     "2026-02-22": {
       "claude-opus-4-6": {
         "total": 0.13464250000000003,
-        "calls": 2,
-        "tokens_in": 4,
-        "tokens_out": 319
+        "calls": 2
       },
       "unknown": {
         "total": 0,
-        "calls": 5,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 5
       },
       "gemini-2.0-flash": {
         "total": 0,
-        "calls": 2,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 2
       }
     },
     "2026-02-23": {
       "claude-opus-4-6": {
         "total": 0.45524200000000004,
-        "calls": 9,
-        "tokens_in": 13,
-        "tokens_out": 2684
+        "calls": 9
       },
       "unknown": {
         "total": 0,
-        "calls": 12,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 12
       }
     },
     "2026-02-24": {
       "claude-opus-4-6": {
         "total": 0.20948024999999998,
-        "calls": 3,
-        "tokens_in": 5,
-        "tokens_out": 542
+        "calls": 3
       },
       "unknown": {
         "total": 0,
-        "calls": 5,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 5
       }
     },
     "2026-02-25": {
       "claude-opus-4-6": {
         "total": 0.61839425,
-        "calls": 13,
-        "tokens_in": 15,
-        "tokens_out": 1716
+        "calls": 13
       },
       "moonshotai/kimi-k2.5": {
         "total": 0.07600200000000001,
-        "calls": 4,
-        "tokens_in": 79960,
-        "tokens_out": 9342
+        "calls": 4
       },
       "unknown": {
         "total": 0,
-        "calls": 26,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 26
       }
     },
     "2026-02-26": {
       "claude-opus-4-6": {
         "total": 64.23640374999998,
-        "calls": 378,
-        "tokens_in": 512,
-        "tokens_out": 108082
+        "calls": 378
       },
       "moonshotai/kimi-k2.5": {
-        "total": 2.762655600000001,
-        "calls": 171,
-        "tokens_in": 4363356,
-        "tokens_out": 48214
+        "total": 2.751555600000001,
+        "calls": 167
       },
       "unknown": {
         "total": 0,
-        "calls": 717,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 713
       },
       "delivery-mirror": {
         "total": 0,
-        "calls": 5,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 5
       }
     },
     "2026-02-27": {
       "claude-opus-4-6": {
-        "total": 35.19085700000001,
-        "calls": 311,
-        "tokens_in": 423,
-        "tokens_out": 127714
+        "total": 38.201413,
+        "calls": 344
       },
       "moonshotai/kimi-k2.5": {
-        "total": 1.0862418,
-        "calls": 115,
-        "tokens_in": 1662413,
-        "tokens_out": 29598
+        "total": 1.1108388,
+        "calls": 117
       },
       "unknown": {
         "total": 0,
-        "calls": 528,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 563
       },
       "delivery-mirror": {
         "total": 0,
-        "calls": 10,
-        "tokens_in": 0,
-        "tokens_out": 0
+        "calls": 11
       }
     }
   },
   "providers": {
     "anthropic": {
-      "total": 102.32735249999998,
-      "calls": 755
+      "total": 105.33790849999994,
+      "calls": 788
     },
     "openrouter": {
-      "total": 3.9248994000000006,
-      "calls": 290
+      "total": 3.9383964000000007,
+      "calls": 288
     },
     "openai": {
       "total": 0.33322250000000003,
@@ -285,21 +200,274 @@
     },
     "unknown": {
       "total": 0,
-      "calls": 1346
-    },
-    "openclaw": {
-      "total": 0,
-      "calls": 19
-    },
-    "google": {
-      "total": 0,
-      "calls": 2
+      "calls": 1377
     }
   },
+  "top_sessions": [
+    {
+      "id": "20a2801e",
+      "model": "moonshotai/kimi-k2.5",
+      "total": 91.72391200000001,
+      "calls": 1210,
+      "tokens_in": 3406577,
+      "tokens_out": 182036,
+      "is_cron": false,
+      "cron_name": "",
+      "day": "2026-02-26"
+    },
+    {
+      "id": "7dbd339a",
+      "model": "claude-opus-4-6",
+      "total": 9.405255999999998,
+      "calls": 290,
+      "tokens_in": 319714,
+      "tokens_out": 53514,
+      "is_cron": false,
+      "cron_name": "",
+      "day": "2026-02-27"
+    },
+    {
+      "id": "185f2a0c",
+      "model": "claude-opus-4-6",
+      "total": 1.036237,
+      "calls": 53,
+      "tokens_in": 27,
+      "tokens_out": 5582,
+      "is_cron": true,
+      "cron_name": "YOLO Nightly Build",
+      "day": "2026-02-27"
+    },
+    {
+      "id": "130172b7",
+      "model": "claude-sonnet-4-20250514",
+      "total": 0.94283025,
+      "calls": 54,
+      "tokens_in": 92,
+      "tokens_out": 12958,
+      "is_cron": false,
+      "cron_name": "",
+      "day": "2026-02-19"
+    },
+    {
+      "id": "ce3d36ee",
+      "model": "claude-opus-4-6",
+      "total": 0.7813365000000001,
+      "calls": 25,
+      "tokens_in": 13,
+      "tokens_out": 11140,
+      "is_cron": true,
+      "cron_name": "nightly-exploration",
+      "day": "2026-02-26"
+    },
+    {
+      "id": "e50cdf4e",
+      "model": "claude-opus-4-6",
+      "total": 0.7782289999999998,
+      "calls": 24,
+      "tokens_in": 13,
+      "tokens_out": 10658,
+      "is_cron": true,
+      "cron_name": "nightly-exploration",
+      "day": "2026-02-27"
+    },
+    {
+      "id": "3f696902",
+      "model": "claude-opus-4-6",
+      "total": 0.49078449999999996,
+      "calls": 26,
+      "tokens_in": 12,
+      "tokens_out": 3400,
+      "is_cron": true,
+      "cron_name": "ai-self-improvement-digest",
+      "day": "2026-02-27"
+    },
+    {
+      "id": "fa190ca0",
+      "model": "claude-opus-4-6",
+      "total": 0.3346325,
+      "calls": 17,
+      "tokens_in": 9,
+      "tokens_out": 2516,
+      "is_cron": true,
+      "cron_name": "Weekly Skill Scout",
+      "day": "2026-02-23"
+    },
+    {
+      "id": "2a575375",
+      "model": "gpt-4o",
+      "total": 0.33322250000000003,
+      "calls": 30,
+      "tokens_in": 48569,
+      "tokens_out": 1740,
+      "is_cron": false,
+      "cron_name": "",
+      "day": "2026-02-21"
+    },
+    {
+      "id": "a720f629",
+      "model": "claude-opus-4-6",
+      "total": 0.33305599999999996,
+      "calls": 17,
+      "tokens_in": 10,
+      "tokens_out": 1013,
+      "is_cron": true,
+      "cron_name": "x-twitter-monitor",
+      "day": "2026-02-25"
+    },
+    {
+      "id": "8ec51170",
+      "model": "claude-opus-4-6",
+      "total": 0.28533825,
+      "calls": 14,
+      "tokens_in": 5,
+      "tokens_out": 703,
+      "is_cron": true,
+      "cron_name": "TEST: YOLO Build (12 PM)",
+      "day": "2026-02-25"
+    },
+    {
+      "id": "b0be0031",
+      "model": "claude-opus-4-6",
+      "total": 0.25486125,
+      "calls": 13,
+      "tokens_in": 5,
+      "tokens_out": 1760,
+      "is_cron": true,
+      "cron_name": "Polymarket Evening Scanner",
+      "day": "2026-02-26"
+    },
+    {
+      "id": "f86d0884",
+      "model": "claude-opus-4-6",
+      "total": 0.25138550000000004,
+      "calls": 12,
+      "tokens_in": 5,
+      "tokens_out": 1894,
+      "is_cron": true,
+      "cron_name": "Polymarket NO Janitor Scanner",
+      "day": "2026-02-26"
+    },
+    {
+      "id": "bb1423e0",
+      "model": "claude-opus-4-6",
+      "total": 0.21002675,
+      "calls": 10,
+      "tokens_in": 7,
+      "tokens_out": 927,
+      "is_cron": false,
+      "cron_name": "",
+      "day": "2026-02-18"
+    },
+    {
+      "id": "e5dd3463",
+      "model": "claude-opus-4-6",
+      "total": 0.20948024999999998,
+      "calls": 8,
+      "tokens_in": 5,
+      "tokens_out": 542,
+      "is_cron": true,
+      "cron_name": "session-cleanup",
+      "day": "2026-02-24"
+    },
+    {
+      "id": "027a2783",
+      "model": "claude-opus-4-6",
+      "total": 0.13464250000000003,
+      "calls": 5,
+      "tokens_in": 4,
+      "tokens_out": 319,
+      "is_cron": true,
+      "cron_name": "Weekend Briefing",
+      "day": "2026-02-22"
+    },
+    {
+      "id": "e3fd250e",
+      "model": "claude-opus-4-6",
+      "total": 0.13247125,
+      "calls": 2,
+      "tokens_in": 3,
+      "tokens_out": 44,
+      "is_cron": false,
+      "cron_name": "",
+      "day": "2026-02-18"
+    },
+    {
+      "id": "9da03863",
+      "model": "claude-opus-4-6",
+      "total": 0.12060950000000001,
+      "calls": 4,
+      "tokens_in": 4,
+      "tokens_out": 168,
+      "is_cron": true,
+      "cron_name": "13F Filing Alert - Situational Awareness LP",
+      "day": "2026-02-23"
+    },
+    {
+      "id": "9e79b3e0",
+      "model": "claude-opus-4-6",
+      "total": 0.11699425000000001,
+      "calls": 4,
+      "tokens_in": 4,
+      "tokens_out": 139,
+      "is_cron": true,
+      "cron_name": "Daily Firewall Check",
+      "day": "2026-02-19"
+    },
+    {
+      "id": "3fbec80d",
+      "model": "moonshotai/kimi-k2.5",
+      "total": 0.0821562,
+      "calls": 19,
+      "tokens_in": 128677,
+      "tokens_out": 1650,
+      "is_cron": true,
+      "cron_name": "Morning Briefing",
+      "day": "2026-02-26"
+    }
+  ],
+  "split": {
+    "cron": {
+      "cost": 6.8618,
+      "calls": 890,
+      "sessions": 75
+    },
+    "interactive": {
+      "cost": 102.7477,
+      "calls": 1601,
+      "sessions": 9
+    }
+  },
+  "hourly": {
+    "0": 3.5831,
+    "1": 17.6587,
+    "2": 6.4344,
+    "3": 1.4454,
+    "4": 0.598,
+    "5": 0.5264,
+    "6": 0.1313,
+    "7": 0.5992,
+    "8": 3.4292,
+    "9": 7.8124,
+    "10": 3.5856,
+    "11": 2.0683,
+    "12": 13.9628,
+    "13": 2.0554,
+    "14": 8.8164,
+    "15": 0.5678,
+    "16": 2.4749,
+    "17": 1.3378,
+    "18": 0.2408,
+    "19": 0.1982,
+    "20": 0.1172,
+    "21": 19.4159,
+    "22": 9.8147,
+    "23": 2.7356
+  },
   "summary": {
-    "total_cost": 106.58547439999998,
-    "total_calls": 2428,
+    "total_cost": 109.6095,
+    "total_calls": 2491,
+    "total_sessions": 84,
     "days_tracked": 10,
-    "venice_unmetered_calls": 1346
+    "venice_unmetered_calls": 1377
   }
 }

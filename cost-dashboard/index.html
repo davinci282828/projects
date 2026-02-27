@@ -1,371 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="color-scheme" content="dark"/>
 <title>Da Vinci — Cost Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;line-height:1.6;padding:20px;max-width:1200px;margin:0 auto}
-h1{font-size:1.8rem;font-weight:700;color:#fff}
-h2{font-size:1.2rem;font-weight:600;color:#fff;margin-bottom:16px}
-.subtitle{color:#737373;font-size:0.85rem;font-weight:400}
-.header{padding:24px 0 20px;border-bottom:1px solid #1a1a1a;margin-bottom:24px}
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:16px 0}
-.stat{background:#111;border:1px solid #1f1f1f;border-radius:10px;padding:14px 16px}
-.stat-label{font-size:0.7rem;color:#737373;text-transform:uppercase;letter-spacing:0.05em}
-.stat-value{font-size:1.4rem;font-weight:700;color:#fff;margin-top:2px}
-.stat-value.red{color:#dc2626}
-.stat-value.blue{color:#3b82f6}
-.stat-value.green{color:#22c55e}
-.note{font-size:0.72rem;color:#525252;margin-top:8px;font-style:italic}
-.section{margin-bottom:32px}
-.chart-container{background:#111;border:1px solid #1f1f1f;border-radius:10px;padding:20px;margin-bottom:24px}
-canvas{width:100%!important;height:auto!important}
-.model-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.model-card{background:#111;border:1px solid #1f1f1f;border-radius:10px;padding:16px;border-left:3px solid #333}
-.model-card.opus{border-left-color:#dc2626}
-.model-card.kimi{border-left-color:#3b82f6}
-.model-card.sonnet{border-left-color:#f59e0b}
-.model-card.gpt4o{border-left-color:#22c55e}
-.model-card.venice{border-left-color:#6b7280}
-.model-name{font-weight:600;font-size:0.9rem;color:#fff;margin-bottom:8px}
-.model-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.model-stat{font-size:0.75rem}
-.model-stat span{color:#737373}
-.donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
-.legend{display:flex;flex-direction:column;gap:8px}
-.legend-item{display:flex;align-items:center;gap:8px;font-size:0.8rem}
-.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.daily-table{width:100%;border-collapse:collapse;font-size:0.8rem}
-.daily-table th{text-align:left;padding:8px 12px;color:#737373;font-weight:500;border-bottom:1px solid #1f1f1f;font-size:0.7rem;text-transform:uppercase}
-.daily-table td{padding:8px 12px;border-bottom:1px solid #141414}
-.daily-table tr:hover{background:#141414}
-.daily-table .amount{font-weight:600;color:#fff;font-variant-numeric:tabular-nums}
-.trend-up{color:#dc2626}
-.trend-down{color:#22c55e}
-.trend-flat{color:#525252}
+:root{--bg0:#090b10;--bg1:#0c1017;--card:#0e1420;--border:rgba(148,163,184,.18);--muted:#94a3b8;--text:#e5e7eb;--title:#f8fafc;--red:#dc2626;--amber:#f59e0b;--green:#22c55e;--blue:#3b82f6;--purple:#a855f7;--cyan:#06b6d4;--shadow:0 12px 40px rgba(0,0,0,.45);--radius:16px;--mono:'JetBrains Mono',ui-monospace,monospace;--sans:'Inter',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);color:var(--text);background:radial-gradient(1200px 600px at 15% 0%,rgba(220,38,38,.08),transparent 60%),radial-gradient(900px 500px at 95% 10%,rgba(59,130,246,.08),transparent 55%),linear-gradient(180deg,var(--bg0),var(--bg1));min-height:100vh}
+.wrap{max-width:1200px;margin:0 auto;padding:24px 16px 40px}
+header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:24px;flex-wrap:wrap}
+h1{font-size:1.5rem;font-weight:700;color:var(--title);letter-spacing:-.02em}
+.subtitle{color:var(--muted);font-size:.82rem;margin-top:4px}
+h2{font-size:1rem;font-weight:600;color:var(--title);margin-bottom:14px}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+.stat-label{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.stat-value{font-size:1.5rem;font-weight:700;color:var(--title);font-family:var(--mono);margin-top:2px}
+.stat-sub{font-size:.7rem;color:var(--muted);margin-top:3px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:20px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+canvas{display:block}
+.model-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:20px}
+.mc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;border-left:3px solid var(--muted)}
+.mc.opus{border-left-color:var(--red)}.mc.kimi{border-left-color:var(--blue)}.mc.sonnet{border-left-color:var(--amber)}.mc.gpt4o{border-left-color:var(--green)}.mc.venice{border-left-color:#6b7280}
+.mc-name{font-weight:600;font-size:.85rem;color:var(--title);margin-bottom:6px}
+.mc-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:.72rem}
+.mc-grid span{color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.78rem}
+th{text-align:left;padding:7px 10px;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em}
+td{padding:7px 10px;border-bottom:1px solid rgba(148,163,184,.06)}
+tr:hover td{background:rgba(148,163,184,.04)}
+.mono{font-family:var(--mono);font-size:.75rem}
+.cost{color:var(--green);font-weight:600}
+.tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:.65rem;font-weight:600}
+.tag-cron{background:rgba(168,85,247,.15);color:var(--purple)}
+.tag-int{background:rgba(59,130,246,.15);color:var(--blue)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;font-size:.75rem}
+.legend-item{display:flex;align-items:center;gap:5px}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.donut-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.donut-legend{display:flex;flex-direction:column;gap:6px;font-size:.75rem}
 .alerts{display:flex;flex-direction:column;gap:8px}
-.alert{padding:12px 16px;border-radius:8px;font-size:0.8rem;display:flex;align-items:center;gap:8px}
+.alert{padding:10px 14px;border-radius:8px;font-size:.78rem;display:flex;align-items:center;gap:8px}
 .alert.warn{background:#1c1107;border:1px solid #854d0e;color:#fbbf24}
 .alert.info{background:#0c1220;border:1px solid #1e3a5f;color:#60a5fa}
-.alert-icon{font-size:1rem}
-@media(max-width:600px){
-  .stats-row{grid-template-columns:1fr 1fr}
-  .model-cards{grid-template-columns:1fr}
-  .donut-wrap{flex-direction:column;align-items:flex-start}
-  body{padding:12px}
-  h1{font-size:1.4rem}
-  .stat-value{font-size:1.1rem}
-}
+.split-bars{display:flex;height:28px;border-radius:6px;overflow:hidden;margin:8px 0}
+.split-bar{display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;color:#fff;transition:width .5s}
+@media(max-width:700px){.stats-row{grid-template-columns:1fr 1fr}.model-cards{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}.donut-wrap{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
+<div class="wrap">
+<header>
+<div><h1>🔺 Da Vinci — Cost Dashboard</h1><div class="subtitle">OpenClaw model spend · real data from session logs</div></div>
+<div style="font-size:.7rem;color:var(--muted)" id="gen-time"></div>
+</header>
+<div class="stats-row" id="stats"></div>
 
-<div class="header">
-  <h1>Da Vinci — Cost Dashboard</h1>
-  <div class="subtitle">OpenClaw Model Spend Tracking · Phase 1</div>
-  <div class="stats-row" id="header-stats"></div>
-  <div class="note" id="venice-note"></div>
+<div class="card"><h2>Daily Spend</h2>
+<div class="legend" id="chart-legend"></div>
+<canvas id="dailyChart" height="200"></canvas>
 </div>
 
-<div class="section">
-  <h2>Daily Spend</h2>
-  <div class="chart-container">
-    <canvas id="dailyChart" height="220"></canvas>
-  </div>
+<h2>Models</h2>
+<div class="model-cards" id="models"></div>
+
+<div class="grid-2">
+<div class="card"><h2>Provider Split</h2>
+<div class="donut-wrap"><canvas id="donut" width="180" height="180" style="width:180px!important;height:180px!important"></canvas><div class="donut-legend" id="plegend"></div></div>
+</div>
+<div class="card"><h2>Cron vs Interactive</h2>
+<div id="split-info"></div>
+<div class="split-bars" id="split-bars"></div>
+<div id="split-detail" style="font-size:.75rem;color:var(--muted);margin-top:8px"></div>
+</div>
 </div>
 
-<div class="section">
-  <h2>Model Breakdown</h2>
-  <div class="model-cards" id="model-cards"></div>
+<div class="card"><h2>Top Sessions by Cost</h2>
+<table id="sessions-table"><thead><tr><th>Session</th><th>Model</th><th>Cost</th><th>Calls</th><th>Tokens</th><th>Type</th></tr></thead><tbody></tbody></table>
 </div>
 
-<div class="section">
-  <h2>Provider Split</h2>
-  <div class="chart-container">
-    <div class="donut-wrap">
-      <canvas id="donutChart" width="200" height="200" style="width:200px!important;height:200px!important"></canvas>
-      <div class="legend" id="provider-legend"></div>
-    </div>
-  </div>
+<div class="card"><h2>Hourly Spend Pattern (UTC)</h2>
+<canvas id="hourlyChart" height="100"></canvas>
 </div>
 
-<div class="section">
-  <h2>Daily Detail</h2>
-  <div class="chart-container" style="overflow-x:auto">
-    <table class="daily-table" id="daily-table">
-      <thead><tr><th>Date</th><th>Spend</th><th>Calls</th><th>Top Model</th><th>Trend</th></tr></thead>
-      <tbody></tbody>
-    </table>
-  </div>
+<div class="card"><h2>Daily Detail</h2>
+<table id="daily-table"><thead><tr><th>Date</th><th>Spend</th><th>Calls</th><th>Top Model</th><th>Trend</th></tr></thead><tbody></tbody></table>
 </div>
 
-<div class="section">
-  <h2>Alerts</h2>
-  <div class="alerts" id="alerts"></div>
+<h2>Alerts</h2>
+<div class="alerts" id="alerts"></div>
 </div>
 
 <script>
-const DATA = {"generated_at":"2026-02-27T09:29:19.761608","models":{"claude-opus-4-6":{"input":0.005,"output":6.0753,"total":101.3845,"calls":728,"tokens_in":992,"tokens_out":243012,"cache_read":65064612},"moonshotai/kimi-k2.5":{"input":3.6634,"output":0.2615,"total":3.9249,"calls":290,"tokens_in":6105729,"tokens_out":87154,"cache_read":4449123},"claude-sonnet-4-20250514":{"input":0.0003,"output":0.1944,"total":0.9428,"calls":27,"tokens_in":92,"tokens_out":12958,"cache_read":1418485},"gpt-4o":{"input":0.1214,"output":0.0174,"total":0.3332,"calls":16,"tokens_in":48569,"tokens_out":1740,"cache_read":155520},"unknown":{"input":0,"output":0,"total":0,"calls":1346,"tokens_in":0,"tokens_out":0,"cache_read":0}},"daily":{"2026-02-17":{"claude-opus-4-6":{"total":0.08,"calls":4},"unknown":{"total":0,"calls":7}},"2026-02-18":{"claude-opus-4-6":{"total":0.3425,"calls":6},"unknown":{"total":0,"calls":6}},"2026-02-19":{"claude-sonnet-4-20250514":{"total":0.9428,"calls":27},"claude-opus-4-6":{"total":0.117,"calls":2},"unknown":{"total":0,"calls":29}},"2026-02-21":{"gpt-4o":{"total":0.3332,"calls":16},"unknown":{"total":0,"calls":11}},"2026-02-22":{"claude-opus-4-6":{"total":0.1346,"calls":2},"unknown":{"total":0,"calls":5}},"2026-02-23":{"claude-opus-4-6":{"total":0.4552,"calls":9},"unknown":{"total":0,"calls":12}},"2026-02-24":{"claude-opus-4-6":{"total":0.2095,"calls":3},"unknown":{"total":0,"calls":5}},"2026-02-25":{"claude-opus-4-6":{"total":0.6184,"calls":13},"moonshotai/kimi-k2.5":{"total":0.076,"calls":4},"unknown":{"total":0,"calls":26}},"2026-02-26":{"claude-opus-4-6":{"total":64.2364,"calls":378},"moonshotai/kimi-k2.5":{"total":2.7627,"calls":171},"unknown":{"total":0,"calls":717}},"2026-02-27":{"claude-opus-4-6":{"total":35.1909,"calls":311},"moonshotai/kimi-k2.5":{"total":1.0862,"calls":115},"unknown":{"total":0,"calls":528}}},"providers":{"anthropic":{"total":102.3274,"calls":755},"openrouter":{"total":3.9249,"calls":290},"openai":{"total":0.3332,"calls":16},"unknown":{"total":0,"calls":1346},"openclaw":{"total":0,"calls":19},"google":{"total":0,"calls":2}},"summary":{"total_cost":106.5855,"total_calls":2428,"days_tracked":10,"venice_unmetered_calls":1346}};
+const D={"generated_at":"2026-02-27","models":{"claude-opus-4-6":{"input":0.005,"output":6.075,"total":101.38,"calls":728,"tokens_in":992,"tokens_out":243012,"cache_read":65064612},"moonshotai/kimi-k2.5":{"input":3.663,"output":0.261,"total":3.925,"calls":290,"tokens_in":6105729,"tokens_out":87154,"cache_read":4449123},"claude-sonnet-4-20250514":{"input":0.0003,"output":0.194,"total":0.943,"calls":27,"tokens_in":92,"tokens_out":12958,"cache_read":1418485},"gpt-4o":{"input":0.121,"output":0.017,"total":0.333,"calls":16,"tokens_in":48569,"tokens_out":1740,"cache_read":155520},"unknown":{"input":0,"output":0,"total":0,"calls":1346,"tokens_in":0,"tokens_out":0,"cache_read":0}},"daily":{"2026-02-17":{"claude-opus-4-6":{"total":0.08,"calls":4}},"2026-02-18":{"claude-opus-4-6":{"total":0.34,"calls":6}},"2026-02-19":{"claude-sonnet-4-20250514":{"total":0.94,"calls":27},"claude-opus-4-6":{"total":0.12,"calls":2}},"2026-02-21":{"gpt-4o":{"total":0.33,"calls":16}},"2026-02-22":{"claude-opus-4-6":{"total":0.13,"calls":2}},"2026-02-23":{"claude-opus-4-6":{"total":0.46,"calls":9}},"2026-02-24":{"claude-opus-4-6":{"total":0.21,"calls":3}},"2026-02-25":{"claude-opus-4-6":{"total":0.62,"calls":13},"moonshotai/kimi-k2.5":{"total":0.08,"calls":4}},"2026-02-26":{"claude-opus-4-6":{"total":64.24,"calls":378},"moonshotai/kimi-k2.5":{"total":2.76,"calls":171}},"2026-02-27":{"claude-opus-4-6":{"total":35.19,"calls":311},"moonshotai/kimi-k2.5":{"total":1.09,"calls":115}}},"providers":{"anthropic":{"total":102.33,"calls":755},"openrouter":{"total":3.93,"calls":290},"openai":{"total":0.33,"calls":16},"unknown":{"total":0,"calls":1346}},"top_sessions":[{"id":"20a2801e","model":"moonshotai/kimi-k2.5","total":91.72,"calls":1210,"tokens_in":0,"tokens_out":0,"is_cron":false,"cron_name":"","day":"2026-02-26"},{"id":"7dbd339a","model":"claude-opus-4-6","total":9.41,"calls":290,"tokens_in":0,"tokens_out":0,"is_cron":false,"cron_name":"","day":"2026-02-27"},{"id":"185f2a0c","model":"claude-opus-4-6","total":1.04,"calls":53,"tokens_in":0,"tokens_out":0,"is_cron":true,"cron_name":"YOLO Nightly Build","day":"2026-02-27"},{"id":"130172b7","model":"claude-sonnet-4-20250514","total":0.94,"calls":54,"tokens_in":0,"tokens_out":0,"is_cron":false,"cron_name":"","day":"2026-02-19"},{"id":"ce3d36ee","model":"claude-opus-4-6","total":0.78,"calls":25,"tokens_in":0,"tokens_out":0,"is_cron":true,"cron_name":"nightly-exploration","day":"2026-02-27"},{"id":"ee4e0ef2","model":"claude-opus-4-6","total":0.55,"calls":14,"tokens_in":0,"tokens_out":0,"is_cron":false,"cron_name":"","day":"2026-02-26"},{"id":"f1fa8a2c","model":"claude-opus-4-6","total":0.46,"calls":10,"tokens_in":0,"tokens_out":0,"is_cron":false,"cron_name":"","day":"2026-02-26"},{"id":"205fb301","model":"claude-opus-4-6","total":0.42,"calls":12,"tokens_in":0,"tokens_out":0,"is_cron":false,"cron_name":"","day":"2026-02-27"},{"id":"e12a7ac8","model":"claude-opus-4-6","total":0.34,"calls":6,"tokens_in":0,"tokens_out":0,"is_cron":false,"cron_name":"","day":"2026-02-18"},{"id":"9cda1d31","model":"moonshotai/kimi-k2.5","total":0.33,"calls":5,"tokens_in":0,"tokens_out":0,"is_cron":true,"cron_name":"morning-briefing","day":"2026-02-26"},{"id":"84d2fea3","model":"moonshotai/kimi-k2.5","total":0.31,"calls":7,"tokens_in":0,"tokens_out":0,"is_cron":true,"cron_name":"daily-security-audit","day":"2026-02-26"},{"id":"b55a2a4e","model":"gpt-4o","total":0.27,"calls":4,"tokens_in":0,"tokens_out":0,"is_cron":false,"cron_name":"","day":"2026-02-21"},{"id":"3f696902","model":"moonshotai/kimi-k2.5","total":0.26,"calls":5,"tokens_in":0,"tokens_out":0,"is_cron":true,"cron_name":"ai-self-improvement-digest","day":"2026-02-27"},{"id":"f8c0ae15","model":"moonshotai/kimi-k2.5","total":0.24,"calls":6,"tokens_in":0,"tokens_out":0,"is_cron":true,"cron_name":"daily-security-audit","day":"2026-02-27"},{"id":"57d90471","model":"moonshotai/kimi-k2.5","total":0.14,"calls":3,"tokens_in":0,"tokens_out":0,"is_cron":true,"cron_name":"daily-workspace-report","day":"2026-02-27"}],"split":{"cron":{"cost":6.86,"calls":890,"sessions":75},"interactive":{"cost":102.75,"calls":1601,"sessions":9}},"hourly":{"0":0.01,"1":0.08,"2":1.82,"3":0,"7":0.95,"8":1.05,"9":5.63,"10":0.05,"11":0.01,"12":0.43,"13":4.37,"14":35.43,"15":12.84,"16":21.68,"17":3.75,"18":0.01,"19":0.89,"20":1.36,"21":14.37,"22":3.22,"23":2.6},"summary":{"total_cost":109.28,"total_calls":2491,"total_sessions":84,"days_tracked":10,"venice_unmetered_calls":1346}};
 
-const COLORS = {
-  'claude-opus-4-6': '#dc2626',
-  'moonshotai/kimi-k2.5': '#3b82f6',
-  'claude-sonnet-4-20250514': '#f59e0b',
-  'gpt-4o': '#22c55e',
-  'unknown': '#6b7280',
-  'anthropic': '#dc2626',
-  'openrouter': '#3b82f6',
-  'openai': '#22c55e',
-  'openclaw': '#8b5cf6',
-  'google': '#f59e0b'
-};
+const C={'claude-opus-4-6':'#dc2626','moonshotai/kimi-k2.5':'#3b82f6','claude-sonnet-4-20250514':'#f59e0b','gpt-4o':'#22c55e','unknown':'#6b7280','anthropic':'#dc2626','openrouter':'#3b82f6','openai':'#22c55e'};
+const L={'claude-opus-4-6':'Opus','moonshotai/kimi-k2.5':'Kimi K2.5','claude-sonnet-4-20250514':'Sonnet','gpt-4o':'GPT-4o','unknown':'Venice (unmetered)','anthropic':'Anthropic','openrouter':'OpenRouter','openai':'OpenAI'};
+const cl=k=>C[k]||'#525252',lb=k=>L[k]||k;
+const $=n=>n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fN=n=>{if(n>=1e6)return(n/1e6).toFixed(1)+'M';if(n>=1e3)return(n/1e3).toFixed(1)+'K';return n.toLocaleString()};
 
-const LABELS = {
-  'claude-opus-4-6': 'Opus',
-  'moonshotai/kimi-k2.5': 'Kimi K2.5',
-  'claude-sonnet-4-20250514': 'Sonnet',
-  'gpt-4o': 'GPT-4o',
-  'unknown': 'Venice (unmetered)',
-  'anthropic': 'Anthropic (direct)',
-  'openrouter': 'OpenRouter',
-  'openai': 'OpenAI',
-  'openclaw': 'OpenClaw',
-  'google': 'Google'
-};
-
-function fmt$(n){return '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
-function fmtN(n){if(n>=1e6)return (n/1e6).toFixed(1)+'M';if(n>=1e3)return (n/1e3).toFixed(1)+'K';return n.toLocaleString()}
-function label(k){return LABELS[k]||k}
-function color(k){return COLORS[k]||'#525252'}
-
-// Header stats
-const S = DATA.summary;
-const avgDaily = S.total_cost / S.days_tracked;
-document.getElementById('header-stats').innerHTML = `
-  <div class="stat"><div class="stat-label">Total Spend</div><div class="stat-value red">${fmt$(S.total_cost)}</div></div>
-  <div class="stat"><div class="stat-label">API Calls</div><div class="stat-value">${fmtN(S.total_calls)}</div></div>
-  <div class="stat"><div class="stat-label">Days Tracked</div><div class="stat-value">${S.days_tracked}</div></div>
-  <div class="stat"><div class="stat-label">Avg Daily</div><div class="stat-value">${fmt$(avgDaily)}</div></div>
-`;
-document.getElementById('venice-note').textContent = `Venice sub-agent calls (${fmtN(S.venice_unmetered_calls)} calls) not metered — runs on Venice credits`;
+// Header
+const S=D.summary,avg=S.total_cost/S.days_tracked;
+document.getElementById('stats').innerHTML=`
+<div class="stat"><div class="stat-label">Total Spend</div><div class="stat-value" style="color:var(--red)">$${$(S.total_cost)}</div><div class="stat-sub">${S.days_tracked} days tracked</div></div>
+<div class="stat"><div class="stat-label">API Calls</div><div class="stat-value">${fN(S.total_calls)}</div><div class="stat-sub">${S.total_sessions} sessions</div></div>
+<div class="stat"><div class="stat-label">Avg Daily</div><div class="stat-value">$${$(avg)}</div><div class="stat-sub">projected ~$${$(avg*30)}/mo</div></div>
+<div class="stat"><div class="stat-label">Venice (unmetered)</div><div class="stat-value" style="color:var(--muted)">${fN(S.venice_unmetered_calls)}</div><div class="stat-sub">calls on Venice credits</div></div>`;
+document.getElementById('gen-time').textContent='Generated: '+D.generated_at;
 
 // Daily chart
-(function(){
-  const canvas = document.getElementById('dailyChart');
-  const ctx = canvas.getContext('2d');
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.parentElement.getBoundingClientRect();
-  const W = rect.width - 40;
-  const H = 220;
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
-  canvas.style.width = W + 'px';
-  canvas.style.height = H + 'px';
-  ctx.scale(dpr, dpr);
-
-  const days = Object.keys(DATA.daily).sort();
-  const models = ['claude-opus-4-6','moonshotai/kimi-k2.5','claude-sonnet-4-20250514','gpt-4o'];
-  
-  let maxVal = 0;
-  days.forEach(d => {
-    let sum = 0;
-    models.forEach(m => { sum += (DATA.daily[d][m]||{}).total||0; });
-    if(sum > maxVal) maxVal = sum;
-  });
-  maxVal = Math.ceil(maxVal / 10) * 10 || 10;
-
-  const pad = {l:50,r:10,t:10,b:40};
-  const chartW = W - pad.l - pad.r;
-  const chartH = H - pad.t - pad.b;
-  const barW = Math.min(40, (chartW / days.length) * 0.7);
-  const gap = chartW / days.length;
-
-  // Grid
-  ctx.strokeStyle = '#1f1f1f';
-  ctx.lineWidth = 1;
-  ctx.font = '10px Inter';
-  ctx.fillStyle = '#525252';
-  for(let i = 0; i <= 4; i++){
-    const y = pad.t + chartH - (chartH * i / 4);
-    ctx.beginPath();
-    ctx.moveTo(pad.l, y);
-    ctx.lineTo(W - pad.r, y);
-    ctx.stroke();
-    ctx.fillText(fmt$(maxVal * i / 4), 2, y + 3);
-  }
-
-  // Bars
-  days.forEach((d, i) => {
-    const x = pad.l + i * gap + (gap - barW) / 2;
-    let cumY = 0;
-    models.forEach(m => {
-      const val = (DATA.daily[d][m]||{}).total||0;
-      if(val <= 0) return;
-      const h = (val / maxVal) * chartH;
-      const y = pad.t + chartH - cumY - h;
-      ctx.fillStyle = color(m);
-      ctx.beginPath();
-      ctx.roundRect(x, y, barW, h, [3,3,0,0]);
-      ctx.fill();
-      cumY += h;
-    });
-    // Date label
-    ctx.fillStyle = '#525252';
-    ctx.font = '9px Inter';
-    ctx.textAlign = 'center';
-    ctx.fillText(d.slice(5), x + barW/2, H - 8);
-    ctx.textAlign = 'left';
-  });
-
-  // Legend
-  ctx.font = '10px Inter';
-  let lx = pad.l;
-  models.forEach(m => {
-    ctx.fillStyle = color(m);
-    ctx.fillRect(lx, H - 26, 8, 8);
-    ctx.fillStyle = '#737373';
-    ctx.fillText(label(m), lx + 12, H - 18);
-    lx += ctx.measureText(label(m)).width + 24;
-  });
-})();
+(function(){const cv=document.getElementById('dailyChart'),ctx=cv.getContext('2d'),dpr=window.devicePixelRatio||1,W=cv.parentElement.clientWidth-40,H=200;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';ctx.scale(dpr,dpr);
+const days=Object.keys(D.daily),models=['claude-opus-4-6','moonshotai/kimi-k2.5','claude-sonnet-4-20250514','gpt-4o'];
+let mx=0;days.forEach(d=>{let s=0;models.forEach(m=>{s+=(D.daily[d][m]||{}).total||0});if(s>mx)mx=s});mx=Math.ceil(mx/10)*10||10;
+const p={l:55,r:10,t:10,b:30},cW=W-p.l-p.r,cH=H-p.t-p.b,bW=Math.min(36,(cW/days.length)*.7),gap=cW/days.length;
+ctx.strokeStyle='rgba(148,163,184,.1)';ctx.lineWidth=1;ctx.font='10px Inter';ctx.fillStyle='#525252';
+for(let i=0;i<=4;i++){const y=p.t+cH-(cH*i/4);ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(W-p.r,y);ctx.stroke();ctx.fillText('$'+$(mx*i/4),2,y+3)}
+days.forEach((d,i)=>{const x=p.l+i*gap+(gap-bW)/2;let cum=0;models.forEach(m=>{const v=(D.daily[d][m]||{}).total||0;if(v<=0)return;const h=(v/mx)*cH,y=p.t+cH-cum-h;ctx.fillStyle=cl(m);ctx.beginPath();ctx.roundRect(x,y,bW,h,[3,3,0,0]);ctx.fill();cum+=h});ctx.fillStyle='#525252';ctx.font='9px Inter';ctx.textAlign='center';ctx.fillText(d.slice(5),x+bW/2,H-6);ctx.textAlign='left'});
+const leg=document.getElementById('chart-legend');models.forEach(m=>{leg.innerHTML+=`<div class="legend-item"><div class="dot" style="background:${cl(m)}"></div>${lb(m)}</div>`})})();
 
 // Model cards
-(function(){
-  const container = document.getElementById('model-cards');
-  const totalCost = S.total_cost;
-  const cardClass = {'claude-opus-4-6':'opus','moonshotai/kimi-k2.5':'kimi','claude-sonnet-4-20250514':'sonnet','gpt-4o':'gpt4o','unknown':'venice'};
-  
-  Object.entries(DATA.models).forEach(([m, d]) => {
-    if(m === 'delivery-mirror' || m === 'gateway-injected' || m === 'gemini-2.0-flash') return;
-    const pct = totalCost > 0 ? ((d.total / totalCost) * 100).toFixed(1) : '0.0';
-    const avgCost = d.calls > 0 ? d.total / d.calls : 0;
-    const card = document.createElement('div');
-    card.className = `model-card ${cardClass[m]||''}`;
-    card.innerHTML = `
-      <div class="model-name">${label(m)}</div>
-      <div class="model-stats">
-        <div class="model-stat"><span>Spend:</span> ${fmt$(d.total)}</div>
-        <div class="model-stat"><span>Share:</span> ${pct}%</div>
-        <div class="model-stat"><span>Calls:</span> ${fmtN(d.calls)}</div>
-        <div class="model-stat"><span>Avg/call:</span> ${fmt$(avgCost)}</div>
-        <div class="model-stat"><span>Tokens in:</span> ${fmtN(d.tokens_in)}</div>
-        <div class="model-stat"><span>Tokens out:</span> ${fmtN(d.tokens_out)}</div>
-        ${d.cache_read ? `<div class="model-stat"><span>Cache read:</span> ${fmtN(d.cache_read)}</div>` : ''}
-      </div>
-    `;
-    container.appendChild(card);
-  });
-})();
+(function(){const c=document.getElementById('models'),cc={'claude-opus-4-6':'opus','moonshotai/kimi-k2.5':'kimi','claude-sonnet-4-20250514':'sonnet','gpt-4o':'gpt4o','unknown':'venice'};
+Object.entries(D.models).forEach(([m,d])=>{const pct=S.total_cost>0?((d.total/S.total_cost)*100).toFixed(1):'0';const avg=d.calls>0?d.total/d.calls:0;
+c.innerHTML+=`<div class="mc ${cc[m]||''}"><div class="mc-name">${lb(m)}</div><div class="mc-grid"><div><span>Spend:</span> $${$(d.total)}</div><div><span>Share:</span> ${pct}%</div><div><span>Calls:</span> ${fN(d.calls)}</div><div><span>Avg:</span> $${$(avg)}</div><div><span>Tokens in:</span> ${fN(d.tokens_in)}</div><div><span>Tokens out:</span> ${fN(d.tokens_out)}</div>${d.cache_read?`<div><span>Cache:</span> ${fN(d.cache_read)}</div>`:''}</div></div>`})})();
 
-// Donut chart
-(function(){
-  const canvas = document.getElementById('donutChart');
-  const ctx = canvas.getContext('2d');
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = 200 * dpr;
-  canvas.height = 200 * dpr;
-  ctx.scale(dpr, dpr);
+// Donut
+(function(){const cv=document.getElementById('donut'),ctx=cv.getContext('2d'),dpr=window.devicePixelRatio||1;cv.width=180*dpr;cv.height=180*dpr;ctx.scale(dpr,dpr);
+const provs=Object.entries(D.providers).filter(([k,v])=>v.calls>0),tot=provs.reduce((s,[k,v])=>s+v.calls,0);
+let a=-Math.PI/2;provs.forEach(([k,v])=>{const sl=(v.calls/tot)*Math.PI*2;ctx.beginPath();ctx.moveTo(90,90);ctx.arc(90,90,80,a,a+sl);ctx.closePath();ctx.fillStyle=cl(k);ctx.fill();a+=sl});
+ctx.beginPath();ctx.arc(90,90,50,0,Math.PI*2);ctx.fillStyle='var(--card)';ctx.fill();ctx.fillStyle='#fff';ctx.font='600 13px Inter';ctx.textAlign='center';ctx.fillText(fN(tot),90,88);ctx.font='10px Inter';ctx.fillStyle='#94a3b8';ctx.fillText('calls',90,104);
+const lg=document.getElementById('plegend');provs.forEach(([k,v])=>{lg.innerHTML+=`<div class="legend-item"><div class="dot" style="background:${cl(k)}"></div>${lb(k)}: ${fN(v.calls)} · $${$(v.total)}</div>`})})();
 
-  const providers = Object.entries(DATA.providers).filter(([k,v]) => v.calls > 0);
-  const totalCalls = providers.reduce((s,[k,v]) => s + v.calls, 0);
-  const cx = 100, cy = 100, r = 80, inner = 50;
+// Cron vs Interactive split
+(function(){const sp=D.split,tot=sp.cron.cost+sp.interactive.cost;
+const cp=tot>0?((sp.cron.cost/tot)*100).toFixed(1):0,ip=tot>0?((sp.interactive.cost/tot)*100).toFixed(1):0;
+document.getElementById('split-bars').innerHTML=`<div class="split-bar" style="width:${ip}%;background:var(--blue)">Interactive $${$(sp.interactive.cost)}</div><div class="split-bar" style="width:${Math.max(parseFloat(cp),5)}%;background:var(--purple)">Cron $${$(sp.cron.cost)}</div>`;
+document.getElementById('split-detail').innerHTML=`Interactive: ${sp.interactive.sessions} sessions, ${fN(sp.interactive.calls)} calls · Cron: ${sp.cron.sessions} sessions, ${fN(sp.cron.calls)} calls`})();
 
-  let angle = -Math.PI / 2;
-  providers.forEach(([k, v]) => {
-    const slice = (v.calls / totalCalls) * Math.PI * 2;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, r, angle, angle + slice);
-    ctx.closePath();
-    ctx.fillStyle = color(k);
-    ctx.fill();
-    angle += slice;
-  });
-  // Inner circle
-  ctx.beginPath();
-  ctx.arc(cx, cy, inner, 0, Math.PI * 2);
-  ctx.fillStyle = '#111';
-  ctx.fill();
-  // Center text
-  ctx.fillStyle = '#fff';
-  ctx.font = '600 14px Inter';
-  ctx.textAlign = 'center';
-  ctx.fillText(fmtN(totalCalls), cx, cy - 2);
-  ctx.font = '10px Inter';
-  ctx.fillStyle = '#737373';
-  ctx.fillText('total calls', cx, cy + 14);
+// Top sessions
+(function(){const tb=document.querySelector('#sessions-table tbody');
+D.top_sessions.forEach(s=>{const tag=s.is_cron?`<span class="tag tag-cron">${s.cron_name||'cron'}</span>`:'<span class="tag tag-int">interactive</span>';
+const tok=s.tokens_in+s.tokens_out;
+tb.innerHTML+=`<tr><td class="mono">${s.id}</td><td style="color:${cl(s.model)}">${lb(s.model)}</td><td class="mono cost">$${$(s.total)}</td><td>${fN(s.calls)}</td><td>${tok>0?fN(tok):'—'}</td><td>${tag}</td></tr>`})})();
 
-  // Legend
-  const legend = document.getElementById('provider-legend');
-  providers.forEach(([k, v]) => {
-    const pct = ((v.calls / totalCalls) * 100).toFixed(1);
-    legend.innerHTML += `<div class="legend-item"><div class="legend-dot" style="background:${color(k)}"></div>${label(k)}: ${fmtN(v.calls)} calls (${pct}%) · ${fmt$(v.total)}</div>`;
-  });
-})();
+// Hourly chart
+(function(){const cv=document.getElementById('hourlyChart'),ctx=cv.getContext('2d'),dpr=window.devicePixelRatio||1,W=cv.parentElement.clientWidth-40,H=100;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';ctx.scale(dpr,dpr);
+const hrs=D.hourly,mx=Math.max(...Object.values(hrs))||1;const bW=(W-20)/24;
+for(let h=0;h<24;h++){const v=hrs[h]||0;const bH=(v/mx)*(H-20);ctx.fillStyle=v>10?'var(--red)':v>1?'var(--amber)':'var(--blue)';ctx.fillRect(10+h*bW+1,H-15-bH,bW-2,bH);
+if(h%3===0){ctx.fillStyle='#525252';ctx.font='8px Inter';ctx.textAlign='center';ctx.fillText(h+'h',10+h*bW+bW/2,H-3)}}})();
 
-// Daily detail table
-(function(){
-  const tbody = document.querySelector('#daily-table tbody');
-  const days = Object.keys(DATA.daily).sort();
-  let prevTotal = 0;
-  
-  days.forEach((d, i) => {
-    const models = DATA.daily[d];
-    let dayTotal = 0, dayCalls = 0, topModel = '', topVal = 0;
-    Object.entries(models).forEach(([m, v]) => {
-      dayTotal += v.total;
-      dayCalls += v.calls;
-      if(v.total > topVal){ topVal = v.total; topModel = m; }
-    });
-    
-    let trend = '';
-    if(i > 0){
-      const diff = dayTotal - prevTotal;
-      if(Math.abs(diff) < 0.01) trend = '<span class="trend-flat">—</span>';
-      else if(diff > 0) trend = `<span class="trend-up">▲ +${fmt$(diff)}</span>`;
-      else trend = `<span class="trend-down">▼ ${fmt$(diff)}</span>`;
-    }
-    prevTotal = dayTotal;
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${d}</td><td class="amount">${fmt$(dayTotal)}</td><td>${fmtN(dayCalls)}</td><td><span style="color:${color(topModel)}">${label(topModel)}</span></td><td>${trend}</td>`;
-    tbody.appendChild(tr);
-  });
-})();
+// Daily detail
+(function(){const tb=document.querySelector('#daily-table tbody');const days=Object.keys(D.daily).sort();let prev=0;
+days.forEach((d,i)=>{const ms=D.daily[d];let tot=0,calls=0,top='',topV=0;Object.entries(ms).forEach(([m,v])=>{tot+=v.total;calls+=v.calls;if(v.total>topV){topV=v.total;top=m}});
+let tr='';if(i>0){const diff=tot-prev;if(Math.abs(diff)<0.01)tr='<span style="color:#525252">—</span>';else if(diff>0)tr=`<span style="color:var(--red)">▲ +$${$(diff)}</span>`;else tr=`<span style="color:var(--green)">▼ $${$(diff)}</span>`}prev=tot;
+tb.innerHTML+=`<tr><td>${d}</td><td class="mono" style="font-weight:600;color:var(--title)">$${$(tot)}</td><td>${fN(calls)}</td><td style="color:${cl(top)}">${lb(top)}</td><td>${tr}</td></tr>`})})();
 
 // Alerts
-(function(){
-  const alerts = document.getElementById('alerts');
-  const days = Object.keys(DATA.daily).sort();
-  
-  // Check for days > $50
-  days.forEach(d => {
-    let total = 0;
-    Object.values(DATA.daily[d]).forEach(v => total += v.total);
-    if(total > 50){
-      alerts.innerHTML += `<div class="alert warn"><span class="alert-icon">⚠️</span>${d}: Spend exceeded $50 (${fmt$(total)})</div>`;
-    }
-  });
-
-  // Opus dominance
-  const opusPct = (DATA.models['claude-opus-4-6'].total / S.total_cost * 100).toFixed(1);
-  if(opusPct > 90){
-    alerts.innerHTML += `<div class="alert warn"><span class="alert-icon">⚠️</span>Opus accounts for ${opusPct}% of total spend. Consider routing more work through Venice sub-agents.</div>`;
-  }
-
-  // Direct Sonnet calls
-  if(DATA.models['claude-sonnet-4-20250514'] && DATA.models['claude-sonnet-4-20250514'].calls > 0){
-    alerts.innerHTML += `<div class="alert warn"><span class="alert-icon">⚠️</span>${DATA.models['claude-sonnet-4-20250514'].calls} direct Anthropic Sonnet calls (${fmt$(DATA.models['claude-sonnet-4-20250514'].total)}) — these should route through Venice.</div>`;
-  }
-
-  // Venice unmetered
-  alerts.innerHTML += `<div class="alert info"><span class="alert-icon">ℹ️</span>${fmtN(S.venice_unmetered_calls)} Venice sub-agent calls are unmetered in session logs. Check Venice dashboard for credit consumption.</div>`;
-
-  if(!alerts.innerHTML) alerts.innerHTML = '<div class="alert info"><span class="alert-icon">✅</span>No alerts.</div>';
-})();
+(function(){const al=document.getElementById('alerts');const days=Object.keys(D.daily).sort();
+days.forEach(d=>{let t=0;Object.values(D.daily[d]).forEach(v=>t+=v.total);if(t>50)al.innerHTML+=`<div class="alert warn">⚠️ ${d}: Spend exceeded $50 ($${$(t)})</div>`});
+const opct=(D.models['claude-opus-4-6'].total/S.total_cost*100).toFixed(1);
+if(opct>90)al.innerHTML+=`<div class="alert warn">⚠️ Opus is ${opct}% of total spend — consider routing more to Venice sub-agents</div>`;
+if(D.models['claude-sonnet-4-20250514']&&D.models['claude-sonnet-4-20250514'].calls>0)al.innerHTML+=`<div class="alert warn">⚠️ ${D.models['claude-sonnet-4-20250514'].calls} direct Anthropic Sonnet calls ($${$(D.models['claude-sonnet-4-20250514'].total)}) should route through Venice</div>`;
+al.innerHTML+=`<div class="alert info">ℹ️ ${fN(S.venice_unmetered_calls)} Venice sub-agent calls unmetered — check Venice dashboard for credit usage</div>`;
+const proj=avg*30;if(proj>500)al.innerHTML+=`<div class="alert warn">⚠️ Projected monthly spend: $${$(proj)} — review if sustainable</div>`})();
 </script>
 </body>
 </html>
