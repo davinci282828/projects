@@ -1,0 +1,305 @@
+{
+  "generated_at": "2026-02-27T09:29:19.761608",
+  "models": {
+    "claude-opus-4-6": {
+      "input": 0.004959999999999929,
+      "output": 6.075299999999998,
+      "total": 101.38452224999997,
+      "calls": 728,
+      "tokens_in": 992,
+      "tokens_out": 243012,
+      "cache_read": 65064612
+    },
+    "moonshotai/kimi-k2.5": {
+      "input": 3.6634374,
+      "output": 0.26146199999999997,
+      "total": 3.9248994000000006,
+      "calls": 290,
+      "tokens_in": 6105729,
+      "tokens_out": 87154,
+      "cache_read": 4449123
+    },
+    "claude-sonnet-4-20250514": {
+      "input": 0.0002760000000000001,
+      "output": 0.19437000000000001,
+      "total": 0.94283025,
+      "calls": 27,
+      "tokens_in": 92,
+      "tokens_out": 12958,
+      "cache_read": 1418485
+    },
+    "gpt-4o": {
+      "input": 0.12142250000000002,
+      "output": 0.017400000000000002,
+      "total": 0.33322250000000003,
+      "calls": 16,
+      "tokens_in": 48569,
+      "tokens_out": 1740,
+      "cache_read": 155520
+    },
+    "unknown": {
+      "input": 0,
+      "output": 0,
+      "total": 0,
+      "calls": 1346,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "cache_read": 0
+    },
+    "delivery-mirror": {
+      "input": 0,
+      "output": 0,
+      "total": 0,
+      "calls": 16,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "cache_read": 0
+    },
+    "gateway-injected": {
+      "input": 0,
+      "output": 0,
+      "total": 0,
+      "calls": 3,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "cache_read": 0
+    },
+    "gemini-2.0-flash": {
+      "input": 0,
+      "output": 0,
+      "total": 0,
+      "calls": 2,
+      "tokens_in": 0,
+      "tokens_out": 0,
+      "cache_read": 0
+    }
+  },
+  "daily": {
+    "2026-02-17": {
+      "claude-opus-4-6": {
+        "total": 0.08001025,
+        "calls": 4,
+        "tokens_in": 6,
+        "tokens_out": 845
+      },
+      "unknown": {
+        "total": 0,
+        "calls": 7,
+        "tokens_in": 0,
+        "tokens_out": 0
+      }
+    },
+    "2026-02-18": {
+      "claude-opus-4-6": {
+        "total": 0.342498,
+        "calls": 6,
+        "tokens_in": 10,
+        "tokens_out": 971
+      },
+      "delivery-mirror": {
+        "total": 0,
+        "calls": 1,
+        "tokens_in": 0,
+        "tokens_out": 0
+      },
+      "unknown": {
+        "total": 0,
+        "calls": 6,
+        "tokens_in": 0,
+        "tokens_out": 0
+      }
+    },
+    "2026-02-19": {
+      "claude-sonnet-4-20250514": {
+        "total": 0.94283025,
+        "calls": 27,
+        "tokens_in": 92,
+        "tokens_out": 12958
+      },
+      "claude-opus-4-6": {
+        "total": 0.11699425000000001,
+        "calls": 2,
+        "tokens_in": 4,
+        "tokens_out": 139
+      },
+      "unknown": {
+        "total": 0,
+        "calls": 29,
+        "tokens_in": 0,
+        "tokens_out": 0
+      }
+    },
+    "2026-02-21": {
+      "gpt-4o": {
+        "total": 0.33322250000000003,
+        "calls": 16,
+        "tokens_in": 48569,
+        "tokens_out": 1740
+      },
+      "gateway-injected": {
+        "total": 0,
+        "calls": 3,
+        "tokens_in": 0,
+        "tokens_out": 0
+      },
+      "unknown": {
+        "total": 0,
+        "calls": 11,
+        "tokens_in": 0,
+        "tokens_out": 0
+      }
+    },
+    "2026-02-22": {
+      "claude-opus-4-6": {
+        "total": 0.13464250000000003,
+        "calls": 2,
+        "tokens_in": 4,
+        "tokens_out": 319
+      },
+      "unknown": {
+        "total": 0,
+        "calls": 5,
+        "tokens_in": 0,
+        "tokens_out": 0
+      },
+      "gemini-2.0-flash": {
+        "total": 0,
+        "calls": 2,
+        "tokens_in": 0,
+        "tokens_out": 0
+      }
+    },
+    "2026-02-23": {
+      "claude-opus-4-6": {
+        "total": 0.45524200000000004,
+        "calls": 9,
+        "tokens_in": 13,
+        "tokens_out": 2684
+      },
+      "unknown": {
+        "total": 0,
+        "calls": 12,
+        "tokens_in": 0,
+        "tokens_out": 0
+      }
+    },
+    "2026-02-24": {
+      "claude-opus-4-6": {
+        "total": 0.20948024999999998,
+        "calls": 3,
+        "tokens_in": 5,
+        "tokens_out": 542
+      },
+      "unknown": {
+        "total": 0,
+        "calls": 5,
+        "tokens_in": 0,
+        "tokens_out": 0
+      }
+    },
+    "2026-02-25": {
+      "claude-opus-4-6": {
+        "total": 0.61839425,
+        "calls": 13,
+        "tokens_in": 15,
+        "tokens_out": 1716
+      },
+      "moonshotai/kimi-k2.5": {
+        "total": 0.07600200000000001,
+        "calls": 4,
+        "tokens_in": 79960,
+        "tokens_out": 9342
+      },
+      "unknown": {
+        "total": 0,
+        "calls": 26,
+        "tokens_in": 0,
+        "tokens_out": 0
+      }
+    },
+    "2026-02-26": {
+      "claude-opus-4-6": {
+        "total": 64.23640374999998,
+        "calls": 378,
+        "tokens_in": 512,
+        "tokens_out": 108082
+      },
+      "moonshotai/kimi-k2.5": {
+        "total": 2.762655600000001,
+        "calls": 171,
+        "tokens_in": 4363356,
+        "tokens_out": 48214
+      },
+      "unknown": {
+        "total": 0,
+        "calls": 717,
+        "tokens_in": 0,
+        "tokens_out": 0
+      },
+      "delivery-mirror": {
+        "total": 0,
+        "calls": 5,
+        "tokens_in": 0,
+        "tokens_out": 0
+      }
+    },
+    "2026-02-27": {
+      "claude-opus-4-6": {
+        "total": 35.19085700000001,
+        "calls": 311,
+        "tokens_in": 423,
+        "tokens_out": 127714
+      },
+      "moonshotai/kimi-k2.5": {
+        "total": 1.0862418,
+        "calls": 115,
+        "tokens_in": 1662413,
+        "tokens_out": 29598
+      },
+      "unknown": {
+        "total": 0,
+        "calls": 528,
+        "tokens_in": 0,
+        "tokens_out": 0
+      },
+      "delivery-mirror": {
+        "total": 0,
+        "calls": 10,
+        "tokens_in": 0,
+        "tokens_out": 0
+      }
+    }
+  },
+  "providers": {
+    "anthropic": {
+      "total": 102.32735249999998,
+      "calls": 755
+    },
+    "openrouter": {
+      "total": 3.9248994000000006,
+      "calls": 290
+    },
+    "openai": {
+      "total": 0.33322250000000003,
+      "calls": 16
+    },
+    "unknown": {
+      "total": 0,
+      "calls": 1346
+    },
+    "openclaw": {
+      "total": 0,
+      "calls": 19
+    },
+    "google": {
+      "total": 0,
+      "calls": 2
+    }
+  },
+  "summary": {
+    "total_cost": 106.58547439999998,
+    "total_calls": 2428,
+    "days_tracked": 10,
+    "venice_unmetered_calls": 1346
+  }
+}

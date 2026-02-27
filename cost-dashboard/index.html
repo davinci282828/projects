@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Da Vinci — Cost Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e5e5e5;font-family:'Inter',sans-serif;line-height:1.6;padding:20px;max-width:1200px;margin:0 auto}
+h1{font-size:1.8rem;font-weight:700;color:#fff}
+h2{font-size:1.2rem;font-weight:600;color:#fff;margin-bottom:16px}
+.subtitle{color:#737373;font-size:0.85rem;font-weight:400}
+.header{padding:24px 0 20px;border-bottom:1px solid #1a1a1a;margin-bottom:24px}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:16px 0}
+.stat{background:#111;border:1px solid #1f1f1f;border-radius:10px;padding:14px 16px}
+.stat-label{font-size:0.7rem;color:#737373;text-transform:uppercase;letter-spacing:0.05em}
+.stat-value{font-size:1.4rem;font-weight:700;color:#fff;margin-top:2px}
+.stat-value.red{color:#dc2626}
+.stat-value.blue{color:#3b82f6}
+.stat-value.green{color:#22c55e}
+.note{font-size:0.72rem;color:#525252;margin-top:8px;font-style:italic}
+.section{margin-bottom:32px}
+.chart-container{background:#111;border:1px solid #1f1f1f;border-radius:10px;padding:20px;margin-bottom:24px}
+canvas{width:100%!important;height:auto!important}
+.model-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.model-card{background:#111;border:1px solid #1f1f1f;border-radius:10px;padding:16px;border-left:3px solid #333}
+.model-card.opus{border-left-color:#dc2626}
+.model-card.kimi{border-left-color:#3b82f6}
+.model-card.sonnet{border-left-color:#f59e0b}
+.model-card.gpt4o{border-left-color:#22c55e}
+.model-card.venice{border-left-color:#6b7280}
+.model-name{font-weight:600;font-size:0.9rem;color:#fff;margin-bottom:8px}
+.model-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.model-stat{font-size:0.75rem}
+.model-stat span{color:#737373}
+.donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.legend{display:flex;flex-direction:column;gap:8px}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:0.8rem}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.daily-table{width:100%;border-collapse:collapse;font-size:0.8rem}
+.daily-table th{text-align:left;padding:8px 12px;color:#737373;font-weight:500;border-bottom:1px solid #1f1f1f;font-size:0.7rem;text-transform:uppercase}
+.daily-table td{padding:8px 12px;border-bottom:1px solid #141414}
+.daily-table tr:hover{background:#141414}
+.daily-table .amount{font-weight:600;color:#fff;font-variant-numeric:tabular-nums}
+.trend-up{color:#dc2626}
+.trend-down{color:#22c55e}
+.trend-flat{color:#525252}
+.alerts{display:flex;flex-direction:column;gap:8px}
+.alert{padding:12px 16px;border-radius:8px;font-size:0.8rem;display:flex;align-items:center;gap:8px}
+.alert.warn{background:#1c1107;border:1px solid #854d0e;color:#fbbf24}
+.alert.info{background:#0c1220;border:1px solid #1e3a5f;color:#60a5fa}
+.alert-icon{font-size:1rem}
+@media(max-width:600px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .model-cards{grid-template-columns:1fr}
+  .donut-wrap{flex-direction:column;align-items:flex-start}
+  body{padding:12px}
+  h1{font-size:1.4rem}
+  .stat-value{font-size:1.1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Da Vinci — Cost Dashboard</h1>
+  <div class="subtitle">OpenClaw Model Spend Tracking · Phase 1</div>
+  <div class="stats-row" id="header-stats"></div>
+  <div class="note" id="venice-note"></div>
+</div>
+
+<div class="section">
+  <h2>Daily Spend</h2>
+  <div class="chart-container">
+    <canvas id="dailyChart" height="220"></canvas>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Model Breakdown</h2>
+  <div class="model-cards" id="model-cards"></div>
+</div>
+
+<div class="section">
+  <h2>Provider Split</h2>
+  <div class="chart-container">
+    <div class="donut-wrap">
+      <canvas id="donutChart" width="200" height="200" style="width:200px!important;height:200px!important"></canvas>
+      <div class="legend" id="provider-legend"></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Daily Detail</h2>
+  <div class="chart-container" style="overflow-x:auto">
+    <table class="daily-table" id="daily-table">
+      <thead><tr><th>Date</th><th>Spend</th><th>Calls</th><th>Top Model</th><th>Trend</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Alerts</h2>
+  <div class="alerts" id="alerts"></div>
+</div>
+
+<script>
+const DATA = {"generated_at":"2026-02-27T09:29:19.761608","models":{"claude-opus-4-6":{"input":0.005,"output":6.0753,"total":101.3845,"calls":728,"tokens_in":992,"tokens_out":243012,"cache_read":65064612},"moonshotai/kimi-k2.5":{"input":3.6634,"output":0.2615,"total":3.9249,"calls":290,"tokens_in":6105729,"tokens_out":87154,"cache_read":4449123},"claude-sonnet-4-20250514":{"input":0.0003,"output":0.1944,"total":0.9428,"calls":27,"tokens_in":92,"tokens_out":12958,"cache_read":1418485},"gpt-4o":{"input":0.1214,"output":0.0174,"total":0.3332,"calls":16,"tokens_in":48569,"tokens_out":1740,"cache_read":155520},"unknown":{"input":0,"output":0,"total":0,"calls":1346,"tokens_in":0,"tokens_out":0,"cache_read":0}},"daily":{"2026-02-17":{"claude-opus-4-6":{"total":0.08,"calls":4},"unknown":{"total":0,"calls":7}},"2026-02-18":{"claude-opus-4-6":{"total":0.3425,"calls":6},"unknown":{"total":0,"calls":6}},"2026-02-19":{"claude-sonnet-4-20250514":{"total":0.9428,"calls":27},"claude-opus-4-6":{"total":0.117,"calls":2},"unknown":{"total":0,"calls":29}},"2026-02-21":{"gpt-4o":{"total":0.3332,"calls":16},"unknown":{"total":0,"calls":11}},"2026-02-22":{"claude-opus-4-6":{"total":0.1346,"calls":2},"unknown":{"total":0,"calls":5}},"2026-02-23":{"claude-opus-4-6":{"total":0.4552,"calls":9},"unknown":{"total":0,"calls":12}},"2026-02-24":{"claude-opus-4-6":{"total":0.2095,"calls":3},"unknown":{"total":0,"calls":5}},"2026-02-25":{"claude-opus-4-6":{"total":0.6184,"calls":13},"moonshotai/kimi-k2.5":{"total":0.076,"calls":4},"unknown":{"total":0,"calls":26}},"2026-02-26":{"claude-opus-4-6":{"total":64.2364,"calls":378},"moonshotai/kimi-k2.5":{"total":2.7627,"calls":171},"unknown":{"total":0,"calls":717}},"2026-02-27":{"claude-opus-4-6":{"total":35.1909,"calls":311},"moonshotai/kimi-k2.5":{"total":1.0862,"calls":115},"unknown":{"total":0,"calls":528}}},"providers":{"anthropic":{"total":102.3274,"calls":755},"openrouter":{"total":3.9249,"calls":290},"openai":{"total":0.3332,"calls":16},"unknown":{"total":0,"calls":1346},"openclaw":{"total":0,"calls":19},"google":{"total":0,"calls":2}},"summary":{"total_cost":106.5855,"total_calls":2428,"days_tracked":10,"venice_unmetered_calls":1346}};
+
+const COLORS = {
+  'claude-opus-4-6': '#dc2626',
+  'moonshotai/kimi-k2.5': '#3b82f6',
+  'claude-sonnet-4-20250514': '#f59e0b',
+  'gpt-4o': '#22c55e',
+  'unknown': '#6b7280',
+  'anthropic': '#dc2626',
+  'openrouter': '#3b82f6',
+  'openai': '#22c55e',
+  'openclaw': '#8b5cf6',
+  'google': '#f59e0b'
+};
+
+const LABELS = {
+  'claude-opus-4-6': 'Opus',
+  'moonshotai/kimi-k2.5': 'Kimi K2.5',
+  'claude-sonnet-4-20250514': 'Sonnet',
+  'gpt-4o': 'GPT-4o',
+  'unknown': 'Venice (unmetered)',
+  'anthropic': 'Anthropic (direct)',
+  'openrouter': 'OpenRouter',
+  'openai': 'OpenAI',
+  'openclaw': 'OpenClaw',
+  'google': 'Google'
+};
+
+function fmt$(n){return '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function fmtN(n){if(n>=1e6)return (n/1e6).toFixed(1)+'M';if(n>=1e3)return (n/1e3).toFixed(1)+'K';return n.toLocaleString()}
+function label(k){return LABELS[k]||k}
+function color(k){return COLORS[k]||'#525252'}
+
+// Header stats
+const S = DATA.summary;
+const avgDaily = S.total_cost / S.days_tracked;
+document.getElementById('header-stats').innerHTML = `
+  <div class="stat"><div class="stat-label">Total Spend</div><div class="stat-value red">${fmt$(S.total_cost)}</div></div>
+  <div class="stat"><div class="stat-label">API Calls</div><div class="stat-value">${fmtN(S.total_calls)}</div></div>
+  <div class="stat"><div class="stat-label">Days Tracked</div><div class="stat-value">${S.days_tracked}</div></div>
+  <div class="stat"><div class="stat-label">Avg Daily</div><div class="stat-value">${fmt$(avgDaily)}</div></div>
+`;
+document.getElementById('venice-note').textContent = `Venice sub-agent calls (${fmtN(S.venice_unmetered_calls)} calls) not metered — runs on Venice credits`;
+
+// Daily chart
+(function(){
+  const canvas = document.getElementById('dailyChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const W = rect.width - 40;
+  const H = 220;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.scale(dpr, dpr);
+
+  const days = Object.keys(DATA.daily).sort();
+  const models = ['claude-opus-4-6','moonshotai/kimi-k2.5','claude-sonnet-4-20250514','gpt-4o'];
+  
+  let maxVal = 0;
+  days.forEach(d => {
+    let sum = 0;
+    models.forEach(m => { sum += (DATA.daily[d][m]||{}).total||0; });
+    if(sum > maxVal) maxVal = sum;
+  });
+  maxVal = Math.ceil(maxVal / 10) * 10 || 10;
+
+  const pad = {l:50,r:10,t:10,b:40};
+  const chartW = W - pad.l - pad.r;
+  const chartH = H - pad.t - pad.b;
+  const barW = Math.min(40, (chartW / days.length) * 0.7);
+  const gap = chartW / days.length;
+
+  // Grid
+  ctx.strokeStyle = '#1f1f1f';
+  ctx.lineWidth = 1;
+  ctx.font = '10px Inter';
+  ctx.fillStyle = '#525252';
+  for(let i = 0; i <= 4; i++){
+    const y = pad.t + chartH - (chartH * i / 4);
+    ctx.beginPath();
+    ctx.moveTo(pad.l, y);
+    ctx.lineTo(W - pad.r, y);
+    ctx.stroke();
+    ctx.fillText(fmt$(maxVal * i / 4), 2, y + 3);
+  }
+
+  // Bars
+  days.forEach((d, i) => {
+    const x = pad.l + i * gap + (gap - barW) / 2;
+    let cumY = 0;
+    models.forEach(m => {
+      const val = (DATA.daily[d][m]||{}).total||0;
+      if(val <= 0) return;
+      const h = (val / maxVal) * chartH;
+      const y = pad.t + chartH - cumY - h;
+      ctx.fillStyle = color(m);
+      ctx.beginPath();
+      ctx.roundRect(x, y, barW, h, [3,3,0,0]);
+      ctx.fill();
+      cumY += h;
+    });
+    // Date label
+    ctx.fillStyle = '#525252';
+    ctx.font = '9px Inter';
+    ctx.textAlign = 'center';
+    ctx.fillText(d.slice(5), x + barW/2, H - 8);
+    ctx.textAlign = 'left';
+  });
+
+  // Legend
+  ctx.font = '10px Inter';
+  let lx = pad.l;
+  models.forEach(m => {
+    ctx.fillStyle = color(m);
+    ctx.fillRect(lx, H - 26, 8, 8);
+    ctx.fillStyle = '#737373';
+    ctx.fillText(label(m), lx + 12, H - 18);
+    lx += ctx.measureText(label(m)).width + 24;
+  });
+})();
+
+// Model cards
+(function(){
+  const container = document.getElementById('model-cards');
+  const totalCost = S.total_cost;
+  const cardClass = {'claude-opus-4-6':'opus','moonshotai/kimi-k2.5':'kimi','claude-sonnet-4-20250514':'sonnet','gpt-4o':'gpt4o','unknown':'venice'};
+  
+  Object.entries(DATA.models).forEach(([m, d]) => {
+    if(m === 'delivery-mirror' || m === 'gateway-injected' || m === 'gemini-2.0-flash') return;
+    const pct = totalCost > 0 ? ((d.total / totalCost) * 100).toFixed(1) : '0.0';
+    const avgCost = d.calls > 0 ? d.total / d.calls : 0;
+    const card = document.createElement('div');
+    card.className = `model-card ${cardClass[m]||''}`;
+    card.innerHTML = `
+      <div class="model-name">${label(m)}</div>
+      <div class="model-stats">
+        <div class="model-stat"><span>Spend:</span> ${fmt$(d.total)}</div>
+        <div class="model-stat"><span>Share:</span> ${pct}%</div>
+        <div class="model-stat"><span>Calls:</span> ${fmtN(d.calls)}</div>
+        <div class="model-stat"><span>Avg/call:</span> ${fmt$(avgCost)}</div>
+        <div class="model-stat"><span>Tokens in:</span> ${fmtN(d.tokens_in)}</div>
+        <div class="model-stat"><span>Tokens out:</span> ${fmtN(d.tokens_out)}</div>
+        ${d.cache_read ? `<div class="model-stat"><span>Cache read:</span> ${fmtN(d.cache_read)}</div>` : ''}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+})();
+
+// Donut chart
+(function(){
+  const canvas = document.getElementById('donutChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = 200 * dpr;
+  canvas.height = 200 * dpr;
+  ctx.scale(dpr, dpr);
+
+  const providers = Object.entries(DATA.providers).filter(([k,v]) => v.calls > 0);
+  const totalCalls = providers.reduce((s,[k,v]) => s + v.calls, 0);
+  const cx = 100, cy = 100, r = 80, inner = 50;
+
+  let angle = -Math.PI / 2;
+  providers.forEach(([k, v]) => {
+    const slice = (v.calls / totalCalls) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, angle, angle + slice);
+    ctx.closePath();
+    ctx.fillStyle = color(k);
+    ctx.fill();
+    angle += slice;
+  });
+  // Inner circle
+  ctx.beginPath();
+  ctx.arc(cx, cy, inner, 0, Math.PI * 2);
+  ctx.fillStyle = '#111';
+  ctx.fill();
+  // Center text
+  ctx.fillStyle = '#fff';
+  ctx.font = '600 14px Inter';
+  ctx.textAlign = 'center';
+  ctx.fillText(fmtN(totalCalls), cx, cy - 2);
+  ctx.font = '10px Inter';
+  ctx.fillStyle = '#737373';
+  ctx.fillText('total calls', cx, cy + 14);
+
+  // Legend
+  const legend = document.getElementById('provider-legend');
+  providers.forEach(([k, v]) => {
+    const pct = ((v.calls / totalCalls) * 100).toFixed(1);
+    legend.innerHTML += `<div class="legend-item"><div class="legend-dot" style="background:${color(k)}"></div>${label(k)}: ${fmtN(v.calls)} calls (${pct}%) · ${fmt$(v.total)}</div>`;
+  });
+})();
+
+// Daily detail table
+(function(){
+  const tbody = document.querySelector('#daily-table tbody');
+  const days = Object.keys(DATA.daily).sort();
+  let prevTotal = 0;
+  
+  days.forEach((d, i) => {
+    const models = DATA.daily[d];
+    let dayTotal = 0, dayCalls = 0, topModel = '', topVal = 0;
+    Object.entries(models).forEach(([m, v]) => {
+      dayTotal += v.total;
+      dayCalls += v.calls;
+      if(v.total > topVal){ topVal = v.total; topModel = m; }
+    });
+    
+    let trend = '';
+    if(i > 0){
+      const diff = dayTotal - prevTotal;
+      if(Math.abs(diff) < 0.01) trend = '<span class="trend-flat">—</span>';
+      else if(diff > 0) trend = `<span class="trend-up">▲ +${fmt$(diff)}</span>`;
+      else trend = `<span class="trend-down">▼ ${fmt$(diff)}</span>`;
+    }
+    prevTotal = dayTotal;
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${d}</td><td class="amount">${fmt$(dayTotal)}</td><td>${fmtN(dayCalls)}</td><td><span style="color:${color(topModel)}">${label(topModel)}</span></td><td>${trend}</td>`;
+    tbody.appendChild(tr);
+  });
+})();
+
+// Alerts
+(function(){
+  const alerts = document.getElementById('alerts');
+  const days = Object.keys(DATA.daily).sort();
+  
+  // Check for days > $50
+  days.forEach(d => {
+    let total = 0;
+    Object.values(DATA.daily[d]).forEach(v => total += v.total);
+    if(total > 50){
+      alerts.innerHTML += `<div class="alert warn"><span class="alert-icon">⚠️</span>${d}: Spend exceeded $50 (${fmt$(total)})</div>`;
+    }
+  });
+
+  // Opus dominance
+  const opusPct = (DATA.models['claude-opus-4-6'].total / S.total_cost * 100).toFixed(1);
+  if(opusPct > 90){
+    alerts.innerHTML += `<div class="alert warn"><span class="alert-icon">⚠️</span>Opus accounts for ${opusPct}% of total spend. Consider routing more work through Venice sub-agents.</div>`;
+  }
+
+  // Direct Sonnet calls
+  if(DATA.models['claude-sonnet-4-20250514'] && DATA.models['claude-sonnet-4-20250514'].calls > 0){
+    alerts.innerHTML += `<div class="alert warn"><span class="alert-icon">⚠️</span>${DATA.models['claude-sonnet-4-20250514'].calls} direct Anthropic Sonnet calls (${fmt$(DATA.models['claude-sonnet-4-20250514'].total)}) — these should route through Venice.</div>`;
+  }
+
+  // Venice unmetered
+  alerts.innerHTML += `<div class="alert info"><span class="alert-icon">ℹ️</span>${fmtN(S.venice_unmetered_calls)} Venice sub-agent calls are unmetered in session logs. Check Venice dashboard for credit consumption.</div>`;
+
+  if(!alerts.innerHTML) alerts.innerHTML = '<div class="alert info"><span class="alert-icon">✅</span>No alerts.</div>';
+})();
+</script>
+</body>
+</html>
