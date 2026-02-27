@@ -141,12 +141,12 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); -web
 </nav>
 
 <div class="tabs">
-  <div class="tab active" onclick="showPanel('themes')">Meta-Themes</div>
-  <div class="tab" onclick="showPanel('speakers')">Speakers</div>
-  <div class="tab" onclick="showPanel('contradictions')">Contradictions</div>
-  <div class="tab" onclick="showPanel('predictions')">Predictions</div>
-  <div class="tab" onclick="showPanel('videos')">Videos</div>
-  <div class="tab" onclick="showPanel('quotes')">Quotes</div>
+  <div class="tab active" data-panel="themes" onclick="showPanel('themes')">Meta-Themes</div>
+  <div class="tab" data-panel="speakers" onclick="showPanel('speakers')">Speakers</div>
+  <div class="tab" data-panel="contradictions" onclick="showPanel('contradictions')">Contradictions</div>
+  <div class="tab" data-panel="predictions" onclick="showPanel('predictions')">Predictions</div>
+  <div class="tab" data-panel="videos" onclick="showPanel('videos')">Videos</div>
+  <div class="tab" data-panel="quotes" onclick="showPanel('quotes')">Quotes</div>
 </div>
 
 <!-- META-THEMES -->
@@ -547,23 +547,35 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); -web
 </div>
 
 <script>
-// Tab switching
+// Tab switching — robust, no event.target dependency
 function showPanel(name) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
-  event.target.classList.add('active');
+  document.querySelector('.tab[data-panel="' + name + '"]').classList.add('active');
 }
 
-// Search filtering
+// Search filtering — works on mobile (input + keyup + search events)
 function filterCards(query, panelId) {
   const panel = document.getElementById(panelId);
-  const q = query.toLowerCase();
+  if (!panel) return;
+  const q = query.toLowerCase().trim();
   panel.querySelectorAll('[data-search]').forEach(card => {
-    const match = !q || card.getAttribute('data-search').toLowerCase().includes(q) || card.textContent.toLowerCase().includes(q);
-    card.style.display = match ? '' : 'none';
+    const searchText = (card.getAttribute('data-search') + ' ' + card.textContent).toLowerCase();
+    card.style.display = (!q || searchText.includes(q)) ? '' : 'none';
   });
 }
+
+// Bind search events for mobile compatibility
+document.querySelectorAll('.search-bar').forEach(bar => {
+  const panelId = bar.closest('.panel')?.id;
+  if (!panelId) return;
+  const handler = () => filterCards(bar.value, panelId);
+  bar.addEventListener('input', handler);
+  bar.addEventListener('keyup', handler);
+  bar.addEventListener('search', handler);
+  bar.addEventListener('change', handler);
+});
 
 // Countdown timers
 function updateCountdowns() {
