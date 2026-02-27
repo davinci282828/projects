@@ -1,0 +1,1429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Swiss Army Calc</title>
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --panel:#101214;
+      --panel2:#0f1113;
+      --border:rgba(255,255,255,.08);
+      --text:#e7e7e7;
+      --muted:#a9b0b7;
+      --muted2:#7f8790;
+      --accent:#3b82f6;
+      --good:#22c55e;
+      --bad:#ef4444;
+      --warn:#f59e0b;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 14px;
+      --radius2: 10px;
+      --focus: 0 0 0 3px rgba(59,130,246,.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background:radial-gradient(1200px 800px at 15% -10%, rgba(59,130,246,.14), transparent 55%),
+                 radial-gradient(900px 700px at 100% 10%, rgba(34,197,94,.08), transparent 55%),
+                 var(--bg);
+      color:var(--text);
+    }
+
+    .wrap{max-width:1060px; margin:0 auto; padding:18px 14px 40px;}
+
+    header{
+      display:flex; align-items:flex-start; justify-content:space-between;
+      gap:14px;
+      margin:10px 0 14px;
+    }
+
+    .title{
+      display:flex; flex-direction:column; gap:6px;
+    }
+
+    .title h1{
+      font-size:18px; letter-spacing:.2px; margin:0;
+      font-weight:700;
+    }
+
+    .title .sub{
+      font-size:12px; color:var(--muted);
+      line-height:1.35;
+    }
+
+    .kbdhint{
+      font-size:12px; color:var(--muted2);
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      padding:10px 12px;
+      border-radius:12px;
+      box-shadow:var(--shadow);
+      min-width:210px;
+    }
+    .kbdhint b{color:var(--text); font-weight:650}
+
+    .tabs{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      background: linear-gradient(to bottom, rgba(10,10,10,.85), rgba(10,10,10,.65));
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:8px;
+      display:flex;
+      gap:8px;
+      box-shadow:var(--shadow);
+      overflow:auto;
+      scrollbar-width: none;
+      margin:0 0 14px;
+    }
+    .tabs::-webkit-scrollbar{display:none}
+
+    .tab{
+      appearance:none;
+      border:1px solid transparent;
+      background:transparent;
+      color:var(--muted);
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:650;
+      letter-spacing:.2px;
+      display:flex; align-items:center; gap:10px;
+      cursor:pointer;
+      white-space:nowrap;
+      transition: transform .12s ease, background .18s ease, color .18s ease, border-color .18s ease;
+    }
+
+    .tab .num{
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted2);
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      padding:2px 7px;
+      border-radius:999px;
+    }
+
+    .tab[aria-selected="true"]{
+      background:rgba(59,130,246,.14);
+      border-color: rgba(59,130,246,.35);
+      color:var(--text);
+      transform: translateY(-1px);
+    }
+
+    .tab:focus-visible{outline:none; box-shadow:var(--focus)}
+
+    main{margin-top:8px}
+
+    .panel{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+      border-radius: var(--radius);
+      padding:14px;
+      box-shadow:var(--shadow);
+    }
+
+    .tool{
+      display:none;
+      opacity:0;
+      transform: translateY(6px);
+      transition: opacity .22s ease, transform .22s ease;
+    }
+    .tool.active{display:block}
+    .tool.active.show{opacity:1; transform: translateY(0)}
+
+    .toolhead{
+      display:flex; align-items:flex-start; justify-content:space-between;
+      gap:12px; margin-bottom:12px;
+    }
+
+    .toolhead h2{margin:0; font-size:16px; letter-spacing:.2px}
+    .toolhead .meta{display:flex; flex-direction:column; align-items:flex-end; gap:6px;}
+
+    .pill{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      background:rgba(255,255,255,.03);
+      display:inline-flex; align-items:center; gap:8px;
+      white-space:nowrap;
+    }
+    .dot{width:8px; height:8px; border-radius:50%; background: var(--muted2)}
+    .pill.good .dot{background:var(--good)}
+    .pill.bad .dot{background:var(--bad)}
+    .pill.warn .dot{background:var(--warn)}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+
+    @media (min-width: 900px){
+      .grid.two{grid-template-columns: 1.1fr .9fr}
+      .grid.three{grid-template-columns: 1fr 1fr 1fr}
+    }
+
+    .card{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(16,18,20,.9), rgba(12,14,16,.9));
+      border-radius: var(--radius);
+      padding:12px;
+    }
+
+    .card h3{
+      margin:0 0 10px;
+      font-size:13px;
+      color:var(--muted);
+      font-weight:650;
+      letter-spacing:.2px;
+      text-transform:uppercase;
+    }
+
+    .row{display:grid; grid-template-columns: 1fr; gap:10px; margin-bottom:10px;}
+    @media (min-width: 600px){
+      .row.two{grid-template-columns: 1fr 1fr}
+      .row.three{grid-template-columns: 1fr 1fr 1fr}
+    }
+
+    label{display:flex; flex-direction:column; gap:7px; font-size:12px; color:var(--muted)}
+    input, select{
+      width:100%;
+      font: inherit;
+      color:var(--text);
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding:11px 12px;
+      outline:none;
+      transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    input::placeholder{color:rgba(255,255,255,.28)}
+    input:focus, select:focus{border-color: rgba(59,130,246,.55); box-shadow: var(--focus); background: rgba(255,255,255,.045)}
+
+    .btnrow{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:flex-start; margin-top:4px}
+
+    button.btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius: 12px;
+      font-weight:650;
+      cursor:pointer;
+      transition: transform .12s ease, background .18s ease, border-color .18s ease;
+    }
+    button.btn:hover{background: rgba(255,255,255,.05)}
+    button.btn:active{transform: translateY(1px)}
+    button.btn.primary{background: rgba(59,130,246,.18); border-color: rgba(59,130,246,.38)}
+    button.btn.primary:hover{background: rgba(59,130,246,.24)}
+    button.btn.ghost{background: transparent}
+    button.btn:focus-visible{outline:none; box-shadow: var(--focus)}
+
+    .mini{
+      font-size:12px;
+      border-radius: 999px;
+      padding:7px 10px;
+    }
+
+    .output{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .stat{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      border-radius: 14px;
+      padding:12px;
+      display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+    }
+    .stat .k{font-size:12px; color:var(--muted)}
+    .stat .v{font-size:16px; font-family:var(--mono); font-variant-numeric: tabular-nums; letter-spacing:.2px}
+
+    .big{
+      border:1px solid rgba(59,130,246,.28);
+      background: linear-gradient(180deg, rgba(59,130,246,.18), rgba(255,255,255,.02));
+      border-radius: 16px;
+      padding:16px;
+    }
+    .big .v{font-size:26px; font-weight:800; font-family:var(--mono)}
+
+    .note{font-size:12px; color:var(--muted2); line-height:1.45}
+
+    .evBadge{
+      display:inline-flex; align-items:center; gap:8px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      padding:6px 10px;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .evBadge.good{border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.10); color: rgba(188,255,215,.95)}
+    .evBadge.bad{border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.10); color: rgba(255,210,210,.95)}
+
+    .divider{height:1px; background: var(--border); margin:10px 0;}
+
+    .hidden{display:none !important;}
+
+    .meetingBig{
+      text-align:center;
+      padding:18px 14px;
+      border-radius: 18px;
+      border:1px solid rgba(59,130,246,.28);
+      background: radial-gradient(800px 280px at 50% 0%, rgba(59,130,246,.20), transparent 60%),
+                  linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+    }
+    .meetingBig .label{font-size:12px; color:var(--muted); margin-bottom:8px;}
+    .meetingBig .cost{
+      font-family:var(--mono);
+      font-variant-numeric: tabular-nums;
+      font-weight:900;
+      font-size:42px;
+      letter-spacing:.3px;
+      line-height:1.1;
+      transform-origin: center;
+    }
+    @media (max-width: 420px){
+      .meetingBig .cost{font-size:36px}
+    }
+
+    .pulse{
+      animation: pulse .6s ease;
+    }
+    @keyframes pulse{
+      0%{transform: scale(1)}
+      40%{transform: scale(1.02)}
+      100%{transform: scale(1)}
+    }
+
+    footer{
+      margin-top:14px;
+      text-align:center;
+      color: var(--muted2);
+      font-size:12px;
+      padding: 16px 0 0;
+    }
+
+    .sr-only{
+      position:absolute;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Swiss Army Calc</h1>
+        <div class="sub">Four fast tools, zero dependencies. Keyboard: <b>1–4</b> for tabs, <b>Enter</b> to calculate.</div>
+      </div>
+      <div class="kbdhint" aria-label="Keyboard shortcuts">
+        <div><b>1</b> Crypto Converter</div>
+        <div><b>2</b> Polymarket Calc</div>
+        <div><b>3</b> Position Sizer</div>
+        <div><b>4</b> Meeting Timer</div>
+      </div>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="Tools">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="tool-crypto" id="tab-crypto" data-tab="crypto">
+        <span class="num">1</span> Crypto Converter
+      </button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="tool-poly" id="tab-poly" data-tab="poly">
+        <span class="num">2</span> Polymarket Calculator
+      </button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="tool-size" id="tab-size" data-tab="size">
+        <span class="num">3</span> Position Sizer
+      </button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="tool-meet" id="tab-meet" data-tab="meet">
+        <span class="num">4</span> Meeting Cost Timer
+      </button>
+    </nav>
+
+    <main>
+      <!-- 1) Crypto Converter -->
+      <section class="panel tool active" id="tool-crypto" role="tabpanel" aria-labelledby="tab-crypto" data-tool="crypto">
+        <div class="toolhead">
+          <h2>Crypto Converter</h2>
+          <div class="meta">
+            <div id="cgStatus" class="pill warn" title="CoinGecko price status"><span class="dot"></span><span id="cgStatusText">Fetching prices…</span></div>
+            <div class="pill" title="Last updated"><span class="dot"></span><span>Updated: <span id="cgUpdated">—</span></span></div>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div class="card">
+            <h3>Convert</h3>
+            <div class="row two">
+              <label>
+                Amount
+                <input id="ccAmount" inputmode="decimal" autocomplete="off" type="number" step="any" min="0" placeholder="0" />
+              </label>
+              <label>
+                Direction
+                <div class="btnrow" style="margin-top:0">
+                  <button class="btn mini" id="ccFlip" type="button" title="Flip conversion">Quick flip ↔</button>
+                  <button class="btn mini" id="ccRefresh" type="button" title="Refresh CoinGecko prices">Refresh prices</button>
+                </div>
+                <div class="note" id="ccDebounceNote">Debounced: max 1 request / 30s.</div>
+              </label>
+            </div>
+
+            <div class="row two">
+              <label>
+                From
+                <select id="ccFrom"></select>
+              </label>
+              <label>
+                To
+                <select id="ccTo"></select>
+              </label>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="output">
+              <div class="stat big">
+                <div class="k">Result</div>
+                <div class="v" id="ccResult">—</div>
+              </div>
+              <div class="stat">
+                <div class="k">Rate (USD per unit)</div>
+                <div class="v" id="ccRate">—</div>
+              </div>
+              <div class="note">If CoinGecko is unavailable, you can enter manual prices below. USDC is treated as $1.</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Manual price fallback</h3>
+            <div class="note" style="margin:0 0 10px">Used only if live prices fail, or if you override them.</div>
+            <div class="row two">
+              <label>BTC (USD)
+                <input id="mpBTC" inputmode="decimal" type="number" step="any" min="0" placeholder="e.g., 64000" />
+              </label>
+              <label>ETH (USD)
+                <input id="mpETH" inputmode="decimal" type="number" step="any" min="0" placeholder="e.g., 3400" />
+              </label>
+            </div>
+            <div class="row two">
+              <label>SOL (USD)
+                <input id="mpSOL" inputmode="decimal" type="number" step="any" min="0" placeholder="e.g., 140" />
+              </label>
+              <label>MATIC/POL (USD)
+                <input id="mpMATIC" inputmode="decimal" type="number" step="any" min="0" placeholder="e.g., 0.80" />
+              </label>
+            </div>
+            <div class="btnrow">
+              <button class="btn primary" id="ccUseManual" type="button">Use manual prices</button>
+              <button class="btn" id="ccUseLive" type="button">Use live prices</button>
+              <span class="note" id="ccPriceMode">Mode: live (if available)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2) Polymarket Calculator -->
+      <section class="panel tool" id="tool-poly" role="tabpanel" aria-labelledby="tab-poly" data-tool="poly">
+        <div class="toolhead">
+          <h2>Polymarket Calculator</h2>
+          <div class="meta">
+            <span id="pmEvBadge" class="evBadge"><span class="dot"></span><span id="pmEvText">EV: —</span></span>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div class="card">
+            <h3>Inputs</h3>
+            <div class="row two">
+              <label>
+                Position
+                <select id="pmSide">
+                  <option value="YES">YES</option>
+                  <option value="NO">NO</option>
+                </select>
+              </label>
+              <label>
+                Current price (¢)
+                <input id="pmPrice" inputmode="decimal" type="number" min="0" max="100" step="0.01" />
+              </label>
+            </div>
+            <div class="row two">
+              <label>
+                Shares owned
+                <input id="pmShares" inputmode="decimal" type="number" min="0" step="any" />
+              </label>
+              <label>
+                Resolution probability estimate (YES %)
+                <input id="pmProb" inputmode="decimal" type="number" min="0" max="100" step="0.1" />
+              </label>
+            </div>
+
+            <div class="btnrow">
+              <button class="btn primary" id="pmCalc" type="button">Calculate</button>
+              <button class="btn" id="pmNoJanitor" type="button" title="Pre-fill for NO positions near 95–99¢">NO Janitor mode</button>
+            </div>
+
+            <div class="note">Assumes $1 payout per share if your side wins. EV and Kelly are based on your probability estimate.</div>
+          </div>
+
+          <div class="card">
+            <h3>Outputs</h3>
+            <div class="output">
+              <div class="stat">
+                <div class="k">Implied probability (YES)</div>
+                <div class="v" id="pmImplied">—</div>
+              </div>
+              <div class="stat">
+                <div class="k">Breakeven probability (YES)</div>
+                <div class="v" id="pmBreakeven">—</div>
+              </div>
+              <div class="stat big">
+                <div class="k">Expected value (profit)</div>
+                <div class="v" id="pmEV">—</div>
+              </div>
+              <div class="stat">
+                <div class="k">Kelly criterion (fraction of bankroll)</div>
+                <div class="v" id="pmKelly">—</div>
+              </div>
+              <div class="note" id="pmExplain">—</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3) Position Sizer -->
+      <section class="panel tool" id="tool-size" role="tabpanel" aria-labelledby="tab-size" data-tool="size">
+        <div class="toolhead">
+          <h2>Position Sizer</h2>
+          <div class="meta">
+            <div class="pill" title="Tip"><span class="dot"></span><span>Risk buttons set risk %</span></div>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div class="card">
+            <h3>Inputs</h3>
+            <div class="row two">
+              <label>
+                Portfolio value ($)
+                <input id="psPortfolio" inputmode="decimal" type="number" min="0" step="any" />
+              </label>
+              <label>
+                Risk per trade (%)
+                <input id="psRiskPct" inputmode="decimal" type="number" min="0" step="0.01" />
+              </label>
+            </div>
+
+            <div class="btnrow">
+              <button class="btn mini" data-risk="1" type="button">1%</button>
+              <button class="btn mini" data-risk="2" type="button">2%</button>
+              <button class="btn mini" data-risk="5" type="button">5%</button>
+            </div>
+
+            <div class="row three" style="margin-top:10px">
+              <label>
+                Side
+                <select id="psSide">
+                  <option value="LONG">Long</option>
+                  <option value="SHORT">Short</option>
+                </select>
+              </label>
+              <label>
+                Entry price
+                <input id="psEntry" inputmode="decimal" type="number" min="0" step="any" />
+              </label>
+              <label>
+                Stop loss price
+                <input id="psStop" inputmode="decimal" type="number" min="0" step="any" />
+              </label>
+            </div>
+
+            <div class="row two">
+              <label>
+                Target price (optional)
+                <input id="psTarget" inputmode="decimal" type="number" min="0" step="any" placeholder="Optional" />
+              </label>
+              <label>
+                
+                <span class="sr-only">Calculate</span>
+                <button class="btn primary" id="psCalc" type="button" style="margin-top:19px; width:100%">Calculate</button>
+              </label>
+            </div>
+
+            <div class="note">Position size is computed from max dollar risk and price distance to stop.</div>
+          </div>
+
+          <div class="card">
+            <h3>Outputs</h3>
+            <div class="output">
+              <div class="stat big">
+                <div class="k">Position size</div>
+                <div class="v" id="psUnits">—</div>
+              </div>
+              <div class="stat">
+                <div class="k">Max loss ($)</div>
+                <div class="v" id="psMaxLoss">—</div>
+              </div>
+              <div class="stat">
+                <div class="k">Dollar risk (computed)</div>
+                <div class="v" id="psDollarRisk">—</div>
+              </div>
+              <div class="stat">
+                <div class="k">Reward : Risk (if target provided)</div>
+                <div class="v" id="psRR">—</div>
+              </div>
+              <div class="note" id="psExplain">—</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4) Meeting Cost Timer -->
+      <section class="panel tool" id="tool-meet" role="tabpanel" aria-labelledby="tab-meet" data-tool="meet">
+        <div class="toolhead">
+          <h2>Meeting Cost Timer</h2>
+          <div class="meta">
+            <div class="pill" title="Enter toggles start/pause"><span class="dot"></span><span>Enter: start/pause</span></div>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div class="card">
+            <h3>Inputs</h3>
+            <div class="row two">
+              <label>
+                Attendees
+                <input id="mtAttendees" inputmode="numeric" type="number" min="1" step="1" />
+              </label>
+              <label>
+                Avg hourly rate ($)
+                <input id="mtRate" inputmode="decimal" type="number" min="0" step="any" />
+              </label>
+            </div>
+
+            <div class="row two">
+              <div class="stat">
+                <div class="k">Cost per minute</div>
+                <div class="v" id="mtPerMin">—</div>
+              </div>
+              <div class="stat">
+                <div class="k">Elapsed</div>
+                <div class="v" id="mtElapsed">00:00</div>
+              </div>
+            </div>
+
+            <div class="btnrow">
+              <button class="btn primary" id="mtStartPause" type="button">Start</button>
+              <button class="btn" id="mtReset" type="button">Reset</button>
+            </div>
+
+            <div class="divider"></div>
+            <div class="note" id="mtSummary">—</div>
+          </div>
+
+          <div class="card">
+            <h3>Running cost</h3>
+            <div class="meetingBig" aria-live="polite" aria-atomic="true">
+              <div class="label">Running cost</div>
+              <div class="cost" id="mtCost">$0.00</div>
+              <div class="note" style="margin-top:10px">Updates in real time while running.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>Swiss Army Calc • Built by Da Vinci 🔺</footer>
+    </main>
+  </div>
+
+  <script>
+    // Swiss Army Calc — single-file, vanilla JS
+
+    const LS_PREFIX = 'swiss_army_calc_v1:';
+
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    function clamp(n, a, b){ return Math.min(b, Math.max(a, n)); }
+    function now(){ return Date.now(); }
+
+    function parseNum(v){
+      const n = Number(v);
+      return Number.isFinite(n) ? n : NaN;
+    }
+
+    function fmtUSD(n, decimals=2){
+      if (!Number.isFinite(n)) return '—';
+      const nf = new Intl.NumberFormat(undefined, { maximumFractionDigits: decimals, minimumFractionDigits: decimals });
+      return '$' + nf.format(n);
+    }
+
+    function fmtNumber(n, decimals=2, trim=true){
+      if (!Number.isFinite(n)) return '—';
+      let s = n.toFixed(decimals);
+      if (trim && decimals > 0){
+        s = s.replace(/\.0+$/,'').replace(/(\.\d*?)0+$/,'$1');
+      }
+      // add commas
+      const [i, d] = s.split('.');
+      const withCommas = i.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return d ? `${withCommas}.${d}` : withCommas;
+    }
+
+    function fmtPct(n, decimals=2){
+      if (!Number.isFinite(n)) return '—';
+      return fmtNumber(n, decimals, true) + '%';
+    }
+
+    function fmtCents(c){
+      if (!Number.isFinite(c)) return '—';
+      return fmtNumber(c, 2, true) + '¢';
+    }
+
+    // Number animation: count up/down effect
+    function animateValue(el, toValue, opts={}){
+      const duration = opts.duration ?? 420;
+      const formatter = opts.formatter ?? ((v) => String(v));
+
+      const fromValue = parseNum(el.dataset.animValue);
+      const start = performance.now();
+      const from = Number.isFinite(fromValue) ? fromValue : (opts.from ?? toValue);
+      const to = toValue;
+
+      el.dataset.animValue = String(to);
+
+      const ease = (t) => 1 - Math.pow(1 - t, 3);
+
+      function frame(ts){
+        const p = clamp((ts - start) / duration, 0, 1);
+        const v = from + (to - from) * ease(p);
+        el.textContent = formatter(v);
+        if (p < 1) requestAnimationFrame(frame);
+        else {
+          el.textContent = formatter(to);
+          // quick pulse to emphasize change
+          el.classList.remove('pulse');
+          void el.offsetWidth;
+          el.classList.add('pulse');
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function setText(el, text){
+      el.textContent = text;
+      delete el.dataset.animValue;
+    }
+
+    function saveInputs(scopeKey, ids){
+      const data = {};
+      for (const id of ids){
+        const el = document.getElementById(id);
+        if (!el) continue;
+        data[id] = el.value;
+      }
+      localStorage.setItem(LS_PREFIX + scopeKey, JSON.stringify(data));
+    }
+
+    function loadInputs(scopeKey){
+      try{
+        const raw = localStorage.getItem(LS_PREFIX + scopeKey);
+        if (!raw) return {};
+        const obj = JSON.parse(raw);
+        return obj && typeof obj === 'object' ? obj : {};
+      }catch{ return {}; }
+    }
+
+    function applyLoadedInputs(scopeKey, defaults, ids){
+      const saved = loadInputs(scopeKey);
+      for (const id of ids){
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const v = (saved[id] ?? defaults[id]);
+        if (v !== undefined) el.value = v;
+      }
+    }
+
+    // Tabs
+    const tabButtons = $$('.tab');
+    const toolPanels = $$('.tool');
+    let activeTab = 'crypto';
+
+    function showTab(name){
+      activeTab = name;
+      for (const btn of tabButtons){
+        const is = btn.dataset.tab === name;
+        btn.setAttribute('aria-selected', is ? 'true' : 'false');
+      }
+      for (const panel of toolPanels){
+        const is = panel.dataset.tool === name;
+        panel.classList.toggle('active', is);
+        if (is){
+          requestAnimationFrame(() => panel.classList.add('show'));
+        } else {
+          panel.classList.remove('show');
+        }
+      }
+      // focus first input for fast use
+      const activePanel = toolPanels.find(p => p.dataset.tool === name);
+      const focusable = activePanel?.querySelector('input, select, button');
+      focusable?.focus?.({preventScroll:true});
+    }
+
+    tabButtons.forEach(btn => btn.addEventListener('click', () => showTab(btn.dataset.tab)));
+
+    // Keyboard shortcuts: 1-4 switch tabs. Enter calculates.
+    document.addEventListener('keydown', (e) => {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      const inInput = ['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName);
+
+      if (e.key === '1') { e.preventDefault(); showTab('crypto'); return; }
+      if (e.key === '2') { e.preventDefault(); showTab('poly'); return; }
+      if (e.key === '3') { e.preventDefault(); showTab('size'); return; }
+      if (e.key === '4') { e.preventDefault(); showTab('meet'); return; }
+
+      if (e.key === 'Enter'){
+        // avoid double-submit for buttons
+        if (document.activeElement?.tagName === 'BUTTON') return;
+        if (activeTab === 'crypto') { e.preventDefault(); calcCrypto(); return; }
+        if (activeTab === 'poly') { e.preventDefault(); calcPoly(); return; }
+        if (activeTab === 'size') { e.preventDefault(); calcSizer(); return; }
+        if (activeTab === 'meet') {
+          // Enter toggles timer even if typing in inputs
+          if (inInput) { e.preventDefault(); toggleMeeting(); return; }
+          e.preventDefault(); toggleMeeting(); return;
+        }
+      }
+    });
+
+    // -------- 1) Crypto Converter --------
+    const COINS = [
+      { code:'USD', label:'USD', decimals: 2, usdPer: 1, stable:true },
+      { code:'USDC', label:'USDC', decimals: 2, usdPer: 1, stable:true },
+      { code:'BTC', label:'BTC', decimals: 8, cgId:'bitcoin' },
+      { code:'ETH', label:'ETH', decimals: 6, cgId:'ethereum' },
+      { code:'SOL', label:'SOL', decimals: 4, cgId:'solana' },
+      { code:'MATIC', label:'MATIC/POL', decimals: 4, cgId:'matic-network' },
+    ];
+
+    const cc = {
+      amount: $('#ccAmount'),
+      from: $('#ccFrom'),
+      to: $('#ccTo'),
+      result: $('#ccResult'),
+      rate: $('#ccRate'),
+      flip: $('#ccFlip'),
+      refresh: $('#ccRefresh'),
+      debounceNote: $('#ccDebounceNote'),
+      statusPill: $('#cgStatus'),
+      statusText: $('#cgStatusText'),
+      updated: $('#cgUpdated'),
+      mp: {
+        BTC: $('#mpBTC'),
+        ETH: $('#mpETH'),
+        SOL: $('#mpSOL'),
+        MATIC: $('#mpMATIC'),
+      },
+      useManualBtn: $('#ccUseManual'),
+      useLiveBtn: $('#ccUseLive'),
+      priceMode: $('#ccPriceMode'),
+    };
+
+    const ccDefaults = {
+      ccAmount: '1000',
+      ccFrom: 'USD',
+      ccTo: 'BTC',
+      mpBTC: '65000',
+      mpETH: '3500',
+      mpSOL: '140',
+      mpMATIC: '0.80',
+    };
+
+    const ccIds = ['ccAmount','ccFrom','ccTo','mpBTC','mpETH','mpSOL','mpMATIC'];
+
+    let priceState = {
+      mode: 'live', // 'live' or 'manual'
+      liveOk: false,
+      lastUpdatedMs: 0,
+      lastFetchMs: 0,
+      pricesUSD: { BTC: NaN, ETH: NaN, SOL: NaN, MATIC: NaN },
+      livePricesUSD: { BTC: NaN, ETH: NaN, SOL: NaN, MATIC: NaN },
+    };
+
+    function ccPopulateSelects(){
+      const makeOpt = (c) => {
+        const o = document.createElement('option');
+        o.value = c.code;
+        o.textContent = c.label;
+        return o;
+      };
+      cc.from.innerHTML = '';
+      cc.to.innerHTML = '';
+      for (const c of COINS){
+        cc.from.appendChild(makeOpt(c));
+        cc.to.appendChild(makeOpt(c));
+      }
+    }
+
+    function setCgStatus(kind, text){
+      cc.statusPill.classList.remove('good','bad','warn');
+      cc.statusPill.classList.add(kind);
+      cc.statusText.textContent = text;
+    }
+
+    function fmtTime(ms){
+      if (!ms) return '—';
+      const d = new Date(ms);
+      // local time, compact
+      const hh = String(d.getHours()).padStart(2,'0');
+      const mm = String(d.getMinutes()).padStart(2,'0');
+      const ss = String(d.getSeconds()).padStart(2,'0');
+      return `${hh}:${mm}:${ss}`;
+    }
+
+    function ccReadManual(){
+      return {
+        BTC: parseNum(cc.mp.BTC.value),
+        ETH: parseNum(cc.mp.ETH.value),
+        SOL: parseNum(cc.mp.SOL.value),
+        MATIC: parseNum(cc.mp.MATIC.value),
+      };
+    }
+
+    function ccApplyPrices(){
+      const manual = ccReadManual();
+      if (priceState.mode === 'manual'){
+        priceState.pricesUSD = { ...priceState.pricesUSD, ...manual };
+      } else {
+        // live mode: use live if ok; fallback to manual values if live missing
+        const merged = { ...manual };
+        for (const k of Object.keys(priceState.livePricesUSD)){
+          const v = priceState.livePricesUSD[k];
+          if (Number.isFinite(v) && v > 0) merged[k] = v;
+        }
+        priceState.pricesUSD = merged;
+      }
+      calcCrypto();
+    }
+
+    function ccCoinUsdPer(code){
+      const c = COINS.find(x => x.code === code);
+      if (!c) return NaN;
+      if (c.code === 'USD' || c.code === 'USDC') return 1;
+      return priceState.pricesUSD[c.code];
+    }
+
+    function ccDecimals(code){
+      return COINS.find(x => x.code === code)?.decimals ?? 6;
+    }
+
+    function calcCrypto(){
+      // persist
+      saveInputs('crypto', ccIds);
+      localStorage.setItem(LS_PREFIX + 'crypto:mode', priceState.mode);
+
+      const amt = parseNum(cc.amount.value);
+      const from = cc.from.value;
+      const to = cc.to.value;
+
+      const fromUsd = ccCoinUsdPer(from);
+      const toUsd = ccCoinUsdPer(to);
+
+      if (!Number.isFinite(amt) || amt < 0){
+        setText(cc.result, '—');
+        setText(cc.rate, '—');
+        return;
+      }
+
+      if (!Number.isFinite(fromUsd) || fromUsd <= 0 || !Number.isFinite(toUsd) || toUsd <= 0){
+        setText(cc.result, '—');
+        setText(cc.rate, 'Missing price data');
+        return;
+      }
+
+      const usdValue = amt * fromUsd;
+      const out = usdValue / toUsd;
+
+      // Rate display: show rate for "from" and "to" to explain
+      const fromRate = from === 'USD' ? 1 : fromUsd;
+      const toRate = to === 'USD' ? 1 : toUsd;
+      const rateText = `${from}: ${fmtNumber(fromRate, from==='USD'||from==='USDC'?2:6, true)} USD | ${to}: ${fmtNumber(toRate, to==='USD'||to==='USDC'?2:6, true)} USD`;
+      setText(cc.rate, rateText);
+
+      const outDec = ccDecimals(to);
+      // more decimals for very small results
+      const dec = (to === 'USD' || to === 'USDC') ? 2 : outDec;
+
+      const formatted = (to === 'USD' || to === 'USDC')
+        ? fmtUSD(out, 2)
+        : fmtNumber(out, dec, true) + ' ' + COINS.find(c => c.code === to)?.label;
+
+      // animate numerics when possible
+      if (to === 'USD' || to === 'USDC'){
+        animateValue(cc.result, out, { formatter: (v) => fmtUSD(v, 2) });
+      } else {
+        animateValue(cc.result, out, { formatter: (v) => fmtNumber(v, dec, true) + ' ' + COINS.find(c => c.code === to)?.label });
+      }
+
+      return formatted;
+    }
+
+    function ccUpdateDebounceNote(){
+      const left = Math.max(0, 30000 - (now() - priceState.lastFetchMs));
+      if (left === 0){
+        cc.debounceNote.textContent = 'Debounced: max 1 request / 30s.';
+        return;
+      }
+      const s = Math.ceil(left / 1000);
+      cc.debounceNote.textContent = `Debounced: next fetch in ~${s}s.`;
+    }
+
+    async function fetchCoinGeckoPrices(){
+      const t = now();
+      if (t - priceState.lastFetchMs < 30000){
+        ccUpdateDebounceNote();
+        return { ok:false, debounced:true };
+      }
+      priceState.lastFetchMs = t;
+      ccUpdateDebounceNote();
+      setCgStatus('warn','Fetching prices…');
+
+      try{
+        const url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,matic-network&vs_currencies=usd';
+        const res = await fetch(url, { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+
+        const next = {
+          BTC: parseNum(data?.bitcoin?.usd),
+          ETH: parseNum(data?.ethereum?.usd),
+          SOL: parseNum(data?.solana?.usd),
+          MATIC: parseNum(data?.['matic-network']?.usd),
+        };
+
+        const okAll = Object.values(next).every(v => Number.isFinite(v) && v > 0);
+        priceState.livePricesUSD = next;
+        priceState.liveOk = okAll;
+        priceState.lastUpdatedMs = now();
+
+        localStorage.setItem(LS_PREFIX + 'crypto:livePricesUSD', JSON.stringify(next));
+        localStorage.setItem(LS_PREFIX + 'crypto:lastUpdatedMs', String(priceState.lastUpdatedMs));
+
+        $('#cgUpdated').textContent = fmtTime(priceState.lastUpdatedMs);
+        setCgStatus(okAll ? 'good' : 'warn', okAll ? 'Live prices loaded' : 'Partial prices loaded');
+        ccApplyPrices();
+        return { ok:true, debounced:false };
+      } catch (err){
+        priceState.liveOk = false;
+        setCgStatus('bad','Live prices unavailable (using fallback)');
+        ccApplyPrices();
+        return { ok:false, debounced:false, error: String(err?.message || err) };
+      }
+    }
+
+    function ccSetMode(mode){
+      priceState.mode = mode;
+      if (mode === 'manual'){
+        cc.priceMode.textContent = 'Mode: manual override';
+      } else {
+        cc.priceMode.textContent = 'Mode: live (if available)';
+      }
+      ccApplyPrices();
+    }
+
+    // Events
+    cc.flip.addEventListener('click', () => {
+      const a = cc.from.value;
+      cc.from.value = cc.to.value;
+      cc.to.value = a;
+      calcCrypto();
+    });
+
+    cc.refresh.addEventListener('click', async () => {
+      await fetchCoinGeckoPrices();
+    });
+
+    cc.useManualBtn.addEventListener('click', () => ccSetMode('manual'));
+    cc.useLiveBtn.addEventListener('click', () => ccSetMode('live'));
+
+    ['input','change'].forEach(evt => {
+      [cc.amount, cc.from, cc.to, cc.mp.BTC, cc.mp.ETH, cc.mp.SOL, cc.mp.MATIC].forEach(el => {
+        el.addEventListener(evt, () => {
+          ccApplyPrices();
+        });
+      });
+    });
+
+    // -------- 2) Polymarket --------
+    const pm = {
+      side: $('#pmSide'),
+      price: $('#pmPrice'),
+      shares: $('#pmShares'),
+      prob: $('#pmProb'),
+      calc: $('#pmCalc'),
+      janitor: $('#pmNoJanitor'),
+      implied: $('#pmImplied'),
+      breakeven: $('#pmBreakeven'),
+      ev: $('#pmEV'),
+      kelly: $('#pmKelly'),
+      explain: $('#pmExplain'),
+      badge: $('#pmEvBadge'),
+      badgeText: $('#pmEvText'),
+    };
+
+    const pmDefaults = {
+      pmSide: 'YES',
+      pmPrice: '52',
+      pmShares: '100',
+      pmProb: '55',
+    };
+    const pmIds = ['pmSide','pmPrice','pmShares','pmProb'];
+
+    function calcPoly(){
+      saveInputs('poly', pmIds);
+
+      const side = pm.side.value;
+      const priceC = clamp(parseNum(pm.price.value), 0, 100);
+      const shares = Math.max(0, parseNum(pm.shares.value));
+      const qYes = clamp(parseNum(pm.prob.value), 0, 100) / 100;
+
+      const p = priceC / 100;
+
+      if (!Number.isFinite(priceC) || !Number.isFinite(shares) || !Number.isFinite(qYes)){
+        setText(pm.implied, '—');
+        setText(pm.breakeven, '—');
+        setText(pm.ev, '—');
+        setText(pm.kelly, '—');
+        setText(pm.explain, '—');
+        pm.badge.classList.remove('good','bad');
+        pm.badgeText.textContent = 'EV: —';
+        return;
+      }
+
+      // Implied YES probability from price depends on which side the input price refers to.
+      const impliedYes = (side === 'YES') ? p : (1 - p);
+      const breakevenYes = (side === 'YES') ? p : (1 - p);
+
+      // EV profit per share in dollars
+      const evPerShare = (side === 'YES') ? (qYes - p) : ((1 - qYes) - p);
+      const evTotal = evPerShare * shares;
+      const cost = p * shares;
+      const evPctOfCost = (cost > 0) ? (evTotal / cost) : NaN;
+
+      // Kelly fraction of bankroll
+      // YES: f* = (q - p)/(1 - p)
+      // NO:  f* = ((1-q) - p)/(1 - p)
+      const denom = (1 - p);
+      let kelly = denom > 0 ? (evPerShare / denom) : NaN;
+      if (!Number.isFinite(kelly)) kelly = NaN;
+      // constrain to [0,1] for display (typical); negative means no bet
+      const kellyClamped = Number.isFinite(kelly) ? clamp(kelly, 0, 1) : NaN;
+
+      animateValue(pm.implied, impliedYes * 100, { formatter: (v) => fmtPct(v, 2) });
+      animateValue(pm.breakeven, breakevenYes * 100, { formatter: (v) => fmtPct(v, 2) });
+      animateValue(pm.ev, evTotal, { formatter: (v) => fmtUSD(v, 2) });
+      animateValue(pm.kelly, kellyClamped * 100, { formatter: (v) => fmtPct(v, 2) });
+
+      const isGood = evTotal > 0;
+      pm.badge.classList.toggle('good', isGood);
+      pm.badge.classList.toggle('bad', !isGood);
+      pm.badgeText.textContent = `EV: ${isGood ? '+EV' : '-EV'}`;
+
+      const sideWinProb = (side === 'YES') ? qYes : (1 - qYes);
+      const impliedSideProb = (side === 'YES') ? impliedYes : (1 - impliedYes);
+
+      pm.explain.textContent = `You are priced at ${fmtCents(priceC)}. Market implies YES ≈ ${fmtPct(impliedYes*100, 2)}. Your estimate: YES ≈ ${fmtPct(qYes*100, 1)}. EV/share ≈ ${fmtUSD(evPerShare, 4)}; total EV ≈ ${fmtUSD(evTotal, 2)} (${Number.isFinite(evPctOfCost) ? fmtPct(evPctOfCost*100, 1) : '—'} of cost). Kelly suggests betting ~${fmtPct(kellyClamped*100, 2)} of bankroll (0% if not +EV).`;
+    }
+
+    pm.calc.addEventListener('click', calcPoly);
+
+    pm.janitor.addEventListener('click', () => {
+      pm.side.value = 'NO';
+      pm.price.value = '97';
+      pm.shares.value = '100';
+      pm.prob.value = '5';
+      calcPoly();
+    });
+
+    ['input','change'].forEach(evt => {
+      [pm.side, pm.price, pm.shares, pm.prob].forEach(el => el.addEventListener(evt, () => calcPoly()));
+    });
+
+    // -------- 3) Position Sizer --------
+    const ps = {
+      portfolio: $('#psPortfolio'),
+      riskPct: $('#psRiskPct'),
+      side: $('#psSide'),
+      entry: $('#psEntry'),
+      stop: $('#psStop'),
+      target: $('#psTarget'),
+      calc: $('#psCalc'),
+      units: $('#psUnits'),
+      maxLoss: $('#psMaxLoss'),
+      dollarRisk: $('#psDollarRisk'),
+      rr: $('#psRR'),
+      explain: $('#psExplain'),
+    };
+
+    const psDefaults = {
+      psPortfolio: '25000',
+      psRiskPct: '1',
+      psSide: 'LONG',
+      psEntry: '100',
+      psStop: '95',
+      psTarget: '115',
+    };
+    const psIds = ['psPortfolio','psRiskPct','psSide','psEntry','psStop','psTarget'];
+
+    function calcSizer(){
+      saveInputs('sizer', psIds);
+
+      const portfolio = Math.max(0, parseNum(ps.portfolio.value));
+      const riskPct = Math.max(0, parseNum(ps.riskPct.value)) / 100;
+      const side = ps.side.value;
+      const entry = parseNum(ps.entry.value);
+      const stop = parseNum(ps.stop.value);
+      const target = parseNum(ps.target.value);
+
+      if (![portfolio, riskPct, entry, stop].every(Number.isFinite)){
+        setText(ps.units, '—');
+        setText(ps.maxLoss, '—');
+        setText(ps.dollarRisk, '—');
+        setText(ps.rr, '—');
+        setText(ps.explain, '—');
+        return;
+      }
+
+      const dollarRisk = portfolio * riskPct;
+
+      const riskPerUnit = (side === 'LONG') ? (entry - stop) : (stop - entry);
+      if (!Number.isFinite(riskPerUnit) || riskPerUnit <= 0){
+        setText(ps.units, '—');
+        animateValue(ps.maxLoss, dollarRisk, { formatter: (v) => fmtUSD(v, 2) });
+        animateValue(ps.dollarRisk, dollarRisk, { formatter: (v) => fmtUSD(v, 2) });
+        setText(ps.rr, '—');
+        ps.explain.textContent = 'Entry/stop are invalid for the selected side (risk per unit must be > 0).';
+        return;
+      }
+
+      const units = dollarRisk / riskPerUnit;
+
+      // Reward:Risk
+      let rr = NaN;
+      if (Number.isFinite(target)){
+        const rewardPerUnit = (side === 'LONG') ? (target - entry) : (entry - target);
+        if (Number.isFinite(rewardPerUnit) && rewardPerUnit > 0){
+          rr = rewardPerUnit / riskPerUnit;
+        }
+      }
+
+      animateValue(ps.units, units, { formatter: (v) => fmtNumber(v, 2, true) + ' units' });
+      animateValue(ps.maxLoss, dollarRisk, { formatter: (v) => fmtUSD(v, 2) });
+      animateValue(ps.dollarRisk, dollarRisk, { formatter: (v) => fmtUSD(v, 2) });
+      if (Number.isFinite(rr)){
+        animateValue(ps.rr, rr, { formatter: (v) => fmtNumber(v, 2, true) + ' : 1' });
+      } else {
+        setText(ps.rr, '—');
+      }
+
+      ps.explain.textContent = `Dollar risk = portfolio × risk%. Risk/unit = |entry − stop| adjusted for ${side.toLowerCase()}. Position size = dollar risk ÷ risk/unit.`;
+    }
+
+    ps.calc.addEventListener('click', calcSizer);
+
+    // Quick risk buttons
+    $$('#tool-size [data-risk]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        ps.riskPct.value = String(btn.dataset.risk);
+        calcSizer();
+      });
+    });
+
+    ['input','change'].forEach(evt => {
+      [ps.portfolio, ps.riskPct, ps.side, ps.entry, ps.stop, ps.target].forEach(el => el.addEventListener(evt, () => calcSizer()));
+    });
+
+    // -------- 4) Meeting Timer --------
+    const mt = {
+      attendees: $('#mtAttendees'),
+      rate: $('#mtRate'),
+      perMin: $('#mtPerMin'),
+      elapsed: $('#mtElapsed'),
+      cost: $('#mtCost'),
+      startPause: $('#mtStartPause'),
+      reset: $('#mtReset'),
+      summary: $('#mtSummary'),
+    };
+
+    const mtDefaults = {
+      mtAttendees: '6',
+      mtRate: '150',
+    };
+    const mtIds = ['mtAttendees','mtRate'];
+
+    let timer = {
+      running: false,
+      startMs: 0,
+      elapsedMs: 0,
+      raf: 0,
+      lastCost: 0,
+    };
+
+    function mtCostPerMinute(){
+      const a = Math.max(1, Math.floor(parseNum(mt.attendees.value)));
+      const r = Math.max(0, parseNum(mt.rate.value));
+      if (!Number.isFinite(a) || !Number.isFinite(r)) return NaN;
+      return (a * r) / 60;
+    }
+
+    function fmtElapsed(ms){
+      const total = Math.max(0, Math.floor(ms/1000));
+      const m = Math.floor(total/60);
+      const s = total % 60;
+      return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+
+    function mtRender(){
+      saveInputs('meeting', mtIds);
+
+      const perMin = mtCostPerMinute();
+      setText(mt.perMin, Number.isFinite(perMin) ? fmtUSD(perMin, 2) + ' / min' : '—');
+
+      const elapsedMs = timer.running ? (timer.elapsedMs + (now() - timer.startMs)) : timer.elapsedMs;
+      mt.elapsed.textContent = fmtElapsed(elapsedMs);
+
+      const perSec = Number.isFinite(perMin) ? (perMin / 60) : NaN;
+      const totalCost = Number.isFinite(perSec) ? (elapsedMs/1000) * perSec : NaN;
+
+      if (Number.isFinite(totalCost)){
+        animateValue(mt.cost, totalCost, { duration: 260, formatter: (v) => fmtUSD(v, 2) });
+        timer.lastCost = totalCost;
+      } else {
+        mt.cost.textContent = '$0.00';
+      }
+
+      if (!timer.running && timer.elapsedMs > 0 && Number.isFinite(timer.lastCost)){
+        mt.summary.textContent = `That meeting cost ${fmtUSD(timer.lastCost, 2)}.`;
+      } else if (timer.running){
+        mt.summary.textContent = 'Running…';
+      } else {
+        mt.summary.textContent = '—';
+      }
+    }
+
+    function mtLoop(){
+      mtRender();
+      if (timer.running) timer.raf = requestAnimationFrame(mtLoop);
+    }
+
+    function toggleMeeting(){
+      if (!timer.running){
+        timer.running = true;
+        timer.startMs = now();
+        mt.startPause.textContent = 'Pause';
+        mt.startPause.classList.add('primary');
+        timer.raf = requestAnimationFrame(mtLoop);
+      } else {
+        timer.running = false;
+        timer.elapsedMs += (now() - timer.startMs);
+        mt.startPause.textContent = 'Start';
+        mt.startPause.classList.add('primary');
+        if (timer.raf) cancelAnimationFrame(timer.raf);
+        mtRender();
+      }
+    }
+
+    mt.startPause.addEventListener('click', toggleMeeting);
+
+    mt.reset.addEventListener('click', () => {
+      timer.running = false;
+      if (timer.raf) cancelAnimationFrame(timer.raf);
+      timer.raf = 0;
+      timer.startMs = 0;
+      timer.elapsedMs = 0;
+      timer.lastCost = 0;
+      mt.startPause.textContent = 'Start';
+      mtRender();
+    });
+
+    ['input','change'].forEach(evt => {
+      [mt.attendees, mt.rate].forEach(el => el.addEventListener(evt, () => mtRender()));
+    });
+
+    // -------- Init --------
+    function init(){
+      ccPopulateSelects();
+
+      // Apply saved defaults
+      applyLoadedInputs('crypto', ccDefaults, ccIds);
+      applyLoadedInputs('poly', pmDefaults, pmIds);
+      applyLoadedInputs('sizer', psDefaults, psIds);
+      applyLoadedInputs('meeting', mtDefaults, mtIds);
+
+      // restore crypto mode
+      const savedMode = localStorage.getItem(LS_PREFIX + 'crypto:mode');
+      if (savedMode === 'manual' || savedMode === 'live') priceState.mode = savedMode;
+      ccSetMode(priceState.mode);
+
+      // restore cached live prices (for offline + immediate usefulness)
+      try{
+        const cached = JSON.parse(localStorage.getItem(LS_PREFIX + 'crypto:livePricesUSD') || 'null');
+        if (cached && typeof cached === 'object'){
+          priceState.livePricesUSD = {
+            BTC: parseNum(cached.BTC),
+            ETH: parseNum(cached.ETH),
+            SOL: parseNum(cached.SOL),
+            MATIC: parseNum(cached.MATIC),
+          };
+        }
+        const lu = parseNum(localStorage.getItem(LS_PREFIX + 'crypto:lastUpdatedMs'));
+        if (Number.isFinite(lu) && lu > 0){
+          priceState.lastUpdatedMs = lu;
+          cc.updated.textContent = fmtTime(lu);
+        }
+      } catch {}
+
+      // Make sure selects reflect loaded values
+      const savedCrypto = loadInputs('crypto');
+      cc.from.value = savedCrypto.ccFrom ?? ccDefaults.ccFrom;
+      cc.to.value = savedCrypto.ccTo ?? ccDefaults.ccTo;
+
+      // initial renders
+      ccApplyPrices();
+      calcPoly();
+      calcSizer();
+      mtRender();
+
+      // attempt live prices (debounced)
+      fetchCoinGeckoPrices();
+
+      // debounce note refresh
+      setInterval(ccUpdateDebounceNote, 500);
+    }
+
+    init();
+  </script>
+</body>
+</html>
