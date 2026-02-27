@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMHC — Provider Referral Packet</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-dark: #1E4129;
+    --green-mid: #2F5A3D;
+    --green-cta: #A1E681;
+    --green-light: #EFFAF3;
+    --green-deep: #002516;
+    --text: #2B2B2B;
+    --text-light: #5A5A5A;
+    --white: #FFFFFF;
+    --border: #D4E5DA;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: var(--green-dark);
+    color: var(--white);
+    padding: 3rem 2rem 3.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 80%;
+    height: 200%;
+    background: radial-gradient(ellipse, rgba(161,230,129,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-cta);
+    border: 1px solid rgba(161,230,129,0.3);
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.2;
+    max-width: 700px;
+    margin: 0 auto 1rem;
+    font-weight: 400;
+  }
+  .hero-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+    max-width: 540px;
+    margin: 0 auto 2rem;
+    line-height: 1.5;
+  }
+  .hero-phone {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    color: var(--green-cta);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+  .hero-phone a {
+    color: var(--green-cta);
+    text-decoration: none;
+  }
+  .hero-email {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 2rem;
+  }
+  .hero-email a { color: rgba(255,255,255,0.9); text-decoration: none; }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .hero-stat {
+    background: rgba(255,255,255,0.05);
+    padding: 1.2rem 0.5rem;
+    text-align: center;
+  }
+  .hero-stat .num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--green-cta);
+    display: block;
+  }
+  .hero-stat .label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.6);
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 3.5rem 2rem; max-width: 800px; margin: 0 auto; }
+  .section-green { background: var(--green-light); }
+  .section-green section { max-width: 800px; }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--green-dark);
+    margin-bottom: 0.75rem;
+    font-weight: 400;
+  }
+  .section-intro {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    max-width: 600px;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  .highlight-box {
+    background: var(--green-light);
+    border-left: 3px solid var(--green-cta);
+    padding: 1rem 1.25rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.9rem;
+    color: var(--green-dark);
+    margin: 1.5rem 0;
+    font-style: italic;
+  }
+
+  /* ===== REFERRAL STEPS ===== */
+  .steps { counter-reset: step; }
+  .step {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+    align-items: start;
+  }
+  .step-num {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--green-dark);
+    color: var(--green-cta);
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--green-dark);
+    margin-bottom: 0.3rem;
+  }
+  .step p {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  .step .note {
+    font-size: 0.8rem;
+    color: var(--green-mid);
+    font-style: italic;
+    margin-top: 0.3rem;
+  }
+
+  /* ===== WHY MMHC ===== */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .why-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    font-size: 0.88rem;
+    color: var(--green-dark);
+    font-weight: 500;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .why-item .check {
+    color: var(--green-cta);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+
+  /* ===== ELIGIBILITY ===== */
+  .elig-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .elig-col h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--green-dark);
+  }
+  .elig-col.yes h3 { color: var(--green-mid); }
+  .elig-col.no h3 { color: #8B4513; }
+  .elig-col ul {
+    list-style: none;
+    padding: 0;
+  }
+  .elig-col li {
+    font-size: 0.85rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-light);
+  }
+  .elig-col li:last-child { border: none; }
+  .elig-col.yes li::before { content: '✓ '; color: var(--green-mid); font-weight: 600; }
+  .elig-col.no li::before { content: '✕ '; color: #8B4513; font-weight: 600; }
+  .elig-note {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-style: italic;
+  }
+
+  /* ===== SPECIALTIES ===== */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .spec-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+  .spec-card h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--green-dark);
+    margin-bottom: 0.5rem;
+  }
+  .spec-card p {
+    font-size: 0.83rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  /* ===== CARE COORDINATION ===== */
+  .coord-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+  }
+  .coord-list li {
+    font-size: 0.9rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .coord-list li:last-child { border: none; }
+  .coord-list .icon {
+    color: var(--green-cta);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  /* ===== SUPPORT TEAM ===== */
+  .support-box {
+    background: var(--green-dark);
+    color: var(--white);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .support-box h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    font-weight: 400;
+  }
+  .support-box p {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+  .support-box .contact {
+    font-size: 0.85rem;
+    color: var(--green-cta);
+  }
+  .support-box .contact a {
+    color: var(--green-cta);
+    text-decoration: none;
+  }
+
+  /* ===== CTA FOOTER ===== */
+  .cta-section {
+    background: var(--green-light);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .cta-section h2 {
+    margin-bottom: 0.5rem;
+  }
+  .cta-section p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: var(--green-dark);
+    color: var(--green-cta);
+    padding: 0.9rem 2.5rem;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+  .cta-btn:hover {
+    background: var(--green-deep);
+    transform: translateY(-1px);
+  }
+  .cta-contact {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  .cta-contact a { color: var(--green-mid); text-decoration: none; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--green-deep);
+    color: rgba(255,255,255,0.6);
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+  footer strong { color: rgba(255,255,255,0.9); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .elig-grid, .spec-grid { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 40px 1fr; gap: 1rem; }
+    .step-num { width: 40px; height: 40px; font-size: 0.95rem; }
+    section { padding: 2.5rem 1.5rem; }
+  }
+
+  @media print {
+    .hero { padding: 2rem; }
+    section { padding: 1.5rem 0; }
+    .cta-section { background: none; border-top: 2px solid var(--green-dark); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">For Healthcare Providers</div>
+  <h1>A Reliable Insurance-Covered Mental Health Partner for Your Patients</h1>
+  <p class="hero-sub">Verified coverage. 24-hour outreach. Closed-loop confirmation. No patient drop-off.</p>
+  <div class="hero-phone"><a href="tel:2129608626">212-960-8626</a></div>
+  <p class="hero-email"><a href="mailto:referrals@mhc.com">referrals@mhc.com</a> · Submit a referral below</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">80+</span><span class="label">Clinicians</span></div>
+    <div class="hero-stat"><span class="num">&lt; 24hr</span><span class="label">Patient Outreach</span></div>
+    <div class="hero-stat"><span class="num">2–5 Days</span><span class="label">Typical Scheduling</span></div>
+    <div class="hero-stat"><span class="num">Most Plans</span><span class="label">Insurance Accepted</span></div>
+  </div>
+</header>
+
+<!-- REFERRAL MODEL -->
+<section>
+  <div class="section-label">Our Referral Model</div>
+  <h2>What Happens After You Refer</h2>
+  <div class="highlight-box">
+    Most referral breakdown happens between "Here's a number to call" and "The patient actually starts care." Our model is designed specifically to prevent that gap.
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div>
+        <h3>You Submit, We Take It From Here</h3>
+        <p>Send a referral via our secure form or email. That's the only step you need to take.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div>
+        <h3>Patient Outreach Within 24 Hours</h3>
+        <p>Our support team contacts the patient directly to initiate intake, answer questions, and begin the process.</p>
+        <p class="note">This is our standard — every referral, every time.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div>
+        <h3>Insurance Verification Before Scheduling</h3>
+        <p>Insurance coverage is verified before scheduling — protecting your patient from surprise costs and protecting your practice from referral friction.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div>
+        <h3>Clinical Matching</h3>
+        <p>Clinical matching is based on presenting concern, medical context, treatment goals, and therapist expertise — not just availability.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <div>
+        <h3>Closed-Loop Confirmation</h3>
+        <p>You'll receive confirmation when your patient is scheduled — and again after their first session is completed.</p>
+        <p class="note">So you're never wondering whether care was initiated. Two confirmations: booked + seen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY MMHC -->
+<div class="section-green">
+<section>
+  <div class="section-label">Why MMHC</div>
+  <h2>Built to Prevent Referral Drop-Off</h2>
+  <div class="why-grid">
+    <div class="why-item"><span class="check">✓</span>Structured intake, not directory-based matching</div>
+    <div class="why-item"><span class="check">✓</span>Insurance verified before scheduling</div>
+    <div class="why-item"><span class="check">✓</span>24-hour patient outreach standard</div>
+    <div class="why-item"><span class="check">✓</span>Closed-loop confirmation to providers</div>
+    <div class="why-item"><span class="check">✓</span>Defined clinical boundaries</div>
+  </div>
+</section>
+</div>
+
+<!-- REFERRAL SUPPORT TEAM -->
+<section>
+  <div class="support-box">
+    <h3>Your Referral Support Team</h3>
+    <p>Every referral is handled by a dedicated support team member — a real person who coordinates intake, follows up with the patient, and keeps you informed.</p>
+    <div class="contact">
+      <a href="mailto:referrals@mhc.com">referrals@mhc.com</a> · <a href="tel:2129608626">212-960-8626</a>
+    </div>
+  </div>
+</section>
+
+<!-- ELIGIBILITY -->
+<section>
+  <div class="section-label">Referral Eligibility</div>
+  <h2>Clear Boundaries, Safe Referrals</h2>
+  <p class="section-intro">Knowing who we serve well — and who we don't — protects your patients.</p>
+
+  <div class="elig-grid">
+    <div class="elig-col yes">
+      <h3>We Work With Adults Experiencing</h3>
+      <ul>
+        <li>Anxiety and panic disorders</li>
+        <li>Depression and mood disorders</li>
+        <li>Pregnancy, postpartum, and fertility-related stress</li>
+        <li>Chronic illness adjustment</li>
+        <li>GI-related stress and somatic symptoms</li>
+        <li>Trauma-related symptoms</li>
+        <li>Relationship and interpersonal stress</li>
+        <li>Grief and life transitions</li>
+      </ul>
+    </div>
+    <div class="elig-col no">
+      <h3>Not Currently Equipped For</h3>
+      <ul>
+        <li>Active psychosis</li>
+        <li>Immediate hospitalization needs</li>
+        <li>Court-mandated treatment</li>
+        <li>Acute medical detox</li>
+      </ul>
+    </div>
+  </div>
+  <p class="elig-note">Unsure about appropriateness? Reach out — we're happy to discuss before you refer.</p>
+</section>
+
+<!-- SPECIALTIES -->
+<div class="section-green">
+<section>
+  <div class="section-label">Specialty Collaboration</div>
+  <h2>Built for Your Practice Context</h2>
+  <p class="section-intro">We work across all specialties. Here's how we fit into your clinical workflow.</p>
+
+  <div class="spec-grid">
+    <div class="spec-card">
+      <h3>Women's Health & OB/GYN</h3>
+      <p>Pregnancy, postpartum adjustment, fertility treatment stress, reproductive transitions, and perinatal mood disorders.</p>
+    </div>
+    <div class="spec-card">
+      <h3>Primary Care</h3>
+      <p>When mental health concerns exceed visit scope or time constraints — moderate anxiety, depression, adjustment issues, and stress management.</p>
+    </div>
+    <div class="spec-card">
+      <h3>GI & Pain Management</h3>
+      <p>Behavioral health support for chronic symptoms, stress-related exacerbation, and gut-brain axis concerns.</p>
+    </div>
+    <div class="spec-card">
+      <h3>Psychiatry</h3>
+      <p>Structured weekly therapy alongside medication management — collaborative care, not parallel treatment.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- CARE COORDINATION -->
+<section>
+  <div class="section-label">Care Coordination</div>
+  <h2>We Stay in the Loop</h2>
+  <p class="section-intro">Upon request, we provide the documentation and communication your practice needs.</p>
+
+  <ul class="coord-list">
+    <li><span class="icon">✓</span>Intake confirmation to referring provider</li>
+    <li><span class="icon">✓</span>Treatment summary letters</li>
+    <li><span class="icon">✓</span>PCP, OB, and psychiatry collaboration</li>
+    <li><span class="icon">✓</span>Medication coordination communication</li>
+  </ul>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Refer a Patient</h2>
+  <p>Secure Provider Referral Form. Average completion time: under 2 minutes.<br>Our team will reach out to the patient within 24 hours.</p>
+  <a href="mailto:referrals@mhc.com" class="cta-btn">Submit a Referral</a>
+  <p class="cta-contact">
+    Or call <a href="tel:2129608626"><strong>212-960-8626</strong></a> · Email <a href="mailto:referrals@mhc.com">referrals@mhc.com</a>
+  </p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Manhattan Mental Health Counseling</strong><br>
+  Structured, insurance-covered psychotherapy for adults across all specialties.<br>
+  Reducing referral friction, preventing patient drop-off, supporting integrated care.
+</footer>
+
+</body>
+</html>
