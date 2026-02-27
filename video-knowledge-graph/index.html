@@ -141,7 +141,8 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); -web
 </nav>
 
 <div class="tabs">
-  <div class="tab active" data-panel="themes" onclick="showPanel('themes')">Meta-Themes</div>
+  <div class="tab active" data-panel="graph" onclick="showPanel('graph')">🔗 Graph</div>
+  <div class="tab" data-panel="themes" onclick="showPanel('themes')">Themes</div>
   <div class="tab" data-panel="speakers" onclick="showPanel('speakers')">Speakers</div>
   <div class="tab" data-panel="contradictions" onclick="showPanel('contradictions')">Contradictions</div>
   <div class="tab" data-panel="predictions" onclick="showPanel('predictions')">Predictions</div>
@@ -149,9 +150,26 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); -web
   <div class="tab" data-panel="quotes" onclick="showPanel('quotes')">Quotes</div>
 </div>
 
+<!-- VISUAL GRAPH -->
+<div class="panel active" id="panel-graph">
+  <div style="position:relative;width:100%;background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+    <canvas id="graph-canvas" style="width:100%;display:block;"></canvas>
+    <div id="graph-tooltip" style="display:none;position:absolute;background:var(--green-dark);color:var(--white);padding:12px 16px;border-radius:10px;font-size:13px;max-width:280px;line-height:1.5;pointer-events:none;z-index:10;box-shadow:0 4px 16px rgba(0,0,0,0.2);"></div>
+  </div>
+  <div style="display:flex;gap:16px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
+    <span style="font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:6px;">
+      <span style="width:12px;height:12px;border-radius:50%;background:var(--green-cta);display:inline-block;"></span> Agreement
+    </span>
+    <span style="font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:6px;">
+      <span style="width:12px;height:12px;border-radius:50%;background:var(--red);display:inline-block;"></span> Contradiction
+    </span>
+    <span style="font-size:12px;color:var(--text-muted);">Click a speaker to see theses · Drag to move</span>
+  </div>
+</div>
+
 <!-- META-THEMES -->
-<div class="panel active" id="panel-themes">
-  <input type="text" class="search-bar" placeholder="Search themes, speakers, topics..." oninput="filterCards(this.value, 'panel-themes')">
+<div class="panel" id="panel-themes">
+  <input type="text" class="search-bar" placeholder="Search themes, speakers, topics...">
 
   <div class="theme-card" data-search="bottleneck physical energy manufacturing zoning musk martin">
     <span class="theme-tag t1">Theme 1</span>
@@ -210,7 +228,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); -web
 
 <!-- SPEAKERS -->
 <div class="panel" id="panel-speakers">
-  <input type="text" class="search-bar" placeholder="Search speakers..." oninput="filterCards(this.value, 'panel-speakers')">
+  <input type="text" class="search-bar" placeholder="Search speakers...">
   <div class="speaker-grid">
 
     <div class="speaker-card" data-search="brent johnson dollar milkshake gold stablecoins macro" onclick="this.classList.toggle('expanded')">
@@ -409,7 +427,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); -web
 
 <!-- VIDEOS -->
 <div class="panel" id="panel-videos">
-  <input type="text" class="search-bar" placeholder="Search videos..." oninput="filterCards(this.value, 'panel-videos')">
+  <input type="text" class="search-bar" placeholder="Search videos...">
   <div class="video-list">
 
     <a class="video-card" href="https://youtu.be/lUPDZvFf1Is" target="_blank" data-search="brent johnson dollar milkshake gold stablecoins">
@@ -594,6 +612,294 @@ function updateCountdowns() {
   }
 }
 updateCountdowns();
+
+// ===== VISUAL GRAPH =====
+(function() {
+  const canvas = document.getElementById('graph-canvas');
+  const ctx = canvas.getContext('2d');
+  const tooltip = document.getElementById('graph-tooltip');
+  const dpr = window.devicePixelRatio || 1;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const w = rect.width;
+    const h = Math.max(500, window.innerHeight * 0.65);
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { w, h };
+  }
+
+  let { w, h } = resize();
+
+  const speakers = [
+    { id: 'brent-johnson', name: 'Brent Johnson', emoji: '🥤', videos: 1, color: '#F0B27A',
+      theses: ['Dollar + gold rise together', 'Stablecoins = modern Eurodollar', 'Bitcoin is speculative, not safe haven', 'US deficits always funded', 'BRICS overhyped'] },
+    { id: 'elon-musk', name: 'Elon Musk', emoji: '⚡', videos: 2, color: '#5DADE2',
+      theses: ['Energy is ultimate currency', 'Chip wall = power wall', 'AGI by 2028-2029', 'Triple exponential robotics', 'Work optional in 10 years', 'Netherlands FSD March 20', 'Robot hands are hard problem'] },
+    { id: 'nassim-taleb', name: 'Nassim Taleb', emoji: '🦢', videos: 1, color: '#E74C3C',
+      theses: ['Dollar losing reserve status', 'AI pioneers go bankrupt', 'Oil shock underpriced', 'Tail risks underpriced'] },
+    { id: 'dario-amodei', name: 'Dario Amodei', emoji: '🛡️', videos: 1, color: '#AF7AC5',
+      theses: ['Intelligence = chemical reaction', 'No theory for why scaling works', 'Application layer has moats', 'Biotech renaissance via AI', 'Critical thinking #1 skill'] },
+    { id: 'jeff-yan', name: 'Jeff Yan', emoji: '🔗', videos: 1, color: '#1ABC9C',
+      theses: ['DeFi before AI takes over', '11 people can run $10B protocol', 'Permissionless perps capture price discovery', 'VC incompatible with decentralization'] },
+    { id: 'poshen-loh', name: 'Po-Shen Loh', emoji: '🧠', videos: 1, color: '#F4D03F',
+      theses: ['Math = last curriculum for original ideas', 'Kids without tech more creative', 'AI homework = driving for exercise', 'Authenticity is human advantage'] },
+    { id: 'david-martin', name: 'David Martin', emoji: '🏗️', videos: 1, color: '#85C1E9',
+      theses: ['Missing middle > subsidies', 'Traffic is Miami #1 threat', 'Residential-first growth', 'Teachers cant afford to live here'] }
+  ];
+
+  const connections = [
+    // Contradictions (red)
+    { from: 'brent-johnson', to: 'nassim-taleb', type: 'contradiction', label: 'Dollar trajectory' },
+    { from: 'elon-musk', to: 'poshen-loh', type: 'contradiction', label: 'AI in education' },
+    { from: 'nassim-taleb', to: 'dario-amodei', type: 'contradiction', label: 'AI market winners' },
+    // Agreements (green)
+    { from: 'brent-johnson', to: 'nassim-taleb', type: 'agreement', label: 'Gold goes up' },
+    { from: 'dario-amodei', to: 'jeff-yan', type: 'agreement', label: 'Application layer wins' },
+    { from: 'dario-amodei', to: 'poshen-loh', type: 'agreement', label: 'Critical thinking survives' },
+    { from: 'jeff-yan', to: 'david-martin', type: 'agreement', label: 'Primitives enable ecosystem' },
+    { from: 'elon-musk', to: 'dario-amodei', type: 'agreement', label: 'AGI is close' },
+    { from: 'poshen-loh', to: 'dario-amodei', type: 'agreement', label: 'Human connection matters' },
+    { from: 'elon-musk', to: 'jeff-yan', type: 'agreement', label: 'Race against time' }
+  ];
+
+  // Position speakers in a circle
+  const cx = w / 2, cy = h / 2, radius = Math.min(w, h) * 0.32;
+  speakers.forEach((s, i) => {
+    const angle = (i / speakers.length) * Math.PI * 2 - Math.PI / 2;
+    s.x = cx + Math.cos(angle) * radius;
+    s.y = cy + Math.sin(angle) * radius;
+    s.targetX = s.x;
+    s.targetY = s.y;
+    s.radius = 28 + s.videos * 10;
+    s.selected = false;
+  });
+
+  const speakerMap = {};
+  speakers.forEach(s => speakerMap[s.id] = s);
+
+  let dragging = null;
+  let selected = null;
+  let mouseX = 0, mouseY = 0;
+  let hoveredSpeaker = null;
+
+  function getMousePos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches ? e.touches[0] : e;
+    return { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+  }
+
+  function findSpeaker(x, y) {
+    for (let i = speakers.length - 1; i >= 0; i--) {
+      const s = speakers[i];
+      const dx = x - s.x, dy = y - s.y;
+      if (dx * dx + dy * dy < s.radius * s.radius) return s;
+    }
+    return null;
+  }
+
+  canvas.addEventListener('mousedown', e => {
+    const pos = getMousePos(e);
+    const s = findSpeaker(pos.x, pos.y);
+    if (s) { dragging = s; dragging.dragOffsetX = pos.x - s.x; dragging.dragOffsetY = pos.y - s.y; }
+  });
+
+  canvas.addEventListener('touchstart', e => {
+    const pos = getMousePos(e);
+    const s = findSpeaker(pos.x, pos.y);
+    if (s) { dragging = s; dragging.dragOffsetX = pos.x - s.x; dragging.dragOffsetY = pos.y - s.y; e.preventDefault(); }
+  }, { passive: false });
+
+  canvas.addEventListener('mousemove', e => {
+    const pos = getMousePos(e);
+    mouseX = pos.x; mouseY = pos.y;
+    if (dragging) {
+      dragging.x = pos.x - dragging.dragOffsetX;
+      dragging.y = pos.y - dragging.dragOffsetY;
+      dragging.targetX = dragging.x;
+      dragging.targetY = dragging.y;
+    }
+    const s = findSpeaker(pos.x, pos.y);
+    canvas.style.cursor = s ? 'pointer' : 'default';
+    hoveredSpeaker = s;
+  });
+
+  canvas.addEventListener('touchmove', e => {
+    if (dragging) {
+      const pos = getMousePos(e);
+      dragging.x = pos.x - dragging.dragOffsetX;
+      dragging.y = pos.y - dragging.dragOffsetY;
+      dragging.targetX = dragging.x;
+      dragging.targetY = dragging.y;
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  function endDrag() { dragging = null; }
+  canvas.addEventListener('mouseup', e => {
+    if (!dragging) {
+      const pos = getMousePos(e);
+      const s = findSpeaker(pos.x, pos.y);
+      selected = (selected === s) ? null : s;
+    }
+    endDrag();
+  });
+  canvas.addEventListener('touchend', e => {
+    if (!dragging) {
+      if (e.changedTouches && e.changedTouches[0]) {
+        const pos = { x: e.changedTouches[0].clientX - canvas.getBoundingClientRect().left, y: e.changedTouches[0].clientY - canvas.getBoundingClientRect().top };
+        const s = findSpeaker(pos.x, pos.y);
+        selected = (selected === s) ? null : s;
+      }
+    }
+    endDrag();
+  });
+
+  // Animation
+  let frame = 0;
+  function draw() {
+    frame++;
+    const dims = resize();
+    w = dims.w; h = dims.h;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // Subtle grid
+    ctx.strokeStyle = 'rgba(209,224,214,0.3)';
+    ctx.lineWidth = 0.5;
+    for (let x = 0; x < w; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+    for (let y = 0; y < h; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+
+    // Draw connections
+    connections.forEach(c => {
+      const from = speakerMap[c.from];
+      const to = speakerMap[c.to];
+      if (!from || !to) return;
+
+      const isContra = c.type === 'contradiction';
+      const isRelevant = !selected || selected.id === c.from || selected.id === c.to;
+      const alpha = isRelevant ? (isContra ? 0.7 : 0.4) : 0.08;
+
+      ctx.beginPath();
+      ctx.strokeStyle = isContra ? `rgba(231,76,60,${alpha})` : `rgba(161,230,129,${alpha})`;
+      ctx.lineWidth = isContra ? 2.5 : 1.5;
+      if (isContra) ctx.setLineDash([6, 4]);
+      else ctx.setLineDash([]);
+
+      // Curved lines
+      const mx = (from.x + to.x) / 2;
+      const my = (from.y + to.y) / 2;
+      const dx = to.x - from.x;
+      const dy = to.y - from.y;
+      const offset = isContra ? 25 : 15;
+      const cpx = mx + (-dy / Math.sqrt(dx*dx+dy*dy)) * offset;
+      const cpy = my + (dx / Math.sqrt(dx*dx+dy*dy)) * offset;
+
+      ctx.moveTo(from.x, from.y);
+      ctx.quadraticCurveTo(cpx, cpy, to.x, to.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Connection label
+      if (isRelevant && (hoveredSpeaker?.id === c.from || hoveredSpeaker?.id === c.to || selected?.id === c.from || selected?.id === c.to)) {
+        ctx.font = '500 10px Inter, sans-serif';
+        ctx.fillStyle = isContra ? 'rgba(231,76,60,0.8)' : 'rgba(47,90,61,0.7)';
+        ctx.textAlign = 'center';
+        ctx.fillText(c.label, cpx, cpy - 6);
+      }
+    });
+
+    // Draw speakers
+    speakers.forEach(s => {
+      const isActive = !selected || selected.id === s.id || connections.some(c => (c.from === selected?.id && c.to === s.id) || (c.to === selected?.id && c.from === s.id));
+      const alpha = isActive ? 1 : 0.25;
+
+      // Glow for selected
+      if (selected === s) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius + 8, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(161,230,129,0.15)';
+        ctx.fill();
+      }
+
+      // Hover glow
+      if (hoveredSpeaker === s && selected !== s) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius + 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(161,230,129,0.1)';
+        ctx.fill();
+      }
+
+      // Circle
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+      ctx.fillStyle = s.color;
+      ctx.globalAlpha = alpha;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Border
+      ctx.strokeStyle = selected === s ? '#1E4129' : 'rgba(255,255,255,0.8)';
+      ctx.lineWidth = selected === s ? 3 : 1.5;
+      ctx.globalAlpha = alpha;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      // Emoji
+      ctx.font = `${s.radius * 0.7}px serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.globalAlpha = alpha;
+      ctx.fillText(s.emoji, s.x, s.y - 1);
+      ctx.globalAlpha = 1;
+
+      // Name
+      ctx.font = '600 13px Inter, sans-serif';
+      ctx.fillStyle = `rgba(30,65,41,${alpha})`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText(s.name, s.x, s.y + s.radius + 8);
+
+      // Video count
+      ctx.font = '400 10px Inter, sans-serif';
+      ctx.fillStyle = `rgba(107,123,113,${alpha})`;
+      ctx.fillText(s.videos + (s.videos === 1 ? ' video' : ' videos'), s.x, s.y + s.radius + 24);
+    });
+
+    // Selected speaker thesis panel
+    if (selected) {
+      const panelX = 16;
+      const panelY = 16;
+      const panelW = Math.min(260, w - 32);
+      const lineH = 22;
+      const panelH = 46 + selected.theses.length * lineH + 8;
+
+      ctx.fillStyle = 'rgba(30,65,41,0.95)';
+      ctx.beginPath();
+      ctx.roundRect(panelX, panelY, panelW, panelH, 12);
+      ctx.fill();
+
+      ctx.font = '700 14px Inter, sans-serif';
+      ctx.fillStyle = '#A1E681';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.fillText(selected.emoji + ' ' + selected.name, panelX + 14, panelY + 12);
+
+      ctx.font = '400 11px Inter, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      selected.theses.forEach((t, i) => {
+        const text = t.length > 38 ? t.substring(0, 36) + '…' : t;
+        ctx.fillText('• ' + text, panelX + 14, panelY + 38 + i * lineH);
+      });
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+})();
 </script>
 
 </body>
