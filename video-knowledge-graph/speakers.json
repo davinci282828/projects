@@ -55,7 +55,7 @@
     "id": "jeff-yan",
     "name": "Jeff Yan",
     "role": "Founder, Hyperliquid",
-    "known_for": "$1B community airdrop \u2192 $10B protocol, 11-person team",
+    "known_for": "$1B community airdrop → $10B protocol, 11-person team",
     "framework": "Build robust primitives, let ecosystem scale; DeFi before AI takes over",
     "appearances": [
       "yt_2cC9IjixIww"
@@ -126,7 +126,7 @@
     "id": "intent-engineering",
     "name": "Enterprise AI Panel",
     "role": "Panel discussion on organizational AI deployment",
-    "known_for": "Intent engineering framework \u2014 making organizational values machine-readable",
+    "known_for": "Intent engineering framework — making organizational values machine-readable",
     "framework": "Intent > prompts; organizational alignment beats raw model capability; mediocre model + great intent infrastructure > frontier model with no alignment",
     "appearances": [
       "yt_QWzLPn164w0"
@@ -162,7 +162,7 @@
     "name": "Robert F. Kennedy Jr.",
     "role": "Secretary of Health and Human Services",
     "known_for": "MAHA (Make America Healthy Again), environmental law, vaccine skepticism, 2024 presidential candidate",
-    "framework": "Perverse incentive analysis \u2014 follow the money to understand why systems produce bad outcomes. Food as root cause of chronic disease epidemic.",
+    "framework": "Perverse incentive analysis — follow the money to understand why systems produce bad outcomes. Food as root cause of chronic disease epidemic.",
     "appearances": [
       "yt_wk7DQom821s"
     ],
@@ -181,7 +181,7 @@
     "name": "Chamath Palihapitiya",
     "role": "CEO Social Capital, All-In Podcast host",
     "known_for": "Early Facebook, SPAC king, macro/venture crossover, public markets analysis",
-    "framework": "When\u2192If repricing framework; structural market analysis; degrossing signals",
+    "framework": "When→If repricing framework; structural market analysis; degrossing signals",
     "appearances": [
       "yt_kzWbCF_IkHY"
     ],
@@ -353,7 +353,7 @@
     "name": "Alan Watts",
     "role": "Philosopher, writer (1915-1973)",
     "known_for": "Popularizing Eastern philosophy for Western audiences, Zen Buddhism, Taoism, the art of letting go",
-    "framework": "The Great Pretending; letting go \u2260 giving up; caring without clinging; action without anxiety; life as improvisation",
+    "framework": "The Great Pretending; letting go ≠ giving up; caring without clinging; action without anxiety; life as improvisation",
     "appearances": [
       "yt_Z55F_YVSaZ8"
     ],
@@ -371,7 +371,7 @@
     "name": "Naval Ravikant",
     "role": "Angel investor (AngelList founder), philosopher-investor, building 'Impossible'",
     "known_for": "How to Get Rich (without getting lucky), Almanack of Naval, early Uber/Twitter investor, intersection of technology + philosophy + wealth",
-    "framework": "No demand for average; every human as spellcaster; AI alpha competes to zero; knowledge one layer below; compression \u2192 abstraction; unaligned humans not AI",
+    "framework": "No demand for average; every human as spellcaster; AI alpha competes to zero; knowledge one layer below; compression → abstraction; unaligned humans not AI",
     "appearances": [
       "yt_sXCKgEl9hBo"
     ],
@@ -391,7 +391,7 @@
     "name": "Michael Saylor",
     "role": "Executive Chairman, Strategy (formerly MicroStrategy)",
     "known_for": "Largest corporate Bitcoin holder, STRC/Stretch digital credit instrument, capital-to-credit conversion",
-    "framework": "Digital capital \u2192 digital credit signal processing; reflexive flywheel; programmable credit across types/platforms/currencies; competing with $300T garbagey credit",
+    "framework": "Digital capital → digital credit signal processing; reflexive flywheel; programmable credit across types/platforms/currencies; competing with $300T garbagey credit",
     "appearances": [
       "yt_yQL9yua9Yq0"
     ],
@@ -428,7 +428,7 @@
     "name": "Jordi Visser",
     "role": "Former CIO Weiss Multi-Strategy Advisors, independent macro strategist",
     "known_for": "Turbulence Model, K-shaped economy thesis, AI/crypto convergence, software-as-prediction-markets framework",
-    "framework": "AI compresses time \u2192 software becomes binary \u2192 prediction market repricing; survive-and-thrive cycles; crypto as fastest horse post-crisis; bottom-up disruption > enterprise adoption",
+    "framework": "AI compresses time → software becomes binary → prediction market repricing; survive-and-thrive cycles; crypto as fastest horse post-crisis; bottom-up disruption > enterprise adoption",
     "appearances": [
       "yt_u48856z9Stc"
     ],
@@ -465,7 +465,7 @@
     "name": "Lyn Alden",
     "role": "Founder, Lyn Alden Investment Strategy",
     "known_for": "Financial plumbing analysis, monetary mechanics, bridging trad-fi and Bitcoin",
-    "framework": "Follow the plumbing \u2014 bank cash ratios, balance sheet mechanics, liquidity cycles. Gradual print > nuclear print. Asset-specific factors dominate in low-stimulus regimes.",
+    "framework": "Follow the plumbing — bank cash ratios, balance sheet mechanics, liquidity cycles. Gradual print > nuclear print. Asset-specific factors dominate in low-stimulus regimes.",
     "appearances": [
       "yt_G-MUaWP9myY"
     ],
@@ -588,7 +588,7 @@
     "name": "JD Ross",
     "role": "Co-founder Opendoor, founder/CEO WithCoverage",
     "known_for": "Opendoor, AI-native insurance brokerage, zero-code engineering team",
-    "framework": "SaaS barbell (model cos eat top, individuals eat middle, trusted experts survive); Jevons Paradox for engineering; writer\u2192editor transition",
+    "framework": "SaaS barbell (model cos eat top, individuals eat middle, trusted experts survive); Jevons Paradox for engineering; writer→editor transition",
     "appearances": [
       "yt_m8y0ftEmbkY"
     ],
@@ -598,6 +598,23 @@
       "AI-engineering",
       "enterprise",
       "Jevons-paradox"
+    ]
+  },
+  {
+    "id": "zack-shapiro",
+    "name": "Zack Shapiro",
+    "role": "AI researcher/practitioner",
+    "known_for": "Thesis that general AI + skills beats specialized vertical AI",
+    "framework": "Well-configured general AI already beats specialized legal AI; the value is in encoded judgment, not the platform",
+    "appearances": [
+      "yt_m8y0ftEmbkY"
+    ],
+    "key_topics": [
+      "AI",
+      "vertical-AI",
+      "legal-AI",
+      "judgment",
+      "general-purpose-AI"
     ]
   }
 ]

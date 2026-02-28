@@ -20,12 +20,12 @@
     "theses": [
       {
         "id": "bj-1",
-        "claim": "Dollar and gold can rise simultaneously \u2014 gold rejects all fiat, not just USD",
+        "claim": "Dollar and gold can rise simultaneously — gold rejects all fiat, not just USD",
         "stance": "bullish-dollar-and-gold"
       },
       {
         "id": "bj-2",
-        "claim": "Stablecoins are the modern Eurodollar system \u2014 US projects dollar dominance through private sector crypto",
+        "claim": "Stablecoins are the modern Eurodollar system — US projects dollar dominance through private sector crypto",
         "stance": "bullish-stablecoins"
       },
       {
@@ -40,7 +40,7 @@
       },
       {
         "id": "bj-5",
-        "claim": "BRICS is overhyped \u2014 US internal policy shifts matter more than external blocs",
+        "claim": "BRICS is overhyped — US internal policy shifts matter more than external blocs",
         "stance": "bearish-BRICS"
       }
     ],
@@ -56,7 +56,7 @@
   {
     "id": "yt_QWzLPn164w0",
     "url": "https://youtu.be/QWzLPn164w0",
-    "title": "Intent Engineering \u2014 From Prompting to Organizational AI",
+    "title": "Intent Engineering — From Prompting to Organizational AI",
     "speaker": "Enterprise AI Panel",
     "speaker_id": "intent-engineering",
     "date_analyzed": "2026-02-27",
@@ -114,7 +114,7 @@
     "theses": [
       {
         "id": "em-1",
-        "claim": "Energy is the ultimate currency \u2014 future measured in watts, not dollars",
+        "claim": "Energy is the ultimate currency — future measured in watts, not dollars",
         "stance": "framework"
       },
       {
@@ -129,12 +129,12 @@
       },
       {
         "id": "em-4",
-        "claim": "Triple exponential for robotics \u2014 AI + chips + electromechanical dexterity multiplying",
+        "claim": "Triple exponential for robotics — AI + chips + electromechanical dexterity multiplying",
         "stance": "framework"
       },
       {
         "id": "em-5",
-        "claim": "Massive deflation coming \u2014 AI productivity exceeds money supply",
+        "claim": "Massive deflation coming — AI productivity exceeds money supply",
         "stance": "bullish-deflation"
       },
       {
@@ -182,12 +182,12 @@
       },
       {
         "id": "dm-3",
-        "claim": "Miami's growth is residential-first \u2014 execs move for lifestyle, companies follow",
+        "claim": "Miami's growth is residential-first — execs move for lifestyle, companies follow",
         "stance": "framework"
       },
       {
         "id": "dm-4",
-        "claim": "Teachers can't afford to live where they work \u2014 applies to all essential workers",
+        "claim": "Teachers can't afford to live where they work — applies to all essential workers",
         "stance": "warning"
       }
     ],
@@ -240,7 +240,7 @@
       }
     ],
     "contrarian_takes": [
-      "Anti-VC model \u2014 100% community distribution",
+      "Anti-VC model — 100% community distribution",
       "Centralized systems move faster but decentralized wins long-term"
     ],
     "quotable": [
@@ -267,12 +267,12 @@
     "theses": [
       {
         "id": "nt-1",
-        "claim": "Dollar losing store-of-value status (not transaction status) \u2014 central banks moving to gold",
+        "claim": "Dollar losing store-of-value status (not transaction status) — central banks moving to gold",
         "stance": "bearish-dollar-reserve"
       },
       {
         "id": "nt-2",
-        "claim": "AI pioneers will go bankrupt \u2014 historical pattern of tech revolutions",
+        "claim": "AI pioneers will go bankrupt — historical pattern of tech revolutions",
         "stance": "bearish-current-AI-stocks"
       },
       {
@@ -317,17 +317,17 @@
     "theses": [
       {
         "id": "pl-1",
-        "claim": "Math is the last curriculum for generating original ideas \u2014 everything else is information retrieval",
+        "claim": "Math is the last curriculum for generating original ideas — everything else is information retrieval",
         "stance": "framework"
       },
       {
         "id": "pl-2",
-        "claim": "Kids without constant tech access are MORE creative \u2014 boredom is precondition for creativity",
+        "claim": "Kids without constant tech access are MORE creative — boredom is precondition for creativity",
         "stance": "contrarian"
       },
       {
         "id": "pl-3",
-        "claim": "Using AI for homework is driving a car for exercise \u2014 task done, zero mental fitness",
+        "claim": "Using AI for homework is driving a car for exercise — task done, zero mental fitness",
         "stance": "cautionary"
       },
       {
@@ -428,7 +428,7 @@
       },
       {
         "id": "da-2",
-        "claim": "No theory for WHY scaling works \u2014 empirical recipe without fundamental explanation",
+        "claim": "No theory for WHY scaling works — empirical recipe without fundamental explanation",
         "stance": "epistemic-humility"
       },
       {
@@ -443,12 +443,12 @@
       },
       {
         "id": "da-5",
-        "claim": "AI-driven biotech renaissance \u2014 programmable mRNA/peptide therapies",
+        "claim": "AI-driven biotech renaissance — programmable mRNA/peptide therapies",
         "stance": "bullish-biotech"
       },
       {
         "id": "da-6",
-        "claim": "Critical thinking is the #1 skill \u2014 distinguishing real from fake",
+        "claim": "Critical thinking is the #1 skill — distinguishing real from fake",
         "stance": "framework"
       }
     ],
@@ -464,7 +464,7 @@
   },
   {
     "id": "yt_z_pk4eBDaLA",
-    "title": "Hard Lessons: Stan Druckenmiller \u2014 Invest, Then Investigate",
+    "title": "Hard Lessons: Stan Druckenmiller — Invest, Then Investigate",
     "channel": "Morgan Stanley",
     "speaker": "stan-druckenmiller",
     "url": "https://youtu.be/z_pk4eBDaLA",
@@ -683,7 +683,7 @@
   },
   {
     "id": "yt_htj3PeukEbM",
-    "title": "The Next Era of AI is Onchain \u2014 Illia Polosukhin at NearCon 2026",
+    "title": "The Next Era of AI is Onchain — Illia Polosukhin at NearCon 2026",
     "channel": "The Rollup",
     "speaker": "illia-polosukhin",
     "url": "https://youtu.be/htj3PeukEbM",
@@ -740,7 +740,7 @@
   },
   {
     "id": "yt_Z55F_YVSaZ8",
-    "title": "Act as If Nothing Matters \u2014 Alan Watts on Letting Go",
+    "title": "Act as If Nothing Matters — Alan Watts on Letting Go",
     "channel": "Alan Watts Within",
     "speaker": "alan-watts",
     "url": "https://youtu.be/Z55F_YVSaZ8",
@@ -762,7 +762,7 @@
   },
   {
     "id": "yt_sXCKgEl9hBo",
-    "title": "On Artificial Intelligence \u2014 Naval Ravikant",
+    "title": "On Artificial Intelligence — Naval Ravikant",
     "channel": "Naval",
     "speaker": "naval-ravikant",
     "url": "https://youtu.be/sXCKgEl9hBo",
@@ -811,7 +811,7 @@
       "tp-ms-1",
       "tp-ms-2"
     ],
-    "key_quote": "Most credit is manufactured to be awful \u2014 very tax-inefficient, and it's illegal for you to buy it."
+    "key_quote": "Most credit is manufactured to be awful — very tax-inefficient, and it's illegal for you to buy it."
   },
   {
     "id": "yt_o-E7DIctrzo",
@@ -951,13 +951,12 @@
       "tp-bh-1",
       "tp-bh-2"
     ],
-    "key_quote": "AI will be a full-out economic actor and it will come from new banks and new money \u2014 crypto-based."
+    "key_quote": "AI will be a full-out economic actor and it will come from new banks and new money — crypto-based."
   },
   {
     "id": "yt_m8y0ftEmbkY",
-    "title": "How to Use AI in 2026: Opendoor Founder's Advice",
+    "title": "How to Use AI in 2026: Opendoor Founder's Advice (JD Ross & Joe Lonsdale)",
     "channel": "Joe Lonsdale / American Optimist",
-    "speaker": "jd-ross",
     "url": "https://youtu.be/m8y0ftEmbkY",
     "date_analyzed": "2026-02-28",
     "topics": [
@@ -975,6 +974,10 @@
       "mt-jdr-1"
     ],
     "predictions": [],
-    "key_quote": "Not a single one of our full-time engineers right now writes code anymore."
+    "key_quote": "Not a single one of our full-time engineers right now writes code anymore.",
+    "speakers": [
+      "jd-ross",
+      "joe-lonsdale"
+    ]
   }
 ]
