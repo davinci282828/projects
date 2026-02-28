@@ -5,8 +5,15 @@
     "role": "CEO, Santiago Capital",
     "known_for": "Dollar Milkshake Theory (2018)",
     "framework": "US structural advantages pull global capital inward; dollar + gold rise together",
-    "appearances": ["yt_lUPDZvFf1Is"],
-    "key_topics": ["dollar", "gold", "macro", "stablecoins"]
+    "appearances": [
+      "yt_lUPDZvFf1Is"
+    ],
+    "key_topics": [
+      "dollar",
+      "gold",
+      "macro",
+      "stablecoins"
+    ]
   },
   {
     "id": "elon-musk",
@@ -14,8 +21,18 @@
     "role": "CEO of Tesla, SpaceX, xAI",
     "known_for": "Building at the intersection of AI compute, energy, robotics, and space",
     "framework": "Energy as ultimate constraint; triple exponential in robotics; work becomes optional",
-    "appearances": ["yt_yxax4xpZus8", "yt_VvKV_ulseKc"],
-    "key_topics": ["energy", "AI", "robotics", "FSD", "deflation", "manufacturing"]
+    "appearances": [
+      "yt_yxax4xpZus8",
+      "yt_VvKV_ulseKc"
+    ],
+    "key_topics": [
+      "energy",
+      "AI",
+      "robotics",
+      "FSD",
+      "deflation",
+      "manufacturing"
+    ]
   },
   {
     "id": "david-martin",
@@ -23,17 +40,32 @@
     "role": "CEO, Terra (Miami real estate developer)",
     "known_for": "Shaping Miami zoning and development policy",
     "framework": "Market-based urbanism; missing middle housing; residential-first growth",
-    "appearances": ["yt_pl1L70N-WLE"],
-    "key_topics": ["miami", "housing", "zoning", "transit", "education"]
+    "appearances": [
+      "yt_pl1L70N-WLE"
+    ],
+    "key_topics": [
+      "miami",
+      "housing",
+      "zoning",
+      "transit",
+      "education"
+    ]
   },
   {
     "id": "jeff-yan",
     "name": "Jeff Yan",
     "role": "Founder, Hyperliquid",
-    "known_for": "$1B community airdrop → $10B protocol, 11-person team",
+    "known_for": "$1B community airdrop \u2192 $10B protocol, 11-person team",
     "framework": "Build robust primitives, let ecosystem scale; DeFi before AI takes over",
-    "appearances": ["yt_2cC9IjixIww"],
-    "key_topics": ["DeFi", "crypto", "permissionless-finance", "primitives"]
+    "appearances": [
+      "yt_2cC9IjixIww"
+    ],
+    "key_topics": [
+      "DeFi",
+      "crypto",
+      "permissionless-finance",
+      "primitives"
+    ]
   },
   {
     "id": "nassim-taleb",
@@ -41,8 +73,16 @@
     "role": "Author (Black Swan, Antifragile), former options trader",
     "known_for": "Tail-risk theory, fat-tailed distributions, anti-fragility",
     "framework": "Tail risks are systematically underpriced; trust empirical evidence over models",
-    "appearances": ["yt_cyds4kP_n80"],
-    "key_topics": ["tail-risk", "dollar", "gold", "AI-bubble", "stagflation"]
+    "appearances": [
+      "yt_cyds4kP_n80"
+    ],
+    "key_topics": [
+      "tail-risk",
+      "dollar",
+      "gold",
+      "AI-bubble",
+      "stagflation"
+    ]
   },
   {
     "id": "poshen-loh",
@@ -50,8 +90,15 @@
     "role": "Carnegie Mellon math professor, former US Math Olympiad team coach",
     "known_for": "Expii educational platform, math as thinking curriculum",
     "framework": "Math as the last curriculum for original thinking; boredom precedes creativity; authenticity is human advantage",
-    "appearances": ["yt_ivVPJhYM8Ng"],
-    "key_topics": ["education", "AI", "creativity", "authenticity"]
+    "appearances": [
+      "yt_ivVPJhYM8Ng"
+    ],
+    "key_topics": [
+      "education",
+      "AI",
+      "creativity",
+      "authenticity"
+    ]
   },
   {
     "id": "dario-amodei",
@@ -59,7 +106,498 @@
     "role": "Co-founder/CEO, Anthropic (builds Claude)",
     "known_for": "Scaling laws research, Constitutional AI, safety-first AI development",
     "framework": "Intelligence = data + compute + model size (no theory for why); application layer has the moats; steer AI, don't stop it",
-    "appearances": ["yt_68ylaeBbdsg"],
-    "key_topics": ["scaling-laws", "AI-safety", "governance", "biotech", "consciousness"]
+    "appearances": [
+      "yt_68ylaeBbdsg",
+      "yt_MPTNHrq_4LU"
+    ],
+    "key_topics": [
+      "scaling-laws",
+      "AI-safety",
+      "governance",
+      "biotech",
+      "consciousness",
+      "pentagon",
+      "military-AI",
+      "surveillance",
+      "autonomous-weapons"
+    ]
+  },
+  {
+    "id": "intent-engineering",
+    "name": "Enterprise AI Panel",
+    "role": "Panel discussion on organizational AI deployment",
+    "known_for": "Intent engineering framework \u2014 making organizational values machine-readable",
+    "framework": "Intent > prompts; organizational alignment beats raw model capability; mediocre model + great intent infrastructure > frontier model with no alignment",
+    "appearances": [
+      "yt_QWzLPn164w0"
+    ],
+    "key_topics": [
+      "intent-engineering",
+      "AI-deployment",
+      "organizational-alignment",
+      "context-engineering"
+    ]
+  },
+  {
+    "id": "stan-druckenmiller",
+    "name": "Stan Druckenmiller",
+    "role": "Founder, Duquesne Family Office (formerly Duquesne Capital Management)",
+    "known_for": "~30% annualized returns, zero losing years 1981-2010. Former Soros Quantum Fund lead PM. Macro legend.",
+    "framework": "Pattern recognition over analysis; expert-enthusiasm-as-signal; courage in sizing; 18mo-3yr time horizons",
+    "appearances": [
+      "yt_z_pk4eBDaLA"
+    ],
+    "key_topics": [
+      "macro",
+      "equity selection",
+      "AI investing",
+      "technical analysis",
+      "mentorship",
+      "sizing",
+      "contrarianism"
+    ]
+  },
+  {
+    "id": "rfk-jr",
+    "name": "Robert F. Kennedy Jr.",
+    "role": "Secretary of Health and Human Services",
+    "known_for": "MAHA (Make America Healthy Again), environmental law, vaccine skepticism, 2024 presidential candidate",
+    "framework": "Perverse incentive analysis \u2014 follow the money to understand why systems produce bad outcomes. Food as root cause of chronic disease epidemic.",
+    "appearances": [
+      "yt_wk7DQom821s"
+    ],
+    "key_topics": [
+      "healthcare-reform",
+      "food-policy",
+      "chronic-disease",
+      "medicaid-fraud",
+      "psychedelic-therapy",
+      "glyphosate",
+      "MAHA"
+    ]
+  },
+  {
+    "id": "chamath-palihapitiya",
+    "name": "Chamath Palihapitiya",
+    "role": "CEO Social Capital, All-In Podcast host",
+    "known_for": "Early Facebook, SPAC king, macro/venture crossover, public markets analysis",
+    "framework": "When\u2192If repricing framework; structural market analysis; degrossing signals",
+    "appearances": [
+      "yt_kzWbCF_IkHY"
+    ],
+    "key_topics": [
+      "SaaS",
+      "AI-disruption",
+      "market-structure",
+      "macro"
+    ]
+  },
+  {
+    "id": "david-sacks",
+    "name": "David Sacks",
+    "role": "White House AI/Crypto Czar, All-In Podcast host, former PayPal/Yammer/Craft",
+    "known_for": "PayPal Mafia, Trump administration AI policy, energy policy",
+    "framework": "Fixed pie fallacy; seen vs unseen heuristic; competing sci-fi narratives",
+    "appearances": [
+      "yt_kzWbCF_IkHY"
+    ],
+    "key_topics": [
+      "AI-policy",
+      "tariffs",
+      "energy",
+      "data-centers",
+      "enterprise-software"
+    ]
+  },
+  {
+    "id": "jason-calacanis",
+    "name": "Jason Calacanis",
+    "role": "Angel investor, All-In Podcast host",
+    "known_for": "Early Uber investor, media/venture crossover, agent maestro concept",
+    "framework": "Operator-first; practical AI deployment; bipartisanship",
+    "appearances": [
+      "yt_kzWbCF_IkHY"
+    ],
+    "key_topics": [
+      "venture",
+      "AI-agents",
+      "media",
+      "politics"
+    ]
+  },
+  {
+    "id": "david-friedberg",
+    "name": "David Friedberg",
+    "role": "CEO The Production Board, All-In Podcast host",
+    "known_for": "Climate Corp (sold to Monsanto), science-based investing, macro thinking",
+    "framework": "Consumptive capacity limits; knowledge work as transitory; productivity vs demand",
+    "appearances": [
+      "yt_kzWbCF_IkHY"
+    ],
+    "key_topics": [
+      "macro-economics",
+      "AI-productivity",
+      "agriculture",
+      "energy",
+      "data-centers"
+    ]
+  },
+  {
+    "id": "julian-goldie",
+    "name": "Julian Goldie",
+    "role": "AI/SEO YouTuber, AI Profit Boardroom community",
+    "known_for": "Practical AI tool reviews, early adoption testing, business workflow integration",
+    "framework": "ROI-first tool evaluation; consumer accessibility matters; orchestration > single model",
+    "appearances": [
+      "yt_XTieQ4iEfAk"
+    ],
+    "key_topics": [
+      "AI-tools",
+      "perplexity",
+      "multi-agent",
+      "orchestration",
+      "solo-operator",
+      "knowledge-work"
+    ]
+  },
+  {
+    "id": "cathie-wood",
+    "name": "Cathie Wood",
+    "role": "Founder/CEO ARK Invest",
+    "known_for": "Disruptive innovation investing, ARKK ETF, Tesla/Bitcoin bull, Wright's Law framework",
+    "framework": "Wright's Law learning curves; wall of worry > euphoria; convergence of technologies; embodied AI > software AI",
+    "appearances": [
+      "yt_e4PFobVycTE"
+    ],
+    "key_topics": [
+      "Tesla",
+      "Bitcoin",
+      "autonomous-mobility",
+      "genomics",
+      "AI-bubble",
+      "orbital-data-centers",
+      "Musk-convergence"
+    ]
+  },
+  {
+    "id": "brian-casel",
+    "name": "Brian Casel",
+    "role": "Solo SaaS builder, Builder Methods / Builder Methods Pro",
+    "known_for": "Practical AI adoption for builders, OpenClaw multi-agent setup, Claude Code workflows",
+    "framework": "Hiring metaphor for agent security; model routing optimization; build what doesn't exist",
+    "appearances": [
+      "yt_bzWI3Dil9Ig"
+    ],
+    "key_topics": [
+      "OpenClaw",
+      "multi-agent",
+      "model-routing",
+      "agent-security",
+      "solo-builder",
+      "cost-optimization"
+    ]
+  },
+  {
+    "id": "illia-polosukhin",
+    "name": "Illia Polosukhin",
+    "role": "Co-founder Near Protocol, co-author 'Attention Is All You Need' (Transformer paper)",
+    "known_for": "Transformer architecture, Near Protocol, blockchain+AI convergence, intent infrastructure",
+    "framework": "Blockchain as agent infrastructure; economic alignment > safety alignment; post-labor economy via intent marketplaces; formal verification as existential necessity",
+    "appearances": [
+      "yt_htj3PeukEbM"
+    ],
+    "key_topics": [
+      "blockchain-AI",
+      "agent-marketplace",
+      "formal-verification",
+      "intent-infrastructure",
+      "post-labor-economy",
+      "confidential-compute",
+      "Near"
+    ]
+  },
+  {
+    "id": "vlad-tenev",
+    "name": "Vlad Tenev",
+    "role": "CEO/Co-founder Robinhood",
+    "known_for": "Democratizing retail investing, Robinhood IPO, commission-free trading, now private markets access",
+    "framework": "Retail as permanent capital; data-driven deal sourcing; making public company brand aspirational again",
+    "appearances": [
+      "yt_-3dNJAwxI0U"
+    ],
+    "key_topics": [
+      "private-markets",
+      "retail-investing",
+      "RVI",
+      "IPO-reform",
+      "HOOD"
+    ]
+  },
+  {
+    "id": "bill-ackman",
+    "name": "Bill Ackman",
+    "role": "CEO Pershing Square Capital Management",
+    "known_for": "Activist investing, public market analysis, direct communication style",
+    "framework": "Value creation through access; in-kind distributions; capital recycling",
+    "appearances": [
+      "yt_-3dNJAwxI0U"
+    ],
+    "key_topics": [
+      "investing",
+      "private-markets",
+      "fund-structure"
+    ]
+  },
+  {
+    "id": "alan-watts",
+    "name": "Alan Watts",
+    "role": "Philosopher, writer (1915-1973)",
+    "known_for": "Popularizing Eastern philosophy for Western audiences, Zen Buddhism, Taoism, the art of letting go",
+    "framework": "The Great Pretending; letting go \u2260 giving up; caring without clinging; action without anxiety; life as improvisation",
+    "appearances": [
+      "yt_Z55F_YVSaZ8"
+    ],
+    "key_topics": [
+      "philosophy",
+      "letting-go",
+      "meaning",
+      "spontaneity",
+      "non-attachment",
+      "play"
+    ]
+  },
+  {
+    "id": "naval-ravikant",
+    "name": "Naval Ravikant",
+    "role": "Angel investor (AngelList founder), philosopher-investor, building 'Impossible'",
+    "known_for": "How to Get Rich (without getting lucky), Almanack of Naval, early Uber/Twitter investor, intersection of technology + philosophy + wealth",
+    "framework": "No demand for average; every human as spellcaster; AI alpha competes to zero; knowledge one layer below; compression \u2192 abstraction; unaligned humans not AI",
+    "appearances": [
+      "yt_sXCKgEl9hBo"
+    ],
+    "key_topics": [
+      "vibe-coding",
+      "AI-leverage",
+      "creativity",
+      "winner-take-all",
+      "early-adoption",
+      "alignment",
+      "programming",
+      "philosophy"
+    ]
+  },
+  {
+    "id": "michael-saylor",
+    "name": "Michael Saylor",
+    "role": "Executive Chairman, Strategy (formerly MicroStrategy)",
+    "known_for": "Largest corporate Bitcoin holder, STRC/Stretch digital credit instrument, capital-to-credit conversion",
+    "framework": "Digital capital \u2192 digital credit signal processing; reflexive flywheel; programmable credit across types/platforms/currencies; competing with $300T garbagey credit",
+    "appearances": [
+      "yt_yQL9yua9Yq0"
+    ],
+    "key_topics": [
+      "Bitcoin",
+      "STRC",
+      "digital-credit",
+      "capital-conversion",
+      "tax-deferred-yield",
+      "reflexive-flywheel",
+      "MSTR"
+    ]
+  },
+  {
+    "id": "donald-trump",
+    "name": "Donald J. Trump",
+    "role": "47th President of the United States",
+    "known_for": "Operation Midnight Hammer, Iran military campaign, tariff policy, DOGE",
+    "framework": "Maximum pressure + military force; explicit regime change invitation; ultimatum diplomacy",
+    "appearances": [
+      "yt_o-E7DIctrzo"
+    ],
+    "key_topics": [
+      "Iran",
+      "military",
+      "nuclear-weapons",
+      "regime-change",
+      "geopolitics",
+      "Middle-East"
+    ]
+  },
+  {
+    "id": "jordi-visser",
+    "name": "Jordi Visser",
+    "role": "Former CIO Weiss Multi-Strategy Advisors, independent macro strategist",
+    "known_for": "Turbulence Model, K-shaped economy thesis, AI/crypto convergence, software-as-prediction-markets framework",
+    "framework": "AI compresses time \u2192 software becomes binary \u2192 prediction market repricing; survive-and-thrive cycles; crypto as fastest horse post-crisis; bottom-up disruption > enterprise adoption",
+    "appearances": [
+      "yt_u48856z9Stc"
+    ],
+    "key_topics": [
+      "macro",
+      "software-repricing",
+      "crypto",
+      "Bitcoin",
+      "AI-disruption",
+      "K-shaped-economy",
+      "turbulence-model",
+      "prediction-markets"
+    ]
+  },
+  {
+    "id": "anthony-pompliano",
+    "name": "Anthony Pompliano",
+    "role": "Host of The Pomp Podcast, Bitcoin advocate, entrepreneur",
+    "known_for": "Bitcoin advocacy, interviewing macro/crypto/tech leaders, simplifying complex topics",
+    "framework": "Bitcoin maximalism with practical orientation; interview-driven thesis development",
+    "appearances": [
+      "yt_u48856z9Stc"
+    ],
+    "key_topics": [
+      "Bitcoin",
+      "crypto",
+      "investing",
+      "macro",
+      "AI"
+    ]
+  },
+  {
+    "id": "lyn-alden",
+    "name": "Lyn Alden",
+    "role": "Founder, Lyn Alden Investment Strategy",
+    "known_for": "Financial plumbing analysis, monetary mechanics, bridging trad-fi and Bitcoin",
+    "framework": "Follow the plumbing \u2014 bank cash ratios, balance sheet mechanics, liquidity cycles. Gradual print > nuclear print. Asset-specific factors dominate in low-stimulus regimes.",
+    "appearances": [
+      "yt_G-MUaWP9myY"
+    ],
+    "key_topics": [
+      "macro",
+      "Fed",
+      "liquidity",
+      "Bitcoin",
+      "gold",
+      "monetary-policy",
+      "fiscal-dominance"
+    ]
+  },
+  {
+    "id": "natalie-brunell",
+    "name": "Natalie Brunell",
+    "role": "Host, Coin Stories podcast",
+    "known_for": "Bitcoin journalism, interviewing macro/crypto thinkers",
+    "framework": "Interview-driven; Bitcoin advocacy with macro context",
+    "appearances": [
+      "yt_G-MUaWP9myY"
+    ],
+    "key_topics": [
+      "Bitcoin",
+      "macro",
+      "monetary-policy"
+    ]
+  },
+  {
+    "id": "greg-isenberg",
+    "name": "Greg Isenberg",
+    "role": "Entrepreneur, advisor to TikTok and Reddit, host of Startup Ideas Podcast",
+    "known_for": "Practical AI tool reviews for founders, community-led growth, built and sold 3 startups",
+    "framework": "Hands-on testing > theory; agents as unfair advantage for solo founders; 'OpenClawification' of the internet",
+    "appearances": [
+      "yt_l-J8RodcM_A"
+    ],
+    "key_topics": [
+      "AI-tools",
+      "entrepreneurship",
+      "agents",
+      "Perplexity",
+      "solo-founder",
+      "productivity"
+    ]
+  },
+  {
+    "id": "ben-horowitz",
+    "name": "Ben Horowitz",
+    "role": "Co-founder, Andreessen Horowitz (a16z)",
+    "known_for": "The Hard Thing About Hard Things, a16z crypto fund, early AI/crypto VC",
+    "framework": "Crypto as AI's native money; fiat failed agents; Apple OpenClaw pivot; RSI already here; unlimited entrepreneurial opportunity",
+    "appearances": [
+      "yt_C1GLT9_tag0"
+    ],
+    "key_topics": [
+      "crypto",
+      "AI-economy",
+      "VC",
+      "Apple",
+      "OpenClaw",
+      "SSI",
+      "classified-physics",
+      "entrepreneurship"
+    ]
+  },
+  {
+    "id": "peter-diamandis",
+    "name": "Peter Diamandis",
+    "role": "Founder XPRIZE, Singularity University; host Moonshots podcast",
+    "known_for": "Abundance mindset, space entrepreneurship, longevity, exponential thinking",
+    "framework": "Abundance over scarcity; space as next frontier; AI + robotics = post-scarcity",
+    "appearances": [
+      "yt_C1GLT9_tag0"
+    ],
+    "key_topics": [
+      "space",
+      "longevity",
+      "AI",
+      "abundance",
+      "exponential-tech"
+    ]
+  },
+  {
+    "id": "alex-innerloop",
+    "name": "Alex (The Innermost Loop)",
+    "role": "AI researcher/writer, Moonshots co-host",
+    "known_for": "The Innermost Loop newsletter, deep AI tracking, contrarian on hype",
+    "framework": "Defensive co-scaling; fiat failed agents; RSI already here; AI solves physics in 2 years",
+    "appearances": [
+      "yt_C1GLT9_tag0"
+    ],
+    "key_topics": [
+      "AI-research",
+      "RSI",
+      "crypto-agents",
+      "physics",
+      "frontier-models"
+    ]
+  },
+  {
+    "id": "joe-lonsdale",
+    "name": "Joe Lonsdale",
+    "role": "Co-founder Palantir, Addepar, 8VC",
+    "known_for": "Palantir, American Optimist podcast, defense/enterprise tech investing",
+    "framework": "Invention eras reset everyone; returns to agency are very high; build on existing frameworks (St Patrick strategy)",
+    "appearances": [
+      "yt_m8y0ftEmbkY"
+    ],
+    "key_topics": [
+      "VC",
+      "Palantir",
+      "AI",
+      "entrepreneurship",
+      "defense"
+    ]
+  },
+  {
+    "id": "jd-ross",
+    "name": "JD Ross",
+    "role": "Co-founder Opendoor, founder/CEO WithCoverage",
+    "known_for": "Opendoor, AI-native insurance brokerage, zero-code engineering team",
+    "framework": "SaaS barbell (model cos eat top, individuals eat middle, trusted experts survive); Jevons Paradox for engineering; writer\u2192editor transition",
+    "appearances": [
+      "yt_m8y0ftEmbkY"
+    ],
+    "key_topics": [
+      "SaaS",
+      "insurance",
+      "AI-engineering",
+      "enterprise",
+      "Jevons-paradox"
+    ]
   }
 ]

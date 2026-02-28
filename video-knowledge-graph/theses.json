@@ -4,37 +4,457 @@
       "id": "mt-1",
       "theme": "Bottleneck shifted from digital to physical",
       "description": "Software/intelligence approaching sufficiency. Constraints now: energy, manufacturing, physical dexterity, zoning, infrastructure.",
-      "supported_by": ["em-2", "em2-3", "dm-1", "dm-2"],
-      "speakers": ["elon-musk", "david-martin"]
+      "supported_by": [
+        "em-2",
+        "em2-3",
+        "dm-1",
+        "dm-2"
+      ],
+      "speakers": [
+        "elon-musk",
+        "david-martin"
+      ]
     },
     {
       "id": "mt-2",
       "theme": "Human value = authentic connection + judgment",
       "description": "As AI handles information/production, human advantage is caring, empathy, taste, critical evaluation.",
-      "supported_by": ["pl-4", "ie-1", "da-6", "pl-1"],
-      "speakers": ["poshen-loh", "intent-engineering", "dario-amodei"]
+      "supported_by": [
+        "pl-4",
+        "ie-1",
+        "da-6",
+        "pl-1"
+      ],
+      "speakers": [
+        "poshen-loh",
+        "intent-engineering",
+        "dario-amodei"
+      ]
     },
     {
       "id": "mt-3",
       "theme": "Gold is consensus hedge",
       "description": "Opposing dollar frameworks both conclude: buy gold. Johnson (dollar + gold up together), Taleb (dollar declining, gold up).",
-      "supported_by": ["bj-1", "nt-1"],
-      "speakers": ["brent-johnson", "nassim-taleb"],
+      "supported_by": [
+        "bj-1",
+        "nt-1"
+      ],
+      "speakers": [
+        "brent-johnson",
+        "nassim-taleb"
+      ],
       "note": "Agreement on conclusion despite disagreement on mechanism"
     },
     {
       "id": "mt-4",
       "theme": "Application layer wins",
       "description": "Moats in regulated industries and domain expertise, not in building models or base infrastructure.",
-      "supported_by": ["da-3", "jy-2", "dm-1"],
-      "speakers": ["dario-amodei", "jeff-yan", "david-martin"]
+      "supported_by": [
+        "da-3",
+        "jy-2",
+        "dm-1"
+      ],
+      "speakers": [
+        "dario-amodei",
+        "jeff-yan",
+        "david-martin"
+      ]
     },
     {
       "id": "mt-5",
       "theme": "Race against time",
       "description": "Multiple domains facing closing windows: DeFi before AI, steer AI before too powerful, preserve human thinking before atrophy, scale energy before chips outpace grid.",
-      "supported_by": ["jy-1", "da-1", "pl-3", "em-2"],
-      "speakers": ["jeff-yan", "dario-amodei", "poshen-loh", "elon-musk"]
+      "supported_by": [
+        "jy-1",
+        "da-1",
+        "pl-3",
+        "em-2"
+      ],
+      "speakers": [
+        "jeff-yan",
+        "dario-amodei",
+        "poshen-loh",
+        "elon-musk"
+      ]
+    },
+    {
+      "id": "mt-sd-1",
+      "theme": "Expert enthusiasm as investment signal",
+      "description": "Don't need domain expertise to invest in a sector. Need trusted experts and ability to read their conviction level as a signal. Knowledge can inversely correlate with holding conviction.",
+      "supported_by": [
+        "sd-1",
+        "sd-2"
+      ],
+      "speakers": [
+        "stan-druckenmiller"
+      ]
+    },
+    {
+      "id": "mt-sd-2",
+      "theme": "Signal degradation through adoption",
+      "description": "Technical analysis and price-vs-news signals both became ineffective as more smart participants adopted them. Edges get arbitraged away when everyone learns them.",
+      "supported_by": [
+        "sd-6"
+      ],
+      "speakers": [
+        "stan-druckenmiller"
+      ]
+    },
+    {
+      "id": "mt-da-2",
+      "theme": "Technology outpacing law creates dangerous legal gaps",
+      "description": "AI makes previously useless legal permissions (bulk data purchases, automated analysis) suddenly dangerous. The law hasn't caught up, creating a window where technically legal actions violate the spirit of constitutional protections.",
+      "supported_by": [
+        "da-pentagon-1"
+      ],
+      "speakers": [
+        "dario-amodei"
+      ]
+    },
+    {
+      "id": "mt-da-3",
+      "theme": "Frontier AI labs have political leverage",
+      "description": "Anthropic survived Pentagon supply chain designation, challenged it publicly, and expects minimal business impact. Signals frontier AI companies have more negotiating power vs. government than assumed.",
+      "supported_by": [
+        "da-pentagon-2"
+      ],
+      "speakers": [
+        "dario-amodei"
+      ]
+    },
+    {
+      "id": "mt-rfk-1",
+      "theme": "Healthcare is a disease-creation system, not a disease-treatment system",
+      "description": "Every economic actor in US healthcare is incentivized to produce and maintain illness. Food companies profit from making people sick, pharma from keeping them sick, insurance from higher volume. $5T/year with worst outcomes because incentives are structurally misaligned.",
+      "supported_by": [
+        "rfk-1"
+      ],
+      "speakers": [
+        "rfk-jr"
+      ]
+    },
+    {
+      "id": "mt-rfk-2",
+      "theme": "Food reform is cheaper than the disease it prevents",
+      "description": "Military food: $10/day fresh vs $18/day processed. Laser weeding: $300/acre vs $1500/acre. SNAP reform removes taxpayer-funded diabetes. Better food consistently costs less when you account for downstream healthcare costs.",
+      "supported_by": [
+        "rfk-2"
+      ],
+      "speakers": [
+        "rfk-jr"
+      ]
+    },
+    {
+      "id": "mt-allin-1",
+      "theme": "When\u2192If: AI triggers structural repricing of enterprise software",
+      "description": "Markets shifted from debating WHEN AI impacts cash flows to IF they exist at all. Triggers cascading repricing: PE compression, revenue multiple collapse, WACC spike. Not a correction \u2014 a permanent re-rating of any company whose moat is threatened by foundation models.",
+      "supported_by": [
+        "allin-1"
+      ],
+      "speakers": [
+        "chamath-palihapitiya"
+      ]
+    },
+    {
+      "id": "mt-allin-2",
+      "theme": "Consumptive capacity may have an upper limit for the first time in human history",
+      "description": "AI could create productive capacity exceeding humanity's ability to consume. Knowledge work may be a transitory phenomenon between computing and AI. If production exceeds consumption, basic economic models break.",
+      "supported_by": [
+        "allin-2"
+      ],
+      "speakers": [
+        "david-friedberg"
+      ]
+    },
+    {
+      "id": "mt-allin-3",
+      "theme": "AI doom narratives are literary, not analytical",
+      "description": "Doomer narratives exploit heuristic biases: seen vs unseen (easier to see job loss than imagine creation), fixed pie fallacy, and dystopian fiction preference. Serious AI conversations are 'more literary than genuinely analytical.' Meanwhile, software engineer demand up 10% YoY.",
+      "supported_by": [
+        "allin-3"
+      ],
+      "speakers": [
+        "david-sacks"
+      ]
+    },
+    {
+      "id": "mt-jg-1",
+      "theme": "Orchestration layer beats any single model",
+      "description": "The most powerful AI system in 2026 isn't built on the best single model \u2014 it intelligently orchestrates all of them. Each model does what it's best at. Value accrues to the routing/orchestration layer, not individual models. Perplexity Computer: 19 models with Claude Opus as the brain.",
+      "supported_by": [
+        "jg-1"
+      ],
+      "speakers": [
+        "julian-goldie"
+      ]
+    },
+    {
+      "id": "mt-jg-2",
+      "theme": "Software fork: human-version vs agent-version",
+      "description": "Software is splitting like desktop\u2192mobile. Human version (manual click/type) vs agent version (describe goal, AI executes). Next big companies will be agent-native \u2014 couldn't exist in human-centric model. Automated orchestration, multimodal routing, persistent workflows are the GPS and push notifications of this era.",
+      "supported_by": [
+        "jg-2"
+      ],
+      "speakers": [
+        "julian-goldie"
+      ]
+    },
+    {
+      "id": "mt-cw-1",
+      "theme": "Wall of worry, not bubble \u2014 most durable bull markets climb skepticism",
+      "description": "Late '90s: euphoria, money thrown at anything dotcom. Today: investors hesitant, climbing wall of worry. Every GPU utilized (no dark fiber equivalent). Wall of worry = most durable bull market. Exact opposite of bubble conditions.",
+      "supported_by": [
+        "cw-1"
+      ],
+      "speakers": [
+        "cathie-wood"
+      ]
+    },
+    {
+      "id": "mt-cw-2",
+      "theme": "Embodied AI (physical + digital) is the real opportunity, not software AI",
+      "description": "Autonomous mobility \u2192 $10T market in 5-10 years. Humanoid robots may be bigger than robo-taxis. Healthcare AI will be most profound application. Value shifting from pure software to physical-digital convergence.",
+      "supported_by": [
+        "cw-2"
+      ],
+      "speakers": [
+        "cathie-wood"
+      ]
+    },
+    {
+      "id": "mt-bc-1",
+      "theme": "Agents as team members, not personal assistants",
+      "description": "The real value of always-on AI agents isn't personal assistance (email, calendar). It's filling professional roles \u2014 developer, marketer, PM, sysadmin \u2014 with dedicated machines, security walls, and model-specific routing. The hiring metaphor defines the entire setup.",
+      "supported_by": [
+        "bc-1"
+      ],
+      "speakers": [
+        "brian-casel"
+      ]
+    },
+    {
+      "id": "mt-ip-1",
+      "theme": "Blockchain was built for agents, not humans",
+      "description": "Blockchain's complexity (wallets, gas, addresses) was terrible UX for humans but is exactly what AI agents need: sybil resistance, programmable money, verifiable computation. The agent economy will run on blockchain rails because agents need infrastructure designed for automated systems.",
+      "supported_by": [
+        "ip-1"
+      ],
+      "speakers": [
+        "illia-polosukhin"
+      ]
+    },
+    {
+      "id": "mt-ip-2",
+      "theme": "Code verification arms race \u2014 existential for software security",
+      "description": "Each AI generation is better at finding vulnerabilities. More AI-written code means more bugs. Next-gen model holders can exploit all existing code. Only escape: formally verify all software. AI makes this feasible for the first time.",
+      "supported_by": [
+        "ip-2"
+      ],
+      "speakers": [
+        "illia-polosukhin"
+      ]
+    },
+    {
+      "id": "mt-ip-3",
+      "theme": "Economic alignment is the real AI alignment problem",
+      "description": "Ads in AI = misalignment by definition. The question isn't will AI kill us, but who does your AI work for? User-owned, ad-free, privacy-first agents running on decentralized infra is the structural solution.",
+      "supported_by": [
+        "ip-3"
+      ],
+      "speakers": [
+        "illia-polosukhin"
+      ]
+    },
+    {
+      "id": "mt-vt-1",
+      "theme": "Private market access is the greatest inequity in capital markets",
+      "description": "The biggest companies (SpaceX $1.2T, AI labs multi-trillion) stay private. Retail locked out of the best wealth creation. Closed-end fund structure with permanent capital (no LP pressure) and data-driven deal sourcing solves this. Retail proven to hold longer than institutional VCs.",
+      "supported_by": [
+        "vt-1"
+      ],
+      "speakers": [
+        "vlad-tenev",
+        "bill-ackman"
+      ]
+    },
+    {
+      "id": "mt-aw-1",
+      "theme": "Action without anxiety is the truest form of intelligence",
+      "description": "Suffering comes from demanding permanence and significance. Letting go isn't giving up \u2014 it's freedom from clinging. The moment you stop trying to make life meaningful, life becomes profoundly meaningful. Applied to investing: the best trades come from acting freely, not anxiously. Courage atrophies when wisdom brings clinging.",
+      "supported_by": [
+        "aw-1"
+      ],
+      "speakers": [
+        "alan-watts"
+      ]
+    },
+    {
+      "id": "mt-nr-1",
+      "theme": "AI democratizes creation but makes markets more winner-take-all",
+      "description": "Everyone can now build (spellcasters). But there is no demand for average \u2014 only the best in each category wins. Taste and judgment become the scarce resource, not capability. More shots on goal but the bar rises.",
+      "supported_by": [
+        "nr-1"
+      ],
+      "speakers": [
+        "naval-ravikant"
+      ]
+    },
+    {
+      "id": "mt-nr-2",
+      "theme": "AI alpha competes to zero \u2014 remaining edge is purely human",
+      "description": "Once everyone has the same AI tools, AI-derived advantages self-cancel. Like dating earpieces that cancel each other out. The remaining alpha is creativity, judgment, taste \u2014 things AI can't replicate. Early adopters have a temporary but massive asymmetric edge.",
+      "supported_by": [
+        "nr-2"
+      ],
+      "speakers": [
+        "naval-ravikant"
+      ]
+    },
+    {
+      "id": "mt-nr-3",
+      "theme": "Programmers are MORE leveraged, not less \u2014 supernormal outcomes ahead",
+      "description": "A programmer with AI fleet = 5-10x productivity. But intelligence/leverage/judgment aren't normally distributed, so outcomes are supernormal. 1000x programmers will replace entire industries. Software engineers who understand the layer below (hardware, physics) have permanent advantage.",
+      "supported_by": [
+        "nr-3"
+      ],
+      "speakers": [
+        "naval-ravikant"
+      ]
+    },
+    {
+      "id": "mt-ms-1",
+      "theme": "Digital credit converts volatile capital into predictable yield",
+      "description": "Bitcoin as signal source: ~30% annual growth with high noise. STRC strips volatility and extracts 11% clean yield as tax-deferred return of capital. Credit layer IS the Bitcoin adoption vehicle \u2014 retirees and corporate treasurers buy STRC, which buys Bitcoin.",
+      "supported_by": [
+        "ms-1"
+      ],
+      "speakers": [
+        "michael-saylor"
+      ]
+    },
+    {
+      "id": "mt-ms-2",
+      "theme": "Traditional credit is manufactured to be awful \u2014 $300T disruption opportunity",
+      "description": "Credit markets structured to benefit issuers: minimize yield, keep tax benefits, restrict retail access (OTC). Digital credit flips every element: highest yield, tax-deferred, daily liquidity, publicly traded. 5-10% of $300T = $15-60T opportunity.",
+      "supported_by": [
+        "ms-2"
+      ],
+      "speakers": [
+        "michael-saylor"
+      ]
+    },
+    {
+      "id": "mt-dt-1",
+      "theme": "US military operations in Iran \u2014 full-spectrum engagement, not limited strike",
+      "description": "Phase 2 of Operation Midnight Hammer. Objectives: destroy missile infrastructure, annihilate navy, eliminate proxy capabilities, prevent nuclear weapons. Explicit regime change invitation to Iranian people. IRGC given surrender-or-die ultimatum.",
+      "supported_by": [
+        "dt-1"
+      ],
+      "speakers": [
+        "donald-trump"
+      ]
+    },
+    {
+      "id": "mt-jv-1",
+      "theme": "Software equity markets are becoming prediction markets",
+      "description": "AI compresses software company growth visibility from years to days. Pricing shifts from DCF to real-time probability. Every AI capability announcement = score change. Explains volatility as rational repricing, not panic.",
+      "supported_by": [
+        "jv-1"
+      ],
+      "speakers": [
+        "jordi-visser"
+      ]
+    },
+    {
+      "id": "mt-jv-2",
+      "theme": "AI needs crypto \u2014 convergence is structural, not speculative",
+      "description": "Three independent voices (Horowitz/VC, Curry/commodities, Mustaq/AI) conclude: fiat rails can't handle agent speed. Plus cryptography for authentication and agent swarms for security. Crypto = infrastructure, not speculation.",
+      "supported_by": [
+        "jv-2"
+      ],
+      "speakers": [
+        "jordi-visser"
+      ]
+    },
+    {
+      "id": "mt-jv-3",
+      "theme": "Survive-and-thrive cycles require government intervention \u2014 crypto is the fastest horse out",
+      "description": "Every deleveraging shock since 2020 required government action. Turbulence model flashing again. Coming out the other side, crypto outperforms because it doesn't get hurt by time compression, agent swarms, or binary repricing.",
+      "supported_by": [
+        "jv-3"
+      ],
+      "speakers": [
+        "jordi-visser"
+      ]
+    },
+    {
+      "id": "mt-la-1",
+      "theme": "Gradual print regime \u2014 asset-specific factors dominate, not macro tailwinds",
+      "description": "No nuclear print without systemic stress (bank cash ratios high). Fed only cares about Treasury/interbank liquidity. In gradual print, each asset must compete on own merits. Bitcoin not a liquidity play \u2014 needs own catalysts. War is the exception that would trigger nuclear print.",
+      "supported_by": [
+        "la-1"
+      ],
+      "speakers": [
+        "lyn-alden"
+      ]
+    },
+    {
+      "id": "mt-gi-1",
+      "theme": "OpenClawification \u2014 every platform converging on agent orchestration",
+      "description": "Perplexity Computer, OpenClaw, Lindy, Claude all converging on the same architecture: persistent agents with tools, sub-agents, memory, recurring tasks, and connectors. The interface differs (web UI vs messaging vs CLI) but the pattern is identical. One-person billion-dollar companies become viable.",
+      "supported_by": [
+        "gi-1"
+      ],
+      "speakers": [
+        "greg-isenberg"
+      ]
+    },
+    {
+      "id": "mt-bh-1",
+      "theme": "Crypto is AI's native money \u2014 fiat failed the agents",
+      "description": "AI agents can't get bank accounts or credit cards. Crypto is the only option. a16z funded an AI-native crypto bank. Need not just ledger of money but 'ledger of truth.' US stablecoin legalization accelerates this. People underestimate how crypto and AI form the AI economy.",
+      "supported_by": [
+        "bh-1"
+      ],
+      "speakers": [
+        "ben-horowitz"
+      ]
+    },
+    {
+      "id": "mt-bh-2",
+      "theme": "Apple's single best product strategy: own the OpenClaw hardware platform",
+      "description": "Mac Mini/Studio unified memory architecture accidentally created the best AI agent hosting hardware. Apple missed foundation models but has the hardware advantage. Ben: '100% I'd do it as Tim Cook.' Multi-trillion dollar opportunity. But culturally unlikely for Apple.",
+      "supported_by": [
+        "bh-2"
+      ],
+      "speakers": [
+        "ben-horowitz"
+      ]
+    },
+    {
+      "id": "mt-bh-3",
+      "theme": "RSI already happened \u2014 we're in the George Jetson phase",
+      "description": "All frontier labs use their models to develop their models. That IS recursive self-improvement. Humans press approve/approve/approve pretending they're in the loop. The real question is when RSI goes fully autonomous (no human in loop). Panel thinks we're already past the singularity trigger.",
+      "supported_by": [
+        "bh-3"
+      ],
+      "speakers": [
+        "ben-horowitz",
+        "alex-innerloop",
+        "peter-diamandis"
+      ]
+    },
+    {
+      "id": "mt-jdr-1",
+      "theme": "SaaS barbell \u2014 model companies eat top, individuals eat middle, trusted experts survive",
+      "description": "Foundation model companies chase high-token verticals (legal, coding). Generic SaaS gets one-shot by individuals. Only trusted-expert businesses with judgment + relationship moats survive. Engineering demand increases via Jevons Paradox.",
+      "supported_by": [
+        "jdr-1"
+      ],
+      "speakers": [
+        "jd-ross",
+        "joe-lonsdale"
+      ]
     }
   ],
   "contradictions": [
@@ -45,7 +465,7 @@
       "speaker_a": "brent-johnson",
       "speaker_b": "nassim-taleb",
       "description": "Johnson: US will always fund deficits, dollar strengthens. Taleb: Dollar losing reserve status, debt is a doom loop.",
-      "resolution": "Both agree gold goes up. Disagreement is on dollar trajectory — possibly different timeframes (short-term flows vs. long-term structural)."
+      "resolution": "Both agree gold goes up. Disagreement is on dollar trajectory \u2014 possibly different timeframes (short-term flows vs. long-term structural)."
     },
     {
       "id": "c-2",
@@ -63,7 +483,49 @@
       "speaker_a": "nassim-taleb",
       "speaker_b": "dario-amodei",
       "description": "Taleb: Current AI leaders will go bankrupt (pioneer pattern). Amodei: Scaling laws keep working, current leaders have compounding advantage.",
-      "resolution": "Taleb's pattern is historical (IBM, Pan Am), but AI may be different — scaling laws create winner-take-all dynamics unlike previous tech revolutions."
+      "resolution": "Taleb's pattern is historical (IBM, Pan Am), but AI may be different \u2014 scaling laws create winner-take-all dynamics unlike previous tech revolutions."
+    },
+    {
+      "id": "c-dollar-sd-bj",
+      "thesis_a": "Brent Johnson: Dollar Milkshake \u2014 structural capital flows strengthen dollar",
+      "thesis_b": "Druckenmiller: Dollar bearish \u2014 top of purchasing power range, foreigners overloaded",
+      "resolution": "Unresolved. Track DXY over next 6-12 months.",
+      "added": "2026-02-28"
+    },
+    {
+      "id": "c-saas-doom",
+      "thesis_a": "Chamath: SaaS cash flows may not exist \u2014 structural if not when",
+      "thesis_b": "Sacks: Software engineer demand up 10% YoY, company formation accelerating, Anthropic hiring at $570K",
+      "resolution": "Unresolved. Both could be true simultaneously \u2014 AI destroys existing SaaS but creates new demand. Track job postings + SaaS multiples.",
+      "added": "2026-02-28"
+    },
+    {
+      "id": "c-ai-bubble",
+      "thesis_a": "Druckenmiller: AI equity echoing '99-'00, shifted away from AI-concentrated portfolio",
+      "thesis_b": "Cathie Wood: Wall of worry, not bubble. Every GPU utilized. Most durable bull markets climb skepticism. Buy the dip.",
+      "resolution": "Unresolved. Track AI equity performance over next 6 months. Key differentiator: Druckenmiller focuses on valuation/sentiment, Wood on utilization/adoption.",
+      "added": "2026-02-28"
+    },
+    {
+      "id": "c-survive-vs-wall-of-worry",
+      "thesis_a": "Jordi Visser: Survive mode incoming \u2014 software repricing is rational, turbulence model flashing, credit widening",
+      "thesis_b": "Cathie Wood: Wall of worry, not bubble. Most durable bull markets climb skepticism. Every GPU utilized.",
+      "resolution": "Unresolved. Both can't be right simultaneously. Track: credit spreads, software multiples, GPU utilization over next 3 months.",
+      "added": "2026-02-28"
+    },
+    {
+      "id": "c-gradual-vs-survive",
+      "thesis_a": "Lyn Alden: Gradual print, no systemic crisis needed, system can run for quite a while",
+      "thesis_b": "Jordi Visser: Survive mode incoming, government intervention will be needed, turbulence model flashing",
+      "resolution": "Unresolved. Alden focuses on financial plumbing (bank reserves, Fed balance sheet). Visser focuses on market signals (credit widening, dispersion, software repricing). Different indicators, different conclusions. War (Iran) would resolve in Visser's favor.",
+      "added": "2026-02-28"
+    },
+    {
+      "id": "c-vertical-ai-fate",
+      "thesis_a": "JD Ross: Model companies will eat high-value verticals like Harvey (legal AI)",
+      "thesis_b": "Zack Shapiro: Well-configured general AI already beats specialized legal AI; the value is in encoded judgment, not the platform",
+      "resolution": "Both bearish on vertical AI SaaS but for different reasons. Ross says model companies attack from above. Shapiro says general AI + skills attacks from below. Either way, thin-wrapper vertical AI loses.",
+      "added": "2026-02-28"
     }
   ],
   "testable_predictions": [
@@ -90,6 +552,231 @@
       "source": "yt_yxax4xpZus8",
       "test_date": "2026-12-31",
       "status": "pending"
+    },
+    {
+      "id": "tp-sd-1",
+      "speaker": "stan-druckenmiller",
+      "video": "yt_z_pk4eBDaLA",
+      "prediction": "US dollar declines from current levels",
+      "test_date": "2026-08-28",
+      "test_condition": "DXY below Feb 2026 level (~104)",
+      "status": "open"
+    },
+    {
+      "id": "tp-sd-2",
+      "speaker": "stan-druckenmiller",
+      "video": "yt_z_pk4eBDaLA",
+      "prediction": "Copper higher due to supply constraints + AI demand",
+      "test_date": "2027-02-28",
+      "test_condition": "Copper futures above Feb 2026 level",
+      "status": "open"
+    },
+    {
+      "id": "tp-sd-3",
+      "speaker": "stan-druckenmiller",
+      "video": "yt_z_pk4eBDaLA",
+      "prediction": "Biotech outperforms AI-concentrated tech as the better AI play",
+      "test_date": "2026-08-28",
+      "test_condition": "XBI outperforms SMH over 6 months",
+      "status": "open"
+    },
+    {
+      "id": "tp-da-2",
+      "speaker": "dario-amodei",
+      "video": "yt_MPTNHrq_4LU",
+      "prediction": "Anthropic survives Pentagon confrontation without major business impact",
+      "test_date": "2026-09-01",
+      "test_condition": "Anthropic revenue/valuation stable or growing by Q3 2026",
+      "status": "open"
+    },
+    {
+      "id": "tp-da-3",
+      "speaker": "dario-amodei",
+      "video": "yt_MPTNHrq_4LU",
+      "prediction": "Congressional AI oversight legislation introduced covering surveillance and autonomous weapons",
+      "test_date": "2026-12-31",
+      "test_condition": "Bill introduced in Congress addressing AI military use restrictions",
+      "status": "open"
+    },
+    {
+      "id": "tp-rfk-1",
+      "speaker": "rfk-jr",
+      "video": "yt_wk7DQom821s",
+      "prediction": "All artificial food dyes removed from US food supply by end of 2026",
+      "test_date": "2027-01-15",
+      "test_condition": "Major food manufacturers have eliminated artificial dyes",
+      "status": "open"
+    },
+    {
+      "id": "tp-rfk-2",
+      "speaker": "rfk-jr",
+      "video": "yt_wk7DQom821s",
+      "prediction": "Federal definition of ultra-processed food by April 2026 + front-of-package labeling",
+      "test_date": "2026-05-01",
+      "test_condition": "Federal UPF definition published",
+      "status": "open"
+    },
+    {
+      "id": "tp-rfk-3",
+      "speaker": "rfk-jr",
+      "video": "yt_wk7DQom821s",
+      "prediction": "Medical records on phones for every American by end of 2026",
+      "test_date": "2027-01-15",
+      "test_condition": "Major health systems provide mobile medical record access",
+      "status": "open"
+    },
+    {
+      "id": "tp-allin-1",
+      "speaker": "chamath-palihapitiya",
+      "video": "yt_kzWbCF_IkHY",
+      "prediction": "SaaS category undergoes permanent multiple compression \u2014 leading SaaS stocks trade at dramatically lower multiples than 2024 peaks",
+      "test_date": "2026-08-28",
+      "test_condition": "Average SaaS P/E below 25x (was 40x+) for top 10 SaaS companies",
+      "status": "open"
+    },
+    {
+      "id": "tp-allin-2",
+      "speaker": "david-sacks",
+      "video": "yt_kzWbCF_IkHY",
+      "prediction": "Future administrations (R or D) keep some version of tariffs in place",
+      "test_date": "2030-01-01",
+      "test_condition": "Tariff structure largely intact regardless of administration change",
+      "status": "open"
+    },
+    {
+      "id": "tp-jg-1",
+      "speaker": "julian-goldie",
+      "video": "yt_XTieQ4iEfAk",
+      "prediction": "Multi-agent orchestration products (Perplexity Computer, OpenClaw) become the dominant AI paradigm over single-model products within 12 months",
+      "test_date": "2027-02-28",
+      "test_condition": "Top 3 AI products by revenue/users are orchestration-based, not single-model",
+      "status": "open"
+    },
+    {
+      "id": "tp-cw-1",
+      "speaker": "cathie-wood",
+      "video": "yt_e4PFobVycTE",
+      "prediction": "Tesla reaches $2,600 by 2029 (robo-taxi revenue, excludes Optimus)",
+      "test_date": "2029-12-31",
+      "test_condition": "TSLA share price >= $2,600",
+      "status": "open"
+    },
+    {
+      "id": "tp-cw-2",
+      "speaker": "cathie-wood",
+      "video": "yt_e4PFobVycTE",
+      "prediction": "Bitcoin bull case $1.5M by 2030 (adjusted down from stablecoin impact)",
+      "test_date": "2030-12-31",
+      "test_condition": "BTC price approaching $1.5M",
+      "status": "open"
+    },
+    {
+      "id": "tp-cw-3",
+      "speaker": "cathie-wood",
+      "video": "yt_e4PFobVycTE",
+      "prediction": "AI collapses drug discovery cost from $2.4B to $600-700M within 5 years",
+      "test_date": "2031-03-01",
+      "test_condition": "Average drug discovery cost below $1B",
+      "status": "open"
+    },
+    {
+      "id": "tp-ip-1",
+      "speaker": "illia-polosukhin",
+      "video": "yt_htj3PeukEbM",
+      "prediction": "Agent-to-agent transactions on blockchain become a meaningful economic layer by 2027",
+      "test_date": "2027-06-01",
+      "test_condition": "Agent marketplace daily transaction volume exceeds $1M across all chains",
+      "status": "open"
+    },
+    {
+      "id": "tp-vt-1",
+      "speaker": "vlad-tenev",
+      "video": "yt_-3dNJAwxI0U",
+      "prediction": "RVI trades at premium to NAV within 6 months of IPO as private portfolio companies approach public listings",
+      "test_date": "2027-02-28",
+      "test_condition": "RVI market price > NAV by 10%+",
+      "status": "open"
+    },
+    {
+      "id": "tp-ms-1",
+      "speaker": "michael-saylor",
+      "video": "yt_yQL9yua9Yq0",
+      "prediction": "STRC maintains >10% annual yield through 2026",
+      "test_date": "2027-01-01",
+      "test_condition": "STRC average dividend rate remains above 10% for 12 consecutive months",
+      "status": "open"
+    },
+    {
+      "id": "tp-ms-2",
+      "speaker": "michael-saylor",
+      "video": "yt_yQL9yua9Yq0",
+      "prediction": "Digital credit ecosystem (STRC-backed products) reaches $10B+ in AUM within 2 years",
+      "test_date": "2028-03-01",
+      "test_condition": "STRC + derivatives + wrapped products exceed $10B",
+      "status": "open"
+    },
+    {
+      "id": "tp-dt-1",
+      "speaker": "donald-trump",
+      "video": "yt_o-E7DIctrzo",
+      "prediction": "Iranian regime falls or is fundamentally altered within 6 months of military operations",
+      "test_date": "2026-08-28",
+      "test_condition": "Iranian government structure fundamentally changed (new leadership, constitution, or collapse)",
+      "status": "open"
+    },
+    {
+      "id": "tp-dt-2",
+      "speaker": "market-implied",
+      "video": "yt_o-E7DIctrzo",
+      "prediction": "Oil spikes above $100/barrel on Iran conflict",
+      "test_date": "2026-03-15",
+      "test_condition": "WTI crude above $100",
+      "status": "open"
+    },
+    {
+      "id": "tp-jv-1",
+      "speaker": "jordi-visser",
+      "video": "yt_u48856z9Stc",
+      "prediction": "Government intervention needed (Fed or fiscal) to stop asset deflation within 3-6 months",
+      "test_date": "2026-08-28",
+      "test_condition": "Fed rate cut, new liquidity facility, or fiscal intervention triggered by market stress",
+      "status": "open"
+    },
+    {
+      "id": "tp-jv-2",
+      "speaker": "jordi-visser",
+      "video": "yt_u48856z9Stc",
+      "prediction": "Crypto (BTC) outperforms S&P 500 coming out of the next survive phase",
+      "test_date": "2026-12-31",
+      "test_condition": "BTC 6-month return > SPY 6-month return from the trough",
+      "status": "open"
+    },
+    {
+      "id": "tp-la-1",
+      "speaker": "lyn-alden",
+      "video": "yt_G-MUaWP9myY",
+      "prediction": "No QE/nuclear print ($2T+ balance sheet expansion) within 1-2 years absent major war or COVID-scale shock",
+      "test_date": "2028-02-28",
+      "test_condition": "Fed balance sheet expansion stays below $2T from current level",
+      "status": "open"
+    },
+    {
+      "id": "tp-bh-1",
+      "speaker": "alex-innerloop",
+      "video": "yt_C1GLT9_tag0",
+      "prediction": "AI discovers something as significant as relativity within 2 years",
+      "test_date": "2028-02-28",
+      "test_condition": "AI-driven scientific discovery of fundamental physics breakthrough",
+      "status": "open"
+    },
+    {
+      "id": "tp-bh-2",
+      "speaker": "ben-horowitz",
+      "video": "yt_C1GLT9_tag0",
+      "prediction": "Crypto-based AI banking becomes a significant economic layer",
+      "test_date": "2027-06-01",
+      "test_condition": "AI-native crypto bank processing >$100M in agent transactions",
+      "status": "open"
     }
   ]
 }
