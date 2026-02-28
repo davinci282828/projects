@@ -93,6 +93,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); -web
 .quote-text::before { content: '"'; font-size: 48px; color: var(--green-cta); opacity: 0.3; position: absolute; top: 10px; left: 20px; font-family: var(--serif); }
 .quote-attr { font-size: 13px; color: var(--green-cta); font-weight: 600; }
 .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.category-header:first-of-type { margin-top: 0 !important; }
 @media (max-width: 640px) {
   .nav { flex-direction: column; gap: 12px; }
   .nav-stats { gap: 16px; }
@@ -130,519 +131,506 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); -web
 <div class="panel active" id="panel-themes">
   <input type="text" class="search-bar" id="search-themes" placeholder="Search themes..." oninput="filterThemes(this.value)">
 
-  <div class="theme-card" data-search="bottleneck shifted from digital to physical software/intelligence approaching sufficiency. constraints now: energy, manufacturing, physical dexterity, zoning, infrastructure.">
-    <span class="theme-tag t1">Theme 1</span>
-    <h2 class="theme-title">Bottleneck shifted from digital to physical</h2>
-    <p class="theme-desc">Software/intelligence approaching sufficiency. Constraints now: energy, manufacturing, physical dexterity, zoning, infrastructure.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Elon Musk</span><span class="speaker-chip">David Martin</span></div>
+  <div class="category-header" style="font-family:var(--serif);font-size:24px;color:var(--green-dark);margin:32px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:10px;">
+    <span style="font-size:28px;">🤖</span> AI & Technology
+    <span style="font-size:13px;font-weight:400;color:var(--text-muted);margin-left:auto;">5 themes</span>
   </div>
-
-  <div class="theme-card" data-search="human value = authentic connection + judgment as ai handles information/production, human advantage is caring, empathy, taste, critical evaluation.">
-    <span class="theme-tag t2">Theme 2</span>
-    <h2 class="theme-title">Human value = authentic connection + judgment</h2>
-    <p class="theme-desc">As AI handles information/production, human advantage is caring, empathy, taste, critical evaluation.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Po-Shen Loh</span><span class="speaker-chip">Enterprise AI Panel</span><span class="speaker-chip">Dario Amodei</span></div>
-  </div>
-
-  <div class="theme-card" data-search="gold is consensus hedge opposing dollar frameworks both conclude: buy gold. johnson (dollar + gold up together), taleb (dollar declining, gold up).">
-    <span class="theme-tag t3">Theme 3</span>
-    <h2 class="theme-title">Gold is consensus hedge</h2>
-    <p class="theme-desc">Opposing dollar frameworks both conclude: buy gold. Johnson (dollar + gold up together), Taleb (dollar declining, gold up).</p>
-    <div class="theme-speakers"><span class="speaker-chip">Brent Johnson</span><span class="speaker-chip">Nassim Nicholas Taleb</span></div>
-  </div>
-
-  <div class="theme-card" data-search="application layer wins moats in regulated industries and domain expertise, not in building models or base infrastructure.">
-    <span class="theme-tag t4">Theme 4</span>
+  <div class="theme-card" data-search="application layer wins moats in regulated industries and domain expertise, not in building models or base infrastructure. dario-amodei jeff-yan david-martin">
+    <span class="theme-tag t4">Theme 1</span>
     <h2 class="theme-title">Application layer wins</h2>
     <p class="theme-desc">Moats in regulated industries and domain expertise, not in building models or base infrastructure.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Dario Amodei</span><span class="speaker-chip">Jeff Yan</span><span class="speaker-chip">David Martin</span></div>
+    <div class="theme-speakers"><span class="speaker-chip">🛡️ Dario Amodei</span><span class="speaker-chip">🔗 Jeff Yan</span><span class="speaker-chip">🏗️ David Martin</span></div>
   </div>
-
-  <div class="theme-card" data-search="race against time multiple domains facing closing windows: defi before ai, steer ai before too powerful, preserve human thinking before atrophy, scale energy before chips outpace grid.">
-    <span class="theme-tag t5">Theme 5</span>
-    <h2 class="theme-title">Race against time</h2>
-    <p class="theme-desc">Multiple domains facing closing windows: DeFi before AI, steer AI before too powerful, preserve human thinking before atrophy, scale energy before chips outpace grid.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Jeff Yan</span><span class="speaker-chip">Dario Amodei</span><span class="speaker-chip">Po-Shen Loh</span><span class="speaker-chip">Elon Musk</span></div>
-  </div>
-
-  <div class="theme-card" data-search="expert enthusiasm as investment signal don't need domain expertise to invest in a sector. need trusted experts and ability to read their conviction level as a signal. knowledge can inversely correlate with holding conviction.">
-    <span class="theme-tag t1">Theme 6</span>
-    <h2 class="theme-title">Expert enthusiasm as investment signal</h2>
-    <p class="theme-desc">Don't need domain expertise to invest in a sector. Need trusted experts and ability to read their conviction level as a signal. Knowledge can inversely correlate with holding conviction.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Stan Druckenmiller</span></div>
-  </div>
-
-  <div class="theme-card" data-search="signal degradation through adoption technical analysis and price-vs-news signals both became ineffective as more smart participants adopted them. edges get arbitraged away when everyone learns them.">
-    <span class="theme-tag t2">Theme 7</span>
+  <div class="theme-card" data-search="signal degradation through adoption technical analysis and price-vs-news signals both became ineffective as more smart participants adopted them. edges get arbitraged away when everyone learns them. stan-druckenmiller">
+    <span class="theme-tag t4">Theme 2</span>
     <h2 class="theme-title">Signal degradation through adoption</h2>
     <p class="theme-desc">Technical analysis and price-vs-news signals both became ineffective as more smart participants adopted them. Edges get arbitraged away when everyone learns them.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Stan Druckenmiller</span></div>
+    <div class="theme-speakers"><span class="speaker-chip">📈 Stan Druckenmiller</span></div>
   </div>
-
-  <div class="theme-card" data-search="technology outpacing law creates dangerous legal gaps ai makes previously useless legal permissions (bulk data purchases, automated analysis) suddenly dangerous. the law hasn't caught up, creating a window where technically legal actions violate the spirit of constitutional protections.">
-    <span class="theme-tag t3">Theme 8</span>
-    <h2 class="theme-title">Technology outpacing law creates dangerous legal gaps</h2>
-    <p class="theme-desc">AI makes previously useless legal permissions (bulk data purchases, automated analysis) suddenly dangerous. The law hasn't caught up, creating a window where technically legal actions violate the spirit of constitutional protections.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Dario Amodei</span></div>
-  </div>
-
-  <div class="theme-card" data-search="frontier ai labs have political leverage anthropic survived pentagon supply chain designation, challenged it publicly, and expects minimal business impact. signals frontier ai companies have more negotiating power vs. government than assumed.">
-    <span class="theme-tag t4">Theme 9</span>
-    <h2 class="theme-title">Frontier AI labs have political leverage</h2>
-    <p class="theme-desc">Anthropic survived Pentagon supply chain designation, challenged it publicly, and expects minimal business impact. Signals frontier AI companies have more negotiating power vs. government than assumed.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Dario Amodei</span></div>
-  </div>
-
-  <div class="theme-card" data-search="healthcare is a disease-creation system, not a disease-treatment system every economic actor in us healthcare is incentivized to produce and maintain illness. food companies profit from making people sick, pharma from keeping them sick, insurance from higher volume. $5t/year with worst outcomes because incentives are structurally misaligned.">
-    <span class="theme-tag t5">Theme 10</span>
-    <h2 class="theme-title">Healthcare is a disease-creation system, not a disease-treatment system</h2>
-    <p class="theme-desc">Every economic actor in US healthcare is incentivized to produce and maintain illness. Food companies profit from making people sick, pharma from keeping them sick, insurance from higher volume. $5T/year with worst outcomes because incentives are structurally misaligned.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Robert F. Kennedy Jr.</span></div>
-  </div>
-
-  <div class="theme-card" data-search="food reform is cheaper than the disease it prevents military food: $10/day fresh vs $18/day processed. laser weeding: $300/acre vs $1500/acre. snap reform removes taxpayer-funded diabetes. better food consistently costs less when you account for downstream healthcare costs.">
-    <span class="theme-tag t1">Theme 11</span>
-    <h2 class="theme-title">Food reform is cheaper than the disease it prevents</h2>
-    <p class="theme-desc">Military food: $10/day fresh vs $18/day processed. Laser weeding: $300/acre vs $1500/acre. SNAP reform removes taxpayer-funded diabetes. Better food consistently costs less when you account for downstream healthcare costs.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Robert F. Kennedy Jr.</span></div>
-  </div>
-
-  <div class="theme-card" data-search="when→if: ai triggers structural repricing of enterprise software markets shifted from debating when ai impacts cash flows to if they exist at all. triggers cascading repricing: pe compression, revenue multiple collapse, wacc spike. not a correction — a permanent re-rating of any company whose moat is threatened by foundation models.">
-    <span class="theme-tag t2">Theme 12</span>
-    <h2 class="theme-title">When→If: AI triggers structural repricing of enterprise software</h2>
-    <p class="theme-desc">Markets shifted from debating WHEN AI impacts cash flows to IF they exist at all. Triggers cascading repricing: PE compression, revenue multiple collapse, WACC spike. Not a correction — a permanent re-rating of any company whose moat is threatened by foundation models.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Chamath Palihapitiya</span></div>
-  </div>
-
-  <div class="theme-card" data-search="consumptive capacity may have an upper limit for the first time in human history ai could create productive capacity exceeding humanity's ability to consume. knowledge work may be a transitory phenomenon between computing and ai. if production exceeds consumption, basic economic models break.">
-    <span class="theme-tag t3">Theme 13</span>
-    <h2 class="theme-title">Consumptive capacity may have an upper limit for the first time in human history</h2>
-    <p class="theme-desc">AI could create productive capacity exceeding humanity's ability to consume. Knowledge work may be a transitory phenomenon between computing and AI. If production exceeds consumption, basic economic models break.</p>
-    <div class="theme-speakers"><span class="speaker-chip">David Friedberg</span></div>
-  </div>
-
-  <div class="theme-card" data-search="ai doom narratives are literary, not analytical doomer narratives exploit heuristic biases: seen vs unseen (easier to see job loss than imagine creation), fixed pie fallacy, and dystopian fiction preference. serious ai conversations are 'more literary than genuinely analytical.' meanwhile, software engineer demand up 10% yoy.">
-    <span class="theme-tag t4">Theme 14</span>
+  <div class="theme-card" data-search="ai doom narratives are literary, not analytical doomer narratives exploit heuristic biases: seen vs unseen (easier to see job loss than imagine creation), fixed pie fallacy, and dystopian fiction preference. serious ai conversations are &#x27;more literary than genuinely analytical.&#x27; meanwhile, software engineer demand up 10% yoy. david-sacks">
+    <span class="theme-tag t4">Theme 3</span>
     <h2 class="theme-title">AI doom narratives are literary, not analytical</h2>
-    <p class="theme-desc">Doomer narratives exploit heuristic biases: seen vs unseen (easier to see job loss than imagine creation), fixed pie fallacy, and dystopian fiction preference. Serious AI conversations are 'more literary than genuinely analytical.' Meanwhile, software engineer demand up 10% YoY.</p>
-    <div class="theme-speakers"><span class="speaker-chip">David Sacks</span></div>
+    <p class="theme-desc">Doomer narratives exploit heuristic biases: seen vs unseen (easier to see job loss than imagine creation), fixed pie fallacy, and dystopian fiction preference. Serious AI conversations are &#x27;more literary than genuinely analytical.&#x27; Meanwhile, software engineer demand up 10% YoY.</p>
+    <div class="theme-speakers"><span class="speaker-chip">⚖️ David Sacks</span></div>
   </div>
-
-  <div class="theme-card" data-search="orchestration layer beats any single model the most powerful ai system in 2026 isn't built on the best single model — it intelligently orchestrates all of them. each model does what it's best at. value accrues to the routing/orchestration layer, not individual models. perplexity computer: 19 models with claude opus as the brain.">
-    <span class="theme-tag t5">Theme 15</span>
+  <div class="theme-card" data-search="orchestration layer beats any single model the most powerful ai system in 2026 isn&#x27;t built on the best single model — it intelligently orchestrates all of them. each model does what it&#x27;s best at. value accrues to the routing/orchestration layer, not individual models. perplexity computer: 19 models with claude opus as the brain. julian-goldie">
+    <span class="theme-tag t4">Theme 4</span>
     <h2 class="theme-title">Orchestration layer beats any single model</h2>
-    <p class="theme-desc">The most powerful AI system in 2026 isn't built on the best single model — it intelligently orchestrates all of them. Each model does what it's best at. Value accrues to the routing/orchestration layer, not individual models. Perplexity Computer: 19 models with Claude Opus as the brain.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Julian Goldie</span></div>
+    <p class="theme-desc">The most powerful AI system in 2026 isn&#x27;t built on the best single model — it intelligently orchestrates all of them. Each model does what it&#x27;s best at. Value accrues to the routing/orchestration layer, not individual models. Perplexity Computer: 19 models with Claude Opus as the brain.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🤖 Julian Goldie</span></div>
   </div>
-
-  <div class="theme-card" data-search="software fork: human-version vs agent-version software is splitting like desktop→mobile. human version (manual click/type) vs agent version (describe goal, ai executes). next big companies will be agent-native — couldn't exist in human-centric model. automated orchestration, multimodal routing, persistent workflows are the gps and push notifications of this era.">
-    <span class="theme-tag t1">Theme 16</span>
-    <h2 class="theme-title">Software fork: human-version vs agent-version</h2>
-    <p class="theme-desc">Software is splitting like desktop→mobile. Human version (manual click/type) vs agent version (describe goal, AI executes). Next big companies will be agent-native — couldn't exist in human-centric model. Automated orchestration, multimodal routing, persistent workflows are the GPS and push notifications of this era.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Julian Goldie</span></div>
-  </div>
-
-  <div class="theme-card" data-search="wall of worry, not bubble — most durable bull markets climb skepticism late '90s: euphoria, money thrown at anything dotcom. today: investors hesitant, climbing wall of worry. every gpu utilized (no dark fiber equivalent). wall of worry = most durable bull market. exact opposite of bubble conditions.">
-    <span class="theme-tag t2">Theme 17</span>
-    <h2 class="theme-title">Wall of worry, not bubble — most durable bull markets climb skepticism</h2>
-    <p class="theme-desc">Late '90s: euphoria, money thrown at anything dotcom. Today: investors hesitant, climbing wall of worry. Every GPU utilized (no dark fiber equivalent). Wall of worry = most durable bull market. Exact opposite of bubble conditions.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Cathie Wood</span></div>
-  </div>
-
-  <div class="theme-card" data-search="embodied ai (physical + digital) is the real opportunity, not software ai autonomous mobility → $10t market in 5-10 years. humanoid robots may be bigger than robo-taxis. healthcare ai will be most profound application. value shifting from pure software to physical-digital convergence.">
-    <span class="theme-tag t3">Theme 18</span>
-    <h2 class="theme-title">Embodied AI (physical + digital) is the real opportunity, not software AI</h2>
-    <p class="theme-desc">Autonomous mobility → $10T market in 5-10 years. Humanoid robots may be bigger than robo-taxis. Healthcare AI will be most profound application. Value shifting from pure software to physical-digital convergence.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Cathie Wood</span></div>
-  </div>
-
-  <div class="theme-card" data-search="agents as team members, not personal assistants the real value of always-on ai agents isn't personal assistance (email, calendar). it's filling professional roles — developer, marketer, pm, sysadmin — with dedicated machines, security walls, and model-specific routing. the hiring metaphor defines the entire setup.">
-    <span class="theme-tag t4">Theme 19</span>
-    <h2 class="theme-title">Agents as team members, not personal assistants</h2>
-    <p class="theme-desc">The real value of always-on AI agents isn't personal assistance (email, calendar). It's filling professional roles — developer, marketer, PM, sysadmin — with dedicated machines, security walls, and model-specific routing. The hiring metaphor defines the entire setup.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Brian Casel</span></div>
-  </div>
-
-  <div class="theme-card" data-search="blockchain was built for agents, not humans blockchain's complexity (wallets, gas, addresses) was terrible ux for humans but is exactly what ai agents need: sybil resistance, programmable money, verifiable computation. the agent economy will run on blockchain rails because agents need infrastructure designed for automated systems.">
-    <span class="theme-tag t5">Theme 20</span>
-    <h2 class="theme-title">Blockchain was built for agents, not humans</h2>
-    <p class="theme-desc">Blockchain's complexity (wallets, gas, addresses) was terrible UX for humans but is exactly what AI agents need: sybil resistance, programmable money, verifiable computation. The agent economy will run on blockchain rails because agents need infrastructure designed for automated systems.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Illia Polosukhin</span></div>
-  </div>
-
-  <div class="theme-card" data-search="code verification arms race — existential for software security each ai generation is better at finding vulnerabilities. more ai-written code means more bugs. next-gen model holders can exploit all existing code. only escape: formally verify all software. ai makes this feasible for the first time.">
-    <span class="theme-tag t1">Theme 21</span>
+  <div class="theme-card" data-search="code verification arms race — existential for software security each ai generation is better at finding vulnerabilities. more ai-written code means more bugs. next-gen model holders can exploit all existing code. only escape: formally verify all software. ai makes this feasible for the first time. illia-polosukhin">
+    <span class="theme-tag t4">Theme 5</span>
     <h2 class="theme-title">Code verification arms race — existential for software security</h2>
     <p class="theme-desc">Each AI generation is better at finding vulnerabilities. More AI-written code means more bugs. Next-gen model holders can exploit all existing code. Only escape: formally verify all software. AI makes this feasible for the first time.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Illia Polosukhin</span></div>
+    <div class="theme-speakers"><span class="speaker-chip">⛓️ Illia Polosukhin</span></div>
   </div>
 
-  <div class="theme-card" data-search="economic alignment is the real ai alignment problem ads in ai = misalignment by definition. the question isn't will ai kill us, but who does your ai work for? user-owned, ad-free, privacy-first agents running on decentralized infra is the structural solution.">
-    <span class="theme-tag t2">Theme 22</span>
-    <h2 class="theme-title">Economic alignment is the real AI alignment problem</h2>
-    <p class="theme-desc">Ads in AI = misalignment by definition. The question isn't will AI kill us, but who does your AI work for? User-owned, ad-free, privacy-first agents running on decentralized infra is the structural solution.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Illia Polosukhin</span></div>
+  <div class="category-header" style="font-family:var(--serif);font-size:24px;color:var(--green-dark);margin:32px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:10px;">
+    <span style="font-size:28px;">📈</span> Markets & Finance
+    <span style="font-size:13px;font-weight:400;color:var(--text-muted);margin-left:auto;">13 themes</span>
   </div>
-
-  <div class="theme-card" data-search="private market access is the greatest inequity in capital markets the biggest companies (spacex $1.2t, ai labs multi-trillion) stay private. retail locked out of the best wealth creation. closed-end fund structure with permanent capital (no lp pressure) and data-driven deal sourcing solves this. retail proven to hold longer than institutional vcs.">
-    <span class="theme-tag t3">Theme 23</span>
+  <div class="theme-card" data-search="gold is consensus hedge opposing dollar frameworks both conclude: buy gold. johnson (dollar + gold up together), taleb (dollar declining, gold up). brent-johnson nassim-taleb">
+    <span class="theme-tag t2">Theme 6</span>
+    <h2 class="theme-title">Gold is consensus hedge</h2>
+    <p class="theme-desc">Opposing dollar frameworks both conclude: buy gold. Johnson (dollar + gold up together), Taleb (dollar declining, gold up).</p>
+    <div class="theme-speakers"><span class="speaker-chip">🥤 Brent Johnson</span><span class="speaker-chip">🦢 Nassim Nicholas Taleb</span></div>
+  </div>
+  <div class="theme-card" data-search="expert enthusiasm as investment signal don&#x27;t need domain expertise to invest in a sector. need trusted experts and ability to read their conviction level as a signal. knowledge can inversely correlate with holding conviction. stan-druckenmiller">
+    <span class="theme-tag t2">Theme 7</span>
+    <h2 class="theme-title">Expert enthusiasm as investment signal</h2>
+    <p class="theme-desc">Don&#x27;t need domain expertise to invest in a sector. Need trusted experts and ability to read their conviction level as a signal. Knowledge can inversely correlate with holding conviction.</p>
+    <div class="theme-speakers"><span class="speaker-chip">📈 Stan Druckenmiller</span></div>
+  </div>
+  <div class="theme-card" data-search="frontier ai labs have political leverage anthropic survived pentagon supply chain designation, challenged it publicly, and expects minimal business impact. signals frontier ai companies have more negotiating power vs. government than assumed. dario-amodei">
+    <span class="theme-tag t2">Theme 8</span>
+    <h2 class="theme-title">Frontier AI labs have political leverage</h2>
+    <p class="theme-desc">Anthropic survived Pentagon supply chain designation, challenged it publicly, and expects minimal business impact. Signals frontier AI companies have more negotiating power vs. government than assumed.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🛡️ Dario Amodei</span></div>
+  </div>
+  <div class="theme-card" data-search="when→if: ai triggers structural repricing of enterprise software markets shifted from debating when ai impacts cash flows to if they exist at all. triggers cascading repricing: pe compression, revenue multiple collapse, wacc spike. not a correction — a permanent re-rating of any company whose moat is threatened by foundation models. chamath-palihapitiya">
+    <span class="theme-tag t2">Theme 9</span>
+    <h2 class="theme-title">When→If: AI triggers structural repricing of enterprise software</h2>
+    <p class="theme-desc">Markets shifted from debating WHEN AI impacts cash flows to IF they exist at all. Triggers cascading repricing: PE compression, revenue multiple collapse, WACC spike. Not a correction — a permanent re-rating of any company whose moat is threatened by foundation models.</p>
+    <div class="theme-speakers"><span class="speaker-chip">💰 Chamath Palihapitiya</span></div>
+  </div>
+  <div class="theme-card" data-search="wall of worry, not bubble — most durable bull markets climb skepticism late &#x27;90s: euphoria, money thrown at anything dotcom. today: investors hesitant, climbing wall of worry. every gpu utilized (no dark fiber equivalent). wall of worry = most durable bull market. exact opposite of bubble conditions. cathie-wood">
+    <span class="theme-tag t2">Theme 10</span>
+    <h2 class="theme-title">Wall of worry, not bubble — most durable bull markets climb skepticism</h2>
+    <p class="theme-desc">Late &#x27;90s: euphoria, money thrown at anything dotcom. Today: investors hesitant, climbing wall of worry. Every GPU utilized (no dark fiber equivalent). Wall of worry = most durable bull market. Exact opposite of bubble conditions.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🚀 Cathie Wood</span></div>
+  </div>
+  <div class="theme-card" data-search="embodied ai (physical + digital) is the real opportunity, not software ai autonomous mobility → $10t market in 5-10 years. humanoid robots may be bigger than robo-taxis. healthcare ai will be most profound application. value shifting from pure software to physical-digital convergence. cathie-wood">
+    <span class="theme-tag t2">Theme 11</span>
+    <h2 class="theme-title">Embodied AI (physical + digital) is the real opportunity, not software AI</h2>
+    <p class="theme-desc">Autonomous mobility → $10T market in 5-10 years. Humanoid robots may be bigger than robo-taxis. Healthcare AI will be most profound application. Value shifting from pure software to physical-digital convergence.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🚀 Cathie Wood</span></div>
+  </div>
+  <div class="theme-card" data-search="private market access is the greatest inequity in capital markets the biggest companies (spacex $1.2t, ai labs multi-trillion) stay private. retail locked out of the best wealth creation. closed-end fund structure with permanent capital (no lp pressure) and data-driven deal sourcing solves this. retail proven to hold longer than institutional vcs. vlad-tenev bill-ackman">
+    <span class="theme-tag t2">Theme 12</span>
     <h2 class="theme-title">Private market access is the greatest inequity in capital markets</h2>
     <p class="theme-desc">The biggest companies (SpaceX $1.2T, AI labs multi-trillion) stay private. Retail locked out of the best wealth creation. Closed-end fund structure with permanent capital (no LP pressure) and data-driven deal sourcing solves this. Retail proven to hold longer than institutional VCs.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Vlad Tenev</span><span class="speaker-chip">Bill Ackman</span></div>
+    <div class="theme-speakers"><span class="speaker-chip">📊 Vlad Tenev</span><span class="speaker-chip">🏦 Bill Ackman</span></div>
   </div>
-
-  <div class="theme-card" data-search="action without anxiety is the truest form of intelligence suffering comes from demanding permanence and significance. letting go isn't giving up — it's freedom from clinging. the moment you stop trying to make life meaningful, life becomes profoundly meaningful. applied to investing: the best trades come from acting freely, not anxiously. courage atrophies when wisdom brings clinging.">
-    <span class="theme-tag t4">Theme 24</span>
+  <div class="theme-card" data-search="action without anxiety is the truest form of intelligence suffering comes from demanding permanence and significance. letting go isn&#x27;t giving up — it&#x27;s freedom from clinging. the moment you stop trying to make life meaningful, life becomes profoundly meaningful. applied to investing: the best trades come from acting freely, not anxiously. courage atrophies when wisdom brings clinging. alan-watts">
+    <span class="theme-tag t2">Theme 13</span>
     <h2 class="theme-title">Action without anxiety is the truest form of intelligence</h2>
-    <p class="theme-desc">Suffering comes from demanding permanence and significance. Letting go isn't giving up — it's freedom from clinging. The moment you stop trying to make life meaningful, life becomes profoundly meaningful. Applied to investing: the best trades come from acting freely, not anxiously. Courage atrophies when wisdom brings clinging.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Alan Watts</span></div>
+    <p class="theme-desc">Suffering comes from demanding permanence and significance. Letting go isn&#x27;t giving up — it&#x27;s freedom from clinging. The moment you stop trying to make life meaningful, life becomes profoundly meaningful. Applied to investing: the best trades come from acting freely, not anxiously. Courage atrophies when wisdom brings clinging.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🧘 Alan Watts</span></div>
   </div>
-
-  <div class="theme-card" data-search="ai democratizes creation but makes markets more winner-take-all everyone can now build (spellcasters). but there is no demand for average — only the best in each category wins. taste and judgment become the scarce resource, not capability. more shots on goal but the bar rises.">
-    <span class="theme-tag t5">Theme 25</span>
+  <div class="theme-card" data-search="ai democratizes creation but makes markets more winner-take-all everyone can now build (spellcasters). but there is no demand for average — only the best in each category wins. taste and judgment become the scarce resource, not capability. more shots on goal but the bar rises. naval-ravikant">
+    <span class="theme-tag t2">Theme 14</span>
     <h2 class="theme-title">AI democratizes creation but makes markets more winner-take-all</h2>
     <p class="theme-desc">Everyone can now build (spellcasters). But there is no demand for average — only the best in each category wins. Taste and judgment become the scarce resource, not capability. More shots on goal but the bar rises.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Naval Ravikant</span></div>
+    <div class="theme-speakers"><span class="speaker-chip">✨ Naval Ravikant</span></div>
   </div>
-
-  <div class="theme-card" data-search="ai alpha competes to zero — remaining edge is purely human once everyone has the same ai tools, ai-derived advantages self-cancel. like dating earpieces that cancel each other out. the remaining alpha is creativity, judgment, taste — things ai can't replicate. early adopters have a temporary but massive asymmetric edge.">
-    <span class="theme-tag t1">Theme 26</span>
-    <h2 class="theme-title">AI alpha competes to zero — remaining edge is purely human</h2>
-    <p class="theme-desc">Once everyone has the same AI tools, AI-derived advantages self-cancel. Like dating earpieces that cancel each other out. The remaining alpha is creativity, judgment, taste — things AI can't replicate. Early adopters have a temporary but massive asymmetric edge.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Naval Ravikant</span></div>
-  </div>
-
-  <div class="theme-card" data-search="programmers are more leveraged, not less — supernormal outcomes ahead a programmer with ai fleet = 5-10x productivity. but intelligence/leverage/judgment aren't normally distributed, so outcomes are supernormal. 1000x programmers will replace entire industries. software engineers who understand the layer below (hardware, physics) have permanent advantage.">
-    <span class="theme-tag t2">Theme 27</span>
-    <h2 class="theme-title">Programmers are MORE leveraged, not less — supernormal outcomes ahead</h2>
-    <p class="theme-desc">A programmer with AI fleet = 5-10x productivity. But intelligence/leverage/judgment aren't normally distributed, so outcomes are supernormal. 1000x programmers will replace entire industries. Software engineers who understand the layer below (hardware, physics) have permanent advantage.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Naval Ravikant</span></div>
-  </div>
-
-  <div class="theme-card" data-search="digital credit converts volatile capital into predictable yield bitcoin as signal source: ~30% annual growth with high noise. strc strips volatility and extracts 11% clean yield as tax-deferred return of capital. credit layer is the bitcoin adoption vehicle — retirees and corporate treasurers buy strc, which buys bitcoin.">
-    <span class="theme-tag t3">Theme 28</span>
-    <h2 class="theme-title">Digital credit converts volatile capital into predictable yield</h2>
-    <p class="theme-desc">Bitcoin as signal source: ~30% annual growth with high noise. STRC strips volatility and extracts 11% clean yield as tax-deferred return of capital. Credit layer IS the Bitcoin adoption vehicle — retirees and corporate treasurers buy STRC, which buys Bitcoin.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Michael Saylor</span></div>
-  </div>
-
-  <div class="theme-card" data-search="traditional credit is manufactured to be awful — $300t disruption opportunity credit markets structured to benefit issuers: minimize yield, keep tax benefits, restrict retail access (otc). digital credit flips every element: highest yield, tax-deferred, daily liquidity, publicly traded. 5-10% of $300t = $15-60t opportunity.">
-    <span class="theme-tag t4">Theme 29</span>
-    <h2 class="theme-title">Traditional credit is manufactured to be awful — $300T disruption opportunity</h2>
-    <p class="theme-desc">Credit markets structured to benefit issuers: minimize yield, keep tax benefits, restrict retail access (OTC). Digital credit flips every element: highest yield, tax-deferred, daily liquidity, publicly traded. 5-10% of $300T = $15-60T opportunity.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Michael Saylor</span></div>
-  </div>
-
-  <div class="theme-card" data-search="us military operations in iran — full-spectrum engagement, not limited strike phase 2 of operation midnight hammer. objectives: destroy missile infrastructure, annihilate navy, eliminate proxy capabilities, prevent nuclear weapons. explicit regime change invitation to iranian people. irgc given surrender-or-die ultimatum.">
-    <span class="theme-tag t5">Theme 30</span>
-    <h2 class="theme-title">US military operations in Iran — full-spectrum engagement, not limited strike</h2>
-    <p class="theme-desc">Phase 2 of Operation Midnight Hammer. Objectives: destroy missile infrastructure, annihilate navy, eliminate proxy capabilities, prevent nuclear weapons. Explicit regime change invitation to Iranian people. IRGC given surrender-or-die ultimatum.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Donald J. Trump</span></div>
-  </div>
-
-  <div class="theme-card" data-search="software equity markets are becoming prediction markets ai compresses software company growth visibility from years to days. pricing shifts from dcf to real-time probability. every ai capability announcement = score change. explains volatility as rational repricing, not panic.">
-    <span class="theme-tag t1">Theme 31</span>
+  <div class="theme-card" data-search="software equity markets are becoming prediction markets ai compresses software company growth visibility from years to days. pricing shifts from dcf to real-time probability. every ai capability announcement = score change. explains volatility as rational repricing, not panic. jordi-visser">
+    <span class="theme-tag t2">Theme 15</span>
     <h2 class="theme-title">Software equity markets are becoming prediction markets</h2>
     <p class="theme-desc">AI compresses software company growth visibility from years to days. Pricing shifts from DCF to real-time probability. Every AI capability announcement = score change. Explains volatility as rational repricing, not panic.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Jordi Visser</span></div>
+    <div class="theme-speakers"><span class="speaker-chip">🌊 Jordi Visser</span></div>
   </div>
-
-  <div class="theme-card" data-search="ai needs crypto — convergence is structural, not speculative three independent voices (horowitz/vc, curry/commodities, mustaq/ai) conclude: fiat rails can't handle agent speed. plus cryptography for authentication and agent swarms for security. crypto = infrastructure, not speculation.">
-    <span class="theme-tag t2">Theme 32</span>
-    <h2 class="theme-title">AI needs crypto — convergence is structural, not speculative</h2>
-    <p class="theme-desc">Three independent voices (Horowitz/VC, Curry/commodities, Mustaq/AI) conclude: fiat rails can't handle agent speed. Plus cryptography for authentication and agent swarms for security. Crypto = infrastructure, not speculation.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Jordi Visser</span></div>
-  </div>
-
-  <div class="theme-card" data-search="survive-and-thrive cycles require government intervention — crypto is the fastest horse out every deleveraging shock since 2020 required government action. turbulence model flashing again. coming out the other side, crypto outperforms because it doesn't get hurt by time compression, agent swarms, or binary repricing.">
-    <span class="theme-tag t3">Theme 33</span>
-    <h2 class="theme-title">Survive-and-thrive cycles require government intervention — crypto is the fastest horse out</h2>
-    <p class="theme-desc">Every deleveraging shock since 2020 required government action. Turbulence model flashing again. Coming out the other side, crypto outperforms because it doesn't get hurt by time compression, agent swarms, or binary repricing.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Jordi Visser</span></div>
-  </div>
-
-  <div class="theme-card" data-search="gradual print regime — asset-specific factors dominate, not macro tailwinds no nuclear print without systemic stress (bank cash ratios high). fed only cares about treasury/interbank liquidity. in gradual print, each asset must compete on own merits. bitcoin not a liquidity play — needs own catalysts. war is the exception that would trigger nuclear print.">
-    <span class="theme-tag t4">Theme 34</span>
-    <h2 class="theme-title">Gradual print regime — asset-specific factors dominate, not macro tailwinds</h2>
-    <p class="theme-desc">No nuclear print without systemic stress (bank cash ratios high). Fed only cares about Treasury/interbank liquidity. In gradual print, each asset must compete on own merits. Bitcoin not a liquidity play — needs own catalysts. War is the exception that would trigger nuclear print.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Lyn Alden</span></div>
-  </div>
-
-  <div class="theme-card" data-search="openclawification — every platform converging on agent orchestration perplexity computer, openclaw, lindy, claude all converging on the same architecture: persistent agents with tools, sub-agents, memory, recurring tasks, and connectors. the interface differs (web ui vs messaging vs cli) but the pattern is identical. one-person billion-dollar companies become viable.">
-    <span class="theme-tag t5">Theme 35</span>
+  <div class="theme-card" data-search="openclawification — every platform converging on agent orchestration perplexity computer, openclaw, lindy, claude all converging on the same architecture: persistent agents with tools, sub-agents, memory, recurring tasks, and connectors. the interface differs (web ui vs messaging vs cli) but the pattern is identical. one-person billion-dollar companies become viable. greg-isenberg">
+    <span class="theme-tag t2">Theme 16</span>
     <h2 class="theme-title">OpenClawification — every platform converging on agent orchestration</h2>
     <p class="theme-desc">Perplexity Computer, OpenClaw, Lindy, Claude all converging on the same architecture: persistent agents with tools, sub-agents, memory, recurring tasks, and connectors. The interface differs (web UI vs messaging vs CLI) but the pattern is identical. One-person billion-dollar companies become viable.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Greg Isenberg</span></div>
+    <div class="theme-speakers"><span class="speaker-chip">💡 Greg Isenberg</span></div>
   </div>
-
-  <div class="theme-card" data-search="crypto is ai's native money — fiat failed the agents ai agents can't get bank accounts or credit cards. crypto is the only option. a16z funded an ai-native crypto bank. need not just ledger of money but 'ledger of truth.' us stablecoin legalization accelerates this. people underestimate how crypto and ai form the ai economy.">
-    <span class="theme-tag t1">Theme 36</span>
-    <h2 class="theme-title">Crypto is AI's native money — fiat failed the agents</h2>
-    <p class="theme-desc">AI agents can't get bank accounts or credit cards. Crypto is the only option. a16z funded an AI-native crypto bank. Need not just ledger of money but 'ledger of truth.' US stablecoin legalization accelerates this. People underestimate how crypto and AI form the AI economy.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Ben Horowitz</span></div>
+  <div class="theme-card" data-search="apple&#x27;s single best product strategy: own the openclaw hardware platform mac mini/studio unified memory architecture accidentally created the best ai agent hosting hardware. apple missed foundation models but has the hardware advantage. ben: &#x27;100% i&#x27;d do it as tim cook.&#x27; multi-trillion dollar opportunity. but culturally unlikely for apple. ben-horowitz">
+    <span class="theme-tag t2">Theme 17</span>
+    <h2 class="theme-title">Apple&#x27;s single best product strategy: own the OpenClaw hardware platform</h2>
+    <p class="theme-desc">Mac Mini/Studio unified memory architecture accidentally created the best AI agent hosting hardware. Apple missed foundation models but has the hardware advantage. Ben: &#x27;100% I&#x27;d do it as Tim Cook.&#x27; Multi-trillion dollar opportunity. But culturally unlikely for Apple.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🏛️ Ben Horowitz</span></div>
   </div>
-
-  <div class="theme-card" data-search="apple's single best product strategy: own the openclaw hardware platform mac mini/studio unified memory architecture accidentally created the best ai agent hosting hardware. apple missed foundation models but has the hardware advantage. ben: '100% i'd do it as tim cook.' multi-trillion dollar opportunity. but culturally unlikely for apple.">
-    <span class="theme-tag t2">Theme 37</span>
-    <h2 class="theme-title">Apple's single best product strategy: own the OpenClaw hardware platform</h2>
-    <p class="theme-desc">Mac Mini/Studio unified memory architecture accidentally created the best AI agent hosting hardware. Apple missed foundation models but has the hardware advantage. Ben: '100% I'd do it as Tim Cook.' Multi-trillion dollar opportunity. But culturally unlikely for Apple.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Ben Horowitz</span></div>
-  </div>
-
-  <div class="theme-card" data-search="rsi already happened — we're in the george jetson phase all frontier labs use their models to develop their models. that is recursive self-improvement. humans press approve/approve/approve pretending they're in the loop. the real question is when rsi goes fully autonomous (no human in loop). panel thinks we're already past the singularity trigger.">
-    <span class="theme-tag t3">Theme 38</span>
-    <h2 class="theme-title">RSI already happened — we're in the George Jetson phase</h2>
-    <p class="theme-desc">All frontier labs use their models to develop their models. That IS recursive self-improvement. Humans press approve/approve/approve pretending they're in the loop. The real question is when RSI goes fully autonomous (no human in loop). Panel thinks we're already past the singularity trigger.</p>
-    <div class="theme-speakers"><span class="speaker-chip">Ben Horowitz</span><span class="speaker-chip">Alex (The Innermost Loop)</span><span class="speaker-chip">Peter Diamandis</span></div>
-  </div>
-
-  <div class="theme-card" data-search="saas barbell — model companies eat top, individuals eat middle, trusted experts survive foundation model companies chase high-token verticals (legal, coding). generic saas gets one-shot by individuals. only trusted-expert businesses with judgment + relationship moats survive. engineering demand increases via jevons paradox.">
-    <span class="theme-tag t4">Theme 39</span>
+  <div class="theme-card" data-search="saas barbell — model companies eat top, individuals eat middle, trusted experts survive foundation model companies chase high-token verticals (legal, coding). generic saas gets one-shot by individuals. only trusted-expert businesses with judgment + relationship moats survive. engineering demand increases via jevons paradox. jd-ross joe-lonsdale">
+    <span class="theme-tag t2">Theme 18</span>
     <h2 class="theme-title">SaaS barbell — model companies eat top, individuals eat middle, trusted experts survive</h2>
     <p class="theme-desc">Foundation model companies chase high-token verticals (legal, coding). Generic SaaS gets one-shot by individuals. Only trusted-expert businesses with judgment + relationship moats survive. Engineering demand increases via Jevons Paradox.</p>
-    <div class="theme-speakers"><span class="speaker-chip">JD Ross</span><span class="speaker-chip">Joe Lonsdale</span></div>
+    <div class="theme-speakers"><span class="speaker-chip">🏠 JD Ross</span><span class="speaker-chip">🛡️ Joe Lonsdale</span></div>
+  </div>
+
+  <div class="category-header" style="font-family:var(--serif);font-size:24px;color:var(--green-dark);margin:32px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:10px;">
+    <span style="font-size:28px;">🏛️</span> Society & Policy
+    <span style="font-size:13px;font-weight:400;color:var(--text-muted);margin-left:auto;">5 themes</span>
+  </div>
+  <div class="theme-card" data-search="bottleneck shifted from digital to physical software/intelligence approaching sufficiency. constraints now: energy, manufacturing, physical dexterity, zoning, infrastructure. elon-musk david-martin">
+    <span class="theme-tag t3">Theme 19</span>
+    <h2 class="theme-title">Bottleneck shifted from digital to physical</h2>
+    <p class="theme-desc">Software/intelligence approaching sufficiency. Constraints now: energy, manufacturing, physical dexterity, zoning, infrastructure.</p>
+    <div class="theme-speakers"><span class="speaker-chip">⚡ Elon Musk</span><span class="speaker-chip">🏗️ David Martin</span></div>
+  </div>
+  <div class="theme-card" data-search="technology outpacing law creates dangerous legal gaps ai makes previously useless legal permissions (bulk data purchases, automated analysis) suddenly dangerous. the law hasn&#x27;t caught up, creating a window where technically legal actions violate the spirit of constitutional protections. dario-amodei">
+    <span class="theme-tag t3">Theme 20</span>
+    <h2 class="theme-title">Technology outpacing law creates dangerous legal gaps</h2>
+    <p class="theme-desc">AI makes previously useless legal permissions (bulk data purchases, automated analysis) suddenly dangerous. The law hasn&#x27;t caught up, creating a window where technically legal actions violate the spirit of constitutional protections.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🛡️ Dario Amodei</span></div>
+  </div>
+  <div class="theme-card" data-search="healthcare is a disease-creation system, not a disease-treatment system every economic actor in us healthcare is incentivized to produce and maintain illness. food companies profit from making people sick, pharma from keeping them sick, insurance from higher volume. $5t/year with worst outcomes because incentives are structurally misaligned. rfk-jr">
+    <span class="theme-tag t3">Theme 21</span>
+    <h2 class="theme-title">Healthcare is a disease-creation system, not a disease-treatment system</h2>
+    <p class="theme-desc">Every economic actor in US healthcare is incentivized to produce and maintain illness. Food companies profit from making people sick, pharma from keeping them sick, insurance from higher volume. $5T/year with worst outcomes because incentives are structurally misaligned.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🏥 Robert F. Kennedy Jr.</span></div>
+  </div>
+  <div class="theme-card" data-search="food reform is cheaper than the disease it prevents military food: $10/day fresh vs $18/day processed. laser weeding: $300/acre vs $1500/acre. snap reform removes taxpayer-funded diabetes. better food consistently costs less when you account for downstream healthcare costs. rfk-jr">
+    <span class="theme-tag t3">Theme 22</span>
+    <h2 class="theme-title">Food reform is cheaper than the disease it prevents</h2>
+    <p class="theme-desc">Military food: $10/day fresh vs $18/day processed. Laser weeding: $300/acre vs $1500/acre. SNAP reform removes taxpayer-funded diabetes. Better food consistently costs less when you account for downstream healthcare costs.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🏥 Robert F. Kennedy Jr.</span></div>
+  </div>
+  <div class="theme-card" data-search="us military operations in iran — full-spectrum engagement, not limited strike phase 2 of operation midnight hammer. objectives: destroy missile infrastructure, annihilate navy, eliminate proxy capabilities, prevent nuclear weapons. explicit regime change invitation to iranian people. irgc given surrender-or-die ultimatum. donald-trump">
+    <span class="theme-tag t3">Theme 23</span>
+    <h2 class="theme-title">US military operations in Iran — full-spectrum engagement, not limited strike</h2>
+    <p class="theme-desc">Phase 2 of Operation Midnight Hammer. Objectives: destroy missile infrastructure, annihilate navy, eliminate proxy capabilities, prevent nuclear weapons. Explicit regime change invitation to Iranian people. IRGC given surrender-or-die ultimatum.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🇺🇸 Donald J. Trump</span></div>
+  </div>
+
+  <div class="category-header" style="font-family:var(--serif);font-size:24px;color:var(--green-dark);margin:32px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:10px;">
+    <span style="font-size:28px;">⛓️</span> Crypto & Web3
+    <span style="font-size:13px;font-weight:400;color:var(--text-muted);margin-left:auto;">10 themes</span>
+  </div>
+  <div class="theme-card" data-search="race against time multiple domains facing closing windows: defi before ai, steer ai before too powerful, preserve human thinking before atrophy, scale energy before chips outpace grid. jeff-yan dario-amodei poshen-loh elon-musk">
+    <span class="theme-tag t5">Theme 24</span>
+    <h2 class="theme-title">Race against time</h2>
+    <p class="theme-desc">Multiple domains facing closing windows: DeFi before AI, steer AI before too powerful, preserve human thinking before atrophy, scale energy before chips outpace grid.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🔗 Jeff Yan</span><span class="speaker-chip">🛡️ Dario Amodei</span><span class="speaker-chip">🧠 Po-Shen Loh</span><span class="speaker-chip">⚡ Elon Musk</span></div>
+  </div>
+  <div class="theme-card" data-search="agents as team members, not personal assistants the real value of always-on ai agents isn&#x27;t personal assistance (email, calendar). it&#x27;s filling professional roles — developer, marketer, pm, sysadmin — with dedicated machines, security walls, and model-specific routing. the hiring metaphor defines the entire setup. brian-casel">
+    <span class="theme-tag t5">Theme 25</span>
+    <h2 class="theme-title">Agents as team members, not personal assistants</h2>
+    <p class="theme-desc">The real value of always-on AI agents isn&#x27;t personal assistance (email, calendar). It&#x27;s filling professional roles — developer, marketer, PM, sysadmin — with dedicated machines, security walls, and model-specific routing. The hiring metaphor defines the entire setup.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🔧 Brian Casel</span></div>
+  </div>
+  <div class="theme-card" data-search="blockchain was built for agents, not humans blockchain&#x27;s complexity (wallets, gas, addresses) was terrible ux for humans but is exactly what ai agents need: sybil resistance, programmable money, verifiable computation. the agent economy will run on blockchain rails because agents need infrastructure designed for automated systems. illia-polosukhin">
+    <span class="theme-tag t5">Theme 26</span>
+    <h2 class="theme-title">Blockchain was built for agents, not humans</h2>
+    <p class="theme-desc">Blockchain&#x27;s complexity (wallets, gas, addresses) was terrible UX for humans but is exactly what AI agents need: sybil resistance, programmable money, verifiable computation. The agent economy will run on blockchain rails because agents need infrastructure designed for automated systems.</p>
+    <div class="theme-speakers"><span class="speaker-chip">⛓️ Illia Polosukhin</span></div>
+  </div>
+  <div class="theme-card" data-search="economic alignment is the real ai alignment problem ads in ai = misalignment by definition. the question isn&#x27;t will ai kill us, but who does your ai work for? user-owned, ad-free, privacy-first agents running on decentralized infra is the structural solution. illia-polosukhin">
+    <span class="theme-tag t5">Theme 27</span>
+    <h2 class="theme-title">Economic alignment is the real AI alignment problem</h2>
+    <p class="theme-desc">Ads in AI = misalignment by definition. The question isn&#x27;t will AI kill us, but who does your AI work for? User-owned, ad-free, privacy-first agents running on decentralized infra is the structural solution.</p>
+    <div class="theme-speakers"><span class="speaker-chip">⛓️ Illia Polosukhin</span></div>
+  </div>
+  <div class="theme-card" data-search="digital credit converts volatile capital into predictable yield bitcoin as signal source: ~30% annual growth with high noise. strc strips volatility and extracts 11% clean yield as tax-deferred return of capital. credit layer is the bitcoin adoption vehicle — retirees and corporate treasurers buy strc, which buys bitcoin. michael-saylor">
+    <span class="theme-tag t5">Theme 28</span>
+    <h2 class="theme-title">Digital credit converts volatile capital into predictable yield</h2>
+    <p class="theme-desc">Bitcoin as signal source: ~30% annual growth with high noise. STRC strips volatility and extracts 11% clean yield as tax-deferred return of capital. Credit layer IS the Bitcoin adoption vehicle — retirees and corporate treasurers buy STRC, which buys Bitcoin.</p>
+    <div class="theme-speakers"><span class="speaker-chip">₿ Michael Saylor</span></div>
+  </div>
+  <div class="theme-card" data-search="traditional credit is manufactured to be awful — $300t disruption opportunity credit markets structured to benefit issuers: minimize yield, keep tax benefits, restrict retail access (otc). digital credit flips every element: highest yield, tax-deferred, daily liquidity, publicly traded. 5-10% of $300t = $15-60t opportunity. michael-saylor">
+    <span class="theme-tag t5">Theme 29</span>
+    <h2 class="theme-title">Traditional credit is manufactured to be awful — $300T disruption opportunity</h2>
+    <p class="theme-desc">Credit markets structured to benefit issuers: minimize yield, keep tax benefits, restrict retail access (OTC). Digital credit flips every element: highest yield, tax-deferred, daily liquidity, publicly traded. 5-10% of $300T = $15-60T opportunity.</p>
+    <div class="theme-speakers"><span class="speaker-chip">₿ Michael Saylor</span></div>
+  </div>
+  <div class="theme-card" data-search="ai needs crypto — convergence is structural, not speculative three independent voices (horowitz/vc, curry/commodities, mustaq/ai) conclude: fiat rails can&#x27;t handle agent speed. plus cryptography for authentication and agent swarms for security. crypto = infrastructure, not speculation. jordi-visser">
+    <span class="theme-tag t5">Theme 30</span>
+    <h2 class="theme-title">AI needs crypto — convergence is structural, not speculative</h2>
+    <p class="theme-desc">Three independent voices (Horowitz/VC, Curry/commodities, Mustaq/AI) conclude: fiat rails can&#x27;t handle agent speed. Plus cryptography for authentication and agent swarms for security. Crypto = infrastructure, not speculation.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🌊 Jordi Visser</span></div>
+  </div>
+  <div class="theme-card" data-search="survive-and-thrive cycles require government intervention — crypto is the fastest horse out every deleveraging shock since 2020 required government action. turbulence model flashing again. coming out the other side, crypto outperforms because it doesn&#x27;t get hurt by time compression, agent swarms, or binary repricing. jordi-visser">
+    <span class="theme-tag t5">Theme 31</span>
+    <h2 class="theme-title">Survive-and-thrive cycles require government intervention — crypto is the fastest horse out</h2>
+    <p class="theme-desc">Every deleveraging shock since 2020 required government action. Turbulence model flashing again. Coming out the other side, crypto outperforms because it doesn&#x27;t get hurt by time compression, agent swarms, or binary repricing.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🌊 Jordi Visser</span></div>
+  </div>
+  <div class="theme-card" data-search="gradual print regime — asset-specific factors dominate, not macro tailwinds no nuclear print without systemic stress (bank cash ratios high). fed only cares about treasury/interbank liquidity. in gradual print, each asset must compete on own merits. bitcoin not a liquidity play — needs own catalysts. war is the exception that would trigger nuclear print. lyn-alden">
+    <span class="theme-tag t5">Theme 32</span>
+    <h2 class="theme-title">Gradual print regime — asset-specific factors dominate, not macro tailwinds</h2>
+    <p class="theme-desc">No nuclear print without systemic stress (bank cash ratios high). Fed only cares about Treasury/interbank liquidity. In gradual print, each asset must compete on own merits. Bitcoin not a liquidity play — needs own catalysts. War is the exception that would trigger nuclear print.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🔬 Lyn Alden</span></div>
+  </div>
+  <div class="theme-card" data-search="crypto is ai&#x27;s native money — fiat failed the agents ai agents can&#x27;t get bank accounts or credit cards. crypto is the only option. a16z funded an ai-native crypto bank. need not just ledger of money but &#x27;ledger of truth.&#x27; us stablecoin legalization accelerates this. people underestimate how crypto and ai form the ai economy. ben-horowitz">
+    <span class="theme-tag t5">Theme 33</span>
+    <h2 class="theme-title">Crypto is AI&#x27;s native money — fiat failed the agents</h2>
+    <p class="theme-desc">AI agents can&#x27;t get bank accounts or credit cards. Crypto is the only option. a16z funded an AI-native crypto bank. Need not just ledger of money but &#x27;ledger of truth.&#x27; US stablecoin legalization accelerates this. People underestimate how crypto and AI form the AI economy.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🏛️ Ben Horowitz</span></div>
+  </div>
+
+  <div class="category-header" style="font-family:var(--serif);font-size:24px;color:var(--green-dark);margin:32px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:10px;">
+    <span style="font-size:28px;">🧠</span> Philosophy & Human Nature
+    <span style="font-size:13px;font-weight:400;color:var(--text-muted);margin-left:auto;">6 themes</span>
+  </div>
+  <div class="theme-card" data-search="human value = authentic connection + judgment as ai handles information/production, human advantage is caring, empathy, taste, critical evaluation. poshen-loh intent-engineering dario-amodei">
+    <span class="theme-tag t1">Theme 34</span>
+    <h2 class="theme-title">Human value = authentic connection + judgment</h2>
+    <p class="theme-desc">As AI handles information/production, human advantage is caring, empathy, taste, critical evaluation.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🧠 Po-Shen Loh</span><span class="speaker-chip">🎯 Enterprise AI Panel</span><span class="speaker-chip">🛡️ Dario Amodei</span></div>
+  </div>
+  <div class="theme-card" data-search="consumptive capacity may have an upper limit for the first time in human history ai could create productive capacity exceeding humanity&#x27;s ability to consume. knowledge work may be a transitory phenomenon between computing and ai. if production exceeds consumption, basic economic models break. david-friedberg">
+    <span class="theme-tag t1">Theme 35</span>
+    <h2 class="theme-title">Consumptive capacity may have an upper limit for the first time in human history</h2>
+    <p class="theme-desc">AI could create productive capacity exceeding humanity&#x27;s ability to consume. Knowledge work may be a transitory phenomenon between computing and AI. If production exceeds consumption, basic economic models break.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🌾 David Friedberg</span></div>
+  </div>
+  <div class="theme-card" data-search="software fork: human-version vs agent-version software is splitting like desktop→mobile. human version (manual click/type) vs agent version (describe goal, ai executes). next big companies will be agent-native — couldn&#x27;t exist in human-centric model. automated orchestration, multimodal routing, persistent workflows are the gps and push notifications of this era. julian-goldie">
+    <span class="theme-tag t1">Theme 36</span>
+    <h2 class="theme-title">Software fork: human-version vs agent-version</h2>
+    <p class="theme-desc">Software is splitting like desktop→mobile. Human version (manual click/type) vs agent version (describe goal, AI executes). Next big companies will be agent-native — couldn&#x27;t exist in human-centric model. Automated orchestration, multimodal routing, persistent workflows are the GPS and push notifications of this era.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🤖 Julian Goldie</span></div>
+  </div>
+  <div class="theme-card" data-search="ai alpha competes to zero — remaining edge is purely human once everyone has the same ai tools, ai-derived advantages self-cancel. like dating earpieces that cancel each other out. the remaining alpha is creativity, judgment, taste — things ai can&#x27;t replicate. early adopters have a temporary but massive asymmetric edge. naval-ravikant">
+    <span class="theme-tag t1">Theme 37</span>
+    <h2 class="theme-title">AI alpha competes to zero — remaining edge is purely human</h2>
+    <p class="theme-desc">Once everyone has the same AI tools, AI-derived advantages self-cancel. Like dating earpieces that cancel each other out. The remaining alpha is creativity, judgment, taste — things AI can&#x27;t replicate. Early adopters have a temporary but massive asymmetric edge.</p>
+    <div class="theme-speakers"><span class="speaker-chip">✨ Naval Ravikant</span></div>
+  </div>
+  <div class="theme-card" data-search="programmers are more leveraged, not less — supernormal outcomes ahead a programmer with ai fleet = 5-10x productivity. but intelligence/leverage/judgment aren&#x27;t normally distributed, so outcomes are supernormal. 1000x programmers will replace entire industries. software engineers who understand the layer below (hardware, physics) have permanent advantage. naval-ravikant">
+    <span class="theme-tag t1">Theme 38</span>
+    <h2 class="theme-title">Programmers are MORE leveraged, not less — supernormal outcomes ahead</h2>
+    <p class="theme-desc">A programmer with AI fleet = 5-10x productivity. But intelligence/leverage/judgment aren&#x27;t normally distributed, so outcomes are supernormal. 1000x programmers will replace entire industries. Software engineers who understand the layer below (hardware, physics) have permanent advantage.</p>
+    <div class="theme-speakers"><span class="speaker-chip">✨ Naval Ravikant</span></div>
+  </div>
+  <div class="theme-card" data-search="rsi already happened — we&#x27;re in the george jetson phase all frontier labs use their models to develop their models. that is recursive self-improvement. humans press approve/approve/approve pretending they&#x27;re in the loop. the real question is when rsi goes fully autonomous (no human in loop). panel thinks we&#x27;re already past the singularity trigger. ben-horowitz alex-innerloop peter-diamandis">
+    <span class="theme-tag t1">Theme 39</span>
+    <h2 class="theme-title">RSI already happened — we&#x27;re in the George Jetson phase</h2>
+    <p class="theme-desc">All frontier labs use their models to develop their models. That IS recursive self-improvement. Humans press approve/approve/approve pretending they&#x27;re in the loop. The real question is when RSI goes fully autonomous (no human in loop). Panel thinks we&#x27;re already past the singularity trigger.</p>
+    <div class="theme-speakers"><span class="speaker-chip">🏛️ Ben Horowitz</span><span class="speaker-chip">🔄 Alex (The Innermost Loop)</span><span class="speaker-chip">🌍 Peter Diamandis</span></div>
   </div>
 </div>
+
 <div class="panel" id="panel-speakers">
   <input type="text" class="search-bar" id="search-speakers" placeholder="Search speakers..." oninput="filterSpeakers(this.value)">
   <div class="speaker-grid">
     <div class="speaker-card" data-search="brent johnson ceo, santiago capital us structural advantages pull global capital inward; dollar + gold rise together dollar, gold, macro, stablecoins" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Brent Johnson</h3>
+      <h3 class="speaker-name">🥤 Brent Johnson</h3>
       <p class="speaker-role">CEO, Santiago Capital</p>
       <p class="speaker-framework">"US structural advantages pull global capital inward; dollar + gold rise together"</p>
       <p class="speaker-meta">1 video · dollar, gold, macro, stablecoins</p>
       <div class="speaker-theses"><div class="thesis-item">Dollar and gold can rise simultaneously — gold rejects all fiat, not just USD</div><div class="thesis-item">Stablecoins are the modern Eurodollar system — US projects dollar dominance through private sector crypto</div><div class="thesis-item">Bitcoin is a speculative liquidity play, not a safe haven</div><div class="thesis-item">US will always fund its deficits because global markets are priced off Treasuries</div><div class="thesis-item">BRICS is overhyped — US internal policy shifts matter more than external blocs</div></div>
     </div>
     <div class="speaker-card" data-search="elon musk ceo of tesla, spacex, xai energy as ultimate constraint; triple exponential in robotics; work becomes optional energy, ai, robotics, fsd" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Elon Musk</h3>
+      <h3 class="speaker-name">⚡ Elon Musk</h3>
       <p class="speaker-role">CEO of Tesla, SpaceX, xAI</p>
       <p class="speaker-framework">"Energy as ultimate constraint; triple exponential in robotics; work becomes optional"</p>
       <p class="speaker-meta">2 videos · energy, AI, robotics, FSD</p>
-      <div class="speaker-theses"><div class="thesis-item">Energy is the ultimate currency — future measured in watts, not dollars</div><div class="thesis-item">The bottleneck is electricity, not chips (the 'chip wall' is a power wall)</div><div class="thesis-item">AGI by 2028-2029, AI exceeding all humans combined by 2030</div><div class="thesis-item">Triple exponential for robotics — AI + chips + electromechanical dexterity multiplying</div><div class="thesis-item">Massive deflation coming — AI productivity exceeds money supply</div><div class="thesis-item">China may pass 3x US electricity output by 2026</div></div>
+      <div class="speaker-theses"><div class="thesis-item">Energy is the ultimate currency — future measured in watts, not dollars</div><div class="thesis-item">The bottleneck is electricity, not chips (the &#x27;chip wall&#x27; is a power wall)</div><div class="thesis-item">AGI by 2028-2029, AI exceeding all humans combined by 2030</div><div class="thesis-item">Triple exponential for robotics — AI + chips + electromechanical dexterity multiplying</div><div class="thesis-item">Massive deflation coming — AI productivity exceeds money supply</div><div class="thesis-item">China may pass 3x US electricity output by 2026</div><div class="thesis-item">FSD sleep-to-destination technical milestone this year</div><div class="thesis-item">Netherlands FSD approval March 20 2026</div></div>
     </div>
     <div class="speaker-card" data-search="david martin ceo, terra (miami real estate developer) market-based urbanism; missing middle housing; residential-first growth miami, housing, zoning, transit" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">David Martin</h3>
+      <h3 class="speaker-name">🏗️ David Martin</h3>
       <p class="speaker-role">CEO, Terra (Miami real estate developer)</p>
       <p class="speaker-framework">"Market-based urbanism; missing middle housing; residential-first growth"</p>
       <p class="speaker-meta">1 video · miami, housing, zoning, transit</p>
-      <div class="speaker-theses"><div class="thesis-item">Missing middle housing via zoning reform beats subsidized affordable housing</div><div class="thesis-item">Traffic is Miami's #1 existential threat, not housing costs</div><div class="thesis-item">Miami's growth is residential-first — execs move for lifestyle, companies follow</div><div class="thesis-item">Teachers can't afford to live where they work — applies to all essential workers</div></div>
+      <div class="speaker-theses"><div class="thesis-item">Missing middle housing via zoning reform beats subsidized affordable housing</div><div class="thesis-item">Traffic is Miami&#x27;s #1 existential threat, not housing costs</div><div class="thesis-item">Miami&#x27;s growth is residential-first — execs move for lifestyle, companies follow</div><div class="thesis-item">Teachers can&#x27;t afford to live where they work — applies to all essential workers</div></div>
     </div>
     <div class="speaker-card" data-search="jeff yan founder, hyperliquid build robust primitives, let ecosystem scale; defi before ai takes over defi, crypto, permissionless-finance, primitives" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Jeff Yan</h3>
+      <h3 class="speaker-name">🔗 Jeff Yan</h3>
       <p class="speaker-role">Founder, Hyperliquid</p>
       <p class="speaker-framework">"Build robust primitives, let ecosystem scale; DeFi before AI takes over"</p>
       <p class="speaker-meta">1 video · DeFi, crypto, permissionless-finance, primitives</p>
       <div class="speaker-theses"><div class="thesis-item">DeFi must be built before AI becomes the primary economic actor or humans lose governance</div><div class="thesis-item">11-person teams can run $10B protocols if primitives are right</div><div class="thesis-item">Permissionless perp markets will capture global price discovery from centralized exchanges</div><div class="thesis-item">VC token allocation is fundamentally incompatible with decentralization</div></div>
     </div>
     <div class="speaker-card" data-search="nassim nicholas taleb author (black swan, antifragile), former options trader tail risks are systematically underpriced; trust empirical evidence over models tail-risk, dollar, gold, ai-bubble" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Nassim Nicholas Taleb</h3>
+      <h3 class="speaker-name">🦢 Nassim Nicholas Taleb</h3>
       <p class="speaker-role">Author (Black Swan, Antifragile), former options trader</p>
       <p class="speaker-framework">"Tail risks are systematically underpriced; trust empirical evidence over models"</p>
       <p class="speaker-meta">1 video · tail-risk, dollar, gold, AI-bubble</p>
       <div class="speaker-theses"><div class="thesis-item">Dollar losing store-of-value status (not transaction status) — central banks moving to gold</div><div class="thesis-item">AI pioneers will go bankrupt — historical pattern of tech revolutions</div><div class="thesis-item">1970s-style oil shock is the most underpriced tail risk</div><div class="thesis-item">Tail risks remain massively underpriced by markets</div></div>
     </div>
     <div class="speaker-card" data-search="po-shen loh carnegie mellon math professor, former us math olympiad team coach math as the last curriculum for original thinking; boredom precedes creativity; authenticity is human advantage education, ai, creativity, authenticity" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Po-Shen Loh</h3>
+      <h3 class="speaker-name">🧠 Po-Shen Loh</h3>
       <p class="speaker-role">Carnegie Mellon math professor, former US Math Olympiad team coach</p>
       <p class="speaker-framework">"Math as the last curriculum for original thinking; boredom precedes creativity; authenticity is human advantage"</p>
       <p class="speaker-meta">1 video · education, AI, creativity, authenticity</p>
       <div class="speaker-theses"><div class="thesis-item">Math is the last curriculum for generating original ideas — everything else is information retrieval</div><div class="thesis-item">Kids without constant tech access are MORE creative — boredom is precondition for creativity</div><div class="thesis-item">Using AI for homework is driving a car for exercise — task done, zero mental fitness</div><div class="thesis-item">Authenticity and genuine human connection is the only reason to choose a human over AI</div></div>
     </div>
-    <div class="speaker-card" data-search="dario amodei co-founder/ceo, anthropic (builds claude) intelligence = data + compute + model size (no theory for why); application layer has the moats; steer ai, don't stop it scaling-laws, ai-safety, governance, biotech" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Dario Amodei</h3>
+    <div class="speaker-card" data-search="dario amodei co-founder/ceo, anthropic (builds claude) intelligence = data + compute + model size (no theory for why); application layer has the moats; steer ai, don&amp;#x27;t stop it scaling-laws, ai-safety, governance, biotech" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">🛡️ Dario Amodei</h3>
       <p class="speaker-role">Co-founder/CEO, Anthropic (builds Claude)</p>
-      <p class="speaker-framework">"Intelligence = data + compute + model size (no theory for why); application layer has the moats; steer AI, don't stop it"</p>
+      <p class="speaker-framework">"Intelligence = data + compute + model size (no theory for why); application layer has the moats; steer AI, don&#x27;t stop it"</p>
       <p class="speaker-meta">2 videos · scaling-laws, AI-safety, governance, biotech</p>
       <div class="speaker-theses"><div class="thesis-item">Intelligence is a chemical reaction: data + compute + model size = intelligence, reliably</div><div class="thesis-item">No theory for WHY scaling works — empirical recipe without fundamental explanation</div><div class="thesis-item">Moats are in the application layer (biotech, finserv, regulated industries), not model building</div><div class="thesis-item">Consciousness may be emergent from sufficiently complex self-reflective systems</div><div class="thesis-item">AI-driven biotech renaissance — programmable mRNA/peptide therapies</div><div class="thesis-item">Critical thinking is the #1 skill — distinguishing real from fake</div></div>
     </div>
-    <div class="speaker-card" data-search="enterprise ai panel panel discussion on organizational ai deployment intent > prompts; organizational alignment beats raw model capability; mediocre model + great intent infrastructure > frontier model with no alignment intent-engineering, ai-deployment, organizational-alignment, context-engineering" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Enterprise AI Panel</h3>
+    <div class="speaker-card" data-search="enterprise ai panel panel discussion on organizational ai deployment intent &amp;gt; prompts; organizational alignment beats raw model capability; mediocre model + great intent infrastructure &amp;gt; frontier model with no alignment intent-engineering, ai-deployment, organizational-alignment, context-engineering" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">🎯 Enterprise AI Panel</h3>
       <p class="speaker-role">Panel discussion on organizational AI deployment</p>
-      <p class="speaker-framework">"Intent > prompts; organizational alignment beats raw model capability; mediocre model + great intent infrastructure > frontier model with no alignment"</p>
+      <p class="speaker-framework">"Intent &gt; prompts; organizational alignment beats raw model capability; mediocre model + great intent infrastructure &gt; frontier model with no alignment"</p>
       <p class="speaker-meta">1 video · intent-engineering, AI-deployment, organizational-alignment, context-engineering</p>
-      <div class="speaker-theses"><div class="thesis-item">Intent engineering (making org values machine-readable) is the next frontier after prompt and context engineering</div><div class="thesis-item">Mediocre model + great intent infrastructure > frontier model + no alignment</div><div class="thesis-item">AI succeeding at the wrong thing is worse than AI failing (Klarna case)</div></div>
+      <div class="speaker-theses"><div class="thesis-item">Intent engineering (making org values machine-readable) is the next frontier after prompt and context engineering</div><div class="thesis-item">Mediocre model + great intent infrastructure &gt; frontier model + no alignment</div><div class="thesis-item">AI succeeding at the wrong thing is worse than AI failing (Klarna case)</div></div>
     </div>
     <div class="speaker-card" data-search="stan druckenmiller founder, duquesne family office (formerly duquesne capital management) pattern recognition over analysis; expert-enthusiasm-as-signal; courage in sizing; 18mo-3yr time horizons macro, equity selection, ai investing, technical analysis" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Stan Druckenmiller</h3>
+      <h3 class="speaker-name">📈 Stan Druckenmiller</h3>
       <p class="speaker-role">Founder, Duquesne Family Office (formerly Duquesne Capital Management)</p>
       <p class="speaker-framework">"Pattern recognition over analysis; expert-enthusiasm-as-signal; courage in sizing; 18mo-3yr time horizons"</p>
       <p class="speaker-meta">1 video · macro, equity selection, AI investing, technical analysis</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
     <div class="speaker-card" data-search="robert f. kennedy jr. secretary of health and human services perverse incentive analysis — follow the money to understand why systems produce bad outcomes. food as root cause of chronic disease epidemic. healthcare-reform, food-policy, chronic-disease, medicaid-fraud" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Robert F. Kennedy Jr.</h3>
+      <h3 class="speaker-name">🏥 Robert F. Kennedy Jr.</h3>
       <p class="speaker-role">Secretary of Health and Human Services</p>
       <p class="speaker-framework">"Perverse incentive analysis — follow the money to understand why systems produce bad outcomes. Food as root cause of chronic disease epidemic."</p>
       <p class="speaker-meta">1 video · healthcare-reform, food-policy, chronic-disease, medicaid-fraud</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
     <div class="speaker-card" data-search="chamath palihapitiya ceo social capital, all-in podcast host when→if repricing framework; structural market analysis; degrossing signals saas, ai-disruption, market-structure, macro" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Chamath Palihapitiya</h3>
+      <h3 class="speaker-name">💰 Chamath Palihapitiya</h3>
       <p class="speaker-role">CEO Social Capital, All-In Podcast host</p>
       <p class="speaker-framework">"When→If repricing framework; structural market analysis; degrossing signals"</p>
       <p class="speaker-meta">1 video · SaaS, AI-disruption, market-structure, macro</p>
       <div class="speaker-theses"><div class="thesis-item">mt-allin-1</div><div class="thesis-item">mt-allin-2</div><div class="thesis-item">mt-allin-3</div></div>
     </div>
     <div class="speaker-card" data-search="david sacks white house ai/crypto czar, all-in podcast host, former paypal/yammer/craft fixed pie fallacy; seen vs unseen heuristic; competing sci-fi narratives ai-policy, tariffs, energy, data-centers" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">David Sacks</h3>
+      <h3 class="speaker-name">⚖️ David Sacks</h3>
       <p class="speaker-role">White House AI/Crypto Czar, All-In Podcast host, former PayPal/Yammer/Craft</p>
       <p class="speaker-framework">"Fixed pie fallacy; seen vs unseen heuristic; competing sci-fi narratives"</p>
       <p class="speaker-meta">1 video · AI-policy, tariffs, energy, data-centers</p>
       <div class="speaker-theses"><div class="thesis-item">mt-allin-1</div><div class="thesis-item">mt-allin-2</div><div class="thesis-item">mt-allin-3</div></div>
     </div>
     <div class="speaker-card" data-search="jason calacanis angel investor, all-in podcast host operator-first; practical ai deployment; bipartisanship venture, ai-agents, media, politics" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Jason Calacanis</h3>
+      <h3 class="speaker-name">🎙️ Jason Calacanis</h3>
       <p class="speaker-role">Angel investor, All-In Podcast host</p>
       <p class="speaker-framework">"Operator-first; practical AI deployment; bipartisanship"</p>
       <p class="speaker-meta">1 video · venture, AI-agents, media, politics</p>
       <div class="speaker-theses"><div class="thesis-item">mt-allin-1</div><div class="thesis-item">mt-allin-2</div><div class="thesis-item">mt-allin-3</div></div>
     </div>
     <div class="speaker-card" data-search="david friedberg ceo the production board, all-in podcast host consumptive capacity limits; knowledge work as transitory; productivity vs demand macro-economics, ai-productivity, agriculture, energy" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">David Friedberg</h3>
+      <h3 class="speaker-name">🌾 David Friedberg</h3>
       <p class="speaker-role">CEO The Production Board, All-In Podcast host</p>
       <p class="speaker-framework">"Consumptive capacity limits; knowledge work as transitory; productivity vs demand"</p>
       <p class="speaker-meta">1 video · macro-economics, AI-productivity, agriculture, energy</p>
       <div class="speaker-theses"><div class="thesis-item">mt-allin-1</div><div class="thesis-item">mt-allin-2</div><div class="thesis-item">mt-allin-3</div></div>
     </div>
-    <div class="speaker-card" data-search="julian goldie ai/seo youtuber, ai profit boardroom community roi-first tool evaluation; consumer accessibility matters; orchestration > single model ai-tools, perplexity, multi-agent, orchestration" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Julian Goldie</h3>
+    <div class="speaker-card" data-search="julian goldie ai/seo youtuber, ai profit boardroom community roi-first tool evaluation; consumer accessibility matters; orchestration &amp;gt; single model ai-tools, perplexity, multi-agent, orchestration" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">🤖 Julian Goldie</h3>
       <p class="speaker-role">AI/SEO YouTuber, AI Profit Boardroom community</p>
-      <p class="speaker-framework">"ROI-first tool evaluation; consumer accessibility matters; orchestration > single model"</p>
+      <p class="speaker-framework">"ROI-first tool evaluation; consumer accessibility matters; orchestration &gt; single model"</p>
       <p class="speaker-meta">1 video · AI-tools, perplexity, multi-agent, orchestration</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
-    <div class="speaker-card" data-search="cathie wood founder/ceo ark invest wright's law learning curves; wall of worry > euphoria; convergence of technologies; embodied ai > software ai tesla, bitcoin, autonomous-mobility, genomics" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Cathie Wood</h3>
+    <div class="speaker-card" data-search="cathie wood founder/ceo ark invest wright&amp;#x27;s law learning curves; wall of worry &amp;gt; euphoria; convergence of technologies; embodied ai &amp;gt; software ai tesla, bitcoin, autonomous-mobility, genomics" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">🚀 Cathie Wood</h3>
       <p class="speaker-role">Founder/CEO ARK Invest</p>
-      <p class="speaker-framework">"Wright's Law learning curves; wall of worry > euphoria; convergence of technologies; embodied AI > software AI"</p>
+      <p class="speaker-framework">"Wright&#x27;s Law learning curves; wall of worry &gt; euphoria; convergence of technologies; embodied AI &gt; software AI"</p>
       <p class="speaker-meta">1 video · Tesla, Bitcoin, autonomous-mobility, genomics</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
-    <div class="speaker-card" data-search="brian casel solo saas builder, builder methods / builder methods pro hiring metaphor for agent security; model routing optimization; build what doesn't exist openclaw, multi-agent, model-routing, agent-security" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Brian Casel</h3>
+    <div class="speaker-card" data-search="brian casel solo saas builder, builder methods / builder methods pro hiring metaphor for agent security; model routing optimization; build what doesn&amp;#x27;t exist openclaw, multi-agent, model-routing, agent-security" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">🔧 Brian Casel</h3>
       <p class="speaker-role">Solo SaaS builder, Builder Methods / Builder Methods Pro</p>
-      <p class="speaker-framework">"Hiring metaphor for agent security; model routing optimization; build what doesn't exist"</p>
+      <p class="speaker-framework">"Hiring metaphor for agent security; model routing optimization; build what doesn&#x27;t exist"</p>
       <p class="speaker-meta">1 video · OpenClaw, multi-agent, model-routing, agent-security</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
-    <div class="speaker-card" data-search="illia polosukhin co-founder near protocol, co-author 'attention is all you need' (transformer paper) blockchain as agent infrastructure; economic alignment > safety alignment; post-labor economy via intent marketplaces; formal verification as existential necessity blockchain-ai, agent-marketplace, formal-verification, intent-infrastructure" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Illia Polosukhin</h3>
-      <p class="speaker-role">Co-founder Near Protocol, co-author 'Attention Is All You Need' (Transformer paper)</p>
-      <p class="speaker-framework">"Blockchain as agent infrastructure; economic alignment > safety alignment; post-labor economy via intent marketplaces; formal verification as existential necessity"</p>
+    <div class="speaker-card" data-search="illia polosukhin co-founder near protocol, co-author &amp;#x27;attention is all you need&amp;#x27; (transformer paper) blockchain as agent infrastructure; economic alignment &amp;gt; safety alignment; post-labor economy via intent marketplaces; formal verification as existential necessity blockchain-ai, agent-marketplace, formal-verification, intent-infrastructure" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">⛓️ Illia Polosukhin</h3>
+      <p class="speaker-role">Co-founder Near Protocol, co-author &#x27;Attention Is All You Need&#x27; (Transformer paper)</p>
+      <p class="speaker-framework">"Blockchain as agent infrastructure; economic alignment &gt; safety alignment; post-labor economy via intent marketplaces; formal verification as existential necessity"</p>
       <p class="speaker-meta">1 video · blockchain-AI, agent-marketplace, formal-verification, intent-infrastructure</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
     <div class="speaker-card" data-search="vlad tenev ceo/co-founder robinhood retail as permanent capital; data-driven deal sourcing; making public company brand aspirational again private-markets, retail-investing, rvi, ipo-reform" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Vlad Tenev</h3>
+      <h3 class="speaker-name">📊 Vlad Tenev</h3>
       <p class="speaker-role">CEO/Co-founder Robinhood</p>
       <p class="speaker-framework">"Retail as permanent capital; data-driven deal sourcing; making public company brand aspirational again"</p>
       <p class="speaker-meta">1 video · private-markets, retail-investing, RVI, IPO-reform</p>
       <div class="speaker-theses"><div class="thesis-item">mt-vt-1</div></div>
     </div>
     <div class="speaker-card" data-search="bill ackman ceo pershing square capital management value creation through access; in-kind distributions; capital recycling investing, private-markets, fund-structure" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Bill Ackman</h3>
+      <h3 class="speaker-name">🏦 Bill Ackman</h3>
       <p class="speaker-role">CEO Pershing Square Capital Management</p>
       <p class="speaker-framework">"Value creation through access; in-kind distributions; capital recycling"</p>
       <p class="speaker-meta">1 video · investing, private-markets, fund-structure</p>
       <div class="speaker-theses"><div class="thesis-item">mt-vt-1</div></div>
     </div>
     <div class="speaker-card" data-search="alan watts philosopher, writer (1915-1973) the great pretending; letting go ≠ giving up; caring without clinging; action without anxiety; life as improvisation philosophy, letting-go, meaning, spontaneity" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Alan Watts</h3>
+      <h3 class="speaker-name">🧘 Alan Watts</h3>
       <p class="speaker-role">Philosopher, writer (1915-1973)</p>
       <p class="speaker-framework">"The Great Pretending; letting go ≠ giving up; caring without clinging; action without anxiety; life as improvisation"</p>
       <p class="speaker-meta">1 video · philosophy, letting-go, meaning, spontaneity</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
-    <div class="speaker-card" data-search="naval ravikant angel investor (angellist founder), philosopher-investor, building 'impossible' no demand for average; every human as spellcaster; ai alpha competes to zero; knowledge one layer below; compression → abstraction; unaligned humans not ai vibe-coding, ai-leverage, creativity, winner-take-all" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Naval Ravikant</h3>
-      <p class="speaker-role">Angel investor (AngelList founder), philosopher-investor, building 'Impossible'</p>
+    <div class="speaker-card" data-search="naval ravikant angel investor (angellist founder), philosopher-investor, building &amp;#x27;impossible&amp;#x27; no demand for average; every human as spellcaster; ai alpha competes to zero; knowledge one layer below; compression → abstraction; unaligned humans not ai vibe-coding, ai-leverage, creativity, winner-take-all" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">✨ Naval Ravikant</h3>
+      <p class="speaker-role">Angel investor (AngelList founder), philosopher-investor, building &#x27;Impossible&#x27;</p>
       <p class="speaker-framework">"No demand for average; every human as spellcaster; AI alpha competes to zero; knowledge one layer below; compression → abstraction; unaligned humans not AI"</p>
       <p class="speaker-meta">1 video · vibe-coding, AI-leverage, creativity, winner-take-all</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
     <div class="speaker-card" data-search="michael saylor executive chairman, strategy (formerly microstrategy) digital capital → digital credit signal processing; reflexive flywheel; programmable credit across types/platforms/currencies; competing with $300t garbagey credit bitcoin, strc, digital-credit, capital-conversion" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Michael Saylor</h3>
+      <h3 class="speaker-name">₿ Michael Saylor</h3>
       <p class="speaker-role">Executive Chairman, Strategy (formerly MicroStrategy)</p>
       <p class="speaker-framework">"Digital capital → digital credit signal processing; reflexive flywheel; programmable credit across types/platforms/currencies; competing with $300T garbagey credit"</p>
       <p class="speaker-meta">1 video · Bitcoin, STRC, digital-credit, capital-conversion</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
     <div class="speaker-card" data-search="donald j. trump 47th president of the united states maximum pressure + military force; explicit regime change invitation; ultimatum diplomacy iran, military, nuclear-weapons, regime-change" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Donald J. Trump</h3>
+      <h3 class="speaker-name">🇺🇸 Donald J. Trump</h3>
       <p class="speaker-role">47th President of the United States</p>
       <p class="speaker-framework">"Maximum pressure + military force; explicit regime change invitation; ultimatum diplomacy"</p>
       <p class="speaker-meta">1 video · Iran, military, nuclear-weapons, regime-change</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
-    <div class="speaker-card" data-search="jordi visser former cio weiss multi-strategy advisors, independent macro strategist ai compresses time → software becomes binary → prediction market repricing; survive-and-thrive cycles; crypto as fastest horse post-crisis; bottom-up disruption > enterprise adoption macro, software-repricing, crypto, bitcoin" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Jordi Visser</h3>
+    <div class="speaker-card" data-search="jordi visser former cio weiss multi-strategy advisors, independent macro strategist ai compresses time → software becomes binary → prediction market repricing; survive-and-thrive cycles; crypto as fastest horse post-crisis; bottom-up disruption &amp;gt; enterprise adoption macro, software-repricing, crypto, bitcoin" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">🌊 Jordi Visser</h3>
       <p class="speaker-role">Former CIO Weiss Multi-Strategy Advisors, independent macro strategist</p>
-      <p class="speaker-framework">"AI compresses time → software becomes binary → prediction market repricing; survive-and-thrive cycles; crypto as fastest horse post-crisis; bottom-up disruption > enterprise adoption"</p>
+      <p class="speaker-framework">"AI compresses time → software becomes binary → prediction market repricing; survive-and-thrive cycles; crypto as fastest horse post-crisis; bottom-up disruption &gt; enterprise adoption"</p>
       <p class="speaker-meta">1 video · macro, software-repricing, crypto, Bitcoin</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
     <div class="speaker-card" data-search="anthony pompliano host of the pomp podcast, bitcoin advocate, entrepreneur bitcoin maximalism with practical orientation; interview-driven thesis development bitcoin, crypto, investing, macro" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Anthony Pompliano</h3>
+      <h3 class="speaker-name">🎤 Anthony Pompliano</h3>
       <p class="speaker-role">Host of The Pomp Podcast, Bitcoin advocate, entrepreneur</p>
       <p class="speaker-framework">"Bitcoin maximalism with practical orientation; interview-driven thesis development"</p>
       <p class="speaker-meta">1 video · Bitcoin, crypto, investing, macro</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
-    <div class="speaker-card" data-search="lyn alden founder, lyn alden investment strategy follow the plumbing — bank cash ratios, balance sheet mechanics, liquidity cycles. gradual print > nuclear print. asset-specific factors dominate in low-stimulus regimes. macro, fed, liquidity, bitcoin" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Lyn Alden</h3>
+    <div class="speaker-card" data-search="lyn alden founder, lyn alden investment strategy follow the plumbing — bank cash ratios, balance sheet mechanics, liquidity cycles. gradual print &amp;gt; nuclear print. asset-specific factors dominate in low-stimulus regimes. macro, fed, liquidity, bitcoin" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">🔬 Lyn Alden</h3>
       <p class="speaker-role">Founder, Lyn Alden Investment Strategy</p>
-      <p class="speaker-framework">"Follow the plumbing — bank cash ratios, balance sheet mechanics, liquidity cycles. Gradual print > nuclear print. Asset-specific factors dominate in low-stimulus regimes."</p>
+      <p class="speaker-framework">"Follow the plumbing — bank cash ratios, balance sheet mechanics, liquidity cycles. Gradual print &gt; nuclear print. Asset-specific factors dominate in low-stimulus regimes."</p>
       <p class="speaker-meta">1 video · macro, Fed, liquidity, Bitcoin</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
     <div class="speaker-card" data-search="natalie brunell host, coin stories podcast interview-driven; bitcoin advocacy with macro context bitcoin, macro, monetary-policy" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Natalie Brunell</h3>
+      <h3 class="speaker-name">📰 Natalie Brunell</h3>
       <p class="speaker-role">Host, Coin Stories podcast</p>
       <p class="speaker-framework">"Interview-driven; Bitcoin advocacy with macro context"</p>
       <p class="speaker-meta">1 video · Bitcoin, macro, monetary-policy</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
-    <div class="speaker-card" data-search="greg isenberg entrepreneur, advisor to tiktok and reddit, host of startup ideas podcast hands-on testing > theory; agents as unfair advantage for solo founders; 'openclawification' of the internet ai-tools, entrepreneurship, agents, perplexity" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Greg Isenberg</h3>
+    <div class="speaker-card" data-search="greg isenberg entrepreneur, advisor to tiktok and reddit, host of startup ideas podcast hands-on testing &amp;gt; theory; agents as unfair advantage for solo founders; &amp;#x27;openclawification&amp;#x27; of the internet ai-tools, entrepreneurship, agents, perplexity" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">💡 Greg Isenberg</h3>
       <p class="speaker-role">Entrepreneur, advisor to TikTok and Reddit, host of Startup Ideas Podcast</p>
-      <p class="speaker-framework">"Hands-on testing > theory; agents as unfair advantage for solo founders; 'OpenClawification' of the internet"</p>
+      <p class="speaker-framework">"Hands-on testing &gt; theory; agents as unfair advantage for solo founders; &#x27;OpenClawification&#x27; of the internet"</p>
       <p class="speaker-meta">1 video · AI-tools, entrepreneurship, agents, Perplexity</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
-    <div class="speaker-card" data-search="ben horowitz co-founder, andreessen horowitz (a16z) crypto as ai's native money; fiat failed agents; apple openclaw pivot; rsi already here; unlimited entrepreneurial opportunity crypto, ai-economy, vc, apple" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Ben Horowitz</h3>
+    <div class="speaker-card" data-search="ben horowitz co-founder, andreessen horowitz (a16z) crypto as ai&amp;#x27;s native money; fiat failed agents; apple openclaw pivot; rsi already here; unlimited entrepreneurial opportunity crypto, ai-economy, vc, apple" onclick="this.classList.toggle('expanded')">
+      <h3 class="speaker-name">🏛️ Ben Horowitz</h3>
       <p class="speaker-role">Co-founder, Andreessen Horowitz (a16z)</p>
-      <p class="speaker-framework">"Crypto as AI's native money; fiat failed agents; Apple OpenClaw pivot; RSI already here; unlimited entrepreneurial opportunity"</p>
+      <p class="speaker-framework">"Crypto as AI&#x27;s native money; fiat failed agents; Apple OpenClaw pivot; RSI already here; unlimited entrepreneurial opportunity"</p>
       <p class="speaker-meta">1 video · crypto, AI-economy, VC, Apple</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
     <div class="speaker-card" data-search="peter diamandis founder xprize, singularity university; host moonshots podcast abundance over scarcity; space as next frontier; ai + robotics = post-scarcity space, longevity, ai, abundance" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Peter Diamandis</h3>
+      <h3 class="speaker-name">🌍 Peter Diamandis</h3>
       <p class="speaker-role">Founder XPRIZE, Singularity University; host Moonshots podcast</p>
       <p class="speaker-framework">"Abundance over scarcity; space as next frontier; AI + robotics = post-scarcity"</p>
       <p class="speaker-meta">1 video · space, longevity, AI, abundance</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
     <div class="speaker-card" data-search="alex (the innermost loop) ai researcher/writer, moonshots co-host defensive co-scaling; fiat failed agents; rsi already here; ai solves physics in 2 years ai-research, rsi, crypto-agents, physics" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Alex (The Innermost Loop)</h3>
+      <h3 class="speaker-name">🔄 Alex (The Innermost Loop)</h3>
       <p class="speaker-role">AI researcher/writer, Moonshots co-host</p>
       <p class="speaker-framework">"Defensive co-scaling; fiat failed agents; RSI already here; AI solves physics in 2 years"</p>
       <p class="speaker-meta">1 video · AI-research, RSI, crypto-agents, physics</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
     <div class="speaker-card" data-search="joe lonsdale co-founder palantir, addepar, 8vc invention eras reset everyone; returns to agency are very high; build on existing frameworks (st patrick strategy) vc, palantir, ai, entrepreneurship" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">Joe Lonsdale</h3>
+      <h3 class="speaker-name">🛡️ Joe Lonsdale</h3>
       <p class="speaker-role">Co-founder Palantir, Addepar, 8VC</p>
       <p class="speaker-framework">"Invention eras reset everyone; returns to agency are very high; build on existing frameworks (St Patrick strategy)"</p>
       <p class="speaker-meta">1 video · VC, Palantir, AI, entrepreneurship</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
     <div class="speaker-card" data-search="jd ross co-founder opendoor, founder/ceo withcoverage saas barbell (model cos eat top, individuals eat middle, trusted experts survive); jevons paradox for engineering; writer→editor transition saas, insurance, ai-engineering, enterprise" onclick="this.classList.toggle('expanded')">
-      <h3 class="speaker-name">JD Ross</h3>
+      <h3 class="speaker-name">🏠 JD Ross</h3>
       <p class="speaker-role">Co-founder Opendoor, founder/CEO WithCoverage</p>
       <p class="speaker-framework">"SaaS barbell (model cos eat top, individuals eat middle, trusted experts survive); Jevons Paradox for engineering; writer→editor transition"</p>
       <p class="speaker-meta">1 video · SaaS, insurance, AI-engineering, enterprise</p>
-      <div class="speaker-theses"></div>
+      <div class="speaker-theses"><div class="thesis-item" style="color:var(--text-muted);font-style:italic;">Theses available in video analysis</div></div>
     </div>
   </div>
 </div>
