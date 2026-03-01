@@ -1,0 +1,1275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Counter — How it works</title>
+  <style>
+    :root{
+      --bg:#0a0a0a;
+      --panel:rgba(255,255,255,.04);
+      --panel2:rgba(255,255,255,.06);
+      --fg:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.66);
+      --border:rgba(255,255,255,.14);
+      --shadow:0 18px 60px rgba(0,0,0,.45);
+      --accent:#4ecdc4;
+      --good:rgba(80,200,120,.7);
+      --warn:rgba(255,193,78,.75);
+      --codebg:rgba(255,255,255,.06);
+      --codeborder:rgba(255,255,255,.12);
+      --mono:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--fg);
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(78,205,196,.18) 0%, transparent 55%),
+        radial-gradient(900px 600px at 85% 35%, rgba(155,89,182,.18) 0%, transparent 55%),
+        var(--bg);
+    }
+
+    a{color:inherit}
+    .layout{
+      display:grid;
+      grid-template-columns: 270px 1fr;
+      gap:18px;
+      max-width:1200px;
+      margin:0 auto;
+      padding:18px 16px 30px;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      height:10px;
+      background:rgba(255,255,255,.05);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      backdrop-filter: blur(8px);
+    }
+    .topbar .progress{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, rgba(78,205,196,.95), rgba(78,205,196,.35));
+      box-shadow: 0 0 0 1px rgba(78,205,196,.15) inset;
+    }
+
+    .sidebar{
+      position:sticky;
+      top:18px;
+      align-self:start;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border-radius:14px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .sidebar .brand{
+      padding:14px 14px 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .dot{width:8px;height:8px;border-radius:99px;background:var(--accent);box-shadow:0 0 0 4px rgba(78,205,196,.12)}
+    .sidebar h2{margin:8px 0 0;font-size:14px;letter-spacing:.2px}
+    .nav{padding:10px}
+    .nav a{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      text-decoration:none;
+      padding:10px 10px;
+      border-radius:10px;
+      color:var(--muted);
+      border:1px solid transparent;
+      transition: background .2s ease, border-color .2s ease, color .2s ease;
+    }
+    .nav a:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08);color:var(--fg)}
+    .nav a[aria-current="true"]{background:rgba(78,205,196,.12);border-color:rgba(78,205,196,.22);color:rgba(255,255,255,.92)}
+    .nav small{font-size:11px;color:rgba(255,255,255,.5)}
+
+    main{min-width:0}
+
+    .hero{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      border-radius:16px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hero .hdr{
+      padding:16px 16px 0;
+    }
+    .hero h1{margin:0 0 6px;font-size:20px}
+    .hero p{margin:0 0 14px;color:var(--muted);line-height:1.45}
+
+    section{
+      margin-top:14px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.035);
+      border-radius:16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.32);
+      overflow:hidden;
+    }
+    section .section-hdr{
+      padding:14px 16px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    }
+    .section-hdr h3{margin:0;font-size:15px;letter-spacing:.2px}
+    .section-hdr p{margin:5px 0 0;color:var(--muted);font-size:13px;line-height:1.4}
+    .pill{
+      font-size:12px;
+      color:rgba(78,205,196,.95);
+      border:1px solid rgba(78,205,196,.25);
+      background:rgba(78,205,196,.08);
+      padding:6px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+      align-self:flex-start;
+    }
+
+    .content{padding:14px 16px 16px}
+
+    .preview{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      padding:0 16px 16px;
+    }
+    .frameWrap{
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:14px;
+      overflow:hidden;
+      background:rgba(0,0,0,.25);
+    }
+    iframe{
+      display:block;
+      width:100%;
+      height:320px;
+      border:0;
+    }
+    .hint{
+      border:1px dashed rgba(78,205,196,.35);
+      background:rgba(78,205,196,.06);
+      border-radius:14px;
+      padding:12px 12px;
+      color:rgba(255,255,255,.86);
+    }
+    .hint b{color:rgba(78,205,196,.95)}
+    .kv{display:grid;grid-template-columns: 130px 1fr;gap:8px 12px;margin-top:10px}
+    .kv div{color:var(--muted);font-size:13px}
+    .kv code{font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.84)}
+
+    .diagramWrap{display:grid;grid-template-columns: 1fr;gap:12px}
+    .legend{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.03)}
+    .tag i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;vertical-align:-1px}
+    .tag .ui{background:rgba(78,205,196,.85)}
+    .tag .logic{background:rgba(255,193,78,.85)}
+    .tag .style{background:rgba(155,89,182,.85)}
+
+    svg{width:100%;height:auto}
+    .node{cursor:pointer}
+    .node rect{fill:rgba(255,255,255,.04);stroke:rgba(255,255,255,.18);stroke-width:1.2;rx:12;ry:12}
+    .node[data-kind="ui"] rect{stroke:rgba(78,205,196,.55)}
+    .node[data-kind="logic"] rect{stroke:rgba(255,193,78,.55)}
+    .node[data-kind="style"] rect{stroke:rgba(155,89,182,.55)}
+    .node text{font-family:var(--sans);fill:rgba(255,255,255,.9)}
+    .node .sub{fill:rgba(255,255,255,.62);font-size:12px}
+    .node.isActive rect{stroke:rgba(78,205,196,.95);fill:rgba(78,205,196,.08)}
+    .node.isActive text{fill:rgba(255,255,255,.95)}
+
+    .arrow{stroke:rgba(255,255,255,.22);stroke-width:1.6;marker-end:url(#arrow)}
+
+    details.card{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      border-radius:14px;
+      overflow:hidden;
+      transition: transform .15s ease;
+    }
+    details.card:hover{transform: translateY(-1px)}
+    details.card summary{
+      list-style:none;
+      cursor:pointer;
+      padding:12px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      user-select:none;
+    }
+    details.card summary::-webkit-details-marker{display:none}
+    .cardTitle{display:flex;flex-direction:column;gap:2px}
+    .cardTitle strong{font-size:13.5px}
+    .cardTitle span{font-size:12.5px;color:var(--muted)}
+    .chev{font-family:var(--mono);color:var(--muted)}
+    details[open] .chev{color:rgba(78,205,196,.9)}
+    .cardBody{padding:0 12px 12px;color:rgba(255,255,255,.86);line-height:1.55}
+    .grid2{display:grid;grid-template-columns: 1fr 1fr;gap:12px;margin-top:10px}
+    .compare{
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+      overflow:hidden;
+      background:rgba(0,0,0,.15);
+    }
+    .compare .cap{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 10px;
+      font-size:12px;
+      color:var(--muted);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+    }
+    .cap b{color:rgba(255,255,255,.86);font-weight:650}
+    .cap.chosen{border-left:3px solid var(--good)}
+    .cap.alt{border-left:3px solid var(--warn)}
+
+    .componentList{display:grid;gap:10px}
+    .component{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      border-radius:14px;
+      overflow:hidden;
+    }
+    .component .head{
+      padding:12px 12px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .component .head strong{font-size:13.5px}
+    .component .head span{display:block;margin-top:3px;color:var(--muted);font-size:12.5px;line-height:1.4}
+    .component .body{display:none;padding:0 12px 12px}
+    .component.isOpen .body{display:block}
+    .io{display:grid;grid-template-columns: 1fr 1fr;gap:10px;margin:10px 0 12px}
+    .io .box{border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.12);border-radius:12px;padding:10px}
+    .io h4{margin:0 0 6px;font-size:12px;color:rgba(255,255,255,.86)}
+    .io ul{margin:0;padding-left:18px;color:var(--muted);font-size:12.5px;line-height:1.5}
+
+    .codeBlock{
+      border:1px solid var(--codeborder);
+      background:var(--codebg);
+      border-radius:12px;
+      overflow:hidden;
+    }
+    .codeHdr{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(0,0,0,.12);
+      cursor:pointer;
+      user-select:none;
+    }
+    .codeHdr b{font-size:12.5px;color:rgba(255,255,255,.86)}
+    .codeHdr small{font-size:12px;color:var(--muted)}
+    pre{
+      margin:0;
+      padding:12px;
+      font-family:var(--mono);
+      font-size:12.25px;
+      line-height:1.55;
+      overflow:auto;
+      white-space:pre;
+      color:rgba(255,255,255,.88);
+    }
+    .codeBlock[data-collapsed="true"] pre{display:none}
+
+    /* Lightweight syntax highlighting */
+    .tok-k{color:rgba(78,205,196,.92)}
+    .tok-s{color:rgba(255,193,78,.92)}
+    .tok-n{color:rgba(155,89,182,.92)}
+    .tok-c{color:rgba(255,255,255,.45)}
+    .tok-t{color:rgba(120,200,255,.9)}
+
+    .flow{
+      display:grid;
+      gap:10px;
+    }
+    .flowControls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .btn{
+      appearance:none;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:rgba(255,255,255,.9);
+      padding:9px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      transition: background .2s ease, transform .06s ease;
+      font-size:13px;
+    }
+    .btn:hover{background:rgba(255,255,255,.10)}
+    .btn:active{transform:translateY(1px)}
+    .btn.primary{border-color:rgba(78,205,196,.35);background:rgba(78,205,196,.10)}
+
+    .step{
+      position:relative;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:10px 12px;
+      display:grid;
+      grid-template-columns: 36px 1fr;
+      gap:10px;
+      align-items:start;
+    }
+    .step .num{
+      width:30px;height:30px;border-radius:10px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(0,0,0,.18);
+      display:grid;place-items:center;
+      color:rgba(255,255,255,.86);
+      font-family:var(--mono);
+      font-size:12px;
+    }
+    .step .txt strong{display:block;font-size:13px}
+    .step .txt span{display:block;margin-top:3px;color:var(--muted);font-size:12.5px;line-height:1.45}
+    .step:not(:last-child)::before{
+      content:"";
+      position:absolute;
+      left:30px;
+      top:100%;
+      width:2px;
+      height:14px;
+      background:rgba(255,255,255,.10);
+      border-radius:2px;
+    }
+    .step:not(:last-child)::after{
+      content:"↓";
+      position:absolute;
+      left:24px;
+      top:calc(100% + 10px);
+      font-family:var(--mono);
+      font-size:12px;
+      color:rgba(255,255,255,.35);
+    }
+
+    .step.isHot{border-color:rgba(78,205,196,.45);background:rgba(78,205,196,.07)}
+    .step.isHot .num{border-color:rgba(78,205,196,.45)}
+
+    .footer{
+      font-size:12px;
+      color:rgba(255,255,255,.55);
+      border-top:1px solid rgba(255,255,255,.10);
+      padding:12px 16px;
+      background:rgba(0,0,0,.12);
+    }
+    .footer .row{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+    .footer code{font-family:var(--mono);color:rgba(255,255,255,.75)}
+    .files{margin-top:8px;display:grid;gap:6px}
+    .files div{display:flex;justify-content:space-between;gap:10px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);padding:8px 10px;border-radius:10px}
+
+    @media (max-width: 920px){
+      .layout{grid-template-columns: 1fr}
+      .sidebar{position:relative;top:auto}
+      .preview{grid-template-columns: 1fr}
+      iframe{height:360px}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto !important; transition:none !important}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar" aria-hidden="true"><div class="progress" id="scrollProgress"></div></div>
+
+  <div class="layout">
+    <aside class="sidebar" aria-label="Jump to navigation">
+      <div class="brand">
+        <div class="badge"><span class="dot" aria-hidden="true"></span><span>Interactive walkthrough</span></div>
+        <h2>Counter app</h2>
+      </div>
+      <nav class="nav" id="jumpNav">
+        <a href="#s0" data-jump="s0"><span>0. Live Preview</span><small>Try it</small></a>
+        <a href="#s1" data-jump="s1"><span>1. Architecture Overview</span><small>Files + flow</small></a>
+        <a href="#s2" data-jump="s2"><span>2. Key Decisions</span><small>Why</small></a>
+        <a href="#s3" data-jump="s3"><span>3. Component Walkthrough</span><small>Components</small></a>
+        <a href="#s4" data-jump="s4"><span>4. Data Flow</span><small>Click → render</small></a>
+        <a href="#s5" data-jump="s5"><span>5. Interactive Elements</span><small>Reading aids</small></a>
+        <a href="#s6" data-jump="s6"><span>6. Build Metadata</span><small>Footer</small></a>
+      </nav>
+    </aside>
+
+    <main>
+      <div class="hero">
+        <div class="hdr">
+          <h1>How the counter works</h1>
+          <p>This app is a tiny, single-page counter: semantic HTML for structure, CSS for the glassy card UI, and a small JS module that holds state (<code>count</code>) and re-renders the number on each button click.</p>
+        </div>
+
+        <div class="preview" id="s0">
+          <div class="frameWrap" aria-label="Live preview">
+            <iframe
+              id="preview"
+              title="Counter preview"
+              sandbox="allow-scripts"
+              srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
+    &lt;title&gt;Counter&lt;/title&gt;
+    &lt;style&gt;
+:root {
+  color-scheme: light dark;
+  --bg: #0b1020;
+  --fg: #e8ecff;
+  --muted: rgba(232, 236, 255, 0.65);
+  --card: rgba(255, 255, 255, 0.06);
+  --border: rgba(232, 236, 255, 0.18);
+  --btn: rgba(255, 255, 255, 0.10);
+  --btn-hover: rgba(255, 255, 255, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+    Arial, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;;
+  background: radial-gradient(1200px 700px at 20% 10%, #1b2a6b 0%, transparent 55%),
+    radial-gradient(900px 600px at 90% 40%, #5b1b6b 0%, transparent 55%),
+    var(--bg);
+  color: var(--fg);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.app {
+  width: min(520px, 100%);
+  border: 1px solid var(--border);
+  background: var(--card);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.title {
+  margin: 0 0 18px 0;
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: 0.2px;
+}
+
+.counter {
+  display: grid;
+  grid-template-columns: 56px 1fr 56px;
+  gap: 12px;
+  align-items: center;
+}
+
+.value {
+  display: block;
+  text-align: center;
+  font-size: 42px;
+  font-weight: 750;
+  padding: 14px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--btn);
+  color: var(--fg);
+  border-radius: 12px;
+  height: 56px;
+  width: 56px;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn:hover {
+  background: var(--btn-hover);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline: 2px solid rgba(232, 236, 255, 0.55);
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f6f7ff;
+    --fg: #0d1330;
+    --muted: rgba(13, 19, 48, 0.65);
+    --card: rgba(255, 255, 255, 0.75);
+    --border: rgba(13, 19, 48, 0.14);
+    --btn: rgba(13, 19, 48, 0.05);
+    --btn-hover: rgba(13, 19, 48, 0.08);
+  }
+
+  body {
+    background: radial-gradient(1200px 700px at 20% 10%, #d7ddff 0%, transparent 55%),
+      radial-gradient(900px 600px at 90% 40%, #ffd7f3 0%, transparent 55%), var(--bg);
+  }
+
+  .value {
+    background: rgba(255, 255, 255, 0.7);
+  }
+}
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;main class=&quot;app&quot; aria-label=&quot;Counter app&quot;&gt;
+      &lt;h1 class=&quot;title&quot;&gt;Counter&lt;/h1&gt;
+
+      &lt;div class=&quot;counter&quot; role=&quot;group&quot; aria-label=&quot;Counter controls&quot;&gt;
+        &lt;button id=&quot;decrement&quot; class=&quot;btn&quot; type=&quot;button&quot; aria-label=&quot;Decrement&quot;&gt;
+          −
+        &lt;/button&gt;
+        &lt;output id=&quot;value&quot; class=&quot;value&quot; aria-live=&quot;polite&quot; aria-atomic=&quot;true&quot;&gt;0&lt;/output&gt;
+        &lt;button id=&quot;increment&quot; class=&quot;btn&quot; type=&quot;button&quot; aria-label=&quot;Increment&quot;&gt;
+          +
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/main&gt;
+
+    &lt;script&gt;
+(() =&gt; {
+  const decBtn = document.getElementById('decrement');
+  const incBtn = document.getElementById('increment');
+  const valueEl = document.getElementById('value');
+
+  let count = 0;
+
+  const render = () =&gt; {
+    valueEl.textContent = String(count);
+  };
+
+  decBtn.addEventListener('click', () =&gt; {
+    count -= 1;
+    render();
+  });
+
+  incBtn.addEventListener('click', () =&gt; {
+    count += 1;
+    render();
+  });
+
+  render();
+})();
+    &lt;/script&gt;
+    &lt;script&gt;
+// PostMessage hook for the data-flow animation.
+document.addEventListener('click', (e) =&gt; {
+  const btn = e.target.closest('button, a, [role="button"]');
+  if (btn) parent.postMessage({ type: 'app-event', event: 'click', target: btn.id || btn.textContent }, '*');
+});
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;"
+            ></iframe>
+          </div>
+
+          <div class="hint">
+            <div><b>Try it</b> — click <code>+</code> and <code>−</code>, then read how that click updates state and re-renders the UI.</div>
+            <div class="kv" aria-label="At a glance">
+              <div>State:</div><div><code>let count = 0</code> (in JS)</div>
+              <div>UI value:</div><div><code>&lt;output id=&quot;value&quot;&gt;</code> (in HTML)</div>
+              <div>Update path:</div><div><code>click → count +/- → render()</code></div>
+              <div>Scope:</div><div>All logic wrapped in an IIFE (no globals)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="s1" aria-label="Architecture Overview">
+        <div class="section-hdr">
+          <div>
+            <h3>1. Architecture Overview</h3>
+            <p>The app is intentionally split by responsibility: HTML declares the controls, CSS styles them, and JS wires events to a single state variable plus a <code>render()</code> function.</p>
+          </div>
+          <div class="pill">UI • Styling • Logic</div>
+        </div>
+        <div class="content">
+          <div class="diagramWrap">
+            <div class="legend" aria-label="Legend">
+              <span class="tag"><i class="ui" aria-hidden="true"></i>UI (markup)</span>
+              <span class="tag"><i class="style" aria-hidden="true"></i>Styling</span>
+              <span class="tag"><i class="logic" aria-hidden="true"></i>Logic (state + events)</span>
+            </div>
+
+            <svg viewBox="0 0 920 290" role="img" aria-label="File and data-flow diagram">
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(255,255,255,.28)"></path>
+                </marker>
+              </defs>
+
+              <g class="node" data-kind="ui" data-component="index-html" transform="translate(30,40)">
+                <rect width="250" height="90"></rect>
+                <text x="16" y="34" font-size="15">index.html</text>
+                <text class="sub" x="16" y="58">Buttons + output element</text>
+              </g>
+
+              <g class="node" data-kind="style" data-component="style-css" transform="translate(30,160)">
+                <rect width="250" height="90"></rect>
+                <text x="16" y="34" font-size="15">style.css</text>
+                <text class="sub" x="16" y="58">Layout, theme vars, focus</text>
+              </g>
+
+              <g class="node" data-kind="logic" data-component="app-js" transform="translate(340,40)">
+                <rect width="260" height="90"></rect>
+                <text x="16" y="34" font-size="15">app.js</text>
+                <text class="sub" x="16" y="58">State + events + render()</text>
+              </g>
+
+              <g class="node" data-kind="logic" data-component="state-render" transform="translate(650,40)">
+                <rect width="240" height="90"></rect>
+                <text x="16" y="34" font-size="15">State + render()</text>
+                <text class="sub" x="16" y="58">count → valueEl.textContent</text>
+              </g>
+
+              <g class="node" data-kind="logic" data-component="events" transform="translate(650,160)">
+                <rect width="240" height="90"></rect>
+                <text x="16" y="34" font-size="15">Event handlers</text>
+                <text class="sub" x="16" y="58">click + / − updates count</text>
+              </g>
+
+              <path class="arrow" d="M 280 85 C 300 85, 310 85, 340 85"></path>
+              <path class="arrow" d="M 600 85 C 620 85, 630 85, 650 85"></path>
+              <path class="arrow" d="M 470 130 C 470 155, 600 155, 650 185"></path>
+              <path class="arrow" d="M 770 160 C 770 130, 770 130, 770 130"></path>
+              <text x="365" y="24" fill="rgba(255,255,255,.55)" font-size="12">DOM lookup</text>
+              <text x="670" y="24" fill="rgba(255,255,255,.55)" font-size="12">render writes UI</text>
+              <text x="592" y="165" fill="rgba(255,255,255,.55)" font-size="12">events call render</text>
+            </svg>
+
+            <div style="color:var(--muted);font-size:13px;line-height:1.5">
+              The only “data” is an in-memory number. The UI never reads from the DOM to compute state; it always treats <code>count</code> as the source of truth and uses <code>render()</code> to push updates into the <code>&lt;output&gt;</code> element.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="s2" aria-label="Key Decisions">
+        <div class="section-hdr">
+          <div>
+            <h3>2. Key Decisions</h3>
+            <p>Small app, but a few choices keep it predictable: isolate state, centralize rendering, and keep the DOM contract explicit with IDs and ARIA attributes.</p>
+          </div>
+          <div class="pill">Trade-offs</div>
+        </div>
+        <div class="content" style="display:grid;gap:10px">
+          <details class="card" open>
+            <summary>
+              <div class="cardTitle">
+                <strong>Single state variable + explicit render()</strong>
+                <span>Predictable UI updates and a single place to change rendering behavior.</span>
+              </div>
+              <span class="chev">▾</span>
+            </summary>
+            <div class="cardBody">
+              <div>Instead of directly mutating the DOM in each click handler (duplicating logic), both handlers update <code>count</code> then call <code>render()</code>. That’s the entire update loop.</div>
+              <div class="grid2" aria-label="Compare chosen vs alternative">
+                <div class="compare">
+                  <div class="cap chosen"><b>Chosen</b><span>single render path</span></div>
+                  <div class="codeBlock" data-collapsed="false" data-lang="js">
+                    <div class="codeHdr"><b>app.js (excerpt)</b><small>state + render</small></div>
+                    <pre data-raw="true">let count = 0;
+
+const render = () =&gt; {
+  valueEl.textContent = String(count);
+};</pre>
+                  </div>
+                </div>
+                <div class="compare">
+                  <div class="cap alt"><b>Alternative</b><span>duplicate DOM updates</span></div>
+                  <div class="codeBlock" data-collapsed="false" data-lang="js">
+                    <div class="codeHdr"><b>What it could look like</b><small>harder to evolve</small></div>
+                    <pre data-raw="true">decBtn.addEventListener('click', () =&gt; {
+  count -= 1;
+  valueEl.textContent = String(count);
+});
+
+incBtn.addEventListener('click', () =&gt; {
+  count += 1;
+  valueEl.textContent = String(count);
+});</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="card">
+            <summary>
+              <div class="cardTitle">
+                <strong>IIFE wrapper (module-like scope)</strong>
+                <span>Keeps variables off <code>window</code>; avoids name collisions.</span>
+              </div>
+              <span class="chev">▾</span>
+            </summary>
+            <div class="cardBody">
+              The entire script is wrapped in <code>(() =&gt; { ... })()</code>, so <code>count</code>, <code>render</code>, and DOM references are private. For tiny apps, this is a pragmatic “no bundler, no globals” pattern.
+            </div>
+          </details>
+
+          <details class="card">
+            <summary>
+              <div class="cardTitle">
+                <strong>Semantic + accessible output</strong>
+                <span><code>&lt;output&gt;</code> with <code>aria-live</code> announces changes politely.</span>
+              </div>
+              <span class="chev">▾</span>
+            </summary>
+            <div class="cardBody">
+              Using <code>&lt;output&gt;</code> makes the number “a computed result” instead of a generic <code>&lt;div&gt;</code>. <code>aria-live="polite"</code> and <code>aria-atomic="true"</code> help assistive tech announce the updated count.
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section id="s3" aria-label="Component Walkthrough">
+        <div class="section-hdr">
+          <div>
+            <h3>3. Component Walkthrough</h3>
+            <p>Click a component to expand it. Hovering a component will highlight it in the architecture diagram (and vice versa).</p>
+          </div>
+          <div class="pill">Click to expand</div>
+        </div>
+        <div class="content">
+          <div class="componentList">
+
+            <div class="component isOpen" data-component="index-html" tabindex="0" role="button" aria-label="Open index.html walkthrough">
+              <div class="head">
+                <div>
+                  <strong>index.html — semantic UI contract</strong>
+                  <span>Declares the elements JS will bind to: <code>#increment</code>, <code>#decrement</code>, and <code>#value</code>.</span>
+                </div>
+                <span class="chev">▾</span>
+              </div>
+              <div class="body">
+                <div class="io">
+                  <div class="box">
+                    <h4>Inputs</h4>
+                    <ul>
+                      <li>User clicks buttons.</li>
+                      <li>Initial value is the literal <code>0</code> in markup.</li>
+                    </ul>
+                  </div>
+                  <div class="box">
+                    <h4>Outputs</h4>
+                    <ul>
+                      <li>Updated count is displayed inside <code>&lt;output id=&quot;value&quot;&gt;</code>.</li>
+                      <li>ARIA live region announces changes.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="codeBlock" data-collapsed="true" data-lang="html">
+                  <div class="codeHdr"><b>index.html</b><small>click to expand</small></div>
+                  <pre data-raw="true">&lt;main class=&quot;app&quot; aria-label=&quot;Counter app&quot;&gt;
+  &lt;h1 class=&quot;title&quot;&gt;Counter&lt;/h1&gt;
+
+  &lt;div class=&quot;counter&quot; role=&quot;group&quot; aria-label=&quot;Counter controls&quot;&gt;
+    &lt;button id=&quot;decrement&quot; class=&quot;btn&quot; type=&quot;button&quot; aria-label=&quot;Decrement&quot;&gt;
+      −
+    &lt;/button&gt;
+    &lt;output id=&quot;value&quot; class=&quot;value&quot; aria-live=&quot;polite&quot; aria-atomic=&quot;true&quot;&gt;0&lt;/output&gt;
+    &lt;button id=&quot;increment&quot; class=&quot;btn&quot; type=&quot;button&quot; aria-label=&quot;Increment&quot;&gt;
+      +
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/main&gt;</pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="component" data-component="style-css" tabindex="0" role="button" aria-label="Open style.css walkthrough">
+              <div class="head">
+                <div>
+                  <strong>style.css — layout + theme variables</strong>
+                  <span>Uses CSS variables for theme colors and a simple grid layout for the controls.</span>
+                </div>
+                <span class="chev">▾</span>
+              </div>
+              <div class="body">
+                <div class="io">
+                  <div class="box">
+                    <h4>Inputs</h4>
+                    <ul>
+                      <li>System color scheme (light vs dark).</li>
+                      <li>Viewport size (responsive width).</li>
+                    </ul>
+                  </div>
+                  <div class="box">
+                    <h4>Outputs</h4>
+                    <ul>
+                      <li>Centered card UI with glass blur.</li>
+                      <li>Focus-visible outline for keyboard users.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="codeBlock" data-collapsed="true" data-lang="css">
+                  <div class="codeHdr"><b>style.css (excerpt)</b><small>click to expand</small></div>
+                  <pre data-raw="true">.counter {
+  display: grid;
+  grid-template-columns: 56px 1fr 56px;
+  gap: 12px;
+  align-items: center;
+}
+
+.value {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 750;
+}
+
+.btn:focus-visible {
+  outline: 2px solid rgba(232, 236, 255, 0.55);
+  outline-offset: 2px;
+}</pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="component" data-component="app-js" tabindex="0" role="button" aria-label="Open app.js walkthrough">
+              <div class="head">
+                <div>
+                  <strong>app.js — wiring, state, render loop</strong>
+                  <span>Grabs DOM nodes once, stores <code>count</code> in memory, and updates the UI on each click.</span>
+                </div>
+                <span class="chev">▾</span>
+              </div>
+              <div class="body">
+                <div class="io">
+                  <div class="box">
+                    <h4>Inputs</h4>
+                    <ul>
+                      <li>DOM elements with stable IDs.</li>
+                      <li>User click events.</li>
+                    </ul>
+                  </div>
+                  <div class="box">
+                    <h4>Outputs</h4>
+                    <ul>
+                      <li>Updates <code>#value</code> text content.</li>
+                      <li>No network/storage; state resets on refresh.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="codeBlock" data-collapsed="true" data-lang="js">
+                  <div class="codeHdr"><b>app.js</b><small>click to expand</small></div>
+                  <pre data-raw="true">(() =&gt; {
+  const decBtn = document.getElementById('decrement');
+  const incBtn = document.getElementById('increment');
+  const valueEl = document.getElementById('value');
+
+  let count = 0;
+
+  const render = () =&gt; {
+    valueEl.textContent = String(count);
+  };
+
+  decBtn.addEventListener('click', () =&gt; {
+    count -= 1;
+    render();
+  });
+
+  incBtn.addEventListener('click', () =&gt; {
+    count += 1;
+    render();
+  });
+
+  render();
+})();</pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="component" data-component="state-render" tabindex="0" role="button" aria-label="Open state + render walkthrough">
+              <div class="head">
+                <div>
+                  <strong>State + render() — the “source of truth”</strong>
+                  <span><code>count</code> is the authoritative value; DOM is just the view.</span>
+                </div>
+                <span class="chev">▾</span>
+              </div>
+              <div class="body">
+                <div style="color:rgba(255,255,255,.86);line-height:1.55">
+                  <div><b>Purpose:</b> keep UI updates consistent and easy to change.</div>
+                  <div style="margin-top:8px"><b>Key logic:</b> <code>render()</code> converts the number to a string and assigns it to <code>textContent</code> (safe and fast).</div>
+                </div>
+                <div class="codeBlock" data-collapsed="false" data-lang="js" style="margin-top:10px">
+                  <div class="codeHdr"><b>render path</b><small>always the same</small></div>
+                  <pre data-raw="true">let count = 0;
+
+const render = () =&gt; {
+  valueEl.textContent = String(count);
+};</pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="component" data-component="events" tabindex="0" role="button" aria-label="Open event handlers walkthrough">
+              <div class="head">
+                <div>
+                  <strong>Event handlers — user interaction</strong>
+                  <span>Two click handlers, symmetric behavior: update <code>count</code>, then call <code>render()</code>.</span>
+                </div>
+                <span class="chev">▾</span>
+              </div>
+              <div class="body">
+                <div style="color:rgba(255,255,255,.86);line-height:1.55">
+                  <div><b>Inputs:</b> button clicks.</div>
+                  <div><b>Outputs:</b> state change and a re-render.</div>
+                </div>
+                <div class="codeBlock" data-collapsed="false" data-lang="js" style="margin-top:10px">
+                  <div class="codeHdr"><b>handlers</b><small>increment/decrement</small></div>
+                  <pre data-raw="true">decBtn.addEventListener('click', () =&gt; {
+  count -= 1;
+  render();
+});
+
+incBtn.addEventListener('click', () =&gt; {
+  count += 1;
+  render();
+});</pre>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section id="s4" aria-label="Data Flow">
+        <div class="section-hdr">
+          <div>
+            <h3>4. Data Flow</h3>
+            <p>When you click a button, the handler mutates <code>count</code> and then re-renders the UI. The steps below animate when you press “Play”, and also when you click in the preview.</p>
+          </div>
+          <div class="pill">Animated</div>
+        </div>
+        <div class="content">
+          <div class="flowControls">
+            <button class="btn primary" id="playFlow" type="button">Play animation</button>
+            <div style="color:var(--muted);font-size:12.5px">Preview clicks will also trigger this (via <code>postMessage</code>).</div>
+          </div>
+          <div class="flow" id="flowSteps">
+            <div class="step" data-step="1" data-triggers="increment decrement">
+              <div class="num">1</div>
+              <div class="txt"><strong>User clicks + or −</strong><span>The browser dispatches a <code>click</code> event on the button element.</span></div>
+            </div>
+            <div class="step" data-step="2" data-triggers="increment decrement">
+              <div class="num">2</div>
+              <div class="txt"><strong>Handler updates in-memory state</strong><span><code>count += 1</code> or <code>count -= 1</code> updates the single source of truth.</span></div>
+            </div>
+            <div class="step" data-step="3" data-triggers="increment decrement">
+              <div class="num">3</div>
+              <div class="txt"><strong>render() writes to the DOM</strong><span><code>valueEl.textContent = String(count)</code> updates the <code>&lt;output&gt;</code> element.</span></div>
+            </div>
+            <div class="step" data-step="4" data-triggers="increment decrement">
+              <div class="num">4</div>
+              <div class="txt"><strong>UI is repainted</strong><span>The new number becomes visible; the <code>aria-live</code> region can announce the change.</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="s5" aria-label="Interactive Elements">
+        <div class="section-hdr">
+          <div>
+            <h3>5. Interactive Elements</h3>
+            <p>Reading aids for this walkthrough: jump navigation, scroll progress, and expandable code snippets.</p>
+          </div>
+          <div class="pill">UI helpers</div>
+        </div>
+        <div class="content" style="color:rgba(255,255,255,.86);line-height:1.6">
+          <details class="card" open>
+            <summary>
+              <div class="cardTitle"><strong>Jump-to sidebar</strong><span>Section links that follow scroll position.</span></div>
+              <span class="chev">▾</span>
+            </summary>
+            <div class="cardBody">The left navigation highlights the section currently in view using an <code>IntersectionObserver</code> (or a small scroll fallback) so it stays accurate as you scroll.</div>
+          </details>
+          <details class="card" open>
+            <summary>
+              <div class="cardTitle"><strong>Progress indicator</strong><span>Top bar shows how far through the page you are.</span></div>
+              <span class="chev">▾</span>
+            </summary>
+            <div class="cardBody">A simple scroll listener updates the width of the teal bar at the top of the page.</div>
+          </details>
+          <details class="card" open>
+            <summary>
+              <div class="cardTitle"><strong>Click to expand code</strong><span>Code blocks default to collapsed where long.</span></div>
+              <span class="chev">▾</span>
+            </summary>
+            <div class="cardBody">Each code block has a header; clicking it toggles visibility. Code is syntax-highlighted with a small in-page highlighter (no external libraries).</div>
+          </details>
+        </div>
+      </section>
+
+      <section id="s6" aria-label="Build Metadata">
+        <div class="section-hdr">
+          <div>
+            <h3>6. Build Metadata</h3>
+            <p>Context about the build that produced the app files.</p>
+          </div>
+          <div class="pill">Footer</div>
+        </div>
+        <div class="footer" id="metaFooter">
+          <div class="row">
+            <span>Task: <code>Build a simple counter with increment/decrement buttons</code></span>
+            <span>Build time: <code>51s</code></span>
+            <span>Model: <code>llama-3.3-70b</code></span>
+            <span>Tokens: <code>0</code></span>
+          </div>
+          <div class="files" aria-label="File inventory">
+            <div><span><code>index.html</code></span><span><code>795 bytes</code> • <code>26 lines</code></span></div>
+            <div><span><code>style.css</code></span><span><code>2328 bytes</code> • <code>115 lines</code></span></div>
+            <div><span><code>app.js</code></span><span><code>440 bytes</code> • <code>23 lines</code></span></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // --- Tiny utilities ---
+    const qs = (sel, root=document) => root.querySelector(sel);
+    const qsa = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    // --- Scroll progress bar ---
+    const progressEl = qs('#scrollProgress');
+    const updateProgress = () => {
+      const doc = document.documentElement;
+      const max = Math.max(1, doc.scrollHeight - doc.clientHeight);
+      const pct = Math.min(1, Math.max(0, doc.scrollTop / max));
+      progressEl.style.width = (pct * 100).toFixed(2) + '%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+
+    // --- Jump nav active state ---
+    const nav = qs('#jumpNav');
+    const navLinks = qsa('a[data-jump]', nav);
+    const sections = navLinks
+      .map(a => qs(a.getAttribute('href')))
+      .filter(Boolean);
+
+    const setActive = (id) => {
+      navLinks.forEach(a => {
+        const is = a.getAttribute('href') === '#' + id;
+        a.setAttribute('aria-current', is ? 'true' : 'false');
+      });
+    };
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        const best = entries
+          .filter(e => e.isIntersecting)
+          .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (best && best.target && best.target.id) setActive(best.target.id);
+      }, { root: null, threshold: [0.2, 0.35, 0.5, 0.65] });
+      sections.forEach(s => io.observe(s));
+    } else {
+      const onScroll = () => {
+        const y = window.scrollY || document.documentElement.scrollTop;
+        let current = sections[0]?.id;
+        for (const s of sections) {
+          const top = s.getBoundingClientRect().top + y;
+          if (y + 120 >= top) current = s.id;
+        }
+        if (current) setActive(current);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+
+    // --- Expand/collapse components ---
+    qsa('.component').forEach(comp => {
+      const head = qs('.head', comp);
+      const toggle = () => comp.classList.toggle('isOpen');
+      head.addEventListener('click', toggle);
+      comp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+    });
+
+    // --- Expand/collapse code blocks ---
+    qsa('.codeBlock').forEach(block => {
+      const hdr = qs('.codeHdr', block);
+      if (!hdr) return;
+      hdr.addEventListener('click', () => {
+        const collapsed = block.getAttribute('data-collapsed') === 'true';
+        block.setAttribute('data-collapsed', collapsed ? 'false' : 'true');
+      });
+    });
+
+    // --- Lightweight syntax highlighting (in-place, small + safe) ---
+    const escapeHtml = (s) => s
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;');
+
+    const highlight = (code, lang) => {
+      // Order matters: escape first, then add spans.
+      let s = escapeHtml(code);
+
+      // Comments
+      if (lang === 'js') {
+        s = s.replace(/(\/\/.*?$)/gm, '<span class="tok-c">$1</span>');
+      }
+      if (lang === 'css') {
+        s = s.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="tok-c">$1</span>');
+      }
+      if (lang === 'html') {
+        s = s.replace(/(&lt;!--[\s\S]*?--&gt;)/g, '<span class="tok-c">$1</span>');
+      }
+
+      // Strings
+      s = s.replace(/(&quot;[^\n]*?&quot;)/g, '<span class="tok-s">$1</span>');
+      s = s.replace(/('(?:\\'|[^'])*')/g, '<span class="tok-s">$1</span>');
+      s = s.replace(/(`(?:\\`|[^`])*`)/g, '<span class="tok-s">$1</span>');
+
+      // Numbers
+      s = s.replace(/\b(\d+(?:\.\d+)?)\b/g, '<span class="tok-n">$1</span>');
+
+      if (lang === 'js') {
+        // Keywords (small set)
+        s = s.replace(/\b(const|let|var|return|if|else|for|while|new|class|function|try|catch|throw)\b/g, '<span class="tok-k">$1</span>');
+        // Common globals / DOM
+        s = s.replace(/\b(document|window|addEventListener|getElementById|textContent|String)\b/g, '<span class="tok-t">$1</span>');
+      }
+      if (lang === 'css') {
+        s = s.replace(/\b(display|grid|flex|background|color|border|padding|margin|gap|font-size|border-radius|outline)\b/g, '<span class="tok-k">$1</span>');
+        s = s.replace(/(--[a-zA-Z0-9-]+)/g, '<span class="tok-t">$1</span>');
+      }
+      if (lang === 'html') {
+        s = s.replace(/(&lt;\/?)([a-zA-Z0-9-]+)(?=\s|&gt;)/g, '$1<span class="tok-k">$2</span>');
+        s = s.replace(/\b(id|class|type|aria-label|aria-live|aria-atomic|role)\b(?==)/g, '<span class="tok-t">$1</span>');
+      }
+
+      return s;
+    };
+
+    qsa('pre[data-raw="true"]').forEach(pre => {
+      const block = pre.closest('.codeBlock');
+      const lang = block?.getAttribute('data-lang') || 'js';
+      const raw = pre.textContent;
+      pre.innerHTML = highlight(raw, lang);
+      pre.removeAttribute('data-raw');
+    });
+
+    // --- Architecture diagram interaction ---
+    const nodes = qsa('svg .node[data-component]');
+    const comps = qsa('.component[data-component]');
+
+    const setActiveComponent = (id) => {
+      nodes.forEach(n => n.classList.toggle('isActive', n.getAttribute('data-component') === id));
+      comps.forEach(c => c.classList.toggle('isActive', c.getAttribute('data-component') === id));
+    };
+
+    nodes.forEach(n => {
+      n.addEventListener('mouseenter', () => setActiveComponent(n.getAttribute('data-component')));
+      n.addEventListener('mouseleave', () => setActiveComponent(''));
+      n.addEventListener('click', () => {
+        const id = n.getAttribute('data-component');
+        const target = qs(`.component[data-component="${CSS.escape(id)}"]`);
+        if (!target) return;
+        target.classList.add('isOpen');
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setActiveComponent(id);
+        // Briefly emphasize selection
+        target.style.boxShadow = '0 0 0 1px rgba(78,205,196,.35), 0 18px 60px rgba(0,0,0,.35)';
+        setTimeout(() => { target.style.boxShadow = ''; }, 650);
+      });
+    });
+
+    comps.forEach(c => {
+      c.addEventListener('mouseenter', () => setActiveComponent(c.getAttribute('data-component')));
+      c.addEventListener('mouseleave', () => setActiveComponent(''));
+    });
+
+    // --- Data flow animation ---
+    const steps = qsa('.step[data-step]');
+    let flowTimer = null;
+
+    const pulseSteps = (trigger) => {
+      const chosen = steps.filter(s => (s.getAttribute('data-triggers') || '').split(/\s+/).includes(trigger));
+      const seq = chosen.length ? chosen : steps;
+
+      let i = 0;
+      const hot = (idx) => {
+        steps.forEach(s => s.classList.remove('isHot'));
+        if (seq[idx]) seq[idx].classList.add('isHot');
+      };
+
+      if (flowTimer) { clearInterval(flowTimer); flowTimer = null; }
+      hot(0);
+      flowTimer = setInterval(() => {
+        i += 1;
+        if (i >= seq.length) {
+          clearInterval(flowTimer);
+          flowTimer = null;
+          setTimeout(() => steps.forEach(s => s.classList.remove('isHot')), 260);
+          return;
+        }
+        hot(i);
+      }, 200);
+    };
+
+    qs('#playFlow').addEventListener('click', () => pulseSteps('increment'));
+
+    // Listen to preview events (postMessage from iframe srcdoc hook)
+    window.addEventListener('message', (e) => {
+      const msg = e.data;
+      if (!msg || msg.type !== 'app-event') return;
+      if (msg.event === 'click') {
+        const t = String(msg.target || '').trim();
+        if (t === 'increment' || t === '+') pulseSteps('increment');
+        else if (t === 'decrement' || t === '−' || t === '-') pulseSteps('decrement');
+        else pulseSteps('increment');
+      }
+    });
+  </script>
+</body>
+</html>
