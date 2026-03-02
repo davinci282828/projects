@@ -133,6 +133,82 @@
             box-shadow: 0 4px 12px rgba(252, 213, 3, 0.3);
         }
 
+        .btn-download {
+            background: var(--dark-green);
+            color: var(--cream);
+            flex: none;
+            width: 40px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .btn-download:hover {
+            background: var(--light-green);
+            color: var(--dark-navy);
+        }
+
+        .export-actions {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+            flex-wrap: wrap;
+        }
+
+        .export-btn.secondary {
+            background: var(--light-green);
+            color: var(--dark-navy);
+        }
+
+        .meta-guide {
+            background: var(--card-bg);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--light-green);
+            display: none;
+        }
+
+        .meta-guide h3 {
+            color: var(--light-green);
+            margin-bottom: 12px;
+        }
+
+        .meta-guide ol {
+            padding-left: 20px;
+            line-height: 2;
+        }
+
+        .meta-guide a {
+            color: var(--gold);
+        }
+
+        .caption-copy {
+            background: var(--dark-navy);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            cursor: pointer;
+            border: 1px solid var(--dark-green);
+            transition: border-color 0.2s;
+        }
+
+        .caption-copy:hover {
+            border-color: var(--light-green);
+        }
+
+        .caption-copy::after {
+            content: ' 📋 tap to copy';
+            opacity: 0.5;
+            font-size: 0.75rem;
+        }
+
+        .caption-copy.copied::after {
+            content: ' ✓ copied!';
+            opacity: 1;
+            color: var(--light-green);
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -420,7 +496,37 @@
                 </select>
             </div>
 
-            <button class="export-btn" id="export-btn">Export Approved</button>
+            <div class="export-actions">
+                <button class="export-btn" id="download-all-btn">⬇ Download All Approved</button>
+                <button class="export-btn secondary" id="meta-guide-btn">📱 How To Post</button>
+            </div>
+        </div>
+
+        <div class="meta-guide" id="meta-guide">
+            <h3>📱 How To Post These</h3>
+            <h4 style="color: var(--gold); margin: 15px 0 8px;">Instagram (Organic Posts)</h4>
+            <ol>
+                <li>Tap ⬇ on the image you want (or "Download All Approved")</li>
+                <li>Images save to your phone/computer</li>
+                <li>Open Instagram → tap + → select the image</li>
+                <li>Tap the caption preview on any card → it copies to clipboard</li>
+                <li>Paste as caption. Done.</li>
+            </ol>
+            <h4 style="color: var(--gold); margin: 15px 0 8px;">Meta Ads Manager (Paid Ads)</h4>
+            <ol>
+                <li>Go to <a href="https://adsmanager.facebook.com" target="_blank">adsmanager.facebook.com</a></li>
+                <li>Create campaign → choose objective (Traffic or Conversions)</li>
+                <li>At ad level: upload the downloaded image</li>
+                <li>Paste the caption as Primary Text</li>
+                <li>Set CTA button to "Book Now" or "Learn More"</li>
+                <li>Target: New York State, ages 25-55, interests: mental health, therapy, wellness</li>
+            </ol>
+            <h4 style="color: var(--gold); margin: 15px 0 8px;">LinkedIn</h4>
+            <ol>
+                <li>Text-only posts perform best for thought leadership</li>
+                <li>Copy text from the <a href="https://docs.google.com/document/d/1uskA2hAWQqJeduTer-OCoIsN8N5omFGn/edit" target="_blank" style="color: var(--gold);">LinkedIn Strategy Doc</a></li>
+                <li>Paste into LinkedIn → post as text. Images optional.</li>
+            </ol>
         </div>
 
         <div id="organic-notice" style="background: var(--dark-green); padding: 20px 30px; border-radius: 12px; margin-bottom: 25px; border-left: 4px solid var(--gold); display: none;">
@@ -509,9 +615,11 @@
                         </div>
                         <div class="card-caption">${creative.caption}</div>
                         ${creative.cta ? `<div class="card-cta">CTA: ${creative.cta}</div>` : ''}
+                        <div class="caption-copy" data-caption="${creative.caption.replace(/"/g, '&quot;')}" onclick="copyCaption(this)">${creative.caption.substring(0, 80)}...</div>
                         <div class="card-actions">
                             <button class="btn btn-approve ${cardState === 'approved' ? 'active' : ''}" data-id="${creative.id}" data-action="approve">${cardState === 'approved' ? '✓ Approved' : 'Approve'}</button>
                             <button class="btn btn-skip ${cardState === 'skipped' ? 'active' : ''}" data-id="${creative.id}" data-action="skip">${cardState === 'skipped' ? '✗ Skipped' : 'Skip'}</button>
+                            <a class="btn btn-download" href="${creative.image}" download="${creative.id}.png" title="Download image">⬇</a>
                         </div>
                     </div>
                 </div>
@@ -642,6 +750,48 @@
                 `;
             }
         }
+
+        // Copy caption to clipboard
+        function copyCaption(el) {
+            const caption = el.dataset.caption;
+            navigator.clipboard.writeText(caption).then(() => {
+                el.classList.add('copied');
+                setTimeout(() => el.classList.remove('copied'), 2000);
+            });
+        }
+
+        // Download all approved images
+        document.addEventListener('click', (e) => {
+            if (e.target.id === 'download-all-btn') {
+                const approved = data.creatives.filter(c => getState(c.id) === 'approved');
+                if (approved.length === 0) {
+                    alert('No approved items yet. Tap "Approve" on the creatives you want first.');
+                    return;
+                }
+                // Download each image
+                approved.forEach((c, i) => {
+                    setTimeout(() => {
+                        const a = document.createElement('a');
+                        a.href = c.image;
+                        a.download = c.id + '.png';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    }, i * 300); // stagger to avoid browser blocking
+                });
+
+                // Also copy all captions
+                const captionText = approved.map(c => `--- ${c.id} ---\n${c.caption}`).join('\n\n');
+                navigator.clipboard.writeText(captionText).then(() => {
+                    alert(`Downloading ${approved.length} images.\n\nAll captions also copied to clipboard!`);
+                });
+            }
+
+            if (e.target.id === 'meta-guide-btn') {
+                const guide = document.getElementById('meta-guide');
+                guide.style.display = guide.style.display === 'none' || !guide.style.display ? 'block' : 'none';
+            }
+        });
 
         // Initialize
         loadData();
