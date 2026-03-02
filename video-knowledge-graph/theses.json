@@ -507,7 +507,7 @@
     {
       "id": "t_illia_ai_onchain",
       "video_id": "yt_htj3PeukEbM",
-      "thesis": "AI agents need wallets, identity, and economic infrastructure to transact autonomously. Blockchain is the only system that treats humans and software equally \u2014 no KYC, no bank account, just a key pair. This makes on-chain infra the natural substrate for the agent economy.",
+      "thesis": "AI alignment is an economic problem, not a technical one: ad-funded AI serves advertisers, not users. User-owned agents on decentralized infra fix this \u2014 your agent works for you because you pay for it directly, no corporate middleman. (Polosukhin)",
       "speaker": "illia_polosukhin",
       "category": "thesis",
       "confidence": 0.8
@@ -553,9 +553,9 @@
       "confidence": 0.85
     },
     {
-      "id": "t_visser_ai_btc_rails",
+      "id": "t_crypto_agent_infra_consolidated",
       "video_id": "yt_u48856z9Stc",
-      "thesis": "Crypto is the 'fastest horse' in survive-and-thrive cycles: every crisis triggers government intervention (bailouts, rate cuts, stimulus), and crypto catches the most upside because it has no AI-vulnerable fundamentals (no earnings to compress, no margins for agent swarms to eat, no binary repricing on AI news). It's just a network and a number.",
+      "thesis": "Crypto is the default financial infrastructure for AI agents. Fiat banking requires human identity (KYC, bank accounts, credit cards) \u2014 agents can't participate. Crypto provides permissionless wallets, programmable payments, and an immutable ledger of truth for verifiable transactions. US stablecoin legalization gives this regulatory legitimacy. The machine economy (agents paying agents) will dwarf human transaction volume within a decade. (Converging view: Visser, Horowitz, Polosukhin)",
       "speaker": "jordi_visser",
       "category": "thesis",
       "confidence": 0.85
@@ -684,14 +684,6 @@
       "id": "t_horowitz_apple_crisis",
       "video_id": "yt_C1GLT9_tag0",
       "thesis": "Apple missed the AI wave. Siri is embarrassingly behind, and Apple's culture of perfection prevents the rapid iteration AI requires. May not recover their position.",
-      "speaker": "ben_horowitz",
-      "category": "thesis",
-      "confidence": 0.8
-    },
-    {
-      "id": "t_horowitz_crypto_ai",
-      "video_id": "yt_C1GLT9_tag0",
-      "thesis": "Crypto is AI's native money \u2014 fiat failed the agents. AI agents can't open bank accounts, pass KYC, or get credit cards. Crypto provides permissionless wallets + an immutable 'ledger of truth' for verifiable agent transactions. US stablecoin legalization gives this regulatory legitimacy \u2014 agents transact in dollar value without touching banks.",
       "speaker": "ben_horowitz",
       "category": "thesis",
       "confidence": 0.8
