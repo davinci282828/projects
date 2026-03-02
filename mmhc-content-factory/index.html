@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MMHC Content Factory — Batch Review</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-green: #1E4129;
+            --light-green: #A1E681;
+            --cream: #EFFAF3;
+            --dark-navy: #0A2540;
+            --gold: #FCD503;
+            --card-bg: #1a1a1a;
+            --hover-bg: #252525;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--dark-navy);
+            color: var(--cream);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--dark-green);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--light-green);
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-label {
+            color: var(--cream);
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .stat-value {
+            background: var(--dark-navy);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            color: var(--light-green);
+        }
+
+        .controls {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group label {
+            font-size: 0.9rem;
+            color: var(--light-green);
+            font-weight: 500;
+        }
+
+        select {
+            background: var(--dark-navy);
+            color: var(--cream);
+            border: 2px solid var(--dark-green);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:hover {
+            border-color: var(--light-green);
+        }
+
+        .export-btn {
+            background: var(--gold);
+            color: var(--dark-navy);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-left: auto;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(252, 213, 3, 0.3);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border-color: var(--dark-green);
+        }
+
+        .card.approved {
+            border-color: var(--light-green);
+        }
+
+        .card.skipped {
+            opacity: 0.5;
+            border-color: #666;
+        }
+
+        .card-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .card-image:hover {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag.type-ad {
+            background: var(--gold);
+            color: var(--dark-navy);
+        }
+
+        .tag.type-organic {
+            background: var(--light-green);
+            color: var(--dark-navy);
+        }
+
+        .tag.awareness {
+            background: var(--dark-green);
+            color: var(--cream);
+        }
+
+        .score-badge {
+            background: var(--dark-navy);
+            color: var(--light-green);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .card-caption {
+            margin: 15px 0;
+            color: var(--cream);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .card-cta {
+            color: var(--light-green);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .btn-approve {
+            background: var(--light-green);
+            color: var(--dark-navy);
+        }
+
+        .btn-approve:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(161, 230, 129, 0.3);
+        }
+
+        .btn-skip {
+            background: #444;
+            color: var(--cream);
+        }
+
+        .btn-skip:hover {
+            background: #555;
+        }
+
+        .btn.active {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn.active::after {
+            content: '✓';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: var(--gold);
+            color: var(--dark-navy);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--cream);
+            opacity: 0.6;
+        }
+
+        .empty-state h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .export-btn {
+                margin-left: 0;
+            }
+
+            .stats {
+                gap: 15px;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--light-green);
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MMHC Content Factory — Batch Review</h1>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-label">Total:</span>
+                    <span class="stat-value" id="total-count">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Approved:</span>
+                    <span class="stat-value" id="approved-count">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Skipped:</span>
+                    <span class="stat-value" id="skipped-count">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Batch:</span>
+                    <span class="stat-value" id="batch-info">—</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="controls">
+            <div class="filter-group">
+                <label>Awareness Stage:</label>
+                <select id="awareness-filter">
+                    <option value="all">All Stages</option>
+                    <option value="unaware">Unaware</option>
+                    <option value="problem-aware">Problem-Aware</option>
+                    <option value="solution-aware">Solution-Aware</option>
+                    <option value="product-aware">Product-Aware</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Post Type:</label>
+                <select id="type-filter">
+                    <option value="all">All Types</option>
+                    <option value="ad">Ad</option>
+                    <option value="organic">Organic</option>
+                </select>
+            </div>
+
+            <button class="export-btn" id="export-btn">Export Approved</button>
+        </div>
+
+        <div class="grid" id="grid">
+            <div class="loading">Loading content...</div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">Close</button>
+            <img class="modal-image" id="modal-image" src="" alt="">
+        </div>
+    </div>
+
+    <script>
+        let data = null;
+        let state = {};
+
+        // Load state from localStorage
+        function loadState() {
+            const saved = localStorage.getItem('mmhc-content-review-state');
+            if (saved) {
+                state = JSON.parse(saved);
+            }
+        }
+
+        // Save state to localStorage
+        function saveState() {
+            localStorage.setItem('mmhc-content-review-state', JSON.stringify(state));
+        }
+
+        // Get state for a creative
+        function getState(id) {
+            return state[id] || null;
+        }
+
+        // Set state for a creative
+        function setState(id, value) {
+            if (value === null) {
+                delete state[id];
+            } else {
+                state[id] = value;
+            }
+            saveState();
+            updateCounts();
+            renderGrid();
+        }
+
+        // Update stats counts
+        function updateCounts() {
+            if (!data) return;
+
+            const total = data.creatives.length;
+            const approved = Object.values(state).filter(s => s === 'approved').length;
+            const skipped = Object.values(state).filter(s => s === 'skipped').length;
+
+            document.getElementById('total-count').textContent = total;
+            document.getElementById('approved-count').textContent = approved;
+            document.getElementById('skipped-count').textContent = skipped;
+            document.getElementById('batch-info').textContent = `${data.batch} — ${data.date}`;
+        }
+
+        // Format awareness stage for display
+        function formatAwareness(awareness) {
+            return awareness.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('-');
+        }
+
+        // Create card HTML
+        function createCard(creative) {
+            const cardState = getState(creative.id);
+            const stateClass = cardState ? cardState : '';
+
+            return `
+                <div class="card ${stateClass}" data-id="${creative.id}" data-awareness="${creative.awareness}" data-type="${creative.type}">
+                    <img class="card-image" src="${creative.image}" alt="${creative.headline}" data-id="${creative.id}">
+                    <div class="card-content">
+                        <div class="card-tags">
+                            <span class="tag type-${creative.type}">${creative.type}</span>
+                            <span class="tag awareness">${formatAwareness(creative.awareness)}</span>
+                            <span class="score-badge">Score: ${creative.score.total}</span>
+                        </div>
+                        <div class="card-caption">${creative.caption}</div>
+                        ${creative.cta ? `<div class="card-cta">CTA: ${creative.cta}</div>` : ''}
+                        <div class="card-actions">
+                            <button class="btn btn-approve ${cardState === 'approved' ? 'active' : ''}" data-id="${creative.id}" data-action="approve">Approve</button>
+                            <button class="btn btn-skip ${cardState === 'skipped' ? 'active' : ''}" data-id="${creative.id}" data-action="skip">Skip</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render grid
+        function renderGrid() {
+            const grid = document.getElementById('grid');
+            const awarenessFilter = document.getElementById('awareness-filter').value;
+            const typeFilter = document.getElementById('type-filter').value;
+
+            if (!data || !data.creatives || data.creatives.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <h2>No content to review</h2>
+                        <p>Make sure data.json is present and contains creatives</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const filtered = data.creatives.filter(c => {
+                const awarenessMatch = awarenessFilter === 'all' || c.awareness === awarenessFilter;
+                const typeMatch = typeFilter === 'all' || c.type === typeFilter;
+                return awarenessMatch && typeMatch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <h2>No matching content</h2>
+                        <p>Try adjusting your filters</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(createCard).join('');
+        }
+
+        // Handle button clicks
+        document.addEventListener('click', (e) => {
+            // Action buttons
+            if (e.target.matches('[data-action]')) {
+                const id = e.target.dataset.id;
+                const action = e.target.dataset.action;
+                const currentState = getState(id);
+
+                if (currentState === action) {
+                    setState(id, null); // Toggle off
+                } else {
+                    setState(id, action); // Set new state
+                }
+            }
+
+            // Image click - open modal
+            if (e.target.matches('.card-image')) {
+                const img = e.target;
+                document.getElementById('modal-image').src = img.src;
+                document.getElementById('modal').classList.add('active');
+            }
+
+            // Close modal
+            if (e.target.id === 'modal-close' || e.target.id === 'modal') {
+                document.getElementById('modal').classList.remove('active');
+            }
+
+            // Export button
+            if (e.target.id === 'export-btn') {
+                exportApproved();
+            }
+        });
+
+        // Filter changes
+        document.getElementById('awareness-filter').addEventListener('change', renderGrid);
+        document.getElementById('type-filter').addEventListener('change', renderGrid);
+
+        // Export approved items
+        function exportApproved() {
+            const approved = data.creatives.filter(c => getState(c.id) === 'approved');
+
+            if (approved.length === 0) {
+                alert('No approved items to export');
+                return;
+            }
+
+            const exportData = {
+                batch: data.batch,
+                date: data.date,
+                exported: new Date().toISOString(),
+                approved: approved
+            };
+
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mmhc-approved-batch-${data.batch}-${Date.now()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Load data
+        async function loadData() {
+            try {
+                const response = await fetch('data.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load data.json');
+                }
+                data = await response.json();
+                loadState();
+                updateCounts();
+                renderGrid();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('grid').innerHTML = `
+                    <div class="empty-state">
+                        <h2>Error loading data</h2>
+                        <p>${error.message}</p>
+                        <p>Make sure data.json exists in the same directory</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize
+        loadData();
+    </script>
+</body>
+</html>
