@@ -534,7 +534,13 @@
             <p style="font-size: 0.95rem; opacity: 0.9;">Organic Instagram posts are in development (pending personal IG handle). LinkedIn content strategy is in the Google Drive shared folder: <a href="https://docs.google.com/document/d/1uskA2hAWQqJeduTer-OCoIsN8N5omFGn/edit" style="color: var(--light-green);" target="_blank">LinkedIn Strategy V2</a></p>
         </div>
 
-        <div class="grid" id="grid">
+        <h2 style="color: var(--gold); margin-bottom: 15px; font-size: 1.4rem;">📣 Ads (<span id="ad-count">0</span>)</h2>
+        <div class="grid" id="grid-ads">
+            <div class="loading">Loading content...</div>
+        </div>
+
+        <h2 style="color: var(--light-green); margin: 30px 0 15px; font-size: 1.4rem;">📝 Organic (<span id="organic-count">0</span>)</h2>
+        <div class="grid" id="grid-organic">
             <div class="loading">Loading content...</div>
         </div>
     </div>
@@ -626,19 +632,16 @@
             `;
         }
 
-        // Render grid
+        // Render grid — split into ads and organic sections
         function renderGrid() {
-            const grid = document.getElementById('grid');
+            const gridAds = document.getElementById('grid-ads');
+            const gridOrganic = document.getElementById('grid-organic');
             const awarenessFilter = document.getElementById('awareness-filter').value;
             const typeFilter = document.getElementById('type-filter').value;
 
             if (!data || !data.creatives || data.creatives.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <h2>No content to review</h2>
-                        <p>Make sure data.json is present and contains creatives</p>
-                    </div>
-                `;
+                gridAds.innerHTML = `<div class="empty-state"><h2>No content to review</h2></div>`;
+                gridOrganic.innerHTML = '';
                 return;
             }
 
@@ -648,17 +651,36 @@
                 return awarenessMatch && typeMatch;
             });
 
-            if (filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <h2>No matching content</h2>
-                        <p>Try adjusting your filters</p>
-                    </div>
-                `;
-                return;
+            const ads = filtered.filter(c => c.type === 'ad');
+            const organic = filtered.filter(c => c.type === 'organic');
+
+            document.getElementById('ad-count').textContent = ads.length;
+            document.getElementById('organic-count').textContent = organic.length;
+
+            // Show/hide sections based on filter
+            const adSection = gridAds.previousElementSibling;
+            const orgSection = gridOrganic.previousElementSibling;
+
+            if (typeFilter === 'organic') {
+                adSection.style.display = 'none';
+                gridAds.style.display = 'none';
+            } else {
+                adSection.style.display = '';
+                gridAds.style.display = '';
             }
 
-            grid.innerHTML = filtered.map(createCard).join('');
+            if (typeFilter === 'ad') {
+                orgSection.style.display = 'none';
+                gridOrganic.style.display = 'none';
+            } else {
+                orgSection.style.display = '';
+                gridOrganic.style.display = '';
+            }
+
+            gridAds.innerHTML = ads.length ? ads.map(createCard).join('') : 
+                (typeFilter !== 'organic' ? '<div class="empty-state"><p>No matching ads</p></div>' : '');
+            gridOrganic.innerHTML = organic.length ? organic.map(createCard).join('') :
+                (typeFilter !== 'ad' ? '<div class="empty-state"><p>No matching organic posts</p></div>' : '');
         }
 
         // Handle button clicks
