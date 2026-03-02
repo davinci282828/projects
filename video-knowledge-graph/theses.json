@@ -507,7 +507,7 @@
     {
       "id": "t_illia_ai_onchain",
       "video_id": "yt_htj3PeukEbM",
-      "thesis": "Next era of AI is on-chain \u2014 autonomous agents need wallets, identity, and economic infrastructure. Blockchain is the natural substrate for agent-to-agent commerce because no human intermediary needed",
+      "thesis": "AI agents need wallets, identity, and economic infrastructure to transact autonomously. Blockchain is the only system that treats humans and software equally \u2014 no KYC, no bank account, just a key pair. This makes on-chain infra the natural substrate for the agent economy.",
       "speaker": "illia_polosukhin",
       "category": "thesis",
       "confidence": 0.8
@@ -515,7 +515,7 @@
     {
       "id": "t_illia_chain_abstraction",
       "video_id": "yt_htj3PeukEbM",
-      "thesis": "Chain abstraction (making multiple blockchains feel like one) is prerequisite for AI agent adoption \u2014 agents shouldn't need to understand Ethereum vs Solana vs NEAR",
+      "thesis": "Chain abstraction (making multiple blockchains feel like one) is a prerequisite for AI agent adoption. Agents shouldn't have to understand Ethereum vs Solana vs NEAR \u2014 they need one unified payment/identity layer.",
       "speaker": "illia_polosukhin",
       "category": "thesis",
       "confidence": 0.75
@@ -523,7 +523,7 @@
     {
       "id": "t_illia_transformer_author",
       "video_id": "yt_htj3PeukEbM",
-      "thesis": "From Transformer co-author to crypto founder: the convergence of AI and crypto is inevitable because both are about decentralized intelligence and permissionless systems",
+      "thesis": "Polosukhin reframes AI alignment as an economic problem, not a technical one: if your AI is ad-funded (Google, Meta), it structurally serves advertisers, not you. User-owned agents on decentralized infra fix this by removing the corporate middleman \u2014 your agent works for you because you own it and pay for it directly.",
       "speaker": "illia_polosukhin",
       "category": "thesis",
       "confidence": 0.7
@@ -555,7 +555,7 @@
     {
       "id": "t_visser_ai_btc_rails",
       "video_id": "yt_u48856z9Stc",
-      "thesis": "AI needs Bitcoin: autonomous agents can't open bank accounts or get credit cards. Bitcoin/Lightning is the only permissionless payments rail for machine-to-machine commerce",
+      "thesis": "Crypto is the 'fastest horse' in survive-and-thrive cycles: every crisis triggers government intervention (bailouts, rate cuts, stimulus), and crypto catches the most upside because it has no AI-vulnerable fundamentals (no earnings to compress, no margins for agent swarms to eat, no binary repricing on AI news). It's just a network and a number.",
       "speaker": "jordi_visser",
       "category": "thesis",
       "confidence": 0.85
@@ -563,7 +563,7 @@
     {
       "id": "t_visser_ai_deflation_inflation",
       "video_id": "yt_u48856z9Stc",
-      "thesis": "AI is deflationary for services (software, content, analysis) but inflationary for energy and commodities (data centers, compute). Net effect depends on which side dominates",
+      "thesis": "AI is deflationary for services (software, content, analysis) but inflationary for energy and commodities (data centers, compute). Net macro effect depends on which force dominates \u2014 creating a bifurcated economy where knowledge workers get cheaper but physical resources get more expensive.",
       "speaker": "jordi_visser",
       "category": "thesis",
       "confidence": 0.85
@@ -571,7 +571,7 @@
     {
       "id": "t_visser_machine_economy",
       "video_id": "yt_u48856z9Stc",
-      "thesis": "Machine economy (agents paying agents) will dwarf human economy in transaction volume within a decade \u2014 needs programmable money that doesn't require human identity or permission",
+      "thesis": "Software equity markets are becoming prediction markets: AI compressed growth visibility from years to days, so the market stopped doing DCF models and started doing real-time probability pricing. Every AI capability announcement shifts the probability estimate \u2192 stocks move 20% overnight. This isn't panic \u2014 it's rational repricing.",
       "speaker": "jordi_visser",
       "category": "thesis",
       "confidence": 0.7
@@ -675,7 +675,7 @@
     {
       "id": "t_horowitz_pace",
       "video_id": "yt_C1GLT9_tag0",
-      "thesis": "AI models improving faster than companies can ship products \u2014 the pace of change is the real story. Companies that can't adapt in months (not years) will be left behind",
+      "thesis": "AI models improve faster than companies can ship products. The pace of model improvement is the real story \u2014 companies that can't adapt in months (not years) will be replaced by those that can.",
       "speaker": "ben_horowitz",
       "category": "thesis",
       "confidence": 0.85
@@ -683,7 +683,7 @@
     {
       "id": "t_horowitz_apple_crisis",
       "video_id": "yt_C1GLT9_tag0",
-      "thesis": "Apple missed the AI wave \u2014 Siri is embarrassingly behind, and Apple's culture of perfection prevents the rapid iteration AI requires. May not recover competitive position",
+      "thesis": "Apple missed the AI wave. Siri is embarrassingly behind, and Apple's culture of perfection prevents the rapid iteration AI requires. May not recover their position.",
       "speaker": "ben_horowitz",
       "category": "thesis",
       "confidence": 0.8
@@ -691,7 +691,7 @@
     {
       "id": "t_horowitz_crypto_ai",
       "video_id": "yt_C1GLT9_tag0",
-      "thesis": "Crypto + AI convergence is the biggest investment opportunity \u2014 a16z investing heavily at intersection. Decentralized compute, on-chain agents, and tokenized AI services are emerging categories",
+      "thesis": "Crypto is AI's native money \u2014 fiat failed the agents. AI agents can't open bank accounts, pass KYC, or get credit cards. Crypto provides permissionless wallets + an immutable 'ledger of truth' for verifiable agent transactions. US stablecoin legalization gives this regulatory legitimacy \u2014 agents transact in dollar value without touching banks.",
       "speaker": "ben_horowitz",
       "category": "thesis",
       "confidence": 0.8
