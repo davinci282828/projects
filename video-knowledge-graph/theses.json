@@ -459,7 +459,7 @@
     {
       "id": "t_allin_ai_deflationary",
       "video_id": "yt_kzWbCF_IkHY",
-      "thesis": "AI is fundamentally deflationary for software \u2014 what cost $100K/yr in SaaS will cost $10K or less. Winners are platforms, losers are single-feature companies",
+      "thesis": "AI is fundamentally deflationary for SaaS \u2014 what cost $100K/yr will cost $10K or less. Winners are platforms that become AI infrastructure, losers are point solutions that AI replaces entirely. (Chamath)",
       "speaker": "chamath_palihapitiya",
       "category": "thesis",
       "confidence": 0.85
@@ -475,18 +475,10 @@
     {
       "id": "t_perplexity_autonomous",
       "video_id": "yt_XTieQ4iEfAk",
-      "thesis": "Perplexity Computer represents shift from AI search to autonomous AI agent \u2014 can browse web, execute code, complete multi-step tasks without human intervention",
+      "thesis": "AI agents (Perplexity Computer, OpenAI Operator, Claude Computer Use) represent the shift from search tools to autonomous agents that browse, execute code, and complete multi-step tasks. The competitive moat is reliability and task completion rate, not features. (Goldie)",
       "speaker": "julian_goldie",
       "category": "thesis",
       "confidence": 0.8
-    },
-    {
-      "id": "t_perplexity_vs_operator",
-      "video_id": "yt_XTieQ4iEfAk",
-      "thesis": "AI agents competing on reliability and task completion rate \u2014 Perplexity Computer vs OpenAI Operator vs Claude Computer Use. Winner will be whoever achieves consistent autonomous task completion first",
-      "speaker": "julian_goldie",
-      "category": "thesis",
-      "confidence": 0.75
     },
     {
       "id": "t_isenberg_ai_first",
@@ -521,14 +513,6 @@
       "confidence": 0.75
     },
     {
-      "id": "t_illia_transformer_author",
-      "video_id": "yt_htj3PeukEbM",
-      "thesis": "Polosukhin reframes AI alignment as an economic problem, not a technical one: if your AI is ad-funded (Google, Meta), it structurally serves advertisers, not you. User-owned agents on decentralized infra fix this by removing the corporate middleman \u2014 your agent works for you because you own it and pay for it directly.",
-      "speaker": "illia_polosukhin",
-      "category": "thesis",
-      "confidence": 0.7
-    },
-    {
       "id": "t_naval_specific_knowledge",
       "video_id": "yt_sXCKgEl9hBo",
       "thesis": "AI makes specific knowledge (creativity, judgment, accountability) MORE valuable \u2014 it replaces generic knowledge work but amplifies those with unique insight. The premium on being irreplaceable increases",
@@ -547,7 +531,7 @@
     {
       "id": "t_naval_education_obsolete",
       "video_id": "yt_sXCKgEl9hBo",
-      "thesis": "Current education system is training people for jobs AI will do \u2014 need to shift to teaching creativity, judgment, and taste. Memorization is worthless when AI has perfect recall",
+      "thesis": "Current education trains people for jobs AI will do. Must shift to teaching creativity, judgment, taste, and the ability to direct AI \u2014 the skills that remain valuable when intelligence is cheap. (Naval)",
       "speaker": "naval_ravikant",
       "category": "thesis",
       "confidence": 0.85
@@ -563,7 +547,7 @@
     {
       "id": "t_visser_ai_deflation_inflation",
       "video_id": "yt_u48856z9Stc",
-      "thesis": "AI is deflationary for services (software, content, analysis) but inflationary for energy and commodities (data centers, compute). Net macro effect depends on which force dominates \u2014 creating a bifurcated economy where knowledge workers get cheaper but physical resources get more expensive.",
+      "thesis": "AI creates a bifurcated economy: deflationary for services (software, content, analysis) but inflationary for physical resources (energy, compute, data centers). Net macro effect depends on which force dominates. (Visser)",
       "speaker": "jordi_visser",
       "category": "thesis",
       "confidence": 0.85
