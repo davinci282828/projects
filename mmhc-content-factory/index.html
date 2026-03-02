@@ -209,6 +209,111 @@
             color: var(--light-green);
         }
 
+        /* LinkedIn text cards */
+        .linkedin-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            border: 2px solid transparent;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .linkedin-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            border-color: #0A66C2;
+        }
+
+        .linkedin-card.approved {
+            border-color: var(--light-green);
+        }
+
+        .linkedin-card.skipped {
+            opacity: 0.5;
+            border-color: #666;
+        }
+
+        .linkedin-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .linkedin-icon {
+            width: 36px;
+            height: 36px;
+            background: #0A66C2;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+        }
+
+        .linkedin-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .linkedin-body {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--cream);
+            white-space: pre-line;
+            margin: 16px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .linkedin-body::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .linkedin-body::-webkit-scrollbar-thumb {
+            background: var(--dark-green);
+            border-radius: 2px;
+        }
+
+        .linkedin-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            align-items: center;
+        }
+
+        .btn-copy-full {
+            background: #0A66C2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+
+        .btn-copy-full:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-copy-full.copied {
+            background: var(--light-green);
+            color: var(--dark-navy);
+        }
+
+        .linkedin-schedule {
+            font-size: 0.8rem;
+            color: var(--cream);
+            opacity: 0.6;
+            margin-left: auto;
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -493,6 +598,7 @@
                     <option value="all">All Types</option>
                     <option value="ad">Ad</option>
                     <option value="organic">Organic</option>
+                    <option value="linkedin">LinkedIn</option>
                 </select>
             </div>
 
@@ -534,7 +640,13 @@
             <p style="font-size: 0.95rem; opacity: 0.9;">Organic Instagram posts are in development (pending personal IG handle). LinkedIn content strategy is in the Google Drive shared folder: <a href="https://docs.google.com/document/d/1uskA2hAWQqJeduTer-OCoIsN8N5omFGn/edit" style="color: var(--light-green);" target="_blank">LinkedIn Strategy V2</a></p>
         </div>
 
-        <h2 style="color: var(--gold); margin-bottom: 15px; font-size: 1.4rem;">📣 Ads (<span id="ad-count">0</span>)</h2>
+        <div id="linkedin-section" style="display: none;">
+            <h2 style="color: #0A66C2; margin-bottom: 15px; font-size: 1.4rem;">💼 LinkedIn Posts (<span id="linkedin-count">0</span>)</h2>
+            <p style="color: var(--cream); opacity: 0.7; margin-bottom: 20px; font-size: 0.9rem;">Text-only posts — tap "Copy Post" to copy the full text, then paste directly into LinkedIn.</p>
+            <div class="grid" id="grid-linkedin"></div>
+        </div>
+
+        <h2 id="ads-header" style="color: var(--gold); margin-bottom: 15px; font-size: 1.4rem;">📣 Ads (<span id="ad-count">0</span>)</h2>
         <div class="grid" id="grid-ads">
             <div class="loading">Loading content...</div>
         </div>
@@ -658,14 +770,28 @@
             document.getElementById('organic-count').textContent = organic.length;
 
             // Show/hide sections based on filter
-            const adSection = gridAds.previousElementSibling;
+            const adHeader = document.getElementById('ads-header');
             const orgSection = gridOrganic.previousElementSibling;
+            const liSection = document.getElementById('linkedin-section');
+
+            // LinkedIn tab
+            if (typeFilter === 'linkedin') {
+                adHeader.style.display = 'none';
+                gridAds.style.display = 'none';
+                orgSection.style.display = 'none';
+                gridOrganic.style.display = 'none';
+                liSection.style.display = 'block';
+                renderLinkedIn();
+                return;
+            } else {
+                liSection.style.display = 'none';
+            }
 
             if (typeFilter === 'organic') {
-                adSection.style.display = 'none';
+                adHeader.style.display = 'none';
                 gridAds.style.display = 'none';
             } else {
-                adSection.style.display = '';
+                adHeader.style.display = '';
                 gridAds.style.display = '';
             }
 
@@ -770,6 +896,157 @@
                         <p>Make sure data.json exists in the same directory</p>
                     </div>
                 `;
+            }
+        }
+
+        // LinkedIn posts data
+        const linkedinPosts = [
+            {
+                id: "li-001",
+                pillar: "Operator's Lens",
+                title: "Origin Story",
+                schedule: "Week 1 — Tuesday",
+                text: `I didn't go to school for therapy. I went to law school.
+
+But after years watching the mental health system fail people I cared about — long wait times, insurance confusion, therapists who ghost after session three — I decided to build something better.
+
+Manhattan Mental Health Counseling now has 80+ licensed therapists serving New York State through online therapy.
+
+Here's what I learned building it:
+
+The biggest barrier to therapy isn't stigma anymore. It's logistics.
+
+Can someone book same-week? Can they use their insurance without a 45-minute phone call? Can they switch therapists without starting over?
+
+We solve for logistics. The clinical team handles the rest.
+
+If you're building in healthcare: the unsexy operational stuff IS the product.`
+            },
+            {
+                id: "li-002",
+                pillar: "Access Advocacy",
+                title: "Hot Take — Vibes vs Access",
+                schedule: "Week 1 — Thursday",
+                text: `Unpopular opinion: Most mental health companies market therapy like it's a luxury product.
+
+Candlelit rooms. Minimalist fonts. "Your journey starts here."
+
+Meanwhile, the person Googling "therapist near me" at 2am just needs someone who takes their insurance and has an opening this week.
+
+We stopped marketing vibes and started marketing access.
+
+Result: Nearly 6,000 people follow our Instagram not for aesthetics — but because we talk about the stuff nobody else will.
+
+The mental health industry doesn't have an awareness problem. It has a delivery problem.`
+            },
+            {
+                id: "li-003",
+                pillar: "Industry Takes",
+                title: "NYC Therapist Paradox",
+                schedule: "Week 2 — Tuesday",
+                text: `New York has more therapists per capita than almost any state in the country.
+
+And yet the average wait time for a new patient is still 3-6 weeks.
+
+How is that possible?
+
+Because most practices are 1-5 person operations. They're full. They don't take your insurance. They don't have evening hours.
+
+When I started Manhattan Mental Health Counseling, the thesis was simple: scale the things solo practices can't.
+
+→ Same-week availability
+→ 80+ therapists across specialties
+→ Real insurance acceptance (not "we'll give you a superbill")
+→ Online therapy — accessible from anywhere in New York State
+
+Mental health access isn't a therapy problem. It's an operations problem.
+
+And operations is what I know.`
+            },
+            {
+                id: "li-004",
+                pillar: "Operator's Lens",
+                title: "The Weight of Infrastructure",
+                schedule: "Week 2 — Thursday",
+                text: `The hardest part of running a mental health practice isn't what you'd think.
+
+It's not hiring therapists. It's not marketing. It's not even insurance credentialing (though that's close).
+
+It's the weight of knowing that when your systems fail, someone doesn't get help.
+
+A scheduling glitch means a first-time patient loses their nerve to try again.
+A billing error means someone stops coming because they think they can't afford it.
+A slow response means they go to the next Google result.
+
+In most businesses, operational mistakes cost money.
+In mental health, they cost something harder to measure.
+
+That's why I obsess over the infrastructure nobody sees.`
+            },
+            {
+                id: "li-005",
+                pillar: "Industry Takes",
+                title: "Online-First by Choice",
+                schedule: "Week 3 — Tuesday",
+                text: `We made a deliberate choice to be online-only.
+
+Not because of COVID. Not because it's cheaper. Because the data shows it works — and it removes the biggest barriers to actually showing up.
+
+No commute through Manhattan traffic.
+No awkward waiting room.
+No "I couldn't make it because of work."
+
+Our no-show rate dropped significantly when we went fully online. Patients in Albany, Buffalo, and the Hudson Valley get the same access as someone on the Upper West Side.
+
+80+ therapists. Every session online. Serving all of New York State.
+
+The future of therapy isn't a nicer office. It's removing the need for one.`
+            }
+        ];
+
+        // Render LinkedIn section
+        function renderLinkedIn() {
+            const grid = document.getElementById('grid-linkedin');
+            const cards = linkedinPosts.map(post => {
+                const cardState = getState(post.id);
+                const stateClass = cardState || '';
+                return `
+                    <div class="linkedin-card ${stateClass}" data-id="${post.id}">
+                        <div class="linkedin-header">
+                            <div class="linkedin-icon">in</div>
+                            <div>
+                                <div style="font-weight: 600; color: var(--cream);">${post.title}</div>
+                                <div class="linkedin-meta">
+                                    <span class="tag" style="background: #0A66C2; color: white;">${post.pillar}</span>
+                                    <span class="tag awareness">${post.schedule}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="linkedin-body">${post.text}</div>
+                        <div class="linkedin-actions">
+                            <button class="btn btn-approve ${cardState === 'approved' ? 'active' : ''}" data-id="${post.id}" data-action="approve">${cardState === 'approved' ? '✓ Approved' : 'Approve'}</button>
+                            <button class="btn btn-skip ${cardState === 'skipped' ? 'active' : ''}" data-id="${post.id}" data-action="skip">${cardState === 'skipped' ? '✗ Skipped' : 'Skip'}</button>
+                            <button class="btn-copy-full" onclick="copyLinkedIn(this, '${post.id}')">Copy Post</button>
+                            <span class="linkedin-schedule">📅 ${post.schedule}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            grid.innerHTML = cards.join('');
+            document.getElementById('linkedin-count').textContent = linkedinPosts.length;
+        }
+
+        function copyLinkedIn(btn, id) {
+            const post = linkedinPosts.find(p => p.id === id);
+            if (post) {
+                navigator.clipboard.writeText(post.text).then(() => {
+                    btn.textContent = '✓ Copied!';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = 'Copy Post';
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
             }
         }
 
