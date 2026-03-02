@@ -730,6 +730,46 @@
       "speaker_id": "jenny-wen",
       "video_id": "yt_eh8bcBIAAFo",
       "confidence": "high"
+    },
+    {
+      "id": "t_igler_map_pack_dominance",
+      "speaker_id": "noah-igler",
+      "claim": "Google Maps map pack is the #1 patient acquisition channel for local healthcare \u2014 top 3 results get 70%+ of all calls",
+      "evidence": "Live demo of plumber search, case studies showing 100+ leads/month after optimization",
+      "confidence": "high",
+      "status": "active",
+      "first_stated": "2026-03-02",
+      "tags": [
+        "local-seo",
+        "google-maps",
+        "healthcare-marketing"
+      ]
+    },
+    {
+      "id": "t_igler_review_volume_trust",
+      "speaker_id": "noah-igler",
+      "claim": "Review volume is the single highest-leverage trust signal for local search ranking",
+      "evidence": "Comparison of businesses with 2000 vs 15 reviews",
+      "confidence": "high",
+      "status": "active",
+      "first_stated": "2026-03-02",
+      "tags": [
+        "local-seo",
+        "reviews"
+      ]
+    },
+    {
+      "id": "t_igler_service_page_depth",
+      "speaker_id": "noah-igler",
+      "claim": "Service page depth directly correlates with relevance ranking",
+      "evidence": "SEO best practice, case studies",
+      "confidence": "medium-high",
+      "status": "active",
+      "first_stated": "2026-03-02",
+      "tags": [
+        "local-seo",
+        "content-strategy"
+      ]
     }
   ],
   "contradictions": [

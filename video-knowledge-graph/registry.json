@@ -1125,5 +1125,67 @@
       }
     ],
     "summary_file": "summaries/jenny-wen-design-dead.md"
+  },
+  {
+    "id": "83JC5nr4tq0",
+    "title": "The Google Maps Trick That Gets Local Businesses 100+ Leads a Month",
+    "channel": "Noah Igler - Local Service Business SEO",
+    "url": "https://youtu.be/83JC5nr4tq0",
+    "date_analyzed": "2026-03-02",
+    "duration": "~15 min",
+    "category": "marketing",
+    "tags": [
+      "local-seo",
+      "google-maps",
+      "patient-acquisition",
+      "lead-generation",
+      "google-business-profile"
+    ],
+    "speakers": [
+      "Noah Igler"
+    ],
+    "summary": "Top 3 Google Maps results get 70%+ of calls. Systematic approach: optimize Google Business Profile, build dedicated service pages, generate reviews, build citations and backlinks. Case studies show 100-286 leads/month results.",
+    "transcript_path": "transcripts/google-maps-local-seo.md",
+    "analysis_path": "analyses/google-maps-local-seo-analysis.md",
+    "relevance_to_mmhc": "high",
+    "theses": [
+      "Google Maps map pack is the #1 patient acquisition channel for local healthcare",
+      "Review volume is the single highest-leverage trust signal",
+      "Service page depth directly correlates with relevance ranking"
+    ]
+  },
+  {
+    "id": "yt_83JC5nr4tq0",
+    "url": "https://youtu.be/83JC5nr4tq0",
+    "title": "The Google Maps Trick That Gets Local Businesses 100+ Leads a Month",
+    "speaker": "Noah Igler",
+    "speaker_id": "noah-igler",
+    "date_analyzed": "2026-03-02",
+    "duration_min": 15,
+    "topics": [
+      "local-seo",
+      "google-maps",
+      "google-business-profile",
+      "lead-generation",
+      "citations",
+      "backlinks",
+      "reviews",
+      "healthcare-marketing"
+    ],
+    "theses": [
+      "t_igler_map_pack_dominance",
+      "t_igler_review_volume_trust",
+      "t_igler_service_page_depth"
+    ],
+    "contrarian_takes": [],
+    "quotable": [
+      "If your phone isn't ringing, it's not because you're bad at what you do. It's because you're not showing up top three on Google Maps.",
+      "Those top three spots get over 70% of all the phone calls.",
+      "This stuff isn't magic. It's just what happens when you show Google the right signals."
+    ],
+    "summary": "Local SEO playbook for getting into Google Maps top 3 results. Three signals: relevance (service pages + GBP optimization), reputation (reviews + citations + backlinks), proximity. Step-by-step implementation: fix GBP, build service pages, generate reviews consistently, build citations and backlinks. Case studies: plumbing company 0\u2192100 leads/month in 5 months, landscaping company hit 286 leads/month.",
+    "analysis_path": "analyses/google-maps-local-seo-analysis.md",
+    "transcript_path": "transcripts/google-maps-local-seo.md",
+    "gdrive_url": "https://docs.google.com/document/d/1OIpiLUXYAmXMLxT4OjMxpJG_oA6lbEWx/edit"
   }
 ]

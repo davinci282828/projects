@@ -1024,5 +1024,19 @@
     "videos": [
       "yt_eh8bcBIAAFo"
     ]
+  },
+  {
+    "id": "noah-igler",
+    "name": "Noah Igler",
+    "role": "Local SEO Consultant",
+    "org": "Local Service Business SEO",
+    "expertise": [
+      "local-seo",
+      "google-maps",
+      "google-business-profile",
+      "lead-generation"
+    ],
+    "twitter": null,
+    "first_seen": "2026-03-02"
   }
 ]
