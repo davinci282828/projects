@@ -423,6 +423,11 @@
             <button class="export-btn" id="export-btn">Export Approved</button>
         </div>
 
+        <div id="organic-notice" style="background: var(--dark-green); padding: 20px 30px; border-radius: 12px; margin-bottom: 25px; border-left: 4px solid var(--gold); display: none;">
+            <h3 style="color: var(--gold); margin-bottom: 8px;">📝 Organic Content</h3>
+            <p style="font-size: 0.95rem; opacity: 0.9;">Organic Instagram posts are in development (pending personal IG handle). LinkedIn content strategy is in the Google Drive shared folder: <a href="https://docs.google.com/document/d/1uskA2hAWQqJeduTer-OCoIsN8N5omFGn/edit" style="color: var(--light-green);" target="_blank">LinkedIn Strategy V2</a></p>
+        </div>
+
         <div class="grid" id="grid">
             <div class="loading">Loading content...</div>
         </div>
@@ -505,8 +510,8 @@
                         <div class="card-caption">${creative.caption}</div>
                         ${creative.cta ? `<div class="card-cta">CTA: ${creative.cta}</div>` : ''}
                         <div class="card-actions">
-                            <button class="btn btn-approve ${cardState === 'approved' ? 'active' : ''}" data-id="${creative.id}" data-action="approve">Approve</button>
-                            <button class="btn btn-skip ${cardState === 'skipped' ? 'active' : ''}" data-id="${creative.id}" data-action="skip">Skip</button>
+                            <button class="btn btn-approve ${cardState === 'approved' ? 'active' : ''}" data-id="${creative.id}" data-action="approve">${cardState === 'approved' ? '✓ Approved' : 'Approve'}</button>
+                            <button class="btn btn-skip ${cardState === 'skipped' ? 'active' : ''}" data-id="${creative.id}" data-action="skip">${cardState === 'skipped' ? '✗ Skipped' : 'Skip'}</button>
                         </div>
                     </div>
                 </div>
@@ -550,10 +555,13 @@
 
         // Handle button clicks
         document.addEventListener('click', (e) => {
-            // Action buttons
-            if (e.target.matches('[data-action]')) {
-                const id = e.target.dataset.id;
-                const action = e.target.dataset.action;
+            // Action buttons — match button or child elements
+            const actionBtn = e.target.closest('[data-action]');
+            if (actionBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                const id = actionBtn.dataset.id;
+                const action = actionBtn.dataset.action === 'approve' ? 'approved' : 'skipped';
                 const currentState = getState(id);
 
                 if (currentState === action) {
@@ -637,6 +645,8 @@
 
         // Initialize
         loadData();
+        // Show organic notice once data loads
+        setTimeout(() => { document.getElementById('organic-notice').style.display = 'block'; }, 500);
     </script>
 </body>
 </html>
