@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MMHC Content Factory — Batch Review</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -1036,7 +1037,7 @@
                             ${cardStatus === 'posted' ? `<button class="btn" style="background:var(--gold); color:var(--dark-navy); flex:2;" disabled>📱 Posted</button>` :
                             `<button class="btn btn-approve ${cardStatus === 'approved' ? 'active' : ''}" data-id="${creative.id}" data-action="approve">${cardStatus === 'approved' ? '✓ Approved' : 'Approve'}</button>
                             <button class="btn btn-skip ${cardStatus === 'skipped' ? 'active' : ''}" data-id="${creative.id}" data-action="skip">${cardStatus === 'skipped' ? '✗ Skipped' : 'Skip'}</button>`}
-                            <a class="btn btn-download" href="${creative.image}" download="${creative.id}.png" title="Download image">⬇</a>
+                            <button class="btn btn-download" onclick="event.stopPropagation(); downloadSingle('${creative.image}', '${creative.id}.png')" title="Download image">⬇</button>
                         </div>
                         ${postedArea}
                         ${perfArea}
@@ -1545,7 +1546,7 @@ The future of therapy isn't a nicer office. It's removing the need for one.`
                         <div style="flex: 0 0 280px; text-align:center;">
                             <img src="${fname}" alt="Slide ${i}" style="width:280px; height:280px; border-radius:8px; object-fit:cover; border: 2px solid ${i === 1 ? '#E1306C' : '#333'};">
                             <div style="margin-top:6px;">
-                                <a href="${fname}" download="${c.id}-slide-${num}.png" style="color:#E1306C; font-size:0.8rem; text-decoration:none;">⬇ Slide ${i}</a>
+                                <button onclick="event.stopPropagation(); downloadSingle('${fname}', '${c.id}-slide-${num}.png')" style="color:#E1306C; font-size:0.8rem; background:none; border:none; cursor:pointer; text-decoration:underline;">⬇ Slide ${i}</button>
                             </div>
                         </div>`;
                 }
@@ -1622,15 +1623,52 @@ The future of therapy isn't a nicer office. It's removing the need for one.`
             document.getElementById('pig-count').textContent = personalIGCarousels.length;
         }
 
-        function downloadAllSlides(carouselId, count) {
-            for (let i = 1; i <= count; i++) {
-                setTimeout(() => {
+        // Mobile-friendly single image download (blob-based)
+        async function downloadSingle(url, filename) {
+            try {
+                const resp = await fetch(url);
+                const blob = await resp.blob();
+                const blobUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(blobUrl);
+            } catch(err) {
+                // Fallback: open in new tab
+                window.open(url, '_blank');
+            }
+        }
+
+        async function downloadAllSlides(carouselId, count) {
+            if (typeof JSZip !== 'undefined') {
+                // ZIP-based download (mobile-friendly)
+                const zip = new JSZip();
+                for (let i = 0; i <= count; i++) {
                     const num = String(i).padStart(2, '0');
-                    const a = document.createElement('a');
-                    a.href = `${carouselId}-slide-${num}.png`;
-                    a.download = `${carouselId}-slide-${num}.png`;
-                    a.click();
-                }, i * 400);
+                    const fname = i === 0 ? `${carouselId}-cover.png` : `${carouselId}-slide-${num}.png`;
+                    try {
+                        const blob = await fetchImageBlob(fname);
+                        zip.file(fname, blob);
+                    } catch(e) { /* skip missing */ }
+                }
+                const zipBlob = await zip.generateAsync({ type: 'blob' });
+                const url = URL.createObjectURL(zipBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${carouselId}-all-slides.zip`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } else {
+                // Fallback: individual downloads
+                for (let i = 1; i <= count; i++) {
+                    const num = String(i).padStart(2, '0');
+                    await downloadSingle(`${carouselId}-slide-${num}.png`, `${carouselId}-slide-${num}.png`);
+                }
             }
         }
 
@@ -1741,31 +1779,87 @@ The future of therapy isn't a nicer office. It's removing the need for one.`
             });
         }
 
-        // Download all approved images
-        document.addEventListener('click', (e) => {
+        // Helper: fetch image as blob (works on mobile)
+        async function fetchImageBlob(url) {
+            const resp = await fetch(url);
+            return resp.blob();
+        }
+
+        // Download all approved images as ZIP (mobile-friendly)
+        document.addEventListener('click', async (e) => {
             if (e.target.id === 'download-all-btn') {
-                const approved = data.creatives.filter(c => getState(c.id) === 'approved');
-                if (approved.length === 0) {
+                // Collect all approved items (ads, organic, carousels, linkedin)
+                const approvedCreatives = data.creatives.filter(c => getState(c.id) === 'approved');
+                const approvedCarousels = personalIGCarousels.filter(c => getState(c.id) === 'approved');
+                const approvedLinkedin = linkedinPosts.filter(p => getState(p.id) === 'approved');
+
+                if (approvedCreatives.length === 0 && approvedCarousels.length === 0 && approvedLinkedin.length === 0) {
                     alert('No approved items yet. Tap "Approve" on the creatives you want first.');
                     return;
                 }
-                // Download each image
-                approved.forEach((c, i) => {
-                    setTimeout(() => {
-                        const a = document.createElement('a');
-                        a.href = c.image;
-                        a.download = c.id + '.png';
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                    }, i * 300); // stagger to avoid browser blocking
-                });
 
-                // Also copy all captions
-                const captionText = approved.map(c => `--- ${c.id} ---\n${c.caption}`).join('\n\n');
-                navigator.clipboard.writeText(captionText).then(() => {
-                    alert(`Downloading ${approved.length} images.\n\nAll captions also copied to clipboard!`);
-                });
+                const btn = e.target;
+                const origText = btn.textContent;
+                btn.textContent = '⏳ Building ZIP...';
+                btn.disabled = true;
+
+                try {
+                    const zip = new JSZip();
+                    const captionParts = [];
+
+                    // Add approved ad/organic images
+                    for (const c of approvedCreatives) {
+                        const blob = await fetchImageBlob(c.image);
+                        zip.file(`${c.type}/${c.id}.png`, blob);
+                        captionParts.push(`--- ${c.id} (${c.type}) ---\n${c.caption}`);
+                    }
+
+                    // Add approved carousel slides
+                    for (const c of approvedCarousels) {
+                        for (let i = 0; i < c.slides; i++) {
+                            const num = String(i + 1).padStart(2, '0');
+                            const fname = i === 0
+                                ? `${c.id}-cover.png`
+                                : `${c.id}-slide-${num}.png`;
+                            try {
+                                const blob = await fetchImageBlob(fname);
+                                zip.file(`carousels/${fname}`, blob);
+                            } catch(err) { /* skip missing slides */ }
+                        }
+                        captionParts.push(`--- ${c.id} (carousel) ---\n${c.caption || c.title}`);
+                    }
+
+                    // Add approved LinkedIn text posts
+                    for (const p of approvedLinkedin) {
+                        captionParts.push(`--- ${p.id} (LinkedIn) ---\nTitle: ${p.title}\nPillar: ${p.pillar}\nSchedule: ${p.schedule}\n\n${p.text}`);
+                    }
+
+                    // Add captions file
+                    zip.file('captions.txt', captionParts.join('\n\n'));
+
+                    // Generate and download ZIP
+                    const zipBlob = await zip.generateAsync({ type: 'blob' });
+                    const url = URL.createObjectURL(zipBlob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `mmhc-approved-${Date.now()}.zip`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+
+                    // Also copy captions to clipboard
+                    const captionText = captionParts.join('\n\n');
+                    await navigator.clipboard.writeText(captionText).catch(() => {});
+
+                    const total = approvedCreatives.length + approvedCarousels.length + approvedLinkedin.length;
+                    alert(`✅ ZIP downloaded with ${total} items + captions.txt\n\nCaptions also copied to clipboard!`);
+                } catch (err) {
+                    alert('Download failed: ' + err.message + '\n\nTry downloading individual images instead.');
+                } finally {
+                    btn.textContent = origText;
+                    btn.disabled = false;
+                }
             }
 
             if (e.target.id === 'meta-guide-btn') {
