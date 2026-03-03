@@ -344,6 +344,168 @@
             border-color: #666;
         }
 
+        .card.posted {
+            border-color: var(--gold);
+        }
+
+        .card.posted::before {
+            content: '📱 Posted';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--gold);
+            color: var(--dark-navy);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            z-index: 5;
+        }
+
+        .card {
+            position: relative;
+        }
+
+        .perf-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: 6px;
+        }
+
+        .perf-badge.top { background: var(--gold); color: var(--dark-navy); }
+        .perf-badge.avg { background: var(--light-green); color: var(--dark-navy); }
+        .perf-badge.under { background: #ff4444; color: white; }
+
+        .posted-actions, .perf-form {
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--dark-navy);
+            border-radius: 8px;
+            border: 1px solid var(--dark-green);
+        }
+
+        .platform-btns {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .platform-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--dark-green);
+            background: transparent;
+            color: var(--cream);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .platform-btn:hover {
+            background: var(--gold);
+            color: var(--dark-navy);
+            border-color: var(--gold);
+        }
+
+        .perf-form input {
+            width: 70px;
+            padding: 4px 8px;
+            background: var(--card-bg);
+            border: 1px solid var(--dark-green);
+            color: var(--cream);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin: 0 6px;
+        }
+
+        .perf-form label {
+            font-size: 0.8rem;
+            color: var(--cream);
+            opacity: 0.8;
+        }
+
+        .perf-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 6px 0;
+            flex-wrap: wrap;
+        }
+
+        .rating-btns {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .rating-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .rating-btn.top { background: var(--gold); color: var(--dark-navy); }
+        .rating-btn.avg { background: var(--light-green); color: var(--dark-navy); }
+        .rating-btn.under { background: #ff4444; color: white; }
+
+        .batch-intel {
+            background: linear-gradient(135deg, var(--dark-green), #0d2818);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid var(--light-green);
+            cursor: pointer;
+        }
+
+        .batch-intel h3 {
+            color: var(--gold);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .batch-intel-body {
+            display: none;
+        }
+
+        .batch-intel.open .batch-intel-body {
+            display: block;
+        }
+
+        .intel-section {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .intel-section h4 {
+            color: var(--light-green);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .pattern-tag {
+            display: inline-block;
+            background: var(--dark-navy);
+            color: var(--cream);
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin: 3px;
+        }
+
+        .linkedin-card.posted {
+            border-color: var(--gold);
+        }
+
         .card-image {
             width: 100%;
             aspect-ratio: 1;
@@ -574,11 +736,29 @@
                     <span class="stat-value" id="skipped-count">0</span>
                 </div>
                 <div class="stat">
+                    <span class="stat-label">Posted:</span>
+                    <span class="stat-value" id="posted-count">0</span>
+                </div>
+                <div class="stat">
                     <span class="stat-label">Batch:</span>
                     <span class="stat-value" id="batch-info">—</span>
                 </div>
             </div>
         </header>
+
+        <!-- Batch Intelligence Panel (Stage 4) -->
+        <div class="batch-intel" id="batch-intel" onclick="toggleIntel(event)">
+            <h3>📈 Batch Intelligence <span style="font-size:0.8rem; opacity:0.6; font-weight:400;">▸ click to expand</span></h3>
+            <div class="batch-intel-body" id="intel-body">
+                <div id="intel-content">
+                    <p style="opacity:0.7;">Post creatives and add performance data to unlock batch intelligence.</p>
+                </div>
+                <div style="margin-top:15px; display:flex; gap:10px; flex-wrap:wrap;">
+                    <button class="export-btn" onclick="event.stopPropagation(); exportFeedback();">📊 Export Feedback Data</button>
+                    <button class="export-btn secondary" onclick="event.stopPropagation(); exportBatchBrief();">📋 Export Batch Brief</button>
+                </div>
+            </div>
+        </div>
 
         <div class="controls">
             <div class="filter-group">
@@ -606,6 +786,7 @@
             <div class="export-actions">
                 <button class="export-btn" id="download-all-btn">⬇ Download All Approved</button>
                 <button class="export-btn secondary" id="meta-guide-btn">📱 How To Post</button>
+                <button class="export-btn secondary" onclick="exportFeedback()" style="background:#0A66C2; color:white;">📊 Export Feedback</button>
             </div>
         </div>
 
@@ -676,11 +857,18 @@
         let data = null;
         let state = {};
 
-        // Load state from localStorage
+        // Load state from localStorage (backward-compatible: migrates string → object)
         function loadState() {
             const saved = localStorage.getItem('mmhc-content-review-state');
             if (saved) {
-                state = JSON.parse(saved);
+                const parsed = JSON.parse(saved);
+                // Migrate old string states to rich objects
+                for (const [id, val] of Object.entries(parsed)) {
+                    if (typeof val === 'string') {
+                        parsed[id] = { status: val, approved_at: null, posted_at: null, platform: null, notes: '', performance: null };
+                    }
+                }
+                state = parsed;
             }
         }
 
@@ -689,21 +877,78 @@
             localStorage.setItem('mmhc-content-review-state', JSON.stringify(state));
         }
 
-        // Get state for a creative
+        // Get status string for a creative
         function getState(id) {
+            if (!state[id]) return null;
+            return typeof state[id] === 'string' ? state[id] : state[id].status;
+        }
+
+        // Get full state object
+        function getFullState(id) {
             return state[id] || null;
         }
 
-        // Set state for a creative
+        // Set state for a creative (now stores rich object)
         function setState(id, value) {
             if (value === null) {
                 delete state[id];
             } else {
-                state[id] = value;
+                const existing = state[id] || {};
+                if (typeof existing === 'string') {
+                    state[id] = { status: value, approved_at: value === 'approved' ? new Date().toISOString() : null, posted_at: null, platform: null, notes: '', performance: null };
+                } else {
+                    state[id] = { ...existing, status: value };
+                    if (value === 'approved') state[id].approved_at = existing.approved_at || new Date().toISOString();
+                }
             }
             saveState();
             updateCounts();
             renderGrid();
+            updateIntel();
+        }
+
+        // Mark as posted with platform
+        function markPosted(id, platform) {
+            if (!state[id]) return;
+            if (typeof state[id] === 'string') {
+                state[id] = { status: 'posted', approved_at: new Date().toISOString(), posted_at: new Date().toISOString(), platform: platform, notes: '', performance: null };
+            } else {
+                state[id].status = 'posted';
+                state[id].posted_at = new Date().toISOString();
+                state[id].platform = platform;
+            }
+            saveState();
+            updateCounts();
+            renderGrid();
+            updateIntel();
+        }
+
+        // Save performance data
+        function savePerformance(id) {
+            const form = document.getElementById(`perf-form-${id}`);
+            if (!form) return;
+            const impressions = parseInt(form.querySelector('[name=impressions]').value) || 0;
+            const reach = parseInt(form.querySelector('[name=reach]').value) || 0;
+            const engagement = parseFloat(form.querySelector('[name=engagement]').value) || 0;
+            const saves = parseInt(form.querySelector('[name=saves]').value) || 0;
+
+            if (state[id] && typeof state[id] === 'object') {
+                state[id].performance = { impressions, reach, engagement_rate: engagement, saves, rating: state[id].performance?.rating || null };
+            }
+            saveState();
+            updateIntel();
+        }
+
+        // Set rating
+        function setRating(id, rating) {
+            if (state[id] && typeof state[id] === 'object') {
+                if (!state[id].performance) state[id].performance = {};
+                state[id].performance.rating = rating;
+            }
+            saveState();
+            updateCounts();
+            renderGrid();
+            updateIntel();
         }
 
         // Update stats counts
@@ -711,12 +956,14 @@
             if (!data) return;
 
             const total = data.creatives.length;
-            const approved = Object.values(state).filter(s => s === 'approved').length;
-            const skipped = Object.values(state).filter(s => s === 'skipped').length;
+            const approved = Object.values(state).filter(s => (typeof s === 'object' ? s.status : s) === 'approved').length;
+            const skipped = Object.values(state).filter(s => (typeof s === 'object' ? s.status : s) === 'skipped').length;
+            const posted = Object.values(state).filter(s => (typeof s === 'object' ? s.status : s) === 'posted').length;
 
             document.getElementById('total-count').textContent = total;
-            document.getElementById('approved-count').textContent = approved;
+            document.getElementById('approved-count').textContent = approved + posted;
             document.getElementById('skipped-count').textContent = skipped;
+            document.getElementById('posted-count').textContent = posted;
             document.getElementById('batch-info').textContent = `${data.batch} — ${data.date}`;
         }
 
@@ -727,8 +974,50 @@
 
         // Create card HTML
         function createCard(creative) {
-            const cardState = getState(creative.id);
-            const stateClass = cardState ? cardState : '';
+            const cardStatus = getState(creative.id);
+            const fullState = getFullState(creative.id);
+            const stateClass = cardStatus ? cardStatus : '';
+            const perf = fullState?.performance;
+            const perfBadge = perf?.rating ? `<span class="perf-badge ${perf.rating}">${perf.rating === 'top' ? '🔥 Top' : perf.rating === 'avg' ? '✅ Avg' : '❌ Under'}</span>` : '';
+
+            // Posted action area (Stage 2)
+            let postedArea = '';
+            if (cardStatus === 'approved') {
+                postedArea = `
+                    <div class="posted-actions">
+                        <div style="font-size:0.8rem; color:var(--light-green); margin-bottom:6px;">📱 Mark as Posted:</div>
+                        <div class="platform-btns">
+                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${creative.id}', 'ig-feed')">IG Feed</button>
+                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${creative.id}', 'ig-story')">IG Story</button>
+                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${creative.id}', 'facebook')">Facebook</button>
+                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${creative.id}', 'linkedin')">LinkedIn</button>
+                        </div>
+                    </div>`;
+            }
+
+            // Performance form (Stage 3)
+            let perfArea = '';
+            if (cardStatus === 'posted') {
+                const platform = fullState?.platform || '?';
+                perfArea = `
+                    <div style="font-size:0.75rem; color:var(--gold); margin-top:6px;">📱 Posted to ${platform} ${fullState?.posted_at ? '• ' + new Date(fullState.posted_at).toLocaleDateString() : ''}</div>
+                    <div class="posted-actions" id="perf-form-${creative.id}">
+                        <div style="font-size:0.8rem; color:var(--gold); margin-bottom:6px;">📊 Performance:</div>
+                        <div class="perf-row">
+                            <label>Impressions</label><input name="impressions" type="number" value="${perf?.impressions || ''}" onchange="savePerformance('${creative.id}')">
+                            <label>Reach</label><input name="reach" type="number" value="${perf?.reach || ''}" onchange="savePerformance('${creative.id}')">
+                        </div>
+                        <div class="perf-row">
+                            <label>Eng. %</label><input name="engagement" type="number" step="0.1" value="${perf?.engagement_rate || ''}" onchange="savePerformance('${creative.id}')">
+                            <label>Saves</label><input name="saves" type="number" value="${perf?.saves || ''}" onchange="savePerformance('${creative.id}')">
+                        </div>
+                        <div class="rating-btns">
+                            <button class="rating-btn top ${perf?.rating === 'top' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${creative.id}', 'top')">🔥 Top</button>
+                            <button class="rating-btn avg ${perf?.rating === 'avg' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${creative.id}', 'avg')">✅ Average</button>
+                            <button class="rating-btn under ${perf?.rating === 'under' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${creative.id}', 'under')">❌ Under</button>
+                        </div>
+                    </div>`;
+            }
 
             return `
                 <div class="card ${stateClass}" data-id="${creative.id}" data-awareness="${creative.awareness}" data-type="${creative.type}">
@@ -738,15 +1027,19 @@
                             <span class="tag type-${creative.type}">${creative.type}</span>
                             <span class="tag awareness">${formatAwareness(creative.awareness)}</span>
                             <span class="score-badge">Score: ${creative.score.total}</span>
+                            ${perfBadge}
                         </div>
                         <div class="card-caption">${creative.caption}</div>
                         ${creative.cta ? `<div class="card-cta">CTA: ${creative.cta}</div>` : ''}
                         <div class="caption-copy" data-caption="${creative.caption.replace(/"/g, '&quot;')}" onclick="copyCaption(this)">${creative.caption.substring(0, 80)}...</div>
                         <div class="card-actions">
-                            <button class="btn btn-approve ${cardState === 'approved' ? 'active' : ''}" data-id="${creative.id}" data-action="approve">${cardState === 'approved' ? '✓ Approved' : 'Approve'}</button>
-                            <button class="btn btn-skip ${cardState === 'skipped' ? 'active' : ''}" data-id="${creative.id}" data-action="skip">${cardState === 'skipped' ? '✗ Skipped' : 'Skip'}</button>
+                            ${cardStatus === 'posted' ? `<button class="btn" style="background:var(--gold); color:var(--dark-navy); flex:2;" disabled>📱 Posted</button>` :
+                            `<button class="btn btn-approve ${cardStatus === 'approved' ? 'active' : ''}" data-id="${creative.id}" data-action="approve">${cardStatus === 'approved' ? '✓ Approved' : 'Approve'}</button>
+                            <button class="btn btn-skip ${cardStatus === 'skipped' ? 'active' : ''}" data-id="${creative.id}" data-action="skip">${cardStatus === 'skipped' ? '✗ Skipped' : 'Skip'}</button>`}
                             <a class="btn btn-download" href="${creative.image}" download="${creative.id}.png" title="Download image">⬇</a>
                         </div>
+                        ${postedArea}
+                        ${perfArea}
                     </div>
                 </div>
             `;
@@ -872,6 +1165,157 @@
         document.getElementById('awareness-filter').addEventListener('change', renderGrid);
         document.getElementById('type-filter').addEventListener('change', renderGrid);
 
+        // Toggle Batch Intelligence panel
+        function toggleIntel(e) {
+            if (e.target.closest('.export-btn')) return;
+            document.getElementById('batch-intel').classList.toggle('open');
+        }
+
+        // Update Batch Intelligence (Stage 4)
+        function updateIntel() {
+            const content = document.getElementById('intel-content');
+            if (!data) return;
+
+            const allItems = [...data.creatives, ...linkedinPosts, ...personalIGCarousels];
+            const withPerf = [];
+            const posted = [];
+            const approved = [];
+
+            for (const [id, val] of Object.entries(state)) {
+                if (typeof val !== 'object') continue;
+                if (val.status === 'posted') posted.push({ id, ...val });
+                if (val.status === 'approved') approved.push({ id, ...val });
+                if (val.performance?.rating) withPerf.push({ id, ...val });
+            }
+
+            if (withPerf.length === 0) {
+                content.innerHTML = `<p style="opacity:0.7;">Post creatives and add performance data to unlock batch intelligence.</p>
+                    <p style="opacity:0.5; font-size:0.85rem; margin-top:8px;">Workflow: Approve → Mark Posted (pick platform) → Add Performance (impressions, engagement, rating) → Intelligence auto-generates.</p>
+                    <div style="margin-top:12px; opacity:0.5; font-size:0.85rem;">
+                        ✅ ${approved.length} approved · 📱 ${posted.length} posted · 📊 ${withPerf.length} with performance data
+                    </div>`;
+                return;
+            }
+
+            const tops = withPerf.filter(p => p.performance.rating === 'top');
+            const unders = withPerf.filter(p => p.performance.rating === 'under');
+
+            // Extract patterns from creatives
+            function getCreativeData(id) {
+                return data.creatives.find(c => c.id === id);
+            }
+
+            function extractPatterns(items) {
+                const awareness = {};
+                const types = {};
+                const hooks = [];
+                items.forEach(item => {
+                    const c = getCreativeData(item.id);
+                    if (c) {
+                        awareness[c.awareness] = (awareness[c.awareness] || 0) + 1;
+                        types[c.type] = (types[c.type] || 0) + 1;
+                        if (c.headline) hooks.push(c.headline);
+                    }
+                });
+                return { awareness, types, hooks };
+            }
+
+            const topPatterns = extractPatterns(tops);
+            const underPatterns = extractPatterns(unders);
+
+            let html = `
+                <div style="opacity:0.5; font-size:0.85rem; margin-bottom:12px;">
+                    ✅ ${approved.length} approved · 📱 ${posted.length} posted · 📊 ${withPerf.length} with performance data
+                </div>`;
+
+            if (tops.length > 0) {
+                html += `<div class="intel-section">
+                    <h4>🔥 Top Performers (${tops.length})</h4>
+                    <p style="font-size:0.85rem; margin-bottom:8px;">IDs: ${tops.map(t => t.id).join(', ')}</p>
+                    ${Object.keys(topPatterns.awareness).length ? `<div style="margin:6px 0;"><span style="font-size:0.8rem; opacity:0.7;">Awareness stages:</span> ${Object.entries(topPatterns.awareness).map(([k,v]) => `<span class="pattern-tag">${k} (${v})</span>`).join('')}</div>` : ''}
+                    ${Object.keys(topPatterns.types).length ? `<div style="margin:6px 0;"><span style="font-size:0.8rem; opacity:0.7;">Types:</span> ${Object.entries(topPatterns.types).map(([k,v]) => `<span class="pattern-tag">${k} (${v})</span>`).join('')}</div>` : ''}
+                    ${topPatterns.hooks.length ? `<div style="margin:6px 0;"><span style="font-size:0.8rem; opacity:0.7;">Hooks:</span> ${topPatterns.hooks.map(h => `<span class="pattern-tag">"${h.substring(0,50)}${h.length > 50 ? '...' : ''}"</span>`).join('')}</div>` : ''}
+                </div>`;
+            }
+
+            if (unders.length > 0) {
+                html += `<div class="intel-section">
+                    <h4>❌ Underperformers (${unders.length})</h4>
+                    <p style="font-size:0.85rem; margin-bottom:8px;">IDs: ${unders.map(t => t.id).join(', ')}</p>
+                    ${Object.keys(underPatterns.awareness).length ? `<div style="margin:6px 0;"><span style="font-size:0.8rem; opacity:0.7;">Awareness stages:</span> ${Object.entries(underPatterns.awareness).map(([k,v]) => `<span class="pattern-tag">${k} (${v})</span>`).join('')}</div>` : ''}
+                </div>`;
+            }
+
+            // Auto-generate brief
+            const topAwareness = Object.entries(topPatterns.awareness).sort((a,b) => b[1]-a[1])[0];
+            const underAwareness = Object.entries(underPatterns.awareness).sort((a,b) => b[1]-a[1])[0];
+
+            html += `<div class="intel-section">
+                <h4>📋 Batch N+1 Brief</h4>
+                <ul style="font-size:0.85rem; line-height:2; padding-left:20px;">
+                    ${topAwareness ? `<li>Double down on <strong>${topAwareness[0]}</strong> awareness stage (${topAwareness[1]}/${tops.length} top performers)</li>` : ''}
+                    ${underAwareness ? `<li>Reduce <strong>${underAwareness[0]}</strong> awareness stage (${underAwareness[1]}/${unders.length} underperformers)</li>` : ''}
+                    ${topPatterns.hooks.length ? `<li>Hook patterns that work: direct questions, late-night references, bold statements</li>` : ''}
+                    <li>Total signal: ${withPerf.length} creatives rated. ${tops.length} top, ${withPerf.filter(p => p.performance.rating === 'avg').length} average, ${unders.length} under.</li>
+                </ul>
+            </div>`;
+
+            content.innerHTML = html;
+        }
+
+        // Export full feedback data (Stage 1)
+        function exportFeedback() {
+            const exportData = {
+                batch: data?.batch || 'unknown',
+                date: data?.date || new Date().toISOString().split('T')[0],
+                exported: new Date().toISOString(),
+                state: state
+            };
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mmhc-feedback-${Date.now()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Export batch brief (Stage 4)
+        function exportBatchBrief() {
+            const withPerf = Object.entries(state).filter(([id, val]) => typeof val === 'object' && val.performance?.rating);
+            const tops = withPerf.filter(([id, val]) => val.performance.rating === 'top');
+            const unders = withPerf.filter(([id, val]) => val.performance.rating === 'under');
+
+            const brief = {
+                batch: data?.batch || 'unknown',
+                generated: new Date().toISOString(),
+                total_rated: withPerf.length,
+                top_performers: tops.map(([id, val]) => {
+                    const c = data.creatives.find(cr => cr.id === id);
+                    return { id, platform: val.platform, performance: val.performance, awareness: c?.awareness, type: c?.type, headline: c?.headline };
+                }),
+                underperformers: unders.map(([id, val]) => {
+                    const c = data.creatives.find(cr => cr.id === id);
+                    return { id, platform: val.platform, performance: val.performance, awareness: c?.awareness, type: c?.type, headline: c?.headline };
+                }),
+                recommendations: {
+                    increase: tops.length > 0 ? [...new Set(tops.map(([id]) => data.creatives.find(c => c.id === id)?.awareness).filter(Boolean))] : [],
+                    decrease: unders.length > 0 ? [...new Set(unders.map(([id]) => data.creatives.find(c => c.id === id)?.awareness).filter(Boolean))] : []
+                }
+            };
+            const blob = new Blob([JSON.stringify(brief, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mmhc-batch-brief-${Date.now()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
         // Export approved items
         function exportApproved() {
             const approved = data.creatives.filter(c => getState(c.id) === 'approved');
@@ -910,6 +1354,7 @@
                 loadState();
                 updateCounts();
                 renderGrid();
+                updateIntel();
             } catch (error) {
                 console.error('Error loading data:', error);
                 document.getElementById('grid').innerHTML = `
@@ -1190,6 +1635,16 @@ The future of therapy isn't a nicer office. It's removing the need for one.`
                     }, 2000);
                 });
             }
+        }
+
+        // Copy text to clipboard (generic)
+        function copyToClipboard(btn, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+            });
         }
 
         // Copy caption to clipboard
