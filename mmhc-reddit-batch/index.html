@@ -247,10 +247,45 @@ const DATA = {
   ]
 };
 
-// State management (localStorage)
+// State management: URL hash (primary) + localStorage (fallback)
 const STORAGE_KEY = 'mmhc-reddit-batch-state';
-function loadState() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
-function saveState(s) { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+
+function encodeRedditState() {
+  return DATA.pieces.map(p => {
+    const s = state[p.id]?.status;
+    return s === 'approved' ? 'a' : s === 'skipped' ? 's' : 'p';
+  }).join('');
+}
+
+function decodeRedditState(hash) {
+  for (let i = 0; i < Math.min(hash.length, DATA.pieces.length); i++) {
+    const c = hash[i];
+    const id = DATA.pieces[i].id;
+    if (c === 'a') { state[id] = { status: 'approved', approved_at: new Date().toISOString() }; }
+    else if (c === 's') { state[id] = { status: 'skipped' }; }
+  }
+}
+
+function loadState() {
+  try {
+    const hash = location.hash;
+    if (hash && hash.startsWith('#s=')) {
+      state = {};
+      decodeRedditState(hash.substring(3));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      return state;
+    }
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+  } catch { return {}; }
+}
+
+function saveState(s) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+  if (typeof DATA !== 'undefined' && DATA.pieces) {
+    history.replaceState(null, '', '#s=' + encodeRedditState());
+  }
+}
+
 let state = loadState();
 
 function getStatus(id) { return state[id]?.status || 'pending'; }
