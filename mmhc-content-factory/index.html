@@ -599,6 +599,7 @@
                     <option value="ad">Ad</option>
                     <option value="organic">Organic</option>
                     <option value="linkedin">LinkedIn</option>
+                    <option value="personal-ig">Personal IG</option>
                 </select>
             </div>
 
@@ -638,6 +639,13 @@
         <div id="organic-notice" style="background: var(--dark-green); padding: 20px 30px; border-radius: 12px; margin-bottom: 25px; border-left: 4px solid var(--gold); display: none;">
             <h3 style="color: var(--gold); margin-bottom: 8px;">📝 Organic Content</h3>
             <p style="font-size: 0.95rem; opacity: 0.9;">Organic Instagram posts are in development (pending personal IG handle). LinkedIn content strategy is in the Google Drive shared folder: <a href="https://docs.google.com/document/d/1uskA2hAWQqJeduTer-OCoIsN8N5omFGn/edit" style="color: var(--light-green);" target="_blank">LinkedIn Strategy V2</a></p>
+        </div>
+
+        <div id="personal-ig-section" style="display: none;">
+            <h2 style="color: #E1306C; margin-bottom: 15px; font-size: 1.4rem;">📱 Personal IG Carousels (<span id="pig-count">0</span>)</h2>
+            <p style="color: var(--cream); opacity: 0.7; margin-bottom: 10px; font-size: 0.9rem;">Founder-voice carousels for your personal Instagram. Each has 5-7 swipeable slides + a caption.</p>
+            <p style="color: var(--cream); opacity: 0.5; margin-bottom: 20px; font-size: 0.85rem;">💡 <strong>How to post:</strong> Download all slides for a carousel → Create new IG post → Select all slides in order → Paste the caption → Post</p>
+            <div class="grid" id="grid-pig"></div>
         </div>
 
         <div id="linkedin-section" style="display: none;">
@@ -773,6 +781,21 @@
             const adHeader = document.getElementById('ads-header');
             const orgSection = gridOrganic.previousElementSibling;
             const liSection = document.getElementById('linkedin-section');
+
+            // Personal IG tab
+            const pigSection = document.getElementById('personal-ig-section');
+            if (typeFilter === 'personal-ig') {
+                adHeader.style.display = 'none';
+                gridAds.style.display = 'none';
+                orgSection.style.display = 'none';
+                gridOrganic.style.display = 'none';
+                liSection.style.display = 'none';
+                pigSection.style.display = 'block';
+                renderPersonalIG();
+                return;
+            } else {
+                pigSection.style.display = 'none';
+            }
 
             // LinkedIn tab
             if (typeFilter === 'linkedin') {
@@ -1003,6 +1026,85 @@ Our no-show rate dropped significantly when we went fully online. Patients in Al
 The future of therapy isn't a nicer office. It's removing the need for one.`
             }
         ];
+
+        // Personal IG carousel data
+        const personalIGCarousels = [
+            {
+                id: 'carousel-001',
+                title: 'Origin Story',
+                pillar: "Operator's Lens",
+                slides: 7,
+                palette: 'Navy + Green',
+                caption: "I didn't go to school for therapy. I went to law school.\n\nBut after years watching the mental health system fail people — I decided to build something better.\n\nSwipe for the full story →",
+                coverImg: 'carousel-001-cover.png'
+            },
+            {
+                id: 'carousel-002',
+                title: 'Vibes vs Access',
+                pillar: 'Access Advocacy',
+                slides: 6,
+                palette: 'Green + Gold',
+                caption: "The mental health industry doesn't have an awareness problem. It has a delivery problem.\n\nSwipe for the unpopular opinion →",
+                coverImg: 'carousel-002-cover.png'
+            },
+            {
+                id: 'carousel-003',
+                title: 'NYC Therapist Paradox',
+                pillar: 'Industry Takes',
+                slides: 6,
+                palette: 'Midnight Blue + Green',
+                caption: "New York has more therapists per capita than almost any state. And yet the average wait for a new patient is 3-6 weeks.\n\nHow is that possible? Swipe →",
+                coverImg: 'carousel-003-cover.png'
+            },
+            {
+                id: 'carousel-004',
+                title: 'Weight of Infrastructure',
+                pillar: "Operator's Lens",
+                slides: 6,
+                palette: 'Deep Purple + Gold',
+                caption: "The hardest part of running a mental health practice isn't what you'd think.\n\nSwipe →",
+                coverImg: 'carousel-004-cover.png'
+            },
+            {
+                id: 'carousel-005',
+                title: 'Online-First by Choice',
+                pillar: 'Industry Takes',
+                slides: 6,
+                palette: 'Ocean Navy + Green',
+                caption: "We made a deliberate choice to be online-only. Not because of COVID.\n\nSwipe for why →",
+                coverImg: 'carousel-005-cover.png'
+            }
+        ];
+
+        function renderPersonalIG() {
+            const grid = document.getElementById('grid-pig');
+            const cards = personalIGCarousels.map(c => {
+                const cardState = getState(c.id);
+                const stateClass = cardState || '';
+                return `
+                    <div class="card ${stateClass}" data-id="${c.id}">
+                        <img src="${c.coverImg}" alt="${c.title}" style="width:100%; border-radius: 8px 8px 0 0;">
+                        <div style="padding: 15px;">
+                            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
+                                <span class="tag" style="background: #E1306C; color: white;">${c.pillar}</span>
+                                <span class="tag awareness">${c.slides} slides</span>
+                                <span class="tag" style="background: #333; color: #ccc;">${c.palette}</span>
+                            </div>
+                            <div style="font-weight:600; color:var(--cream); margin-bottom:8px; font-size:1.1rem;">${c.title}</div>
+                            <div class="caption-copy" onclick="copyToClipboard(this, \`${c.caption.replace(/`/g, '\\`').replace(/\n/g, '\\n')}\`)" style="font-size:0.85rem; max-height:80px; overflow:hidden;">${c.caption.replace(/\n/g, '<br>')}</div>
+                            <div style="display:flex; gap:8px; margin-top:12px; align-items:center;">
+                                <button class="btn btn-approve ${cardState === 'approved' ? 'active' : ''}" data-id="${c.id}" data-action="approve">${cardState === 'approved' ? '✓' : '✓'}</button>
+                                <button class="btn btn-skip ${cardState === 'skipped' ? 'active' : ''}" data-id="${c.id}" data-action="skip">${cardState === 'skipped' ? '✗' : '✗'}</button>
+                                <a href="${c.coverImg}" download="${c.id}-cover.png" class="btn" style="background:#E1306C; color:white; text-decoration:none; font-size:0.8rem;">⬇ Cover</a>
+                            </div>
+                            <p style="font-size:0.75rem; color:var(--cream); opacity:0.4; margin-top:8px;">Full slides: download from carousel folder</p>
+                        </div>
+                    </div>
+                `;
+            });
+            grid.innerHTML = cards.join('');
+            document.getElementById('pig-count').textContent = personalIGCarousels.length;
+        }
 
         // Render LinkedIn section
         function renderLinkedIn() {
