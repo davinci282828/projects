@@ -452,6 +452,32 @@
   </style>
 </head>
 <body>
+<!-- Da Vinci Ops — Shared Dashboard Nav -->
+<nav id="dv-nav" style="position:sticky;top:0;z-index:9998;background:#0A2540;border-bottom:1px solid rgba(255,255,255,.1);padding:0 16px;display:flex;align-items:center;gap:4px;height:44px;overflow-x:auto;-webkit-overflow-scrolling:touch;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;white-space:nowrap;">
+  <span style="font-weight:900;color:rgba(255,255,255,.5);margin-right:8px;flex-shrink:0;">🔺 Ops</span>
+  <a href="https://davinci282828.github.io/projects/x-intelligence/" style="padding:10px 12px;color:rgba(255,255,255,.7);text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.dataset.active==='true'?'#fff':'rgba(255,255,255,.7)'">X Intelligence</a>
+  <a href="https://davinci282828.github.io/projects/mmhc-content-factory/" style="padding:10px 12px;color:rgba(255,255,255,.7);text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.dataset.active==='true'?'#fff':'rgba(255,255,255,.7)'">Content Factory</a>
+  <a href="https://davinci282828.github.io/projects/mmhc-reddit-batch/" style="padding:10px 12px;color:rgba(255,255,255,.7);text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.dataset.active==='true'?'#fff':'rgba(255,255,255,.7)'">Reddit Batch</a>
+  <a href="https://davinci282828.github.io/projects/video-knowledge-graph/" style="padding:10px 12px;color:rgba(255,255,255,.7);text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.dataset.active==='true'?'#fff':'rgba(255,255,255,.7)'">Video KG</a>
+  <a href="https://davinci282828.github.io/projects/" style="padding:10px 12px;color:rgba(255,255,255,.4);text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;margin-left:auto;flex-shrink:0;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.4)'">All Projects ›</a>
+</nav>
+<script>
+(function(){
+  var nav=document.getElementById('dv-nav');
+  if(!nav)return;
+  var links=nav.querySelectorAll('a');
+  var loc=location.href;
+  links.forEach(function(a){
+    if(loc.indexOf(a.getAttribute('href'))>-1||(a.getAttribute('href')&&loc.indexOf(a.getAttribute('href').replace(/\/$/,''))>-1)){
+      a.style.color='#fff';
+      a.style.borderBottomColor='#6bb7ff';
+      a.style.fontWeight='700';
+      a.dataset.active='true';
+    }
+  });
+})();
+</script>
+
   <header>
     <div class="header-inner">
       <div class="title-row">
@@ -1157,6 +1183,7 @@
   }
 
   function scoreColor(total){
+    if(total === null || total === undefined) return "#607D8B";
     if(total >= 12) return "#4CAF50";
     if(total >= 8) return "#FFD54F";
     return "#F44336";
@@ -1347,15 +1374,16 @@
     if(state.tierFilter !== "ALL") rows = rows.filter(a => String(a.tier) === String(state.tierFilter));
     if(state.statusFilter !== "ALL") rows = rows.filter(a => a.status === state.statusFilter);
 
-    // Sort
+    // Sort (null scores go to bottom)
     const sort = state.acctSort;
+    const safeScore = (a) => a.scores?.total ?? -1;
     rows.sort((a,b) => {
       if(sort === "tier"){
         if(a.tier !== b.tier) return a.tier - b.tier;
-        return (b.scores?.total || 0) - (a.scores?.total || 0);
+        return safeScore(b) - safeScore(a);
       }
       if(sort === "score"){
-        return (b.scores?.total || 0) - (a.scores?.total || 0);
+        return safeScore(b) - safeScore(a);
       }
       if(sort === "tweets"){
         return (b.tweets_surfaced_30d || 0) - (a.tweets_surfaced_30d || 0);
@@ -1366,15 +1394,17 @@
     // Desktop table
     const tb = $("acctTbody");
     tb.innerHTML = rows.map(a => {
-      const total = a.scores?.total ?? (Number(a.scores?.specificity||0) + Number(a.scores?.relevance||0) + Number(a.scores?.freshness||0));
+      const raw = a.scores?.total;
+      const total = (raw !== null && raw !== undefined) ? raw : null;
       const sc = scoreColor(total);
+      const scoreDisplay = total !== null ? fmtNum(total) : "—";
       return `
         <tr>
           <td><span class="handle">@${escapeHtml(a.handle)}</span></td>
           <td>${escapeHtml(a.name)}</td>
           <td>${tierBadge(a.tier)}</td>
           <td>${escapeHtml(a.domain)}</td>
-          <td><span class="score" style="color:${sc}">${fmtNum(total)}</span></td>
+          <td><span class="score" style="color:${sc}">${scoreDisplay}</span></td>
           <td><span class="badge" style="border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.06)">${escapeHtml(a.status)}</span></td>
           <td>${fmtNum(a.tweets_surfaced_30d)}</td>
           <td class="micro">${escapeHtml(a.last_scored || "—")}</td>
@@ -1385,8 +1415,13 @@
     // Mobile cards
     const cards = $("acctCards");
     cards.innerHTML = rows.map(a => {
-      const total = a.scores?.total ?? (Number(a.scores?.specificity||0) + Number(a.scores?.relevance||0) + Number(a.scores?.freshness||0));
+      const raw = a.scores?.total;
+      const total = (raw !== null && raw !== undefined) ? raw : null;
       const sc = scoreColor(total);
+      const scoreDisplay = total !== null ? fmtNum(total) : "—";
+      const breakdownDisplay = total !== null
+        ? `S:${fmtNum(a.scores?.specificity)} · R:${fmtNum(a.scores?.relevance)} · F:${fmtNum(a.scores?.freshness)}`
+        : "Unscored — calibrates after ratings";
       return `
         <div class="acctCard" style="margin-bottom:10px">
           <div class="acctHead">
@@ -1396,14 +1431,14 @@
             </div>
             <div style="text-align:right; display:flex; flex-direction:column; gap:8px; align-items:flex-end">
               ${tierBadge(a.tier)}
-              <span class="badge" style="border-color:${sc}55;background:${sc}16"><span class="sr-only">Score</span><span style="font-family:var(--mono); font-weight:1000">${fmtNum(total)}</span></span>
+              <span class="badge" style="border-color:${sc}55;background:${sc}16"><span class="sr-only">Score</span><span style="font-family:var(--mono); font-weight:1000">${scoreDisplay}</span></span>
             </div>
           </div>
           <div class="acctGrid">
             <div class="kv"><div class="k">Status</div><div class="v">${escapeHtml(a.status)}</div></div>
             <div class="kv"><div class="k">Tweets (30d)</div><div class="v">${fmtNum(a.tweets_surfaced_30d)}</div></div>
             <div class="kv"><div class="k">Last scored</div><div class="v">${escapeHtml(a.last_scored || "—")}</div></div>
-            <div class="kv"><div class="k">Score breakdown</div><div class="v micro">S:${fmtNum(a.scores?.specificity)} · R:${fmtNum(a.scores?.relevance)} · F:${fmtNum(a.scores?.freshness)}</div></div>
+            <div class="kv"><div class="k">Score breakdown</div><div class="v micro">${breakdownDisplay}</div></div>
           </div>
         </div>
       `;
@@ -1668,6 +1703,17 @@
   function init(){
     loadUiState();
     initFilters();
+
+    // Fix 3: Always default to scan_date if no items exist for saved date
+    // or if no date was saved (fresh load)
+    const savedDate = state.briefDate;
+    const scanDate = DATA.meta.scan_date;
+    const hasItemsForSaved = DATA.daily_brief.some(b => b.date === savedDate);
+    if(!savedDate || !hasItemsForSaved){
+      // Find most recent date with items, fall back to scan_date
+      const dates = [...new Set(DATA.daily_brief.map(b => b.date))].sort().reverse();
+      state.briefDate = dates[0] || scanDate;
+    }
 
     // Apply initial control values
     $("briefDate").value = state.briefDate;
