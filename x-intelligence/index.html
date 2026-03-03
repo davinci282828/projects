@@ -278,6 +278,36 @@
     .btnRate.noi{border-color:rgba(244,67,54,.55); background:rgba(244,67,54,.10)}
     .btnRate.unc{border-color:rgba(255,213,79,.55); background:rgba(255,213,79,.10)}
 
+    .action-row{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:8px;
+      margin-top:8px;
+    }
+    .btnAction{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      border-radius:12px;
+      border:1px solid rgba(107,183,255,.3);
+      background:rgba(107,183,255,.08);
+      min-height:var(--tap);
+      font-size:0.8rem;
+      font-weight:700;
+      cursor:pointer;
+      user-select:none;
+      color:rgba(255,255,255,.85);
+      transition:all .15s;
+    }
+    .btnAction:active{
+      transform:scale(.96);
+      background:rgba(107,183,255,.2);
+    }
+    .btnAction.analyze{border-color:rgba(156,39,176,.5); background:rgba(156,39,176,.1)}
+    .btnAction.repurpose{border-color:rgba(0,188,212,.5); background:rgba(0,188,212,.1)}
+    .btnAction.apply{border-color:rgba(255,152,0,.5); background:rgba(255,152,0,.1)}
+
     .empty{
       border:1px dashed rgba(255,255,255,.25);
       border-radius:var(--radius);
@@ -1217,6 +1247,35 @@ AI safety and wide distribution of",
     $("lastScan").textContent = DATA.meta.generated ? DATA.meta.generated.replace("T"," ").replace("Z","Z") : "—";
   }
 
+  function buildActionPrompt(action, item){
+    const acct = getAccount(item.handle);
+    const tier = acct ? `T${acct.tier}` : "T?";
+    const base = `X Intelligence item from @${item.handle} (${tier}, ${item.tag}):\n\nTweet: "${item.tweet_text}"\n\nClaim: ${item.claim}\nSo What: ${item.so_what}\nConfidence: ${item.confidence}\nLink: ${item.link}\n`;
+
+    if(action === "analyze"){
+      return `🔍 X INTEL DEEP ANALYSIS\n\n${base}\n---\nAnalyze this for our use case:\n1. How does this approach/insight apply to MMHC operations or our OpenClaw setup?\n2. Compare what they're doing vs what we're doing — gaps and advantages\n3. Specific recommendations: what should we adopt, adapt, or ignore?\n4. If there's a tool/workflow mentioned, assess effort vs. payoff for us`;
+    }
+    if(action === "repurpose"){
+      return `📝 CONTENT REPURPOSE\n\n${base}\n---\nTurn this insight into content pieces:\n1. MMHC Blog post outline (500-800 words, audience = potential therapy clients)\n2. Instagram post (image concept + caption, MMHC voice)\n3. LinkedIn post (Steven's professional voice, 150-200 words)\n4. Thread format (5-7 tweets, educational tone)\n\nAdapt the core insight for each platform's audience. Don't just rewrite — reframe for mental health / therapy context where relevant.`;
+    }
+    if(action === "apply"){
+      return `⚡ ACTIONABLE NEXT STEPS\n\n${base}\n---\nBased on this intelligence:\n1. What specific change should we make this week? (one concrete action)\n2. What file/config/workflow would change? (be specific with paths)\n3. What's the expected impact? (quantify if possible)\n4. What's the risk of NOT acting on this?\n5. Priority: do this now, queue it, or just note it?`;
+    }
+    return base;
+  }
+
+  function showPromptModal(text){
+    const overlay = document.createElement("div");
+    overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
+    const box = document.createElement("div");
+    box.style.cssText = "background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:20px;max-width:600px;max-height:80vh;overflow:auto;width:100%";
+    box.innerHTML = `<p style="margin-bottom:12px;font-weight:700">📋 Copy this prompt:</p><textarea style="width:100%;min-height:200px;background:rgba(255,255,255,.05);color:white;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:14px;resize:vertical" readonly>${text.replace(/</g,'&lt;')}</textarea><div style="margin-top:12px;display:flex;gap:8px"><button onclick="this.closest('div[style*=fixed]').remove()" style="flex:1;padding:12px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.1);color:white;cursor:pointer;font-weight:700">Close</button></div>`;
+    overlay.appendChild(box);
+    overlay.addEventListener("click", (e) => { if(e.target === overlay) overlay.remove(); });
+    document.body.appendChild(overlay);
+    box.querySelector("textarea").select();
+  }
+
   function renderDaily(){
     const list = $("briefList");
     const ratings = getRatings();
@@ -1267,6 +1326,11 @@ AI safety and wide distribution of",
             <button type="button" class="btnRate noi" data-rate="noise" aria-pressed="${r === "noise" ? "true" : "false"}">✗ Noise</button>
             <button type="button" class="btnRate unc" data-rate="unclear" aria-pressed="${r === "unclear" ? "true" : "false"}">? Unclear</button>
           </div>
+          <div class="action-row">
+            <button type="button" class="btnAction analyze" data-action="analyze">🔍 Analyze</button>
+            <button type="button" class="btnAction repurpose" data-action="repurpose">📝 Repurpose</button>
+            <button type="button" class="btnAction apply" data-action="apply">⚡ Apply</button>
+          </div>
         </article>
       `;
     }).join("");
@@ -1282,6 +1346,22 @@ AI safety and wide distribution of",
           setRating(id, next);
           toast(next ? `<strong>Saved</strong> rating: ${escapeHtml(next)}.` : `<strong>Cleared</strong> rating.`);
           render();
+        });
+      }
+
+      // Wire up action buttons
+      const item = items.find(x => x.id === id);
+      if(!item) continue;
+      for(const btn of card.querySelectorAll(".btnAction")){
+        btn.addEventListener("click", () => {
+          const action = btn.getAttribute("data-action");
+          const prompt = buildActionPrompt(action, item);
+          navigator.clipboard.writeText(prompt).then(() => {
+            toast(`<strong>${action === 'analyze' ? '🔍 Analyze' : action === 'repurpose' ? '📝 Repurpose' : '⚡ Apply'}</strong> prompt copied! Paste to Da Vinci.`);
+          }).catch(() => {
+            // Fallback: show in a modal
+            showPromptModal(prompt);
+          });
         });
       }
     }
