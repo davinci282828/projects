@@ -586,378 +586,435 @@
   // DATA is intended to be injected by cron in production. This file includes realistic sample data.
 
   const DATA = {
-    meta: {
-      generated: "2026-03-03T13:40:00Z",
-      scan_date: "2026-03-03",
-      accounts_scanned: 17,
-      framework_version: "v2"
+  "meta": {
+    "generated": "2026-03-03T18:52:36.997062+00:00",
+    "scan_date": "2026-03-03",
+    "accounts_scanned": 4,
+    "framework_version": "v2",
+    "scan_source": "graphql-scan-20260303_122403.json"
+  },
+  "accounts": [
+    {
+      "handle": "Saboo_Shubham_",
+      "name": "Shubham Saboo",
+      "tier": 0,
+      "domain": "Multi-agent / Google PM",
+      "why": "98K star repo, 8-agent OpenClaw stack",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
+      },
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 7,
+      "status": "active"
     },
-    accounts: [
-      {
-        handle: "Saboo_Shubham_",
-        name: "Shubham Saboo",
-        tier: 0,
-        domain: "Multi-agent / Google PM",
-        why: "Sample: Open-source 8-agent stack + strong engagement",
-        scores: { specificity: 4, relevance: 5, freshness: 4, total: 13 },
-        last_scored: "2026-03-03",
-        tweets_surfaced_30d: 12,
-        status: "active"
+    {
+      "handle": "julesyoo",
+      "name": "Julie Yoo",
+      "tier": 0,
+      "domain": "Healthcare AI strategy / a16z bio GP",
+      "why": "Investment thesis, digital health trends",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "rileybrown",
-        name: "Riley Brown",
-        tier: 1,
-        domain: "AI product + evaluation",
-        why: "Sample: practical eval threads + tooling",
-        scores: { specificity: 4, relevance: 4, freshness: 3, total: 11 },
-        last_scored: "2026-03-03",
-        tweets_surfaced_30d: 9,
-        status: "active"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "Dr_Singularity",
+      "name": "Dr Singularity",
+      "tier": 0,
+      "domain": "Clinical AI research / diagnostics",
+      "why": "Breakthrough papers, diagnostic benchmarks",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "lorenzodoteth",
-        name: "Lorenzo",
-        tier: 1,
-        domain: "Agent infra + automation",
-        why: "Sample: fast-moving infra notes + demos",
-        scores: { specificity: 4, relevance: 4, freshness: 4, total: 12 },
-        last_scored: "2026-03-03",
-        tweets_surfaced_30d: 10,
-        status: "active"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "NetsmartTech",
+      "name": "Netsmart",
+      "tier": 0,
+      "domain": "Behavioral health EHR + clinical docs",
+      "why": "EHR workflows, clinical documentation",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "julesyoo",
-        name: "Jules Yoo",
-        tier: 2,
-        domain: "Operator / GTM",
-        why: "Sample: operator frameworks + distribution insights",
-        scores: { specificity: 3, relevance: 4, freshness: 3, total: 10 },
-        last_scored: "2026-03-03",
-        tweets_surfaced_30d: 6,
-        status: "watch"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "watch"
+    },
+    {
+      "handle": "lorenzodoteth",
+      "name": "Lorenzo",
+      "tier": 1,
+      "domain": "Venice / NanoClaw builder",
+      "why": "Agent builder journal + Venice insider",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "Dr_Singularity",
-        name: "Dr. Singularity",
-        tier: 2,
-        domain: "Agents research + demos",
-        why: "Sample: agentic workflows + benchmarking talk",
-        scores: { specificity: 4, relevance: 3, freshness: 3, total: 10 },
-        last_scored: "2026-03-03",
-        tweets_surfaced_30d: 7,
-        status: "trial"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "rileybrown",
+      "name": "Riley Brown",
+      "tier": 1,
+      "domain": "Narrow agent thesis",
+      "why": "7-10 skill sweet spot, vibecodeapp",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "NetsmartTech",
-        name: "NetsmartTech",
-        tier: 3,
-        domain: "Health IT / EHR ecosystem",
-        why: "Sample: health IT updates and vendor moves",
-        scores: { specificity: 3, relevance: 3, freshness: 3, total: 9 },
-        last_scored: "2026-03-03",
-        tweets_surfaced_30d: 4,
-        status: "watch"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "swyx",
+      "name": "Shawn Wang",
+      "tier": 2,
+      "domain": "AI dev tools",
+      "why": "AI engineering, smol-ai",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "austen",
-        name: "Austen",
-        tier: 3,
-        domain: "AI engineering",
-        why: "Sample: compact implementation notes",
-        scores: { specificity: 3, relevance: 3, freshness: 2, total: 8 },
-        last_scored: "2026-03-02",
-        tweets_surfaced_30d: 5,
-        status: "trial"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "emollick",
+      "name": "Ethan Mollick",
+      "tier": 2,
+      "domain": "AI in orgs / education",
+      "why": "Wharton prof, AI adoption research",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "swyx",
-        name: "Shawn Wang",
-        tier: 2,
-        domain: "AI dev tools",
-        why: "Sample: broad dev-tool radar + curation",
-        scores: { specificity: 3, relevance: 4, freshness: 3, total: 10 },
-        last_scored: "2026-03-01",
-        tweets_surfaced_30d: 8,
-        status: "active"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "OpenAI",
+      "name": "OpenAI",
+      "tier": 4,
+      "domain": "Model/platform updates",
+      "why": "Platform changes",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "PatrickMcKenzie",
-        name: "Patrick McKenzie",
-        tier: 4,
-        domain: "Startups / operations",
-        why: "Sample: business ops lens",
-        scores: { specificity: 2, relevance: 3, freshness: 2, total: 7 },
-        last_scored: "2026-02-28",
-        tweets_surfaced_30d: 3,
-        status: "watch"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "AnthropicAI",
+      "name": "Anthropic",
+      "tier": 4,
+      "domain": "Model/platform updates",
+      "why": "Platform changes",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "emollick",
-        name: "Ethan Mollick",
-        tier: 4,
-        domain: "AI in orgs / education",
-        why: "Sample: human factors + adoption",
-        scores: { specificity: 2, relevance: 3, freshness: 3, total: 8 },
-        last_scored: "2026-03-01",
-        tweets_surfaced_30d: 2,
-        status: "watch"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "AskVenice",
+      "name": "Venice.ai",
+      "tier": 4,
+      "domain": "Privacy AI platform",
+      "why": "Venice ecosystem",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "statnews",
-        name: "STAT",
-        tier: 3,
-        domain: "Healthcare news",
-        why: "Sample: healthcare landscape headlines",
-        scores: { specificity: 2, relevance: 4, freshness: 3, total: 9 },
-        last_scored: "2026-03-02",
-        tweets_surfaced_30d: 6,
-        status: "active"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "openclaw",
+      "name": "OpenClaw",
+      "tier": 4,
+      "domain": "Agent framework",
+      "why": "Our platform",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "NEJM",
-        name: "NEJM",
-        tier: 5,
-        domain: "Clinical research",
-        why: "Sample: high-quality clinical signals (low tweet volume)",
-        scores: { specificity: 2, relevance: 4, freshness: 1, total: 7 },
-        last_scored: "2026-02-25",
-        tweets_surfaced_30d: 1,
-        status: "watch"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "statnews",
+      "name": "STAT News",
+      "tier": 3,
+      "domain": "Healthcare news",
+      "why": "Healthcare/pharma coverage",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "OpenAI",
-        name: "OpenAI",
-        tier: 3,
-        domain: "Model/platform updates",
-        why: "Sample: primary-source platform changes",
-        scores: { specificity: 3, relevance: 4, freshness: 3, total: 10 },
-        last_scored: "2026-03-03",
-        tweets_surfaced_30d: 5,
-        status: "active"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "NTFabiano",
+      "name": "Nicholas Fabiano, MD",
+      "tier": 5,
+      "domain": "Medical research content",
+      "why": "Viral research format template",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "AnthropicAI",
-        name: "Anthropic",
-        tier: 3,
-        domain: "Model/platform updates",
-        why: "Sample: primary-source platform changes",
-        scores: { specificity: 3, relevance: 4, freshness: 3, total: 10 },
-        last_scored: "2026-03-03",
-        tweets_surfaced_30d: 4,
-        status: "active"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 4,
+      "status": "active"
+    },
+    {
+      "handle": "JoeLonsdale",
+      "name": "Joe Lonsdale",
+      "tier": 3,
+      "domain": "8VC / enterprise AI",
+      "why": "Healthcare + enterprise investing",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "MayoClinic",
-        name: "Mayo Clinic",
-        tier: 4,
-        domain: "Clinical org updates",
-        why: "Sample: clinical org perspective",
-        scores: { specificity: 2, relevance: 3, freshness: 2, total: 7 },
-        last_scored: "2026-02-27",
-        tweets_surfaced_30d: 2,
-        status: "watch"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "lennysan",
+      "name": "Lenny Rachitsky",
+      "tier": 3,
+      "domain": "Product thinking + AI",
+      "why": "Newsletter surfaces builders",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "CedarsSinai",
-        name: "Cedars-Sinai",
-        tier: 4,
-        domain: "Clinical org updates",
-        why: "Sample: clinical + AI news",
-        scores: { specificity: 2, relevance: 3, freshness: 2, total: 7 },
-        last_scored: "2026-02-27",
-        tweets_surfaced_30d: 2,
-        status: "watch"
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "Hxlfed14",
+      "name": "Himanshu",
+      "tier": 2,
+      "domain": "Agent architecture research",
+      "why": "Comparative agent analysis",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        handle: "polymarket",
-        name: "Polymarket",
-        tier: 5,
-        domain: "Markets / sentiment",
-        why: "Sample: market sentiment tracker",
-        scores: { specificity: 2, relevance: 2, freshness: 2, total: 6 },
-        last_scored: "2026-03-01",
-        tweets_surfaced_30d: 2,
-        status: "dropped"
-      }
-    ],
-    daily_brief: [
-      {
-        id: "brief-20260303-001",
-        date: "2026-03-03",
-        handle: "Saboo_Shubham_",
-        tag: "AGENT-INFRA",
-        claim: "Sample: Released a diagram of an 8-agent workflow with explicit handoffs + shared memory.",
-        so_what: "The orchestration pattern is close to what we'd want for OpenClaw-style pipelines; worth copying the delegation + evaluation loop.",
-        confidence: "High",
-        link: "https://x.com/Saboo_Shubham_/status/0000000000000000000",
-        tweet_text: "Sample tweet: Here's my 8-agent stack (planner → researcher → tool-runner → evaluator). Biggest gain came from strict contracts + cached context.",
-        metrics: { views: 34000, likes: 249, reposts: 58 },
-        rating: null
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "trial"
+    },
+    {
+      "handle": "PatrickMcKenzie",
+      "name": "Patrick McKenzie",
+      "tier": 3,
+      "domain": "Startups / operations",
+      "why": "Stripe, ops thinking",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        id: "brief-20260303-002",
-        date: "2026-03-03",
-        handle: "lorenzodoteth",
-        tag: "AGENT-INFRA",
-        claim: "Sample: Demo'd a tiny agent router that picks tools based on cost + latency budget.",
-        so_what: "We can add a simple budget-aware router to reduce spend and improve responsiveness on mobile workflows.",
-        confidence: "Medium",
-        link: "https://x.com/lorenzodoteth/status/0000000000000000001",
-        tweet_text: "Sample tweet: Tool routing should be budget-first. If latency > 1s, prefer cached summaries; if budget tight, degrade gracefully.",
-        metrics: { views: 18000, likes: 121, reposts: 19 },
-        rating: null
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "watch"
+    },
+    {
+      "handle": "polymarket",
+      "name": "Polymarket",
+      "tier": 5,
+      "domain": "Markets / sentiment",
+      "why": "Prediction markets",
+      "scores": {
+        "specificity": 3,
+        "relevance": 3,
+        "freshness": 3,
+        "total": 9
       },
-      {
-        id: "brief-20260303-003",
-        date: "2026-03-03",
-        handle: "rileybrown",
-        tag: "AGENT-PRODUCT",
-        claim: "Sample: Shared an eval rubric for agent reliability (task success, tool errors, hallucination rate).",
-        so_what: "Directly usable scoring dimensions for our weekly hit rate and internal QA gates.",
-        confidence: "High",
-        link: "https://x.com/rileybrown/status/0000000000000000002",
-        tweet_text: "Sample tweet: Stop arguing 'agentic'. Measure: success%, tool error%, retry depth, and contradiction rate vs. references.",
-        metrics: { views: 22000, likes: 310, reposts: 44 },
-        rating: null
+      "last_scored": "2026-03-03",
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    }
+  ],
+  "daily_brief": [
+    {
+      "id": "brief-20260303-001",
+      "date": "2026-03-03",
+      "handle": "Saboo_Shubham_",
+      "tag": "AGENT-INFRA",
+      "claim": "My Chief of Staff OpenClaw agent Monica writes performance reviews for the agent team every week.",
+      "so_what": "This shows a live deployment of agent workflows for team management, relevant to OpenClaw's infrastructure and reliability.",
+      "confidence": "High",
+      "link": "https://x.com/Saboo_Shubham_/status/2028678449561501991",
+      "tweet_text": "This is HOW you manage AI Agent teams in 2026 (in 5 minutes a week).
+
+My Chief of Staff OpenClaw agent Monica writes performance reviews for the agent team every week.
+
+She grades each agent. Flags what's working. What's not. Then brings it all to me in one report.
+
+I give https:",
+      "metrics": {
+        "views": 105602,
+        "likes": 571,
+        "reposts": 74
       },
-      {
-        id: "brief-20260303-004",
-        date: "2026-03-03",
-        handle: "statnews",
-        tag: "LANDSCAPE",
-        claim: "Sample: Hospital system announced a new AI documentation pilot with a major vendor.",
-        so_what: "Signals broader procurement appetite; track vendors + pricing models to anticipate competitive positioning.",
-        confidence: "Speculative",
-        link: "https://x.com/statnews/status/0000000000000000003",
-        tweet_text: "Sample tweet: A large health system is piloting AI documentation across several clinics; details TBD.",
-        metrics: { views: 9500, likes: 63, reposts: 11 },
-        rating: null
+      "rating": null
+    },
+    {
+      "id": "brief-20260303-002",
+      "date": "2026-03-03",
+      "handle": "Saboo_Shubham_",
+      "tag": "AGENT-INFRA",
+      "claim": "I run a team of 8 OpenClaw Agents 24/7 based on characters from FRIENDS and The Office that get smarter every single day.",
+      "so_what": "This demonstrates a live, scalable agent deployment with continuous learning, relevant to OpenClaw's agent infrastructure and product development.",
+      "confidence": "High",
+      "link": "https://x.com/Saboo_Shubham_/status/2027791423253450948",
+      "tweet_text": "DON'T READ this unless you want to feel like you're living in 2027.
+
+I run a team of 8 OpenClaw Agents 24/7 based on characters from FRIENDS and The Office that get smarter every single day.
+
+Running agent teams is one thing. Watching them get smarter every day is another. https:",
+      "metrics": {
+        "views": 136622,
+        "likes": 544,
+        "reposts": 49
       },
-      {
-        id: "brief-20260303-005",
-        date: "2026-03-03",
-        handle: "NetsmartTech",
-        tag: "MMHC-OPS",
-        claim: "Sample: Posted a thread on operationalizing care coordination metrics inside EHR workflows.",
-        so_what: "If we ship in clinical contexts, we need alignment with EHR-native metrics + reporting expectations.",
-        confidence: "Medium",
-        link: "https://x.com/NetsmartTech/status/0000000000000000004",
-        tweet_text: "Sample tweet: Care coordination isn't a vibe. Define the measure, define the workflow trigger, and document the data provenance.",
-        metrics: { views: 7200, likes: 51, reposts: 9 },
-        rating: null
+      "rating": null
+    },
+    {
+      "id": "brief-20260303-003",
+      "date": "2026-03-03",
+      "handle": "Saboo_Shubham_",
+      "tag": "AGENT-PRODUCT",
+      "claim": "Claude broke it into tickets and spun up a team of agents. The agents started picking up tasks on their own. No one told them to.",
+      "so_what": "This shows autonomous agent behavior and self-organization, relevant to agent product development and reliability.",
+      "confidence": "High",
+      "link": "https://x.com/Saboo_Shubham_/status/2026856780798767531",
+      "tweet_text": "SPEC IS BECOMING THE PRODUCT
+
+An Anthropic engineer gave Claude a spec, pointed it to an Asana board and left for the weekend.
+
+Claude broke it into tickets and spun up a team of agents. The agents started picking up tasks on their own. No one told them to.
+
+They just did. https:",
+      "metrics": {
+        "views": 282964,
+        "likes": 894,
+        "reposts": 69
       },
-      {
-        id: "brief-20260303-006",
-        date: "2026-03-03",
-        handle: "emollick",
-        tag: "MMHC-CONTENT",
-        claim: "Sample: Suggested a content format for explaining AI limits to non-technical stakeholders.",
-        so_what: "Good template for MMHC content outputs: 'What it does / fails at / how to verify'.",
-        confidence: "Medium",
-        link: "https://x.com/emollick/status/0000000000000000005",
-        tweet_text: "Sample tweet: The best AI training is not features—it's verification habits. Teach people where it fails and how to check.",
-        metrics: { views: 41000, likes: 982, reposts: 131 },
-        rating: null
+      "rating": null
+    },
+    {
+      "id": "brief-20260303-004",
+      "date": "2026-03-03",
+      "handle": "Saboo_Shubham_",
+      "tag": "AGENT-INFRA",
+      "claim": "Perplexity just launched their own OpenClaw. Anthropic Cowork might be the next.",
+      "so_what": "This indicates a competitive landscape for agent infrastructure, relevant to OpenClaw's market positioning and architecture.",
+      "confidence": "High",
+      "link": "https://x.com/Saboo_Shubham_/status/2026760837663510623",
+      "tweet_text": "Perplexity just launched their own OpenClaw. 
+
+Anthropic Cowork might be the next.
+
+Composable Computers is ALL YOU NEED.
+
+https://t.co/xGPGc9sYIv",
+      "metrics": {
+        "views": 22311,
+        "likes": 193,
+        "reposts": 17
       },
-      {
-        id: "brief-20260303-007",
-        date: "2026-03-03",
-        handle: "OpenAI",
-        tag: "AGENT-INFRA",
-        claim: "Sample: Noted a platform change affecting tool call tracing and logging.",
-        so_what: "If logging semantics changed, our evaluation + replay tooling might need updates.",
-        confidence: "Speculative",
-        link: "https://x.com/OpenAI/status/0000000000000000006",
-        tweet_text: "Sample tweet: We improved tool-call tracing for better debuggability. Details in docs (sample).",
-        metrics: { views: 56000, likes: 1400, reposts: 210 },
-        rating: null
+      "rating": null
+    },
+    {
+      "id": "brief-20260303-005",
+      "date": "2026-03-03",
+      "handle": "sama",
+      "tag": "LANDSCAPE",
+      "claim": "Tonight, we reached an agreement with the Department of War to deploy our models in their classified network.",
+      "so_what": "This reflects a significant regulatory and strategic shift in AI deployment, relevant to the broader AI landscape and compliance considerations.",
+      "confidence": "High",
+      "link": "https://x.com/sama/status/2027578652477821175",
+      "tweet_text": "Tonight, we reached an agreement with the Department of War to deploy our models in their classified network.
+
+In all of our interactions, the DoW displayed a deep respect for safety and a desire to partner to achieve the best possible outcome.
+
+AI safety and wide distribution of",
+      "metrics": {
+        "views": 37562552,
+        "likes": 34424,
+        "reposts": 4061
       },
-      {
-        id: "brief-20260303-008",
-        date: "2026-03-03",
-        handle: "AnthropicAI",
-        tag: "AGENT-PRODUCT",
-        claim: "Sample: Shared guidance on building safer agent UX with explicit 'review step'.",
-        so_what: "Matches the mobile review workflow: force a human checkpoint before irreversible actions.",
-        confidence: "High",
-        link: "https://x.com/AnthropicAI/status/0000000000000000007",
-        tweet_text: "Sample tweet: For agent UX: show plan, show sources, require explicit confirmation for destructive actions.",
-        metrics: { views: 39000, likes: 870, reposts: 102 },
-        rating: null
-      },
-      {
-        id: "brief-20260302-009",
-        date: "2026-03-02",
-        handle: "julesyoo",
-        tag: "LANDSCAPE",
-        claim: "Sample: Operator note on why AI features are being bundled instead of sold standalone.",
-        so_what: "Impacts pricing strategy: expect bundling pressure and focus on workflow outcomes.",
-        confidence: "Medium",
-        link: "https://x.com/julesyoo/status/0000000000000000008",
-        tweet_text: "Sample tweet: AI is becoming table stakes. Winners attach to distribution and charge for outcomes.",
-        metrics: { views: 12000, likes: 201, reposts: 27 },
-        rating: null
-      },
-      {
-        id: "brief-20260301-010",
-        date: "2026-03-01",
-        handle: "polymarket",
-        tag: "POLYMARKET-URGENT",
-        claim: "Sample: Market implied shift in near-term expectations for a policy outcome.",
-        so_what: "If real, could affect narrative pacing and stakeholder attention; treat as a volatility indicator.",
-        confidence: "Speculative",
-        link: "https://x.com/polymarket/status/0000000000000000009",
-        tweet_text: "Sample tweet: Odds moved sharply today (sample). Remember: markets reflect sentiment + liquidity, not ground truth.",
-        metrics: { views: 8700, likes: 41, reposts: 12 },
-        rating: null
-      }
-    ],
-    discovery_log: [
-      {
-        date: "2026-03-03",
-        source_handle: "Saboo_Shubham_",
-        new_handle: "someone_new",
-        method: "engagement_graph",
-        score: 9,
-        reason: "Sample: strong overlap with agent infra threads + frequent demos",
-        status: "proposed"
-      },
-      {
-        date: "2026-03-03",
-        source_handle: "rileybrown",
-        new_handle: "evals_are_hard",
-        method: "search",
-        score: 8,
-        reason: "Sample: posts consistent evaluation prompts and failure analyses",
-        status: "proposed"
-      },
-      {
-        date: "2026-03-02",
-        source_handle: "statnews",
-        new_handle: "HealthITWatcher",
-        method: "quote_tweet",
-        score: 7,
-        reason: "Sample: tracks procurement + vendor consolidation moves",
-        status: "proposed"
-      },
-      {
-        date: "2026-03-01",
-        source_handle: "lorenzodoteth",
-        new_handle: "router_tools",
-        method: "manual",
-        score: 6,
-        reason: "Sample: niche tool-router implementation notes (low volume)",
-        status: "proposed"
-      }
-    ],
-    weekly_stats: [
-      { week: "2026-W06", items_surfaced: 18, signal: 10, noise: 6, unclear: 2, hit_rate: 0.56, new_accounts_proposed: 2 },
-      { week: "2026-W07", items_surfaced: 24, signal: 16, noise: 6, unclear: 2, hit_rate: 0.67, new_accounts_proposed: 3 },
-      { week: "2026-W08", items_surfaced: 20, signal: 13, noise: 5, unclear: 2, hit_rate: 0.65, new_accounts_proposed: 1 },
-      { week: "2026-W09", items_surfaced: 22, signal: 15, noise: 5, unclear: 2, hit_rate: 0.68, new_accounts_proposed: 3 }
-    ]
-  };
+      "rating": null
+    }
+  ],
+  "discovery_log": [],
+  "weekly_stats": []
+};
 
   const TAG_COLORS = {
     "MMHC-OPS": "#4CAF50",
