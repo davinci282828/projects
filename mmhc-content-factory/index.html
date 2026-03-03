@@ -1004,12 +1004,12 @@
                     <div class="posted-actions" id="perf-form-${creative.id}">
                         <div style="font-size:0.8rem; color:var(--gold); margin-bottom:6px;">📊 Performance:</div>
                         <div class="perf-row">
-                            <label>Impressions</label><input name="impressions" type="number" value="${perf?.impressions || ''}" onchange="savePerformance('${creative.id}')">
-                            <label>Reach</label><input name="reach" type="number" value="${perf?.reach || ''}" onchange="savePerformance('${creative.id}')">
+                            <label>Impressions</label><input name="impressions" type="number" value="${perf?.impressions || ''}" oninput="savePerformance('${creative.id}')">
+                            <label>Reach</label><input name="reach" type="number" value="${perf?.reach || ''}" oninput="savePerformance('${creative.id}')">
                         </div>
                         <div class="perf-row">
-                            <label>Eng. %</label><input name="engagement" type="number" step="0.1" value="${perf?.engagement_rate || ''}" onchange="savePerformance('${creative.id}')">
-                            <label>Saves</label><input name="saves" type="number" value="${perf?.saves || ''}" onchange="savePerformance('${creative.id}')">
+                            <label>Eng. %</label><input name="engagement" type="number" step="0.1" value="${perf?.engagement_rate || ''}" oninput="savePerformance('${creative.id}')">
+                            <label>Saves</label><input name="saves" type="number" value="${perf?.saves || ''}" oninput="savePerformance('${creative.id}')">
                         </div>
                         <div class="rating-btns">
                             <button class="rating-btn top ${perf?.rating === 'top' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${creative.id}', 'top')">🔥 Top</button>
@@ -1202,7 +1202,9 @@
 
             // Extract patterns from creatives
             function getCreativeData(id) {
-                return data.creatives.find(c => c.id === id);
+                return data.creatives.find(c => c.id === id)
+                    || linkedinPosts.find(p => p.id === id)
+                    || personalIGCarousels.find(c => c.id === id);
             }
 
             function extractPatterns(items) {
@@ -1528,8 +1530,11 @@ The future of therapy isn't a nicer office. It's removing the need for one.`
             grid.style.gap = '30px';
 
             const cards = personalIGCarousels.map(c => {
-                const cardState = getState(c.id);
-                const stateClass = cardState || '';
+                const cardStatus = getState(c.id);
+                const fullSt = getFullState(c.id);
+                const stateClass = cardStatus || '';
+                const perf = fullSt?.performance;
+                const perfBadge = perf?.rating ? `<span class="perf-badge ${perf.rating}">${perf.rating === 'top' ? '🔥 Top' : perf.rating === 'avg' ? '✅ Avg' : '❌ Under'}</span>` : '';
 
                 // Build slide images
                 let slideImgs = '';
@@ -1545,6 +1550,41 @@ The future of therapy isn't a nicer office. It's removing the need for one.`
                         </div>`;
                 }
 
+                let postedArea = '';
+                if (cardStatus === 'approved') {
+                    postedArea = `<div class="posted-actions" style="margin-top:12px;">
+                        <div style="font-size:0.8rem; color:var(--light-green); margin-bottom:6px;">📱 Mark as Posted:</div>
+                        <div class="platform-btns">
+                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${c.id}', 'ig-feed')">IG Feed</button>
+                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${c.id}', 'ig-story')">IG Story</button>
+                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${c.id}', 'facebook')">Facebook</button>
+                        </div>
+                    </div>`;
+                }
+
+                let perfArea = '';
+                if (cardStatus === 'posted') {
+                    const platform = fullSt?.platform || '?';
+                    perfArea = `
+                        <div style="font-size:0.75rem; color:var(--gold); margin-top:8px;">📱 Posted to ${platform} ${fullSt?.posted_at ? '• ' + new Date(fullSt.posted_at).toLocaleDateString() : ''}</div>
+                        <div class="posted-actions" id="perf-form-${c.id}" style="margin-top:8px;">
+                            <div style="font-size:0.8rem; color:var(--gold); margin-bottom:6px;">📊 Performance:</div>
+                            <div class="perf-row">
+                                <label>Impressions</label><input name="impressions" type="number" value="${perf?.impressions || ''}" oninput="savePerformance('${c.id}')">
+                                <label>Reach</label><input name="reach" type="number" value="${perf?.reach || ''}" oninput="savePerformance('${c.id}')">
+                            </div>
+                            <div class="perf-row">
+                                <label>Eng. %</label><input name="engagement" type="number" step="0.1" value="${perf?.engagement_rate || ''}" oninput="savePerformance('${c.id}')">
+                                <label>Saves</label><input name="saves" type="number" value="${perf?.saves || ''}" oninput="savePerformance('${c.id}')">
+                            </div>
+                            <div class="rating-btns">
+                                <button class="rating-btn top ${perf?.rating === 'top' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${c.id}', 'top')">🔥 Top</button>
+                                <button class="rating-btn avg ${perf?.rating === 'avg' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${c.id}', 'avg')">✅ Average</button>
+                                <button class="rating-btn under ${perf?.rating === 'under' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${c.id}', 'under')">❌ Under</button>
+                            </div>
+                        </div>`;
+                }
+
                 return `
                     <div class="linkedin-card ${stateClass}" data-id="${c.id}" style="padding:24px;">
                         <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
@@ -1554,11 +1594,12 @@ The future of therapy isn't a nicer office. It's removing the need for one.`
                                     <span class="tag awareness">${c.slides} slides</span>
                                     <span class="tag" style="background: #333; color: #ccc;">${c.palette}</span>
                                 </div>
-                                <div style="font-weight:700; color:var(--cream); font-size:1.2rem;">${c.title}</div>
+                                <div style="font-weight:700; color:var(--cream); font-size:1.2rem;">${c.title} ${perfBadge}</div>
                             </div>
                             <div style="display:flex; gap:8px;">
-                                <button class="btn btn-approve ${cardState === 'approved' ? 'active' : ''}" data-id="${c.id}" data-action="approve">${cardState === 'approved' ? '✓ Approved' : 'Approve'}</button>
-                                <button class="btn btn-skip ${cardState === 'skipped' ? 'active' : ''}" data-id="${c.id}" data-action="skip">${cardState === 'skipped' ? '✗ Skip' : 'Skip'}</button>
+                                ${cardStatus === 'posted' ? `<button class="btn" style="background:var(--gold); color:var(--dark-navy);" disabled>📱 Posted</button>` :
+                                `<button class="btn btn-approve ${cardStatus === 'approved' ? 'active' : ''}" data-id="${c.id}" data-action="approve">${cardStatus === 'approved' ? '✓ Approved' : 'Approve'}</button>
+                                <button class="btn btn-skip ${cardStatus === 'skipped' ? 'active' : ''}" data-id="${c.id}" data-action="skip">${cardStatus === 'skipped' ? '✗ Skip' : 'Skip'}</button>`}
                             </div>
                         </div>
 
@@ -1572,6 +1613,8 @@ The future of therapy isn't a nicer office. It's removing the need for one.`
                         </div>
 
                         <div class="caption-copy" onclick="copyToClipboard(this, \`${c.caption.replace(/`/g, '\\`').replace(/\n/g, '\\n')}\`)" style="font-size:0.85rem; margin-top:12px; max-height:60px; overflow:hidden;">${c.caption.replace(/\n/g, '<br>')}</div>
+                        ${postedArea}
+                        ${perfArea}
                     </div>
                 `;
             });
@@ -1595,14 +1638,53 @@ The future of therapy isn't a nicer office. It's removing the need for one.`
         function renderLinkedIn() {
             const grid = document.getElementById('grid-linkedin');
             const cards = linkedinPosts.map(post => {
-                const cardState = getState(post.id);
-                const stateClass = cardState || '';
+                const cardStatus = getState(post.id);
+                const fullState = getFullState(post.id);
+                const stateClass = cardStatus || '';
+                const perf = fullState?.performance;
+                const perfBadge = perf?.rating ? `<span class="perf-badge ${perf.rating}">${perf.rating === 'top' ? '🔥 Top' : perf.rating === 'avg' ? '✅ Avg' : '❌ Under'}</span>` : '';
+
+                let postedArea = '';
+                if (cardStatus === 'approved') {
+                    postedArea = `<div class="posted-actions" style="margin-top:12px;">
+                        <div style="font-size:0.8rem; color:var(--light-green); margin-bottom:6px;">📱 Mark as Posted:</div>
+                        <div class="platform-btns">
+                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${post.id}', 'linkedin')">LinkedIn</button>
+                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${post.id}', 'ig-feed')">IG Feed</button>
+                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${post.id}', 'facebook')">Facebook</button>
+                        </div>
+                    </div>`;
+                }
+
+                let perfArea = '';
+                if (cardStatus === 'posted') {
+                    const platform = fullState?.platform || '?';
+                    perfArea = `
+                        <div style="font-size:0.75rem; color:var(--gold); margin-top:8px;">📱 Posted to ${platform} ${fullState?.posted_at ? '• ' + new Date(fullState.posted_at).toLocaleDateString() : ''}</div>
+                        <div class="posted-actions" id="perf-form-${post.id}" style="margin-top:8px;">
+                            <div style="font-size:0.8rem; color:var(--gold); margin-bottom:6px;">📊 Performance:</div>
+                            <div class="perf-row">
+                                <label>Impressions</label><input name="impressions" type="number" value="${perf?.impressions || ''}" oninput="savePerformance('${post.id}')">
+                                <label>Reach</label><input name="reach" type="number" value="${perf?.reach || ''}" oninput="savePerformance('${post.id}')">
+                            </div>
+                            <div class="perf-row">
+                                <label>Eng. %</label><input name="engagement" type="number" step="0.1" value="${perf?.engagement_rate || ''}" oninput="savePerformance('${post.id}')">
+                                <label>Saves</label><input name="saves" type="number" value="${perf?.saves || ''}" oninput="savePerformance('${post.id}')">
+                            </div>
+                            <div class="rating-btns">
+                                <button class="rating-btn top ${perf?.rating === 'top' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${post.id}', 'top')">🔥 Top</button>
+                                <button class="rating-btn avg ${perf?.rating === 'avg' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${post.id}', 'avg')">✅ Average</button>
+                                <button class="rating-btn under ${perf?.rating === 'under' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${post.id}', 'under')">❌ Under</button>
+                            </div>
+                        </div>`;
+                }
+
                 return `
                     <div class="linkedin-card ${stateClass}" data-id="${post.id}">
                         <div class="linkedin-header">
                             <div class="linkedin-icon">in</div>
                             <div>
-                                <div style="font-weight: 600; color: var(--cream);">${post.title}</div>
+                                <div style="font-weight: 600; color: var(--cream);">${post.title} ${perfBadge}</div>
                                 <div class="linkedin-meta">
                                     <span class="tag" style="background: #0A66C2; color: white;">${post.pillar}</span>
                                     <span class="tag awareness">${post.schedule}</span>
@@ -1611,11 +1693,14 @@ The future of therapy isn't a nicer office. It's removing the need for one.`
                         </div>
                         <div class="linkedin-body">${post.text}</div>
                         <div class="linkedin-actions">
-                            <button class="btn btn-approve ${cardState === 'approved' ? 'active' : ''}" data-id="${post.id}" data-action="approve">${cardState === 'approved' ? '✓ Approved' : 'Approve'}</button>
-                            <button class="btn btn-skip ${cardState === 'skipped' ? 'active' : ''}" data-id="${post.id}" data-action="skip">${cardState === 'skipped' ? '✗ Skipped' : 'Skip'}</button>
+                            ${cardStatus === 'posted' ? `<button class="btn" style="background:var(--gold); color:var(--dark-navy);" disabled>📱 Posted</button>` :
+                            `<button class="btn btn-approve ${cardStatus === 'approved' ? 'active' : ''}" data-id="${post.id}" data-action="approve">${cardStatus === 'approved' ? '✓ Approved' : 'Approve'}</button>
+                            <button class="btn btn-skip ${cardStatus === 'skipped' ? 'active' : ''}" data-id="${post.id}" data-action="skip">${cardStatus === 'skipped' ? '✗ Skipped' : 'Skip'}</button>`}
                             <button class="btn-copy-full" onclick="copyLinkedIn(this, '${post.id}')">Copy Post</button>
                             <span class="linkedin-schedule">📅 ${post.schedule}</span>
                         </div>
+                        ${postedArea}
+                        ${perfArea}
                     </div>
                 `;
             });
