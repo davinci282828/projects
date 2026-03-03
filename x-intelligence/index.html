@@ -493,7 +493,7 @@
 
       <div class="stats" role="group" aria-label="Overview statistics">
         <div class="stat"><div class="k">Total accounts</div><div class="v" id="statAccounts">—</div></div>
-        <div class="stat"><div class="k">Active scans</div><div class="v" id="statActive">—</div></div>
+        <div class="stat"><div class="k">Scanned today</div><div class="v" id="statActive">—</div></div>
         <div class="stat"><div class="k">Today's brief items</div><div class="v" id="statToday">—</div></div>
         <div class="stat"><div class="k">7-day hit rate</div><div class="v" id="statHitRate">—</div></div>
       </div>
@@ -643,7 +643,7 @@
 
   const DATA = {
   "meta": {
-    "generated": "2026-03-03T19:56:36.897840+00:00",
+    "generated": "2026-03-03T20:37:53.570793+00:00",
     "scan_date": "2026-03-03",
     "accounts_scanned": 4,
     "framework_version": "v2",
@@ -953,6 +953,38 @@
       "last_scored": null,
       "tweets_surfaced_30d": 0,
       "status": "active"
+    },
+    {
+      "handle": "sama",
+      "name": "Sam Altman",
+      "tier": 3,
+      "domain": "OpenAI CEO / AI policy",
+      "why": "Platform direction, policy signals",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 8,
+      "status": "active"
+    },
+    {
+      "handle": "Hxlf_",
+      "name": "ฮาฟ🐻. | เรียน!",
+      "tier": 5,
+      "domain": "Auto-discovered",
+      "why": "Found in scan, 8 followers",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 13,
+      "status": "trial"
     }
   ],
   "daily_brief": [
@@ -962,7 +994,7 @@
       "handle": "Saboo_Shubham_",
       "tag": "AGENT-INFRA",
       "claim": "Chief of Staff OpenClaw agent Monica writes performance reviews for the agent team every week.",
-      "so_what": "This shows a live deployment of agent workflows and management within OpenClaw, relevant to agent infrastructure and reliability.",
+      "so_what": "This shows a structured approach to managing AI agent teams, relevant to OpenClaw's infrastructure and reliability.",
       "confidence": "High",
       "link": "https://x.com/Saboo_Shubham_/status/2028678449561501991",
       "tweet_text": "This is HOW you manage AI Agent teams in 2026 (in 5 minutes a week).\n\nMy Chief of Staff OpenClaw agent Monica writes performance reviews for the agent team every week.\n\nShe grades each agent. Flags what's working. What's not. Then brings it all to me in one report.\n\nI give https:",
@@ -979,7 +1011,7 @@
       "handle": "Saboo_Shubham_",
       "tag": "AGENT-INFRA",
       "claim": "I run a team of 8 OpenClaw Agents 24/7 based on characters from FRIENDS and The Office that get smarter every single day.",
-      "so_what": "This demonstrates a live deployment of agent teams with continuous learning, relevant to agent infrastructure and product development.",
+      "so_what": "This demonstrates live deployment and continuous learning in agent teams, important for OpenClaw's product and infrastructure development.",
       "confidence": "High",
       "link": "https://x.com/Saboo_Shubham_/status/2027791423253450948",
       "tweet_text": "DON'T READ this unless you want to feel like you're living in 2027.\n\nI run a team of 8 OpenClaw Agents 24/7 based on characters from FRIENDS and The Office that get smarter every single day.\n\nRunning agent teams is one thing. Watching them get smarter every day is another. https:",
@@ -996,7 +1028,7 @@
       "handle": "Saboo_Shubham_",
       "tag": "AGENT-PRODUCT",
       "claim": "Claude broke it into tickets and spun up a team of agents. The agents started picking up tasks on their own. No one told them to.",
-      "so_what": "This shows autonomous agent behavior and self-organization, relevant to agent product development and reliability.",
+      "so_what": "This illustrates autonomous agent behavior, relevant to agent product development and capabilities.",
       "confidence": "High",
       "link": "https://x.com/Saboo_Shubham_/status/2026856780798767531",
       "tweet_text": "SPEC IS BECOMING THE PRODUCT\n\nAn Anthropic engineer gave Claude a spec, pointed it to an Asana board and left for the weekend.\n\nClaude broke it into tickets and spun up a team of agents. The agents started picking up tasks on their own. No one told them to.\n\nThey just did. https:",
@@ -1011,9 +1043,9 @@
       "id": "brief-20260303-004",
       "date": "2026-03-03",
       "handle": "Saboo_Shubham_",
-      "tag": "LANDSCAPE",
+      "tag": "AGENT-INFRA",
       "claim": "Perplexity just launched their own OpenClaw. Anthropic Cowork might be the next.",
-      "so_what": "This indicates a growing landscape of agent-based platforms, relevant to understanding market competition and trends.",
+      "so_what": "This indicates competitive development in agent infrastructure, relevant to OpenClaw's market position and architecture.",
       "confidence": "High",
       "link": "https://x.com/Saboo_Shubham_/status/2026760837663510623",
       "tweet_text": "Perplexity just launched their own OpenClaw. \n\nAnthropic Cowork might be the next.\n\nComposable Computers is ALL YOU NEED.\n\nhttps://t.co/xGPGc9sYIv",
@@ -1028,9 +1060,9 @@
       "id": "brief-20260303-005",
       "date": "2026-03-03",
       "handle": "sama",
-      "tag": "AGENT-INFRA",
+      "tag": "LANDSCAPE",
       "claim": "Tonight, we reached an agreement with the Department of War to deploy our models in their classified network.",
-      "so_what": "This shows a strategic deployment of AI models in a high-security environment, relevant to agent infrastructure and reliability.",
+      "so_what": "This reflects a major regulatory and strategic shift in AI deployment, relevant to the broader AI landscape and compliance considerations.",
       "confidence": "High",
       "link": "https://x.com/sama/status/2027578652477821175",
       "tweet_text": "Tonight, we reached an agreement with the Department of War to deploy our models in their classified network.\n\nIn all of our interactions, the DoW displayed a deep respect for safety and a desire to partner to achieve the best possible outcome.\n\nAI safety and wide distribution of",
@@ -1233,7 +1265,7 @@
 
   function computeHeaderStats(){
     const total = DATA.accounts.length;
-    const active = DATA.accounts.filter(a => a.status === "active").length;
+    const active = DATA.meta.accounts_scanned || DATA.accounts.filter(a => a.tweets_surfaced_30d > 0).length;
     const today = state.briefDate || DATA.meta.scan_date;
     const todaysCount = DATA.daily_brief.filter(b => b.date === today).length;
     const latestWeek = DATA.weekly_stats[DATA.weekly_stats.length - 1];
@@ -1245,7 +1277,13 @@
     $("statHitRate").textContent = `${fmtNum(hr)}%`;
 
     $("frameworkVer").textContent = DATA.meta.framework_version || "—";
-    $("lastScan").textContent = DATA.meta.generated ? DATA.meta.generated.replace("T"," ").replace("Z","Z") : "—";
+    // Format timestamp: "2026-03-03T19:56:36.897840+00:00" → "Mar 3, 2026 2:56 PM ET"
+    if(DATA.meta.generated){
+      try{
+        const d = new Date(DATA.meta.generated);
+        $("lastScan").textContent = d.toLocaleString("en-US", {month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit",timeZoneName:"short",timeZone:"America/New_York"});
+      }catch(e){ $("lastScan").textContent = DATA.meta.generated; }
+    } else { $("lastScan").textContent = "—"; }
   }
 
   function buildActionPrompt(action, item){
