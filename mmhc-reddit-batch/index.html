@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMHC Reddit Content Batch — March 2026</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f0f; color: #fff; padding: 40px; }
+  h1 { font-size: 28px; margin-bottom: 8px; }
+  .subtitle { color: #888; margin-bottom: 40px; font-size: 16px; }
+  .section { margin-bottom: 60px; }
+  .section h2 { font-size: 22px; margin-bottom: 6px; color: #A1E681; }
+  .section .desc { color: #999; margin-bottom: 20px; font-size: 14px; }
+  .grid { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 16px; }
+  .grid img { height: 320px; border-radius: 12px; cursor: pointer; transition: transform 0.2s; flex-shrink: 0; }
+  .grid img:hover { transform: scale(1.03); }
+  .singles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+  .singles-grid img { width: 100%; border-radius: 12px; cursor: pointer; transition: transform 0.2s; }
+  .singles-grid img:hover { transform: scale(1.03); }
+  .stats { display: flex; gap: 30px; margin-bottom: 40px; }
+  .stat { background: #1a1a1a; padding: 20px 30px; border-radius: 12px; }
+  .stat .num { font-size: 36px; font-weight: 700; color: #A1E681; }
+  .stat .label { font-size: 14px; color: #888; margin-top: 4px; }
+  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; justify-content: center; align-items: center; }
+  .modal.active { display: flex; }
+  .modal img { max-height: 90vh; max-width: 90vw; border-radius: 8px; }
+  .modal .close { position: absolute; top: 20px; right: 30px; font-size: 36px; cursor: pointer; color: #fff; }
+  .copy-block { background: #1a1a1a; padding: 16px 20px; border-radius: 8px; margin-top: 12px; font-size: 13px; color: #ccc; line-height: 1.6; }
+  .copy-block .headline-text { color: #fff; font-weight: 600; font-size: 15px; }
+</style>
+</head>
+<body>
+<h1>MMHC Reddit Content Batch</h1>
+<p class="subtitle">March 2026 — Derived from Reddit therapy community research (50 posts, 10 themes, 8 pain points)</p>
+
+<div class="stats">
+  <div class="stat"><div class="num">3</div><div class="label">Carousels (15 slides)</div></div>
+  <div class="stat"><div class="num">5</div><div class="label">Single Posts</div></div>
+  <div class="stat"><div class="num">2</div><div class="label">Organic Posts</div></div>
+  <div class="stat"><div class="num">22</div><div class="label">Total PNGs</div></div>
+</div>
+
+<div class="section">
+  <h2>Carousel 1: What people actually ask about therapy</h2>
+  <div class="desc">Source: Top Reddit questions by engagement. Format: Question → Reassurance.</div>
+  <div class="grid">
+    <img src="carousel-1/slide-1.png" onclick="showModal(this)">
+    <img src="carousel-1/slide-2.png" onclick="showModal(this)">
+    <img src="carousel-1/slide-3.png" onclick="showModal(this)">
+    <img src="carousel-1/slide-4.png" onclick="showModal(this)">
+    <img src="carousel-1/slide-5.png" onclick="showModal(this)">
+  </div>
+</div>
+
+<div class="section">
+  <h2>Carousel 2: Signs your therapist might not be the right fit</h2>
+  <div class="desc">Source: "Therapist relationship" theme (236 engagement, 10 posts). Angle: Pro-fit, not anti-therapist.</div>
+  <div class="grid">
+    <img src="carousel-2/slide-1.png" onclick="showModal(this)">
+    <img src="carousel-2/slide-2.png" onclick="showModal(this)">
+    <img src="carousel-2/slide-3.png" onclick="showModal(this)">
+    <img src="carousel-2/slide-4.png" onclick="showModal(this)">
+    <img src="carousel-2/slide-5.png" onclick="showModal(this)">
+  </div>
+</div>
+
+<div class="section">
+  <h2>Carousel 3: Online therapy myths vs reality</h2>
+  <div class="desc">Source: "Online vs in-person" theme (190 engagement). Directly supports MMHC's online-only model.</div>
+  <div class="grid">
+    <img src="carousel-3/slide-1.png" onclick="showModal(this)">
+    <img src="carousel-3/slide-2.png" onclick="showModal(this)">
+    <img src="carousel-3/slide-3.png" onclick="showModal(this)">
+    <img src="carousel-3/slide-4.png" onclick="showModal(this)">
+    <img src="carousel-3/slide-5.png" onclick="showModal(this)">
+  </div>
+</div>
+
+<div class="section">
+  <h2>Single Posts (Ads)</h2>
+  <div class="desc">5 standalone posts with backgrounds. Each targets a specific Reddit-sourced insight.</div>
+  <div class="singles-grid">
+    <div>
+      <img src="singles/single-4-keep-up.png" onclick="showModal(this)">
+      <div class="copy-block">
+        <div class="headline-text">Your therapist should be able to keep up with you.</div>
+        Source: Viral Reddit post (142 engagement). BG: Night skyline.
+      </div>
+    </div>
+    <div>
+      <img src="singles/single-5-good-enough-reason.png" onclick="showModal(this)">
+      <div class="copy-block">
+        <div class="headline-text">You're allowed to start therapy without a 'good enough' reason.</div>
+        Source: First session anxiety theme (66 engagement). BG: Couch.
+      </div>
+    </div>
+    <div>
+      <img src="singles/single-8-real-person.png" onclick="showModal(this)">
+      <div class="copy-block">
+        <div class="headline-text">Your therapist at MMHC is a real person who listens.</div>
+        Source: AI anxiety pain point (30 engagement). BG: Living room.
+      </div>
+    </div>
+    <div>
+      <img src="singles/single-9-family-outsider.png" onclick="showModal(this)">
+      <div class="copy-block">
+        <div class="headline-text">Being the family outsider doesn't mean you have to heal alone.</div>
+        Source: "Black sheep" pain point (26 engagement). BG: Brooklyn Bridge.
+      </div>
+    </div>
+    <div>
+      <img src="singles/single-10-survive.png" onclick="showModal(this)">
+      <div class="copy-block">
+        <div class="headline-text">Therapy shouldn't feel like another thing to survive.</div>
+        Source: Finding therapist theme (258 engagement). BG: Subway platform.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Organic Posts (No CTA)</h2>
+  <div class="desc">Engagement-focused — designed for comments, saves, and shares.</div>
+  <div class="singles-grid">
+    <div>
+      <img src="organic/organic-6-no-therapist.png" onclick="showModal(this)">
+      <div class="copy-block">
+        <div class="headline-text">'No therapist wants to work with me.'</div>
+        Caption: We've heard that before. You're not too much. Have you ever felt this way?
+      </div>
+    </div>
+    <div>
+      <img src="organic/organic-7-not-working.png" onclick="showModal(this)">
+      <div class="copy-block">
+        <div class="headline-text">How to tell your therapist something isn't working</div>
+        Caption: 4-step mini-guide. Goal: saves + shares.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal" onclick="closeModal()">
+  <span class="close">&times;</span>
+  <img id="modalImg" src="">
+</div>
+
+<script>
+function showModal(el) {
+  document.getElementById('modalImg').src = el.src;
+  document.getElementById('modal').classList.add('active');
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
