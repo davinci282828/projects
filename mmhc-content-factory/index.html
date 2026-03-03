@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MMHC Content Factory — Batch Review</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -210,111 +209,6 @@
             color: var(--light-green);
         }
 
-        /* LinkedIn text cards */
-        .linkedin-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 30px;
-            border: 2px solid transparent;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .linkedin-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            border-color: #0A66C2;
-        }
-
-        .linkedin-card.approved {
-            border-color: var(--light-green);
-        }
-
-        .linkedin-card.skipped {
-            opacity: 0.5;
-            border-color: #666;
-        }
-
-        .linkedin-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .linkedin-icon {
-            width: 36px;
-            height: 36px;
-            background: #0A66C2;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-            color: white;
-        }
-
-        .linkedin-meta {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .linkedin-body {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: var(--cream);
-            white-space: pre-line;
-            margin: 16px 0;
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .linkedin-body::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .linkedin-body::-webkit-scrollbar-thumb {
-            background: var(--dark-green);
-            border-radius: 2px;
-        }
-
-        .linkedin-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 16px;
-            align-items: center;
-        }
-
-        .btn-copy-full {
-            background: #0A66C2;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: transform 0.2s;
-        }
-
-        .btn-copy-full:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-copy-full.copied {
-            background: var(--light-green);
-            color: var(--dark-navy);
-        }
-
-        .linkedin-schedule {
-            font-size: 0.8rem;
-            color: var(--cream);
-            opacity: 0.6;
-            margin-left: auto;
-        }
-
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -343,168 +237,6 @@
         .card.skipped {
             opacity: 0.5;
             border-color: #666;
-        }
-
-        .card.posted {
-            border-color: var(--gold);
-        }
-
-        .card.posted::before {
-            content: '📱 Posted';
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: var(--gold);
-            color: var(--dark-navy);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            z-index: 5;
-        }
-
-        .card {
-            position: relative;
-        }
-
-        .perf-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            margin-left: 6px;
-        }
-
-        .perf-badge.top { background: var(--gold); color: var(--dark-navy); }
-        .perf-badge.avg { background: var(--light-green); color: var(--dark-navy); }
-        .perf-badge.under { background: #ff4444; color: white; }
-
-        .posted-actions, .perf-form {
-            margin-top: 10px;
-            padding: 10px;
-            background: var(--dark-navy);
-            border-radius: 8px;
-            border: 1px solid var(--dark-green);
-        }
-
-        .platform-btns {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .platform-btn {
-            padding: 6px 12px;
-            border: 1px solid var(--dark-green);
-            background: transparent;
-            color: var(--cream);
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-        }
-
-        .platform-btn:hover {
-            background: var(--gold);
-            color: var(--dark-navy);
-            border-color: var(--gold);
-        }
-
-        .perf-form input {
-            width: 70px;
-            padding: 4px 8px;
-            background: var(--card-bg);
-            border: 1px solid var(--dark-green);
-            color: var(--cream);
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin: 0 6px;
-        }
-
-        .perf-form label {
-            font-size: 0.8rem;
-            color: var(--cream);
-            opacity: 0.8;
-        }
-
-        .perf-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 6px 0;
-            flex-wrap: wrap;
-        }
-
-        .rating-btns {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .rating-btn {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .rating-btn.top { background: var(--gold); color: var(--dark-navy); }
-        .rating-btn.avg { background: var(--light-green); color: var(--dark-navy); }
-        .rating-btn.under { background: #ff4444; color: white; }
-
-        .batch-intel {
-            background: linear-gradient(135deg, var(--dark-green), #0d2818);
-            padding: 25px 30px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border: 1px solid var(--light-green);
-            cursor: pointer;
-        }
-
-        .batch-intel h3 {
-            color: var(--gold);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .batch-intel-body {
-            display: none;
-        }
-
-        .batch-intel.open .batch-intel-body {
-            display: block;
-        }
-
-        .intel-section {
-            background: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-        }
-
-        .intel-section h4 {
-            color: var(--light-green);
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-
-        .pattern-tag {
-            display: inline-block;
-            background: var(--dark-navy);
-            color: var(--cream);
-            padding: 3px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin: 3px;
-        }
-
-        .linkedin-card.posted {
-            border-color: var(--gold);
         }
 
         .card-image {
@@ -763,29 +495,11 @@
                     <span class="stat-value" id="skipped-count">0</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-label">Posted:</span>
-                    <span class="stat-value" id="posted-count">0</span>
-                </div>
-                <div class="stat">
                     <span class="stat-label">Batch:</span>
                     <span class="stat-value" id="batch-info">—</span>
                 </div>
             </div>
         </header>
-
-        <!-- Batch Intelligence Panel (Stage 4) -->
-        <div class="batch-intel" id="batch-intel" onclick="toggleIntel(event)">
-            <h3>📈 Batch Intelligence <span style="font-size:0.8rem; opacity:0.6; font-weight:400;">▸ click to expand</span></h3>
-            <div class="batch-intel-body" id="intel-body">
-                <div id="intel-content">
-                    <p style="opacity:0.7;">Post creatives and add performance data to unlock batch intelligence.</p>
-                </div>
-                <div style="margin-top:15px; display:flex; gap:10px; flex-wrap:wrap;">
-                    <button class="export-btn" onclick="event.stopPropagation(); exportFeedback();">📊 Export Feedback Data</button>
-                    <button class="export-btn secondary" onclick="event.stopPropagation(); exportBatchBrief();">📋 Export Batch Brief</button>
-                </div>
-            </div>
-        </div>
 
         <div class="controls">
             <div class="filter-group">
@@ -805,15 +519,12 @@
                     <option value="all">All Types</option>
                     <option value="ad">Ad</option>
                     <option value="organic">Organic</option>
-                    <option value="linkedin">LinkedIn</option>
-                    <option value="personal-ig">Personal IG</option>
                 </select>
             </div>
 
             <div class="export-actions">
                 <button class="export-btn" id="download-all-btn">⬇ Download All Approved</button>
                 <button class="export-btn secondary" id="meta-guide-btn">📱 How To Post</button>
-                <button class="export-btn secondary" onclick="exportFeedback()" style="background:#0A66C2; color:white;">📊 Export Feedback</button>
             </div>
         </div>
 
@@ -849,20 +560,7 @@
             <p style="font-size: 0.95rem; opacity: 0.9;">Organic Instagram posts are in development (pending personal IG handle). LinkedIn content strategy is in the Google Drive shared folder: <a href="https://docs.google.com/document/d/1uskA2hAWQqJeduTer-OCoIsN8N5omFGn/edit" style="color: var(--light-green);" target="_blank">LinkedIn Strategy V2</a></p>
         </div>
 
-        <div id="personal-ig-section" style="display: none;">
-            <h2 style="color: #E1306C; margin-bottom: 15px; font-size: 1.4rem;">📱 Personal IG Carousels (<span id="pig-count">0</span>)</h2>
-            <p style="color: var(--cream); opacity: 0.7; margin-bottom: 10px; font-size: 0.9rem;">Founder-voice carousels for your personal Instagram. Each has 5-7 swipeable slides + a caption.</p>
-            <p style="color: var(--cream); opacity: 0.5; margin-bottom: 20px; font-size: 0.85rem;">💡 <strong>How to post:</strong> Download all slides for a carousel → Create new IG post → Select all slides in order → Paste the caption → Post</p>
-            <div class="grid" id="grid-pig"></div>
-        </div>
-
-        <div id="linkedin-section" style="display: none;">
-            <h2 style="color: #0A66C2; margin-bottom: 15px; font-size: 1.4rem;">💼 LinkedIn Posts (<span id="linkedin-count">0</span>)</h2>
-            <p style="color: var(--cream); opacity: 0.7; margin-bottom: 20px; font-size: 0.9rem;">Text-only posts — tap "Copy Post" to copy the full text, then paste directly into LinkedIn.</p>
-            <div class="grid" id="grid-linkedin"></div>
-        </div>
-
-        <h2 id="ads-header" style="color: var(--gold); margin-bottom: 15px; font-size: 1.4rem;">📣 Ads (<span id="ad-count">0</span>)</h2>
+        <h2 style="color: var(--gold); margin-bottom: 15px; font-size: 1.4rem;">📣 Ads (<span id="ad-count">0</span>)</h2>
         <div class="grid" id="grid-ads">
             <div class="loading">Loading content...</div>
         </div>
@@ -884,18 +582,11 @@
         let data = null;
         let state = {};
 
-        // Load state from localStorage (backward-compatible: migrates string → object)
+        // Load state from localStorage
         function loadState() {
             const saved = localStorage.getItem('mmhc-content-review-state');
             if (saved) {
-                const parsed = JSON.parse(saved);
-                // Migrate old string states to rich objects
-                for (const [id, val] of Object.entries(parsed)) {
-                    if (typeof val === 'string') {
-                        parsed[id] = { status: val, approved_at: null, posted_at: null, platform: null, notes: '', performance: null };
-                    }
-                }
-                state = parsed;
+                state = JSON.parse(saved);
             }
         }
 
@@ -904,78 +595,21 @@
             localStorage.setItem('mmhc-content-review-state', JSON.stringify(state));
         }
 
-        // Get status string for a creative
+        // Get state for a creative
         function getState(id) {
-            if (!state[id]) return null;
-            return typeof state[id] === 'string' ? state[id] : state[id].status;
-        }
-
-        // Get full state object
-        function getFullState(id) {
             return state[id] || null;
         }
 
-        // Set state for a creative (now stores rich object)
+        // Set state for a creative
         function setState(id, value) {
             if (value === null) {
                 delete state[id];
             } else {
-                const existing = state[id] || {};
-                if (typeof existing === 'string') {
-                    state[id] = { status: value, approved_at: value === 'approved' ? new Date().toISOString() : null, posted_at: null, platform: null, notes: '', performance: null };
-                } else {
-                    state[id] = { ...existing, status: value };
-                    if (value === 'approved') state[id].approved_at = existing.approved_at || new Date().toISOString();
-                }
+                state[id] = value;
             }
             saveState();
             updateCounts();
             renderGrid();
-            updateIntel();
-        }
-
-        // Mark as posted with platform
-        function markPosted(id, platform) {
-            if (!state[id]) return;
-            if (typeof state[id] === 'string') {
-                state[id] = { status: 'posted', approved_at: new Date().toISOString(), posted_at: new Date().toISOString(), platform: platform, notes: '', performance: null };
-            } else {
-                state[id].status = 'posted';
-                state[id].posted_at = new Date().toISOString();
-                state[id].platform = platform;
-            }
-            saveState();
-            updateCounts();
-            renderGrid();
-            updateIntel();
-        }
-
-        // Save performance data
-        function savePerformance(id) {
-            const form = document.getElementById(`perf-form-${id}`);
-            if (!form) return;
-            const impressions = parseInt(form.querySelector('[name=impressions]').value) || 0;
-            const reach = parseInt(form.querySelector('[name=reach]').value) || 0;
-            const engagement = parseFloat(form.querySelector('[name=engagement]').value) || 0;
-            const saves = parseInt(form.querySelector('[name=saves]').value) || 0;
-
-            if (state[id] && typeof state[id] === 'object') {
-                state[id].performance = { impressions, reach, engagement_rate: engagement, saves, rating: state[id].performance?.rating || null };
-            }
-            saveState();
-            updateIntel();
-        }
-
-        // Set rating
-        function setRating(id, rating) {
-            if (state[id] && typeof state[id] === 'object') {
-                if (!state[id].performance) state[id].performance = {};
-                state[id].performance.rating = rating;
-            }
-            saveState();
-            updateCounts();
-            renderGrid();
-            updateIntel();
         }
 
         // Update stats counts
@@ -983,14 +617,12 @@
             if (!data) return;
 
             const total = data.creatives.length;
-            const approved = Object.values(state).filter(s => (typeof s === 'object' ? s.status : s) === 'approved').length;
-            const skipped = Object.values(state).filter(s => (typeof s === 'object' ? s.status : s) === 'skipped').length;
-            const posted = Object.values(state).filter(s => (typeof s === 'object' ? s.status : s) === 'posted').length;
+            const approved = Object.values(state).filter(s => s === 'approved').length;
+            const skipped = Object.values(state).filter(s => s === 'skipped').length;
 
             document.getElementById('total-count').textContent = total;
-            document.getElementById('approved-count').textContent = approved + posted;
+            document.getElementById('approved-count').textContent = approved;
             document.getElementById('skipped-count').textContent = skipped;
-            document.getElementById('posted-count').textContent = posted;
             document.getElementById('batch-info').textContent = `${data.batch} — ${data.date}`;
         }
 
@@ -1001,50 +633,8 @@
 
         // Create card HTML
         function createCard(creative) {
-            const cardStatus = getState(creative.id);
-            const fullState = getFullState(creative.id);
-            const stateClass = cardStatus ? cardStatus : '';
-            const perf = fullState?.performance;
-            const perfBadge = perf?.rating ? `<span class="perf-badge ${perf.rating}">${perf.rating === 'top' ? '🔥 Top' : perf.rating === 'avg' ? '✅ Avg' : '❌ Under'}</span>` : '';
-
-            // Posted action area (Stage 2)
-            let postedArea = '';
-            if (cardStatus === 'approved') {
-                postedArea = `
-                    <div class="posted-actions">
-                        <div style="font-size:0.8rem; color:var(--light-green); margin-bottom:6px;">📱 Mark as Posted:</div>
-                        <div class="platform-btns">
-                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${creative.id}', 'ig-feed')">IG Feed</button>
-                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${creative.id}', 'ig-story')">IG Story</button>
-                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${creative.id}', 'facebook')">Facebook</button>
-                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${creative.id}', 'linkedin')">LinkedIn</button>
-                        </div>
-                    </div>`;
-            }
-
-            // Performance form (Stage 3)
-            let perfArea = '';
-            if (cardStatus === 'posted') {
-                const platform = fullState?.platform || '?';
-                perfArea = `
-                    <div style="font-size:0.75rem; color:var(--gold); margin-top:6px;">📱 Posted to ${platform} ${fullState?.posted_at ? '• ' + new Date(fullState.posted_at).toLocaleDateString() : ''}</div>
-                    <div class="posted-actions" id="perf-form-${creative.id}">
-                        <div style="font-size:0.8rem; color:var(--gold); margin-bottom:6px;">📊 Performance:</div>
-                        <div class="perf-row">
-                            <label>Impressions</label><input name="impressions" type="number" value="${perf?.impressions || ''}" oninput="savePerformance('${creative.id}')">
-                            <label>Reach</label><input name="reach" type="number" value="${perf?.reach || ''}" oninput="savePerformance('${creative.id}')">
-                        </div>
-                        <div class="perf-row">
-                            <label>Eng. %</label><input name="engagement" type="number" step="0.1" value="${perf?.engagement_rate || ''}" oninput="savePerformance('${creative.id}')">
-                            <label>Saves</label><input name="saves" type="number" value="${perf?.saves || ''}" oninput="savePerformance('${creative.id}')">
-                        </div>
-                        <div class="rating-btns">
-                            <button class="rating-btn top ${perf?.rating === 'top' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${creative.id}', 'top')">🔥 Top</button>
-                            <button class="rating-btn avg ${perf?.rating === 'avg' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${creative.id}', 'avg')">✅ Average</button>
-                            <button class="rating-btn under ${perf?.rating === 'under' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${creative.id}', 'under')">❌ Under</button>
-                        </div>
-                    </div>`;
-            }
+            const cardState = getState(creative.id);
+            const stateClass = cardState ? cardState : '';
 
             return `
                 <div class="card ${stateClass}" data-id="${creative.id}" data-awareness="${creative.awareness}" data-type="${creative.type}">
@@ -1054,19 +644,15 @@
                             <span class="tag type-${creative.type}">${creative.type}</span>
                             <span class="tag awareness">${formatAwareness(creative.awareness)}</span>
                             <span class="score-badge">Score: ${creative.score.total}</span>
-                            ${perfBadge}
                         </div>
                         <div class="card-caption">${creative.caption}</div>
                         ${creative.cta ? `<div class="card-cta">CTA: ${creative.cta}</div>` : ''}
                         <div class="caption-copy" data-caption="${creative.caption.replace(/"/g, '&quot;')}" onclick="copyCaption(this)">${creative.caption.substring(0, 80)}...</div>
                         <div class="card-actions">
-                            ${cardStatus === 'posted' ? `<button class="btn" style="background:var(--gold); color:var(--dark-navy); flex:2;" disabled>📱 Posted</button>` :
-                            `<button class="btn btn-approve ${cardStatus === 'approved' ? 'active' : ''}" data-id="${creative.id}" data-action="approve">${cardStatus === 'approved' ? '✓ Approved' : 'Approve'}</button>
-                            <button class="btn btn-skip ${cardStatus === 'skipped' ? 'active' : ''}" data-id="${creative.id}" data-action="skip">${cardStatus === 'skipped' ? '✗ Skipped' : 'Skip'}</button>`}
-                            <button class="btn btn-download" onclick="event.stopPropagation(); downloadSingle('${creative.image}', '${creative.id}.png')" title="Download image">⬇</button>
+                            <button class="btn btn-approve ${cardState === 'approved' ? 'active' : ''}" data-id="${creative.id}" data-action="approve">${cardState === 'approved' ? '✓ Approved' : 'Approve'}</button>
+                            <button class="btn btn-skip ${cardState === 'skipped' ? 'active' : ''}" data-id="${creative.id}" data-action="skip">${cardState === 'skipped' ? '✗ Skipped' : 'Skip'}</button>
+                            <a class="btn btn-download" href="${creative.image}" download="${creative.id}.png" title="Download image">⬇</a>
                         </div>
-                        ${postedArea}
-                        ${perfArea}
                     </div>
                 </div>
             `;
@@ -1098,43 +684,14 @@
             document.getElementById('organic-count').textContent = organic.length;
 
             // Show/hide sections based on filter
-            const adHeader = document.getElementById('ads-header');
+            const adSection = gridAds.previousElementSibling;
             const orgSection = gridOrganic.previousElementSibling;
-            const liSection = document.getElementById('linkedin-section');
-
-            // Personal IG tab
-            const pigSection = document.getElementById('personal-ig-section');
-            if (typeFilter === 'personal-ig') {
-                adHeader.style.display = 'none';
-                gridAds.style.display = 'none';
-                orgSection.style.display = 'none';
-                gridOrganic.style.display = 'none';
-                liSection.style.display = 'none';
-                pigSection.style.display = 'block';
-                renderPersonalIG();
-                return;
-            } else {
-                pigSection.style.display = 'none';
-            }
-
-            // LinkedIn tab
-            if (typeFilter === 'linkedin') {
-                adHeader.style.display = 'none';
-                gridAds.style.display = 'none';
-                orgSection.style.display = 'none';
-                gridOrganic.style.display = 'none';
-                liSection.style.display = 'block';
-                renderLinkedIn();
-                return;
-            } else {
-                liSection.style.display = 'none';
-            }
 
             if (typeFilter === 'organic') {
-                adHeader.style.display = 'none';
+                adSection.style.display = 'none';
                 gridAds.style.display = 'none';
             } else {
-                adHeader.style.display = '';
+                adSection.style.display = '';
                 gridAds.style.display = '';
             }
 
@@ -1192,159 +749,6 @@
         document.getElementById('awareness-filter').addEventListener('change', renderGrid);
         document.getElementById('type-filter').addEventListener('change', renderGrid);
 
-        // Toggle Batch Intelligence panel
-        function toggleIntel(e) {
-            if (e.target.closest('.export-btn')) return;
-            document.getElementById('batch-intel').classList.toggle('open');
-        }
-
-        // Update Batch Intelligence (Stage 4)
-        function updateIntel() {
-            const content = document.getElementById('intel-content');
-            if (!data) return;
-
-            const allItems = [...data.creatives, ...linkedinPosts, ...personalIGCarousels];
-            const withPerf = [];
-            const posted = [];
-            const approved = [];
-
-            for (const [id, val] of Object.entries(state)) {
-                if (typeof val !== 'object') continue;
-                if (val.status === 'posted') posted.push({ id, ...val });
-                if (val.status === 'approved') approved.push({ id, ...val });
-                if (val.performance?.rating) withPerf.push({ id, ...val });
-            }
-
-            if (withPerf.length === 0) {
-                content.innerHTML = `<p style="opacity:0.7;">Post creatives and add performance data to unlock batch intelligence.</p>
-                    <p style="opacity:0.5; font-size:0.85rem; margin-top:8px;">Workflow: Approve → Mark Posted (pick platform) → Add Performance (impressions, engagement, rating) → Intelligence auto-generates.</p>
-                    <div style="margin-top:12px; opacity:0.5; font-size:0.85rem;">
-                        ✅ ${approved.length} approved · 📱 ${posted.length} posted · 📊 ${withPerf.length} with performance data
-                    </div>`;
-                return;
-            }
-
-            const tops = withPerf.filter(p => p.performance.rating === 'top');
-            const unders = withPerf.filter(p => p.performance.rating === 'under');
-
-            // Extract patterns from creatives
-            function getCreativeData(id) {
-                return data.creatives.find(c => c.id === id)
-                    || linkedinPosts.find(p => p.id === id)
-                    || personalIGCarousels.find(c => c.id === id);
-            }
-
-            function extractPatterns(items) {
-                const awareness = {};
-                const types = {};
-                const hooks = [];
-                items.forEach(item => {
-                    const c = getCreativeData(item.id);
-                    if (c) {
-                        awareness[c.awareness] = (awareness[c.awareness] || 0) + 1;
-                        types[c.type] = (types[c.type] || 0) + 1;
-                        if (c.headline) hooks.push(c.headline);
-                    }
-                });
-                return { awareness, types, hooks };
-            }
-
-            const topPatterns = extractPatterns(tops);
-            const underPatterns = extractPatterns(unders);
-
-            let html = `
-                <div style="opacity:0.5; font-size:0.85rem; margin-bottom:12px;">
-                    ✅ ${approved.length} approved · 📱 ${posted.length} posted · 📊 ${withPerf.length} with performance data
-                </div>`;
-
-            if (tops.length > 0) {
-                html += `<div class="intel-section">
-                    <h4>🔥 Top Performers (${tops.length})</h4>
-                    <p style="font-size:0.85rem; margin-bottom:8px;">IDs: ${tops.map(t => t.id).join(', ')}</p>
-                    ${Object.keys(topPatterns.awareness).length ? `<div style="margin:6px 0;"><span style="font-size:0.8rem; opacity:0.7;">Awareness stages:</span> ${Object.entries(topPatterns.awareness).map(([k,v]) => `<span class="pattern-tag">${k} (${v})</span>`).join('')}</div>` : ''}
-                    ${Object.keys(topPatterns.types).length ? `<div style="margin:6px 0;"><span style="font-size:0.8rem; opacity:0.7;">Types:</span> ${Object.entries(topPatterns.types).map(([k,v]) => `<span class="pattern-tag">${k} (${v})</span>`).join('')}</div>` : ''}
-                    ${topPatterns.hooks.length ? `<div style="margin:6px 0;"><span style="font-size:0.8rem; opacity:0.7;">Hooks:</span> ${topPatterns.hooks.map(h => `<span class="pattern-tag">"${h.substring(0,50)}${h.length > 50 ? '...' : ''}"</span>`).join('')}</div>` : ''}
-                </div>`;
-            }
-
-            if (unders.length > 0) {
-                html += `<div class="intel-section">
-                    <h4>❌ Underperformers (${unders.length})</h4>
-                    <p style="font-size:0.85rem; margin-bottom:8px;">IDs: ${unders.map(t => t.id).join(', ')}</p>
-                    ${Object.keys(underPatterns.awareness).length ? `<div style="margin:6px 0;"><span style="font-size:0.8rem; opacity:0.7;">Awareness stages:</span> ${Object.entries(underPatterns.awareness).map(([k,v]) => `<span class="pattern-tag">${k} (${v})</span>`).join('')}</div>` : ''}
-                </div>`;
-            }
-
-            // Auto-generate brief
-            const topAwareness = Object.entries(topPatterns.awareness).sort((a,b) => b[1]-a[1])[0];
-            const underAwareness = Object.entries(underPatterns.awareness).sort((a,b) => b[1]-a[1])[0];
-
-            html += `<div class="intel-section">
-                <h4>📋 Batch N+1 Brief</h4>
-                <ul style="font-size:0.85rem; line-height:2; padding-left:20px;">
-                    ${topAwareness ? `<li>Double down on <strong>${topAwareness[0]}</strong> awareness stage (${topAwareness[1]}/${tops.length} top performers)</li>` : ''}
-                    ${underAwareness ? `<li>Reduce <strong>${underAwareness[0]}</strong> awareness stage (${underAwareness[1]}/${unders.length} underperformers)</li>` : ''}
-                    ${topPatterns.hooks.length ? `<li>Hook patterns that work: direct questions, late-night references, bold statements</li>` : ''}
-                    <li>Total signal: ${withPerf.length} creatives rated. ${tops.length} top, ${withPerf.filter(p => p.performance.rating === 'avg').length} average, ${unders.length} under.</li>
-                </ul>
-            </div>`;
-
-            content.innerHTML = html;
-        }
-
-        // Export full feedback data (Stage 1)
-        function exportFeedback() {
-            const exportData = {
-                batch: data?.batch || 'unknown',
-                date: data?.date || new Date().toISOString().split('T')[0],
-                exported: new Date().toISOString(),
-                state: state
-            };
-            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `mmhc-feedback-${Date.now()}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        // Export batch brief (Stage 4)
-        function exportBatchBrief() {
-            const withPerf = Object.entries(state).filter(([id, val]) => typeof val === 'object' && val.performance?.rating);
-            const tops = withPerf.filter(([id, val]) => val.performance.rating === 'top');
-            const unders = withPerf.filter(([id, val]) => val.performance.rating === 'under');
-
-            const brief = {
-                batch: data?.batch || 'unknown',
-                generated: new Date().toISOString(),
-                total_rated: withPerf.length,
-                top_performers: tops.map(([id, val]) => {
-                    const c = data.creatives.find(cr => cr.id === id);
-                    return { id, platform: val.platform, performance: val.performance, awareness: c?.awareness, type: c?.type, headline: c?.headline };
-                }),
-                underperformers: unders.map(([id, val]) => {
-                    const c = data.creatives.find(cr => cr.id === id);
-                    return { id, platform: val.platform, performance: val.performance, awareness: c?.awareness, type: c?.type, headline: c?.headline };
-                }),
-                recommendations: {
-                    increase: tops.length > 0 ? [...new Set(tops.map(([id]) => data.creatives.find(c => c.id === id)?.awareness).filter(Boolean))] : [],
-                    decrease: unders.length > 0 ? [...new Set(unders.map(([id]) => data.creatives.find(c => c.id === id)?.awareness).filter(Boolean))] : []
-                }
-            };
-            const blob = new Blob([JSON.stringify(brief, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `mmhc-batch-brief-${Date.now()}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
         // Export approved items
         function exportApproved() {
             const approved = data.creatives.filter(c => getState(c.id) === 'approved');
@@ -1383,7 +787,6 @@
                 loadState();
                 updateCounts();
                 renderGrid();
-                updateIntel();
             } catch (error) {
                 console.error('Error loading data:', error);
                 document.getElementById('grid').innerHTML = `
@@ -1396,406 +799,6 @@
             }
         }
 
-        // LinkedIn posts data
-        const linkedinPosts = [
-            {
-                id: "li-001",
-                pillar: "Operator's Lens",
-                title: "Origin Story",
-                schedule: "Week 1 — Tuesday",
-                text: `I didn't go to school for therapy. I went to law school.
-
-But after years watching the mental health system fail people I cared about — long wait times, insurance confusion, therapists who ghost after session three — I decided to build something better.
-
-Manhattan Mental Health Counseling now has 80+ licensed therapists serving New York State through online therapy.
-
-Here's what I learned building it:
-
-The biggest barrier to therapy isn't stigma anymore. It's logistics.
-
-Can someone book same-week? Can they use their insurance without a 45-minute phone call? Can they switch therapists without starting over?
-
-We solve for logistics. The clinical team handles the rest.
-
-If you're building in healthcare: the unsexy operational stuff IS the product.`
-            },
-            {
-                id: "li-002",
-                pillar: "Access Advocacy",
-                title: "Hot Take — Vibes vs Access",
-                schedule: "Week 1 — Thursday",
-                text: `Unpopular opinion: Most mental health companies market therapy like it's a luxury product.
-
-Candlelit rooms. Minimalist fonts. "Your journey starts here."
-
-Meanwhile, the person Googling "therapist near me" at 2am just needs someone who takes their insurance and has an opening this week.
-
-We stopped marketing vibes and started marketing access.
-
-Result: Nearly 6,000 people follow our Instagram not for aesthetics — but because we talk about the stuff nobody else will.
-
-The mental health industry doesn't have an awareness problem. It has a delivery problem.`
-            },
-            {
-                id: "li-003",
-                pillar: "Industry Takes",
-                title: "NYC Therapist Paradox",
-                schedule: "Week 2 — Tuesday",
-                text: `New York has more therapists per capita than almost any state in the country.
-
-And yet the average wait time for a new patient is still 3-6 weeks.
-
-How is that possible?
-
-Because most practices are 1-5 person operations. They're full. They don't take your insurance. They don't have evening hours.
-
-When I started Manhattan Mental Health Counseling, the thesis was simple: scale the things solo practices can't.
-
-→ Same-week availability
-→ 80+ therapists across specialties
-→ Real insurance acceptance (not "we'll give you a superbill")
-→ Online therapy — accessible from anywhere in New York State
-
-Mental health access isn't a therapy problem. It's an operations problem.
-
-And operations is what I know.`
-            },
-            {
-                id: "li-004",
-                pillar: "Operator's Lens",
-                title: "The Weight of Infrastructure",
-                schedule: "Week 2 — Thursday",
-                text: `The hardest part of running a mental health practice isn't what you'd think.
-
-It's not hiring therapists. It's not marketing. It's not even insurance credentialing (though that's close).
-
-It's the weight of knowing that when your systems fail, someone doesn't get help.
-
-A scheduling glitch means a first-time patient loses their nerve to try again.
-A billing error means someone stops coming because they think they can't afford it.
-A slow response means they go to the next Google result.
-
-In most businesses, operational mistakes cost money.
-In mental health, they cost something harder to measure.
-
-That's why I obsess over the infrastructure nobody sees.`
-            },
-            {
-                id: "li-005",
-                pillar: "Industry Takes",
-                title: "Online-First by Choice",
-                schedule: "Week 3 — Tuesday",
-                text: `We made a deliberate choice to be online-only.
-
-Not because of COVID. Not because it's cheaper. Because the data shows it works — and it removes the biggest barriers to actually showing up.
-
-No commute through Manhattan traffic.
-No awkward waiting room.
-No "I couldn't make it because of work."
-
-Our no-show rate dropped significantly when we went fully online. Patients in Albany, Buffalo, and the Hudson Valley get the same access as someone on the Upper West Side.
-
-80+ therapists. Every session online. Serving all of New York State.
-
-The future of therapy isn't a nicer office. It's removing the need for one.`
-            }
-        ];
-
-        // Personal IG carousel data
-        const personalIGCarousels = [
-            {
-                id: 'carousel-001',
-                title: 'Origin Story',
-                pillar: "Operator's Lens",
-                slides: 7,
-                palette: 'Navy + Green',
-                caption: "I didn't go to school for therapy. I went to law school.\n\nBut after years watching the mental health system fail people — I decided to build something better.\n\nSwipe for the full story →",
-                coverImg: 'carousel-001-cover.png'
-            },
-            {
-                id: 'carousel-002',
-                title: 'Vibes vs Access',
-                pillar: 'Access Advocacy',
-                slides: 6,
-                palette: 'Green + Gold',
-                caption: "The mental health industry doesn't have an awareness problem. It has a delivery problem.\n\nSwipe for the unpopular opinion →",
-                coverImg: 'carousel-002-cover.png'
-            },
-            {
-                id: 'carousel-003',
-                title: 'NYC Therapist Paradox',
-                pillar: 'Industry Takes',
-                slides: 6,
-                palette: 'Midnight Blue + Green',
-                caption: "New York has more therapists per capita than almost any state. And yet the average wait for a new patient is 3-6 weeks.\n\nHow is that possible? Swipe →",
-                coverImg: 'carousel-003-cover.png'
-            },
-            {
-                id: 'carousel-004',
-                title: 'Weight of Infrastructure',
-                pillar: "Operator's Lens",
-                slides: 6,
-                palette: 'Deep Purple + Gold',
-                caption: "The hardest part of running a mental health practice isn't what you'd think.\n\nSwipe →",
-                coverImg: 'carousel-004-cover.png'
-            },
-            {
-                id: 'carousel-005',
-                title: 'Online-First by Choice',
-                pillar: 'Industry Takes',
-                slides: 6,
-                palette: 'Ocean Navy + Green',
-                caption: "We made a deliberate choice to be online-only. Not because of COVID.\n\nSwipe for why →",
-                coverImg: 'carousel-005-cover.png'
-            }
-        ];
-
-        function renderPersonalIG() {
-            const grid = document.getElementById('grid-pig');
-            grid.style.display = 'flex';
-            grid.style.flexDirection = 'column';
-            grid.style.gap = '30px';
-
-            const cards = personalIGCarousels.map(c => {
-                const cardStatus = getState(c.id);
-                const fullSt = getFullState(c.id);
-                const stateClass = cardStatus || '';
-                const perf = fullSt?.performance;
-                const perfBadge = perf?.rating ? `<span class="perf-badge ${perf.rating}">${perf.rating === 'top' ? '🔥 Top' : perf.rating === 'avg' ? '✅ Avg' : '❌ Under'}</span>` : '';
-
-                // Build slide images
-                let slideImgs = '';
-                for (let i = 1; i <= c.slides; i++) {
-                    const num = String(i).padStart(2, '0');
-                    const fname = `${c.id}-slide-${num}.png`;
-                    slideImgs += `
-                        <div style="flex: 0 0 280px; text-align:center;">
-                            <img src="${fname}" alt="Slide ${i}" style="width:280px; height:280px; border-radius:8px; object-fit:cover; border: 2px solid ${i === 1 ? '#E1306C' : '#333'};">
-                            <div style="margin-top:6px;">
-                                <button onclick="event.stopPropagation(); downloadSingle('${fname}', '${c.id}-slide-${num}.png')" style="color:#E1306C; font-size:0.8rem; background:none; border:none; cursor:pointer; text-decoration:underline;">⬇ Slide ${i}</button>
-                            </div>
-                        </div>`;
-                }
-
-                let postedArea = '';
-                if (cardStatus === 'approved') {
-                    postedArea = `<div class="posted-actions" style="margin-top:12px;">
-                        <div style="font-size:0.8rem; color:var(--light-green); margin-bottom:6px;">📱 Mark as Posted:</div>
-                        <div class="platform-btns">
-                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${c.id}', 'ig-feed')">IG Feed</button>
-                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${c.id}', 'ig-story')">IG Story</button>
-                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${c.id}', 'facebook')">Facebook</button>
-                        </div>
-                    </div>`;
-                }
-
-                let perfArea = '';
-                if (cardStatus === 'posted') {
-                    const platform = fullSt?.platform || '?';
-                    perfArea = `
-                        <div style="font-size:0.75rem; color:var(--gold); margin-top:8px;">📱 Posted to ${platform} ${fullSt?.posted_at ? '• ' + new Date(fullSt.posted_at).toLocaleDateString() : ''}</div>
-                        <div class="posted-actions" id="perf-form-${c.id}" style="margin-top:8px;">
-                            <div style="font-size:0.8rem; color:var(--gold); margin-bottom:6px;">📊 Performance:</div>
-                            <div class="perf-row">
-                                <label>Impressions</label><input name="impressions" type="number" value="${perf?.impressions || ''}" oninput="savePerformance('${c.id}')">
-                                <label>Reach</label><input name="reach" type="number" value="${perf?.reach || ''}" oninput="savePerformance('${c.id}')">
-                            </div>
-                            <div class="perf-row">
-                                <label>Eng. %</label><input name="engagement" type="number" step="0.1" value="${perf?.engagement_rate || ''}" oninput="savePerformance('${c.id}')">
-                                <label>Saves</label><input name="saves" type="number" value="${perf?.saves || ''}" oninput="savePerformance('${c.id}')">
-                            </div>
-                            <div class="rating-btns">
-                                <button class="rating-btn top ${perf?.rating === 'top' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${c.id}', 'top')">🔥 Top</button>
-                                <button class="rating-btn avg ${perf?.rating === 'avg' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${c.id}', 'avg')">✅ Average</button>
-                                <button class="rating-btn under ${perf?.rating === 'under' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${c.id}', 'under')">❌ Under</button>
-                            </div>
-                        </div>`;
-                }
-
-                return `
-                    <div class="linkedin-card ${stateClass}" data-id="${c.id}" style="padding:24px;">
-                        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
-                            <div>
-                                <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px;">
-                                    <span class="tag" style="background: #E1306C; color: white;">${c.pillar}</span>
-                                    <span class="tag awareness">${c.slides} slides</span>
-                                    <span class="tag" style="background: #333; color: #ccc;">${c.palette}</span>
-                                </div>
-                                <div style="font-weight:700; color:var(--cream); font-size:1.2rem;">${c.title} ${perfBadge}</div>
-                            </div>
-                            <div style="display:flex; gap:8px;">
-                                ${cardStatus === 'posted' ? `<button class="btn" style="background:var(--gold); color:var(--dark-navy);" disabled>📱 Posted</button>` :
-                                `<button class="btn btn-approve ${cardStatus === 'approved' ? 'active' : ''}" data-id="${c.id}" data-action="approve">${cardStatus === 'approved' ? '✓ Approved' : 'Approve'}</button>
-                                <button class="btn btn-skip ${cardStatus === 'skipped' ? 'active' : ''}" data-id="${c.id}" data-action="skip">${cardStatus === 'skipped' ? '✗ Skip' : 'Skip'}</button>`}
-                            </div>
-                        </div>
-
-                        <div style="overflow-x:auto; display:flex; gap:12px; padding:10px 0; -webkit-overflow-scrolling:touch;">
-                            ${slideImgs}
-                        </div>
-
-                        <div style="display:flex; gap:12px; margin-top:16px; align-items:center; flex-wrap:wrap;">
-                            <button class="btn-copy-full" onclick="copyToClipboard(this, \`${c.caption.replace(/`/g, '\\`').replace(/\n/g, '\\n')}\`)">📋 Copy Caption</button>
-                            <button class="btn-copy-full" style="background:#333;" onclick="downloadAllSlides('${c.id}', ${c.slides})">⬇ Download All Slides</button>
-                        </div>
-
-                        <div class="caption-copy" onclick="copyToClipboard(this, \`${c.caption.replace(/`/g, '\\`').replace(/\n/g, '\\n')}\`)" style="font-size:0.85rem; margin-top:12px; max-height:60px; overflow:hidden;">${c.caption.replace(/\n/g, '<br>')}</div>
-                        ${postedArea}
-                        ${perfArea}
-                    </div>
-                `;
-            });
-            grid.innerHTML = cards.join('');
-            document.getElementById('pig-count').textContent = personalIGCarousels.length;
-        }
-
-        // Mobile-friendly single image download (blob-based)
-        async function downloadSingle(url, filename) {
-            try {
-                const resp = await fetch(url);
-                const blob = await resp.blob();
-                const blobUrl = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = blobUrl;
-                a.download = filename;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(blobUrl);
-            } catch(err) {
-                // Fallback: open in new tab
-                window.open(url, '_blank');
-            }
-        }
-
-        async function downloadAllSlides(carouselId, count) {
-            if (typeof JSZip !== 'undefined') {
-                // ZIP-based download (mobile-friendly)
-                const zip = new JSZip();
-                for (let i = 0; i <= count; i++) {
-                    const num = String(i).padStart(2, '0');
-                    const fname = i === 0 ? `${carouselId}-cover.png` : `${carouselId}-slide-${num}.png`;
-                    try {
-                        const blob = await fetchImageBlob(fname);
-                        zip.file(fname, blob);
-                    } catch(e) { /* skip missing */ }
-                }
-                const zipBlob = await zip.generateAsync({ type: 'blob' });
-                const url = URL.createObjectURL(zipBlob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `${carouselId}-all-slides.zip`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            } else {
-                // Fallback: individual downloads
-                for (let i = 1; i <= count; i++) {
-                    const num = String(i).padStart(2, '0');
-                    await downloadSingle(`${carouselId}-slide-${num}.png`, `${carouselId}-slide-${num}.png`);
-                }
-            }
-        }
-
-        // Render LinkedIn section
-        function renderLinkedIn() {
-            const grid = document.getElementById('grid-linkedin');
-            const cards = linkedinPosts.map(post => {
-                const cardStatus = getState(post.id);
-                const fullState = getFullState(post.id);
-                const stateClass = cardStatus || '';
-                const perf = fullState?.performance;
-                const perfBadge = perf?.rating ? `<span class="perf-badge ${perf.rating}">${perf.rating === 'top' ? '🔥 Top' : perf.rating === 'avg' ? '✅ Avg' : '❌ Under'}</span>` : '';
-
-                let postedArea = '';
-                if (cardStatus === 'approved') {
-                    postedArea = `<div class="posted-actions" style="margin-top:12px;">
-                        <div style="font-size:0.8rem; color:var(--light-green); margin-bottom:6px;">📱 Mark as Posted:</div>
-                        <div class="platform-btns">
-                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${post.id}', 'linkedin')">LinkedIn</button>
-                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${post.id}', 'ig-feed')">IG Feed</button>
-                            <button class="platform-btn" onclick="event.stopPropagation(); markPosted('${post.id}', 'facebook')">Facebook</button>
-                        </div>
-                    </div>`;
-                }
-
-                let perfArea = '';
-                if (cardStatus === 'posted') {
-                    const platform = fullState?.platform || '?';
-                    perfArea = `
-                        <div style="font-size:0.75rem; color:var(--gold); margin-top:8px;">📱 Posted to ${platform} ${fullState?.posted_at ? '• ' + new Date(fullState.posted_at).toLocaleDateString() : ''}</div>
-                        <div class="posted-actions" id="perf-form-${post.id}" style="margin-top:8px;">
-                            <div style="font-size:0.8rem; color:var(--gold); margin-bottom:6px;">📊 Performance:</div>
-                            <div class="perf-row">
-                                <label>Impressions</label><input name="impressions" type="number" value="${perf?.impressions || ''}" oninput="savePerformance('${post.id}')">
-                                <label>Reach</label><input name="reach" type="number" value="${perf?.reach || ''}" oninput="savePerformance('${post.id}')">
-                            </div>
-                            <div class="perf-row">
-                                <label>Eng. %</label><input name="engagement" type="number" step="0.1" value="${perf?.engagement_rate || ''}" oninput="savePerformance('${post.id}')">
-                                <label>Saves</label><input name="saves" type="number" value="${perf?.saves || ''}" oninput="savePerformance('${post.id}')">
-                            </div>
-                            <div class="rating-btns">
-                                <button class="rating-btn top ${perf?.rating === 'top' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${post.id}', 'top')">🔥 Top</button>
-                                <button class="rating-btn avg ${perf?.rating === 'avg' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${post.id}', 'avg')">✅ Average</button>
-                                <button class="rating-btn under ${perf?.rating === 'under' ? 'active' : ''}" onclick="event.stopPropagation(); setRating('${post.id}', 'under')">❌ Under</button>
-                            </div>
-                        </div>`;
-                }
-
-                return `
-                    <div class="linkedin-card ${stateClass}" data-id="${post.id}">
-                        <div class="linkedin-header">
-                            <div class="linkedin-icon">in</div>
-                            <div>
-                                <div style="font-weight: 600; color: var(--cream);">${post.title} ${perfBadge}</div>
-                                <div class="linkedin-meta">
-                                    <span class="tag" style="background: #0A66C2; color: white;">${post.pillar}</span>
-                                    <span class="tag awareness">${post.schedule}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="linkedin-body">${post.text}</div>
-                        <div class="linkedin-actions">
-                            ${cardStatus === 'posted' ? `<button class="btn" style="background:var(--gold); color:var(--dark-navy);" disabled>📱 Posted</button>` :
-                            `<button class="btn btn-approve ${cardStatus === 'approved' ? 'active' : ''}" data-id="${post.id}" data-action="approve">${cardStatus === 'approved' ? '✓ Approved' : 'Approve'}</button>
-                            <button class="btn btn-skip ${cardStatus === 'skipped' ? 'active' : ''}" data-id="${post.id}" data-action="skip">${cardStatus === 'skipped' ? '✗ Skipped' : 'Skip'}</button>`}
-                            <button class="btn-copy-full" onclick="copyLinkedIn(this, '${post.id}')">Copy Post</button>
-                            <span class="linkedin-schedule">📅 ${post.schedule}</span>
-                        </div>
-                        ${postedArea}
-                        ${perfArea}
-                    </div>
-                `;
-            });
-            grid.innerHTML = cards.join('');
-            document.getElementById('linkedin-count').textContent = linkedinPosts.length;
-        }
-
-        function copyLinkedIn(btn, id) {
-            const post = linkedinPosts.find(p => p.id === id);
-            if (post) {
-                navigator.clipboard.writeText(post.text).then(() => {
-                    btn.textContent = '✓ Copied!';
-                    btn.classList.add('copied');
-                    setTimeout(() => {
-                        btn.textContent = 'Copy Post';
-                        btn.classList.remove('copied');
-                    }, 2000);
-                });
-            }
-        }
-
-        // Copy text to clipboard (generic)
-        function copyToClipboard(btn, text) {
-            navigator.clipboard.writeText(text).then(() => {
-                const orig = btn.textContent;
-                btn.textContent = '✓ Copied!';
-                btn.classList.add('copied');
-                setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
-            });
-        }
-
         // Copy caption to clipboard
         function copyCaption(el) {
             const caption = el.dataset.caption;
@@ -1805,87 +808,31 @@ The future of therapy isn't a nicer office. It's removing the need for one.`
             });
         }
 
-        // Helper: fetch image as blob (works on mobile)
-        async function fetchImageBlob(url) {
-            const resp = await fetch(url);
-            return resp.blob();
-        }
-
-        // Download all approved images as ZIP (mobile-friendly)
-        document.addEventListener('click', async (e) => {
+        // Download all approved images
+        document.addEventListener('click', (e) => {
             if (e.target.id === 'download-all-btn') {
-                // Collect all approved items (ads, organic, carousels, linkedin)
-                const approvedCreatives = data.creatives.filter(c => getState(c.id) === 'approved');
-                const approvedCarousels = personalIGCarousels.filter(c => getState(c.id) === 'approved');
-                const approvedLinkedin = linkedinPosts.filter(p => getState(p.id) === 'approved');
-
-                if (approvedCreatives.length === 0 && approvedCarousels.length === 0 && approvedLinkedin.length === 0) {
+                const approved = data.creatives.filter(c => getState(c.id) === 'approved');
+                if (approved.length === 0) {
                     alert('No approved items yet. Tap "Approve" on the creatives you want first.');
                     return;
                 }
+                // Download each image
+                approved.forEach((c, i) => {
+                    setTimeout(() => {
+                        const a = document.createElement('a');
+                        a.href = c.image;
+                        a.download = c.id + '.png';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    }, i * 300); // stagger to avoid browser blocking
+                });
 
-                const btn = e.target;
-                const origText = btn.textContent;
-                btn.textContent = '⏳ Building ZIP...';
-                btn.disabled = true;
-
-                try {
-                    const zip = new JSZip();
-                    const captionParts = [];
-
-                    // Add approved ad/organic images
-                    for (const c of approvedCreatives) {
-                        const blob = await fetchImageBlob(c.image);
-                        zip.file(`${c.type}/${c.id}.png`, blob);
-                        captionParts.push(`--- ${c.id} (${c.type}) ---\n${c.caption}`);
-                    }
-
-                    // Add approved carousel slides
-                    for (const c of approvedCarousels) {
-                        for (let i = 0; i < c.slides; i++) {
-                            const num = String(i + 1).padStart(2, '0');
-                            const fname = i === 0
-                                ? `${c.id}-cover.png`
-                                : `${c.id}-slide-${num}.png`;
-                            try {
-                                const blob = await fetchImageBlob(fname);
-                                zip.file(`carousels/${fname}`, blob);
-                            } catch(err) { /* skip missing slides */ }
-                        }
-                        captionParts.push(`--- ${c.id} (carousel) ---\n${c.caption || c.title}`);
-                    }
-
-                    // Add approved LinkedIn text posts
-                    for (const p of approvedLinkedin) {
-                        captionParts.push(`--- ${p.id} (LinkedIn) ---\nTitle: ${p.title}\nPillar: ${p.pillar}\nSchedule: ${p.schedule}\n\n${p.text}`);
-                    }
-
-                    // Add captions file
-                    zip.file('captions.txt', captionParts.join('\n\n'));
-
-                    // Generate and download ZIP
-                    const zipBlob = await zip.generateAsync({ type: 'blob' });
-                    const url = URL.createObjectURL(zipBlob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `mmhc-approved-${Date.now()}.zip`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-
-                    // Also copy captions to clipboard
-                    const captionText = captionParts.join('\n\n');
-                    await navigator.clipboard.writeText(captionText).catch(() => {});
-
-                    const total = approvedCreatives.length + approvedCarousels.length + approvedLinkedin.length;
-                    alert(`✅ ZIP downloaded with ${total} items + captions.txt\n\nCaptions also copied to clipboard!`);
-                } catch (err) {
-                    alert('Download failed: ' + err.message + '\n\nTry downloading individual images instead.');
-                } finally {
-                    btn.textContent = origText;
-                    btn.disabled = false;
-                }
+                // Also copy all captions
+                const captionText = approved.map(c => `--- ${c.id} ---\n${c.caption}`).join('\n\n');
+                navigator.clipboard.writeText(captionText).then(() => {
+                    alert(`Downloading ${approved.length} images.\n\nAll captions also copied to clipboard!`);
+                });
             }
 
             if (e.target.id === 'meta-guide-btn') {
