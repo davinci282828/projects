@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MMHC Reddit Content Batch — March 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
   :root {
     --green: #A1E681;
@@ -316,7 +317,7 @@ function renderCard(piece) {
           <button onclick="toggleCaption('${piece.id}')" style="border-color:#555;color:#aaa;">👁 Preview</button>
           ${isCarousel
             ? `<button class="btn-download" onclick="downloadAllSlides('${piece.id}')">⬇ All ${piece.files.length} Slides</button>`
-            : `<a class="btn-download" href="${mainImg}" download="${piece.id}.png">⬇ Download</a>`
+            : `<button class="btn-download" onclick="downloadSingle('${mainImg}', '${piece.id}.png')">⬇ Download</button>`
           }
         </div>
       </div>
@@ -347,40 +348,96 @@ function render() {
   updateStats();
 }
 
-function downloadAllSlides(carouselId) {
+// Mobile-friendly blob download
+async function downloadSingle(url, filename) {
+  try {
+    const resp = await fetch(url);
+    const blob = await resp.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(blobUrl);
+  } catch(err) {
+    window.open(url, '_blank');
+  }
+}
+
+async function downloadAllSlides(carouselId) {
   const piece = DATA.pieces.find(p => p.id === carouselId);
   if (!piece) return;
-  piece.files.forEach((f, i) => {
-    setTimeout(() => {
-      const a = document.createElement('a');
-      a.href = f;
-      a.download = `${carouselId}-slide-${i+1}.png`;
-      a.click();
-    }, i * 300);
-  });
-  toast(`Downloading ${piece.files.length} slides...`);
+  if (typeof JSZip !== 'undefined') {
+    toast('Building ZIP...');
+    const zip = new JSZip();
+    for (let i = 0; i < piece.files.length; i++) {
+      try {
+        const resp = await fetch(piece.files[i]);
+        const blob = await resp.blob();
+        zip.file(`${carouselId}-slide-${i+1}.png`, blob);
+      } catch(e) {}
+    }
+    const zipBlob = await zip.generateAsync({ type: 'blob' });
+    const url = URL.createObjectURL(zipBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${carouselId}-all-slides.zip`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast(`ZIP with ${piece.files.length} slides downloaded!`);
+  } else {
+    for (const [i, f] of piece.files.entries()) {
+      await downloadSingle(f, `${carouselId}-slide-${i+1}.png`);
+    }
+    toast(`Downloading ${piece.files.length} slides...`);
+  }
 }
 
 // Toolbar handlers
-document.getElementById('btn-download-approved').addEventListener('click', () => {
+document.getElementById('btn-download-approved').addEventListener('click', async () => {
   const approved = DATA.pieces.filter(p => getStatus(p.id) === 'approved');
   if (approved.length === 0) { toast('No approved items yet'); return; }
-  let delay = 0;
-  approved.forEach(p => {
-    p.files.forEach(f => {
-      setTimeout(() => {
-        const a = document.createElement('a');
-        a.href = f;
-        a.download = f.split('/').pop();
-        a.click();
-      }, delay);
-      delay += 300;
-    });
-  });
-  // Also copy all captions
-  const captionText = approved.map(p => `--- ${p.id} ---\n${p.caption}`).join('\n\n');
-  navigator.clipboard.writeText(captionText).catch(() => {});
-  toast(`Downloading ${approved.length} pieces + captions copied!`);
+
+  if (typeof JSZip !== 'undefined') {
+    toast('Building ZIP...');
+    const zip = new JSZip();
+    const captionParts = [];
+    for (const p of approved) {
+      for (const f of p.files) {
+        try {
+          const resp = await fetch(f);
+          const blob = await resp.blob();
+          zip.file(f.split('/').pop(), blob);
+        } catch(e) {}
+      }
+      captionParts.push(`--- ${p.id} (${p.type}) ---\n${p.caption}`);
+    }
+    zip.file('captions.txt', captionParts.join('\n\n'));
+    const zipBlob = await zip.generateAsync({ type: 'blob' });
+    const url = URL.createObjectURL(zipBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `mmhc-reddit-approved-${Date.now()}.zip`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    navigator.clipboard.writeText(captionParts.join('\n\n')).catch(() => {});
+    toast(`ZIP with ${approved.length} pieces + captions downloaded!`);
+  } else {
+    for (const p of approved) {
+      for (const f of p.files) {
+        await downloadSingle(f, f.split('/').pop());
+      }
+    }
+    const captionText = approved.map(p => `--- ${p.id} ---\n${p.caption}`).join('\n\n');
+    navigator.clipboard.writeText(captionText).catch(() => {});
+    toast(`Downloading ${approved.length} pieces + captions copied!`);
+  }
 });
 
 document.getElementById('btn-export-feedback').addEventListener('click', () => {
