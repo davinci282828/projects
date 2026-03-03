@@ -152,9 +152,10 @@
   <button class="primary" id="btn-download-approved">⬇ Download All Approved</button>
   <button id="btn-export-feedback">📊 Export Feedback</button>
   <button id="btn-export-brief">📋 Export Brief</button>
+  <button id="btn-send-davinci" style="background:#0088cc;color:#fff;font-weight:700">🚀 Send to Da Vinci</button>
   <button id="btn-reset">↺ Reset All</button>
   <span class="spacer"></span>
-  <span class="filter-info">💡 Approve → Download → Post. State saved in browser.</span>
+  <span class="filter-info">💡 Approve → Send to Da Vinci. Done.</span>
 </div>
 
 <div id="content"></div>
@@ -535,6 +536,14 @@ document.getElementById('btn-export-brief').addEventListener('click', () => {
   a.download = `mmhc-reddit-brief-${Date.now()}.txt`;
   a.click();
   toast('Brief exported!');
+});
+
+document.getElementById('btn-send-davinci').addEventListener('click', () => {
+  const approved = Object.values(state).filter(s => s?.status === 'approved').length;
+  const skipped = Object.values(state).filter(s => s?.status === 'skipped').length;
+  const total = DATA.pieces.length;
+  const tgUrl = `https://t.me/share/url?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(`Reddit Batch review: ✅ ${approved} approved | ✗ ${skipped} skipped | ⏳ ${total - approved - skipped} pending`)}`;
+  window.open(tgUrl, '_blank');
 });
 
 document.getElementById('btn-reset').addEventListener('click', () => {
