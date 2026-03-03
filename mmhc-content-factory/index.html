@@ -525,6 +525,7 @@
             <div class="export-actions">
                 <button class="export-btn" id="download-all-btn">⬇ Download All Approved</button>
                 <button class="export-btn secondary" id="meta-guide-btn">📱 How To Post</button>
+                <button class="export-btn secondary" id="export-feedback-btn" style="background:#FF9800;color:#000;font-weight:700">📤 Export Feedback</button>
             </div>
         </div>
 
@@ -784,6 +785,15 @@
                     throw new Error('Failed to load data.json');
                 }
                 data = await response.json();
+                // Load baked-in approvals from data.json first (server-side truth)
+                if (data.approvals) {
+                    for (const [id, status] of Object.entries(data.approvals)) {
+                        if (!state[id]) {  // localStorage overrides baked-in
+                            state[id] = status;
+                        }
+                    }
+                    saveState();
+                }
                 loadState();
                 updateCounts();
                 renderGrid();
@@ -838,6 +848,30 @@
             if (e.target.id === 'meta-guide-btn') {
                 const guide = document.getElementById('meta-guide');
                 guide.style.display = guide.style.display === 'none' || !guide.style.display ? 'block' : 'none';
+            }
+
+            if (e.target.id === 'export-feedback-btn') {
+                const exportData = {
+                    exported: new Date().toISOString(),
+                    batch: data?.batch || 'unknown',
+                    device: /Mobile|iPhone|iPad|Android/.test(navigator.userAgent) ? 'mobile' : 'desktop',
+                    state: state,
+                    summary: {
+                        approved: Object.entries(state).filter(([k,v]) => v === 'approved').map(([k]) => k),
+                        skipped: Object.entries(state).filter(([k,v]) => v === 'skipped').map(([k]) => k),
+                        pending: data ? data.creatives.filter(c => !state[c.id]).map(c => c.id) : []
+                    }
+                };
+                const blob = new Blob([JSON.stringify(exportData, null, 2)], {type: 'application/json'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `mmhc-feedback-${Date.now()}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                alert(`Exported ${Object.keys(state).length} decisions.\n\nSend this file to Da Vinci via Telegram.`);
             }
         });
 
