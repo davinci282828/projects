@@ -526,6 +526,7 @@
                 <button class="export-btn" id="download-all-btn">⬇ Download All Approved</button>
                 <button class="export-btn secondary" id="meta-guide-btn">📱 How To Post</button>
                 <button class="export-btn secondary" id="copy-link-btn" style="background:#FF9800;color:#000;font-weight:700">📋 Share State</button>
+                <button class="export-btn" id="send-to-davinci-btn" style="background:#0088cc;font-weight:700">🚀 Send to Da Vinci</button>
             </div>
         </div>
 
@@ -886,16 +887,23 @@
             if (e.target.id === 'copy-link-btn') {
                 const url = location.href;
                 if (navigator.share) {
-                    // Mobile: use native share sheet
                     navigator.share({ title: 'MMHC Content Review', url: url }).catch(() => {});
                 } else {
-                    // Desktop: copy to clipboard
                     navigator.clipboard.writeText(url).then(() => {
                         alert('Link copied! Open on any device to restore your approvals.');
                     }).catch(() => {
                         prompt('Copy this link:', url);
                     });
                 }
+            }
+
+            if (e.target.id === 'send-to-davinci-btn') {
+                const approved = Object.entries(state).filter(([k,v]) => v === 'approved').length;
+                const skipped = Object.entries(state).filter(([k,v]) => v === 'skipped').length;
+                const total = data ? data.creatives.length : 0;
+                const msg = `Content Factory review:\n✅ ${approved} approved | ✗ ${skipped} skipped | ⏳ ${total - approved - skipped} pending\n\n${location.href}`;
+                const tgUrl = `https://t.me/share/url?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(`Content Factory review: ✅ ${approved} approved | ✗ ${skipped} skipped | ⏳ ${total - approved - skipped} pending`)}`;
+                window.open(tgUrl, '_blank');
             }
         });
 
