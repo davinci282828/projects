@@ -525,7 +525,7 @@
             <div class="export-actions">
                 <button class="export-btn" id="download-all-btn">⬇ Download All Approved</button>
                 <button class="export-btn secondary" id="meta-guide-btn">📱 How To Post</button>
-                <button class="export-btn secondary" id="export-feedback-btn" style="background:#FF9800;color:#000;font-weight:700">📤 Export Feedback</button>
+                <button class="export-btn secondary" id="copy-link-btn" style="background:#FF9800;color:#000;font-weight:700">📋 Share State</button>
             </div>
         </div>
 
@@ -583,25 +583,58 @@
         let data = null;
         let state = {};
 
-        // Load state from localStorage
+        // === State persistence: URL hash (primary) + localStorage (fallback) ===
+        // State is encoded in URL hash so it works across devices via shared link.
+        // Format: #s=aaspp... where a=approved, s=skipped, p=pending
+        // Order matches data.json creatives array order.
+
+        function encodeState() {
+            if (!data || !data.creatives) return '';
+            return data.creatives.map(c => {
+                const s = state[c.id];
+                return s === 'approved' ? 'a' : s === 'skipped' ? 's' : 'p';
+            }).join('');
+        }
+
+        function decodeState(hash) {
+            if (!data || !data.creatives || !hash) return;
+            for (let i = 0; i < Math.min(hash.length, data.creatives.length); i++) {
+                const c = hash[i];
+                const id = data.creatives[i].id;
+                if (c === 'a') state[id] = 'approved';
+                else if (c === 's') state[id] = 'skipped';
+                // 'p' = pending, don't set
+            }
+        }
+
         function loadState() {
+            // 1. Check URL hash first (cross-device link)
+            const hash = location.hash;
+            if (hash && hash.startsWith('#s=')) {
+                decodeState(hash.substring(3));
+                saveState(); // persist to localStorage too
+                return;
+            }
+            // 2. Fall back to localStorage
             const saved = localStorage.getItem('mmhc-content-review-state');
             if (saved) {
                 state = JSON.parse(saved);
             }
         }
 
-        // Save state to localStorage
         function saveState() {
             localStorage.setItem('mmhc-content-review-state', JSON.stringify(state));
+            // Auto-update URL hash (no page reload)
+            if (data && data.creatives) {
+                const encoded = encodeState();
+                history.replaceState(null, '', '#s=' + encoded);
+            }
         }
 
-        // Get state for a creative
         function getState(id) {
             return state[id] || null;
         }
 
-        // Set state for a creative
         function setState(id, value) {
             if (value === null) {
                 delete state[id];
@@ -850,28 +883,19 @@
                 guide.style.display = guide.style.display === 'none' || !guide.style.display ? 'block' : 'none';
             }
 
-            if (e.target.id === 'export-feedback-btn') {
-                const exportData = {
-                    exported: new Date().toISOString(),
-                    batch: data?.batch || 'unknown',
-                    device: /Mobile|iPhone|iPad|Android/.test(navigator.userAgent) ? 'mobile' : 'desktop',
-                    state: state,
-                    summary: {
-                        approved: Object.entries(state).filter(([k,v]) => v === 'approved').map(([k]) => k),
-                        skipped: Object.entries(state).filter(([k,v]) => v === 'skipped').map(([k]) => k),
-                        pending: data ? data.creatives.filter(c => !state[c.id]).map(c => c.id) : []
-                    }
-                };
-                const blob = new Blob([JSON.stringify(exportData, null, 2)], {type: 'application/json'});
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `mmhc-feedback-${Date.now()}.json`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                alert(`Exported ${Object.keys(state).length} decisions.\n\nSend this file to Da Vinci via Telegram.`);
+            if (e.target.id === 'copy-link-btn') {
+                const url = location.href;
+                if (navigator.share) {
+                    // Mobile: use native share sheet
+                    navigator.share({ title: 'MMHC Content Review', url: url }).catch(() => {});
+                } else {
+                    // Desktop: copy to clipboard
+                    navigator.clipboard.writeText(url).then(() => {
+                        alert('Link copied! Open on any device to restore your approvals.');
+                    }).catch(() => {
+                        prompt('Copy this link:', url);
+                    });
+                }
             }
         });
 
