@@ -1078,32 +1078,72 @@ The future of therapy isn't a nicer office. It's removing the need for one.`
 
         function renderPersonalIG() {
             const grid = document.getElementById('grid-pig');
+            grid.style.display = 'flex';
+            grid.style.flexDirection = 'column';
+            grid.style.gap = '30px';
+
             const cards = personalIGCarousels.map(c => {
                 const cardState = getState(c.id);
                 const stateClass = cardState || '';
+
+                // Build slide images
+                let slideImgs = '';
+                for (let i = 1; i <= c.slides; i++) {
+                    const num = String(i).padStart(2, '0');
+                    const fname = `${c.id}-slide-${num}.png`;
+                    slideImgs += `
+                        <div style="flex: 0 0 280px; text-align:center;">
+                            <img src="${fname}" alt="Slide ${i}" style="width:280px; height:280px; border-radius:8px; object-fit:cover; border: 2px solid ${i === 1 ? '#E1306C' : '#333'};">
+                            <div style="margin-top:6px;">
+                                <a href="${fname}" download="${c.id}-slide-${num}.png" style="color:#E1306C; font-size:0.8rem; text-decoration:none;">⬇ Slide ${i}</a>
+                            </div>
+                        </div>`;
+                }
+
                 return `
-                    <div class="card ${stateClass}" data-id="${c.id}">
-                        <img src="${c.coverImg}" alt="${c.title}" style="width:100%; border-radius: 8px 8px 0 0;">
-                        <div style="padding: 15px;">
-                            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;">
-                                <span class="tag" style="background: #E1306C; color: white;">${c.pillar}</span>
-                                <span class="tag awareness">${c.slides} slides</span>
-                                <span class="tag" style="background: #333; color: #ccc;">${c.palette}</span>
+                    <div class="linkedin-card ${stateClass}" data-id="${c.id}" style="padding:24px;">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
+                            <div>
+                                <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px;">
+                                    <span class="tag" style="background: #E1306C; color: white;">${c.pillar}</span>
+                                    <span class="tag awareness">${c.slides} slides</span>
+                                    <span class="tag" style="background: #333; color: #ccc;">${c.palette}</span>
+                                </div>
+                                <div style="font-weight:700; color:var(--cream); font-size:1.2rem;">${c.title}</div>
                             </div>
-                            <div style="font-weight:600; color:var(--cream); margin-bottom:8px; font-size:1.1rem;">${c.title}</div>
-                            <div class="caption-copy" onclick="copyToClipboard(this, \`${c.caption.replace(/`/g, '\\`').replace(/\n/g, '\\n')}\`)" style="font-size:0.85rem; max-height:80px; overflow:hidden;">${c.caption.replace(/\n/g, '<br>')}</div>
-                            <div style="display:flex; gap:8px; margin-top:12px; align-items:center;">
-                                <button class="btn btn-approve ${cardState === 'approved' ? 'active' : ''}" data-id="${c.id}" data-action="approve">${cardState === 'approved' ? '✓' : '✓'}</button>
-                                <button class="btn btn-skip ${cardState === 'skipped' ? 'active' : ''}" data-id="${c.id}" data-action="skip">${cardState === 'skipped' ? '✗' : '✗'}</button>
-                                <a href="${c.coverImg}" download="${c.id}-cover.png" class="btn" style="background:#E1306C; color:white; text-decoration:none; font-size:0.8rem;">⬇ Cover</a>
+                            <div style="display:flex; gap:8px;">
+                                <button class="btn btn-approve ${cardState === 'approved' ? 'active' : ''}" data-id="${c.id}" data-action="approve">${cardState === 'approved' ? '✓ Approved' : 'Approve'}</button>
+                                <button class="btn btn-skip ${cardState === 'skipped' ? 'active' : ''}" data-id="${c.id}" data-action="skip">${cardState === 'skipped' ? '✗ Skip' : 'Skip'}</button>
                             </div>
-                            <p style="font-size:0.75rem; color:var(--cream); opacity:0.4; margin-top:8px;">Full slides: download from carousel folder</p>
                         </div>
+
+                        <div style="overflow-x:auto; display:flex; gap:12px; padding:10px 0; -webkit-overflow-scrolling:touch;">
+                            ${slideImgs}
+                        </div>
+
+                        <div style="display:flex; gap:12px; margin-top:16px; align-items:center; flex-wrap:wrap;">
+                            <button class="btn-copy-full" onclick="copyToClipboard(this, \`${c.caption.replace(/`/g, '\\`').replace(/\n/g, '\\n')}\`)">📋 Copy Caption</button>
+                            <button class="btn-copy-full" style="background:#333;" onclick="downloadAllSlides('${c.id}', ${c.slides})">⬇ Download All Slides</button>
+                        </div>
+
+                        <div class="caption-copy" onclick="copyToClipboard(this, \`${c.caption.replace(/`/g, '\\`').replace(/\n/g, '\\n')}\`)" style="font-size:0.85rem; margin-top:12px; max-height:60px; overflow:hidden;">${c.caption.replace(/\n/g, '<br>')}</div>
                     </div>
                 `;
             });
             grid.innerHTML = cards.join('');
             document.getElementById('pig-count').textContent = personalIGCarousels.length;
+        }
+
+        function downloadAllSlides(carouselId, count) {
+            for (let i = 1; i <= count; i++) {
+                setTimeout(() => {
+                    const num = String(i).padStart(2, '0');
+                    const a = document.createElement('a');
+                    a.href = `${carouselId}-slide-${num}.png`;
+                    a.download = `${carouselId}-slide-${num}.png`;
+                    a.click();
+                }, i * 400);
+            }
         }
 
         // Render LinkedIn section
