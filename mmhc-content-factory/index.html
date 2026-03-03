@@ -673,7 +673,7 @@
 
             return `
                 <div class="card ${stateClass}" data-id="${creative.id}" data-awareness="${creative.awareness}" data-type="${creative.type}">
-                    <img class="card-image" src="${creative.image}" alt="${creative.headline}" data-id="${creative.id}">
+                    <img class="card-image" src="${creative.image}?t=${Date.now()}" alt="${creative.headline}" data-id="${creative.id}">
                     <div class="card-content">
                         <div class="card-tags">
                             <span class="tag type-${creative.type}">${creative.type}</span>
@@ -814,7 +814,7 @@
         // Load data
         async function loadData() {
             try {
-                const response = await fetch('data.json');
+                const response = await fetch('data.json?t=' + Date.now());
                 if (!response.ok) {
                     throw new Error('Failed to load data.json');
                 }
@@ -901,9 +901,26 @@
                 const approved = Object.entries(state).filter(([k,v]) => v === 'approved').length;
                 const skipped = Object.entries(state).filter(([k,v]) => v === 'skipped').length;
                 const total = data ? data.creatives.length : 0;
-                const msg = `Content Factory review:\n✅ ${approved} approved | ✗ ${skipped} skipped | ⏳ ${total - approved - skipped} pending\n\n${location.href}`;
-                const tgUrl = `https://t.me/share/url?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(`Content Factory review: ✅ ${approved} approved | ✗ ${skipped} skipped | ⏳ ${total - approved - skipped} pending`)}`;
-                window.open(tgUrl, '_blank');
+                const text = `Content Factory review: ✅ ${approved} approved | ✗ ${skipped} skipped | ⏳ ${total - approved - skipped} pending\n\n${location.href}`;
+                // Try tg:// protocol first (opens Telegram app directly on mobile)
+                const tgDeep = `tg://msg_url?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(text)}`;
+                // Fallback: copy to clipboard
+                const opened = window.open(tgDeep);
+                setTimeout(() => {
+                    // If tg:// didn't work (desktop/no Telegram), copy to clipboard
+                    if (!opened || opened.closed) {
+                        navigator.clipboard.writeText(text).then(() => {
+                            alert('Copied to clipboard! Paste in Telegram to Da Vinci.');
+                        }).catch(() => {
+                            // Last resort: use web share API
+                            if (navigator.share) {
+                                navigator.share({ title: 'MMHC Review', text: text, url: location.href });
+                            } else {
+                                prompt('Copy this:', text);
+                            }
+                        });
+                    }
+                }, 1500);
             }
         });
 
