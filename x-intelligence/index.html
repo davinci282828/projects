@@ -1286,6 +1286,58 @@
     } else { $("lastScan").textContent = "—"; }
   }
 
+  // Telegram deep link config
+  const TG_BOT = "Davinciff_bot";
+  function tgDeepLink(action, payload){
+    return `https://t.me/${TG_BOT}?start=xi_${action}_${encodeURIComponent(payload)}`;
+  }
+
+  function triggerAction(action, item, btn){
+    let payload, url;
+    if(action === "analyze"){
+      payload = item.handle;
+      url = tgDeepLink("dive", payload);
+    } else if(action === "repurpose"){
+      payload = item.id;
+      url = tgDeepLink("repurpose", payload);
+    } else if(action === "apply"){
+      payload = item.id;
+      url = tgDeepLink("apply", payload);
+    } else {
+      return;
+    }
+
+    // Visual feedback
+    const origText = btn.textContent;
+    btn.textContent = "Sent to Da Vinci →";
+    btn.style.opacity = "0.6";
+    btn.style.pointerEvents = "none";
+    setTimeout(() => { btn.textContent = origText; btn.style.opacity = "1"; btn.style.pointerEvents = "auto"; }, 3000);
+
+    // Log action locally
+    const actions = JSON.parse(localStorage.getItem("xi_actions") || "[]");
+    actions.push({action, item_id: item.id, handle: item.handle, timestamp: new Date().toISOString()});
+    localStorage.setItem("xi_actions", JSON.stringify(actions.slice(-100)));
+
+    // Open Telegram deep link
+    window.open(url, "_blank");
+  }
+
+  function triggerAccountDive(handle, btn){
+    const url = tgDeepLink("dive", handle);
+    const origText = btn.textContent;
+    btn.textContent = "Sent →";
+    btn.style.opacity = "0.6";
+    btn.style.pointerEvents = "none";
+    setTimeout(() => { btn.textContent = origText; btn.style.opacity = "1"; btn.style.pointerEvents = "auto"; }, 3000);
+
+    const actions = JSON.parse(localStorage.getItem("xi_actions") || "[]");
+    actions.push({action: "dive", handle, timestamp: new Date().toISOString()});
+    localStorage.setItem("xi_actions", JSON.stringify(actions.slice(-100)));
+
+    window.open(url, "_blank");
+  }
+
   function buildActionPrompt(action, item){
     const acct = getAccount(item.handle);
     const tier = acct ? `T${acct.tier}` : "T?";
@@ -1394,14 +1446,21 @@
       for(const btn of card.querySelectorAll(".btnAction")){
         btn.addEventListener("click", () => {
           const action = btn.getAttribute("data-action");
-          const prompt = buildActionPrompt(action, item);
-          navigator.clipboard.writeText(prompt).then(() => {
-            toast(`<strong>${action === 'analyze' ? '🔍 Analyze' : action === 'repurpose' ? '📝 Repurpose' : '⚡ Apply'}</strong> prompt copied! Paste to Da Vinci.`);
-          }).catch(() => {
-            // Fallback: show in a modal
-            showPromptModal(prompt);
-          });
+          triggerAction(action, item, btn);
         });
+        // Long-press fallback: copy prompt to clipboard
+        let lpTimer;
+        btn.addEventListener("pointerdown", (e) => {
+          lpTimer = setTimeout(() => {
+            const action = btn.getAttribute("data-action");
+            const prompt = buildActionPrompt(action, item);
+            navigator.clipboard.writeText(prompt).then(() => {
+              toast(`📋 Prompt copied to clipboard (long-press fallback).`);
+            }).catch(() => showPromptModal(prompt));
+          }, 600);
+        });
+        btn.addEventListener("pointerup", () => clearTimeout(lpTimer));
+        btn.addEventListener("pointerleave", () => clearTimeout(lpTimer));
       }
     }
   }
@@ -1446,6 +1505,7 @@
           <td><span class="badge" style="border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.06)">${escapeHtml(a.status)}</span></td>
           <td>${fmtNum(a.tweets_surfaced_30d)}</td>
           <td class="micro">${escapeHtml(a.last_scored || "—")}</td>
+          <td><button type="button" class="btnAction analyze" data-handle="${escapeHtml(a.handle)}" data-acct-dive="true" style="font-size:0.7rem;padding:4px 10px;min-height:auto">🔍 Dive</button></td>
         </tr>
       `;
     }).join("");
@@ -1478,9 +1538,20 @@
             <div class="kv"><div class="k">Last scored</div><div class="v">${escapeHtml(a.last_scored || "—")}</div></div>
             <div class="kv"><div class="k">Score breakdown</div><div class="v micro">${breakdownDisplay}</div></div>
           </div>
+          <div class="action-row" style="margin-top:8px">
+            <button type="button" class="btnAction analyze" data-handle="${escapeHtml(a.handle)}" data-acct-dive="true">🔍 Deep Dive</button>
+          </div>
         </div>
       `;
     }).join("");
+
+    // Wire up account Deep Dive buttons (both table and cards)
+    for(const btn of document.querySelectorAll("[data-acct-dive]")){
+      btn.addEventListener("click", () => {
+        const handle = btn.getAttribute("data-handle");
+        triggerAccountDive(handle, btn);
+      });
+    }
   }
 
   function discKey(entry){
