@@ -469,6 +469,10 @@
   </style>
 </head>
 <body>
+<script>/* XI_STATE fallback if xi-state.js not yet generated */
+if(typeof XI_STATE==="undefined"){var XI_STATE={};var XI_FEEDBACK={};}
+</script>
+<script src="xi-state.js" onerror=""></script>
 <!-- Da Vinci Ops — Shared Dashboard Nav -->
 <nav id="dv-nav" style="position:sticky;top:0;z-index:9998;background:#0A2540;border-bottom:1px solid rgba(255,255,255,.1);padding:0 16px;display:flex;align-items:center;gap:4px;height:44px;overflow-x:auto;-webkit-overflow-scrolling:touch;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;white-space:nowrap;">
   <span style="font-weight:900;color:rgba(255,255,255,.5);margin-right:8px;flex-shrink:0;">🔺 Ops</span>
@@ -1263,11 +1267,25 @@
 
   function uniq(arr){ return Array.from(new Set(arr)); }
 
-  // --- Status badge system (reads localStorage xi_actions) ---
+  // --- Status badge system (reads XI_STATE from xi-state.js, falls back to localStorage) ---
   function getActionStatus(itemId, handle){
-    // Check localStorage for actions taken on this item
+    // 1. Check server-side state (XI_STATE global from xi-state.js)
+    if(typeof XI_STATE !== "undefined"){
+      // Check by exact item id patterns
+      const patterns = [];
+      if(itemId) ["dive","repurpose","apply","dismiss"].forEach(a => patterns.push(`xi_${a}_${itemId}`));
+      if(handle) ["dive","repurpose","apply","dismiss","track"].forEach(a => patterns.push(`xi_${a}_${handle}`));
+      let best = null;
+      for(const key of patterns){
+        const entry = XI_STATE[key];
+        if(entry && (!best || entry.timestamp > best.timestamp)){
+          best = {action: entry.action, timestamp: entry.timestamp, status: entry.status};
+        }
+      }
+      if(best) return best;
+    }
+    // 2. Fall back to localStorage (client-side actions not yet synced)
     const actions = JSON.parse(localStorage.getItem("xi_actions") || "[]");
-    // Most recent action for this item
     const matching = actions.filter(a =>
       a.item_id === itemId || a.handle === handle
     );
@@ -1279,13 +1297,13 @@
   function statusBadgeHtml(itemId, handle){
     const s = getActionStatus(itemId, handle);
     if(!s) return "";
-    const labels = {
-      analyze: "🔍 Dive sent",
-      repurpose: "📝 Repurpose sent",
-      apply: "⚡ Apply sent",
-      dive: "🔍 Dive sent"
+    const statusLabels = {
+      pending: {dive:"🔍 Diving…", repurpose:"📝 Repurposing…", apply:"⚡ Applying…", track:"📡 Researching…"},
+      complete: {dive:"✅ Dive done", repurpose:"✅ Repurposed", apply:"✅ Applied", dismiss:"✕ Dismissed", track:"✅ Tracked"},
+      sent: {dive:"🔍 Dive sent", repurpose:"📝 Repurpose sent", apply:"⚡ Apply sent", analyze:"🔍 Dive sent"},
     };
-    const label = labels[s.action] || `${s.action} sent`;
+    const tier = statusLabels[s.status] || statusLabels.sent;
+    const label = (tier[s.action]) || `${s.action} ${s.status}`;
     const ago = timeAgo(s.timestamp);
     return `<span class="status-badge ${s.status}" title="${ago}">${label}</span>`;
   }
