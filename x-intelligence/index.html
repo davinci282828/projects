@@ -280,7 +280,7 @@
 
     .action-row{
       display:grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap:8px;
       margin-top:8px;
     }
@@ -307,6 +307,23 @@
     .btnAction.analyze{border-color:rgba(156,39,176,.5); background:rgba(156,39,176,.1)}
     .btnAction.repurpose{border-color:rgba(0,188,212,.5); background:rgba(0,188,212,.1)}
     .btnAction.apply{border-color:rgba(255,152,0,.5); background:rgba(255,152,0,.1)}
+
+    /* Status badges for acted-on items */
+    .status-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      font-size:0.65rem;
+      font-weight:700;
+      padding:2px 8px;
+      border-radius:20px;
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+    }
+    .status-badge.sent{background:rgba(255,152,0,.15);color:#ffb74d;border:1px solid rgba(255,152,0,.3)}
+    .status-badge.complete{background:rgba(76,175,80,.15);color:#81c784;border:1px solid rgba(76,175,80,.3)}
+    .status-badge.dismissed{background:rgba(158,158,158,.15);color:#bdbdbd;border:1px solid rgba(158,158,158,.3)}
+    .status-badge.pending{background:rgba(33,150,243,.15);color:#64b5f6;border:1px solid rgba(33,150,243,.3)}
 
     .empty{
       border:1px dashed rgba(255,255,255,.25);
@@ -452,6 +469,10 @@
   </style>
 </head>
 <body>
+<script>/* XI_STATE fallback if xi-state.js not yet generated */
+if(typeof XI_STATE==="undefined"){var XI_STATE={};var XI_FEEDBACK={};}
+</script>
+<script src="xi-state.js" onerror=""></script>
 <!-- Da Vinci Ops — Shared Dashboard Nav -->
 <nav id="dv-nav" style="position:sticky;top:0;z-index:9998;background:#0A2540;border-bottom:1px solid rgba(255,255,255,.1);padding:0 16px;display:flex;align-items:center;gap:4px;height:44px;overflow-x:auto;-webkit-overflow-scrolling:touch;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;white-space:nowrap;">
   <span style="font-weight:900;color:rgba(255,255,255,.5);margin-right:8px;flex-shrink:0;">🔺 Ops</span>
@@ -643,11 +664,11 @@
 
   const DATA = {
   "meta": {
-    "generated": "2026-03-03T20:37:53.570793+00:00",
-    "scan_date": "2026-03-03",
-    "accounts_scanned": 4,
+    "generated": "2026-03-04T14:01:31.924695+00:00",
+    "scan_date": "2026-03-04",
+    "accounts_scanned": 6,
     "framework_version": "v2",
-    "scan_source": "graphql-scan-20260303_122403.json"
+    "scan_source": "graphql-scan-20260304_082146.json"
   },
   "accounts": [
     {
@@ -663,7 +684,7 @@
         "total": null
       },
       "last_scored": null,
-      "tweets_surfaced_30d": 7,
+      "tweets_surfaced_30d": 5,
       "status": "active"
     },
     {
@@ -967,7 +988,391 @@
         "total": null
       },
       "last_scored": null,
-      "tweets_surfaced_30d": 8,
+      "tweets_surfaced_30d": 9,
+      "status": "active"
+    },
+    {
+      "handle": "LegionHealth",
+      "name": "Legion Health",
+      "tier": 0,
+      "domain": "AI-native psychiatry / YC",
+      "why": "AI psych practice with insurance — MMHC competitor/playbook",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "mattpavelle",
+      "name": "Matt Pavelle",
+      "tier": 0,
+      "domain": "Doctronic CEO / healthcare tech",
+      "why": "Democratizing healthcare, EHR automation",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "maxmarchione",
+      "name": "Max Marchione",
+      "tier": 0,
+      "domain": "Superpower founder",
+      "why": "New healthcare system, actionable health tech",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "SinaHartung",
+      "name": "Sina Hartung",
+      "tier": 0,
+      "domain": "AskEureka / health+AI",
+      "why": "Healthcare tech + AI, clinical docs",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "roshanpateI",
+      "name": "Roshan Patel",
+      "tier": 0,
+      "domain": "Arrow Payments / healthcare",
+      "why": "Healthcare payments — MMHC billing ops",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "watch"
+    },
+    {
+      "handle": "CarbonHealth",
+      "name": "Carbon Health",
+      "tier": 0,
+      "domain": "Hybrid healthcare provider",
+      "why": "Tech-driven telehealth + group practice model",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "watch"
+    },
+    {
+      "handle": "StealthMedical1",
+      "name": "Stealth Medical",
+      "tier": 0,
+      "domain": "Medical AI / biodefense",
+      "why": "HIPAA, clinical AI compliance",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "tonyztherapy",
+      "name": "Tony Z Therapy",
+      "tier": 0,
+      "domain": "Licensed therapist / practice owner",
+      "why": "Private practice management tips",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "LoriGottlieb1",
+      "name": "Lori Gottlieb",
+      "tier": 0,
+      "domain": "Therapist / NYT author",
+      "why": "Psychotherapy content, MMHC blog fuel",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "alliyoungmd",
+      "name": "Dr. Alli Young",
+      "tier": 0,
+      "domain": "Psychiatrist / FAU professor",
+      "why": "Mental health + lifestyle medicine",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "watch"
+    },
+    {
+      "handle": "moltbook",
+      "name": "Moltbook",
+      "tier": 1,
+      "domain": "OpenClaw community hub",
+      "why": "Front page of agent internet",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "DataChaz",
+      "name": "DataChaz",
+      "tier": 1,
+      "domain": "OpenClaw tinkerer",
+      "why": "LLM/agent tooling, open source",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "bcherny",
+      "name": "Boris Cherny",
+      "tier": 1,
+      "domain": "Claude Code / Anthropic",
+      "why": "Agent-building internals",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "oliverhenry",
+      "name": "Oliver Henry",
+      "tier": 1,
+      "domain": "Larry / OpenClaw skill",
+      "why": "Marketing automation on OpenClaw",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "calebhodges",
+      "name": "Caleb Hodges",
+      "tier": 1,
+      "domain": "GodMode / OpenClaw OS",
+      "why": "Personal AI OS architecture",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "johnrushx",
+      "name": "John Rush",
+      "tier": 1,
+      "domain": "Most automated org",
+      "why": "24 AI agents, metrics and failures",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "itsolelehmann",
+      "name": "Ole Lehmann",
+      "tier": 1,
+      "domain": "AI agents for non-tech",
+      "why": "Business automation, non-tech adoption",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "RocketableInc",
+      "name": "Rocketable",
+      "tier": 1,
+      "domain": "YC W25 / AI-maximalist",
+      "why": "Replaces human teams with agents",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "watch"
+    },
+    {
+      "handle": "_jasonwei",
+      "name": "Jason Wei",
+      "tier": 2,
+      "domain": "Meta AI researcher",
+      "why": "Agent architecture, ex-OpenAI/Google",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "trial"
+    },
+    {
+      "handle": "Yampeleg",
+      "name": "Yam Peleg",
+      "tier": 2,
+      "domain": "AI researcher / thursdai",
+      "why": "Weekly AI news with agent focus",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "trial"
+    },
+    {
+      "handle": "JonathanShedler",
+      "name": "Jonathan Shedler",
+      "tier": 5,
+      "domain": "Psychotherapy professor",
+      "why": "Clinical psychology research",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "DoctorPerin",
+      "name": "Dr. Perin",
+      "tier": 5,
+      "domain": "Private practice psychologist",
+      "why": "Therapy content, practice tips",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "sleepdiplomat",
+      "name": "Matthew Walker",
+      "tier": 5,
+      "domain": "Neuroscience / sleep",
+      "why": "Sleep + mental health research",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "maxlugavere",
+      "name": "Max Lugavere",
+      "tier": 5,
+      "domain": "Brain health / longevity",
+      "why": "Genius Foods, brain health research",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
       "status": "active"
     },
     {
@@ -985,91 +1390,123 @@
       "last_scored": null,
       "tweets_surfaced_30d": 13,
       "status": "trial"
+    },
+    {
+      "handle": "SawyerMerritt",
+      "name": "Sawyer Merritt",
+      "tier": 5,
+      "domain": "Auto-discovered",
+      "why": "Found in scan, 1044776 followers",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 12,
+      "status": "trial"
+    },
+    {
+      "handle": "ChrisJBakke",
+      "name": "Chris Bakke",
+      "tier": 5,
+      "domain": "Auto-discovered",
+      "why": "Found in scan, 333607 followers",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 21,
+      "status": "trial"
     }
   ],
   "daily_brief": [
     {
-      "id": "brief-20260303-001",
-      "date": "2026-03-03",
+      "id": "brief-20260304-001",
+      "date": "2026-03-04",
       "handle": "Saboo_Shubham_",
       "tag": "AGENT-INFRA",
-      "claim": "Chief of Staff OpenClaw agent Monica writes performance reviews for the agent team every week.",
-      "so_what": "This shows a structured approach to managing AI agent teams, relevant to OpenClaw's infrastructure and reliability.",
+      "claim": "I describe what I want in plain English on Telegram. Ross asks clarifying questions. Then builds it. Tests it. Deploys it.",
+      "so_what": "This shows a live deployment of an AI agent infrastructure, relevant to OpenClaw's agent systems.",
       "confidence": "High",
-      "link": "https://x.com/Saboo_Shubham_/status/2028678449561501991",
-      "tweet_text": "This is HOW you manage AI Agent teams in 2026 (in 5 minutes a week).\n\nMy Chief of Staff OpenClaw agent Monica writes performance reviews for the agent team every week.\n\nShe grades each agent. Flags what's working. What's not. Then brings it all to me in one report.\n\nI give https:",
+      "link": "https://x.com/Saboo_Shubham_/status/2029068430784270728",
+      "tweet_text": "This is HOW you build, test, and ship faster than ever with OpenClaw Agents in 2026.\n\nI don't open my laptop to build anymore. I text my AI agent Ross.\n\nI describe what I want in plain English on Telegram.\nRoss asks clarifying questions.\nThen builds it. Tests it. Deploys it. http",
       "metrics": {
-        "views": 105602,
-        "likes": 571,
-        "reposts": 74
+        "views": 43842,
+        "likes": 288,
+        "reposts": 29
       },
       "rating": null
     },
     {
-      "id": "brief-20260303-002",
-      "date": "2026-03-03",
+      "id": "brief-20260304-002",
+      "date": "2026-03-04",
+      "handle": "Saboo_Shubham_",
+      "tag": "AGENT-INFRA",
+      "claim": "My Chief of Staff OpenClaw agent Monica writes performance reviews for the agent team every week. She grades each agent. Flags what's working. What's not.",
+      "so_what": "This demonstrates a strategic insight into managing AI agent teams, relevant to OpenClaw's agent infrastructure and product development.",
+      "confidence": "High",
+      "link": "https://x.com/Saboo_Shubham_/status/2028678449561501991",
+      "tweet_text": "This is HOW you manage AI Agent teams in 2026 (in 5 minutes a week).\n\nMy Chief of Staff OpenClaw agent Monica writes performance reviews for the agent team every week.\n\nShe grades each agent. Flags what's working. What's not. Then brings it all to me in one report.\n\nI give https:",
+      "metrics": {
+        "views": 164683,
+        "likes": 817,
+        "reposts": 108
+      },
+      "rating": null
+    },
+    {
+      "id": "brief-20260304-003",
+      "date": "2026-03-04",
       "handle": "Saboo_Shubham_",
       "tag": "AGENT-INFRA",
       "claim": "I run a team of 8 OpenClaw Agents 24/7 based on characters from FRIENDS and The Office that get smarter every single day.",
-      "so_what": "This demonstrates live deployment and continuous learning in agent teams, important for OpenClaw's product and infrastructure development.",
+      "so_what": "This shows a live deployment of AI agents with continuous learning, relevant to OpenClaw's agent infrastructure and product.",
       "confidence": "High",
       "link": "https://x.com/Saboo_Shubham_/status/2027791423253450948",
       "tweet_text": "DON'T READ this unless you want to feel like you're living in 2027.\n\nI run a team of 8 OpenClaw Agents 24/7 based on characters from FRIENDS and The Office that get smarter every single day.\n\nRunning agent teams is one thing. Watching them get smarter every day is another. https:",
       "metrics": {
-        "views": 136622,
+        "views": 137013,
         "likes": 544,
         "reposts": 49
       },
       "rating": null
     },
     {
-      "id": "brief-20260303-003",
-      "date": "2026-03-03",
-      "handle": "Saboo_Shubham_",
-      "tag": "AGENT-PRODUCT",
-      "claim": "Claude broke it into tickets and spun up a team of agents. The agents started picking up tasks on their own. No one told them to.",
-      "so_what": "This illustrates autonomous agent behavior, relevant to agent product development and capabilities.",
-      "confidence": "High",
-      "link": "https://x.com/Saboo_Shubham_/status/2026856780798767531",
-      "tweet_text": "SPEC IS BECOMING THE PRODUCT\n\nAn Anthropic engineer gave Claude a spec, pointed it to an Asana board and left for the weekend.\n\nClaude broke it into tickets and spun up a team of agents. The agents started picking up tasks on their own. No one told them to.\n\nThey just did. https:",
-      "metrics": {
-        "views": 282964,
-        "likes": 894,
-        "reposts": 69
-      },
-      "rating": null
-    },
-    {
-      "id": "brief-20260303-004",
-      "date": "2026-03-03",
-      "handle": "Saboo_Shubham_",
-      "tag": "AGENT-INFRA",
-      "claim": "Perplexity just launched their own OpenClaw. Anthropic Cowork might be the next.",
-      "so_what": "This indicates competitive development in agent infrastructure, relevant to OpenClaw's market position and architecture.",
-      "confidence": "High",
-      "link": "https://x.com/Saboo_Shubham_/status/2026760837663510623",
-      "tweet_text": "Perplexity just launched their own OpenClaw. \n\nAnthropic Cowork might be the next.\n\nComposable Computers is ALL YOU NEED.\n\nhttps://t.co/xGPGc9sYIv",
-      "metrics": {
-        "views": 22311,
-        "likes": 193,
-        "reposts": 17
-      },
-      "rating": null
-    },
-    {
-      "id": "brief-20260303-005",
-      "date": "2026-03-03",
+      "id": "brief-20260304-004",
+      "date": "2026-03-04",
       "handle": "sama",
       "tag": "LANDSCAPE",
       "claim": "Tonight, we reached an agreement with the Department of War to deploy our models in their classified network.",
-      "so_what": "This reflects a major regulatory and strategic shift in AI deployment, relevant to the broader AI landscape and compliance considerations.",
+      "so_what": "This indicates a major regulatory and operational shift in AI deployment, relevant to the healthcare AI audit and compliance landscape.",
       "confidence": "High",
       "link": "https://x.com/sama/status/2027578652477821175",
       "tweet_text": "Tonight, we reached an agreement with the Department of War to deploy our models in their classified network.\n\nIn all of our interactions, the DoW displayed a deep respect for safety and a desire to partner to achieve the best possible outcome.\n\nAI safety and wide distribution of",
       "metrics": {
-        "views": 37562552,
-        "likes": 34424,
+        "views": 37659326,
+        "likes": 34428,
         "reposts": 4061
+      },
+      "rating": null
+    },
+    {
+      "id": "brief-20260304-005",
+      "date": "2026-03-04",
+      "handle": "sama",
+      "tag": "CLINICAL-AI",
+      "claim": "Big Pharma profits billions pushing Ozempic & Metformin on people. But they buried a natural compound that's been fighting metabolic decline, insulin resistance, & age-related weight gain for centuries. It's Berberine. Here's how it helps:",
+      "so_what": "This highlights a potential healthcare innovation with implications for AI-driven health audits and EHR integration.",
+      "confidence": "Medium",
+      "link": "https://x.com/sama/status/1998505408529575971",
+      "tweet_text": "Big Pharma profits billions pushing Ozempic &amp; Metformin on people.\n\nBut they buried a natural compound that's been fighting metabolic decline, insulin resistance, &amp; age-related weight gain for centuries.\n\nIt's Berberine. Here's how it helps:\n\n1. While… https://t.co/IcCa6A",
+      "metrics": {
+        "views": 1341775,
+        "likes": 1890,
+        "reposts": 582
       },
       "rating": null
     }
@@ -1246,6 +1683,59 @@
 
   function uniq(arr){ return Array.from(new Set(arr)); }
 
+  // --- Status badge system (reads XI_STATE from xi-state.js, falls back to localStorage) ---
+  function getActionStatus(itemId, handle){
+    // 1. Check server-side state (XI_STATE global from xi-state.js)
+    if(typeof XI_STATE !== "undefined"){
+      // Check by exact item id patterns
+      const patterns = [];
+      if(itemId) ["dive","repurpose","apply","dismiss"].forEach(a => patterns.push(`xi_${a}_${itemId}`));
+      if(handle) ["dive","repurpose","apply","dismiss","track"].forEach(a => patterns.push(`xi_${a}_${handle}`));
+      let best = null;
+      for(const key of patterns){
+        const entry = XI_STATE[key];
+        if(entry && (!best || entry.timestamp > best.timestamp)){
+          best = {action: entry.action, timestamp: entry.timestamp, status: entry.status};
+        }
+      }
+      if(best) return best;
+    }
+    // 2. Fall back to localStorage (client-side actions not yet synced)
+    const actions = JSON.parse(localStorage.getItem("xi_actions") || "[]");
+    const matching = actions.filter(a =>
+      a.item_id === itemId || a.handle === handle
+    );
+    if(matching.length === 0) return null;
+    const last = matching[matching.length - 1];
+    return {action: last.action, timestamp: last.timestamp, status: "sent"};
+  }
+
+  function statusBadgeHtml(itemId, handle){
+    const s = getActionStatus(itemId, handle);
+    if(!s) return "";
+    const statusLabels = {
+      pending: {dive:"🔍 Diving…", repurpose:"📝 Repurposing…", apply:"⚡ Applying…", track:"📡 Researching…"},
+      complete: {dive:"✅ Dive done", repurpose:"✅ Repurposed", apply:"✅ Applied", dismiss:"✕ Dismissed", track:"✅ Tracked"},
+      sent: {dive:"🔍 Dive sent", repurpose:"📝 Repurpose sent", apply:"⚡ Apply sent", analyze:"🔍 Dive sent"},
+    };
+    const tier = statusLabels[s.status] || statusLabels.sent;
+    const label = (tier[s.action]) || `${s.action} ${s.status}`;
+    const ago = timeAgo(s.timestamp);
+    return `<span class="status-badge ${s.status}" title="${ago}">${label}</span>`;
+  }
+
+  function timeAgo(ts){
+    if(!ts) return "";
+    const diff = Date.now() - new Date(ts).getTime();
+    const mins = Math.floor(diff / 60000);
+    if(mins < 1) return "just now";
+    if(mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if(hrs < 24) return `${hrs}h ago`;
+    const days = Math.floor(hrs / 24);
+    return `${days}d ago`;
+  }
+
   function initFilters(){
     // Tag filter
     const tags = uniq(DATA.daily_brief.map(x => x.tag)).sort();
@@ -1303,15 +1793,25 @@
     } else if(action === "apply"){
       payload = item.id;
       url = tgDeepLink("apply", payload);
+    } else if(action === "dismiss"){
+      payload = item.id;
+      url = tgDeepLink("dismiss", payload);
     } else {
       return;
     }
 
     // Visual feedback
     const origText = btn.textContent;
-    btn.textContent = "Sent to Da Vinci →";
+    btn.textContent = action === "dismiss" ? "Dismissed ✕" : "Sent to Da Vinci →";
     btn.style.opacity = "0.6";
     btn.style.pointerEvents = "none";
+
+    // Fade the whole card on dismiss
+    if(action === "dismiss"){
+      const card = btn.closest(".card");
+      if(card){ card.style.opacity = "0.35"; card.style.transition = "opacity 0.3s"; }
+    }
+
     setTimeout(() => { btn.textContent = origText; btn.style.opacity = "1"; btn.style.pointerEvents = "auto"; }, 3000);
 
     // Log action locally
@@ -1398,6 +1898,7 @@
               <span class="handle">@${escapeHtml(item.handle)}</span>
               ${typeof tier === "number" ? tierBadge(tier) : `<span class="badge">T?</span>`}
               ${confBadge(item.confidence)}
+              ${statusBadgeHtml(item.id, item.handle)}
             </div>
             <div class="micro" style="text-align:right">
               <div>${linkHtml}</div>
@@ -1421,6 +1922,7 @@
             <button type="button" class="btnAction analyze" data-action="analyze">🔍 Analyze</button>
             <button type="button" class="btnAction repurpose" data-action="repurpose">📝 Repurpose</button>
             <button type="button" class="btnAction apply" data-action="apply">⚡ Apply</button>
+            <button type="button" class="btnAction dismiss" data-action="dismiss" style="border-color:rgba(158,158,158,.4);background:rgba(158,158,158,.08);font-size:0.7rem">✕ Dismiss</button>
           </div>
         </article>
       `;
@@ -1505,7 +2007,7 @@
           <td><span class="badge" style="border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.06)">${escapeHtml(a.status)}</span></td>
           <td>${fmtNum(a.tweets_surfaced_30d)}</td>
           <td class="micro">${escapeHtml(a.last_scored || "—")}</td>
-          <td><button type="button" class="btnAction analyze" data-handle="${escapeHtml(a.handle)}" data-acct-dive="true" style="font-size:0.7rem;padding:4px 10px;min-height:auto">🔍 Dive</button></td>
+          <td><button type="button" class="btnAction analyze" data-handle="${escapeHtml(a.handle)}" data-acct-dive="true" style="font-size:0.7rem;padding:4px 10px;min-height:auto">🔍 Dive</button>${statusBadgeHtml(null, a.handle)}</td>
         </tr>
       `;
     }).join("");
