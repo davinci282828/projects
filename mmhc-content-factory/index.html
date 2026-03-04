@@ -678,11 +678,11 @@
                         <div class="card-tags">
                             <span class="tag type-${creative.type}">${creative.type}</span>
                             <span class="tag awareness">${formatAwareness(creative.awareness)}</span>
-                            <span class="score-badge">Score: ${creative.score.total}</span>
+                            <span class="score-badge">Score: ${creative.score ? creative.score.total : '—'}</span>
                         </div>
-                        <div class="card-caption">${creative.caption}</div>
+                        <div class="card-caption">${creative.caption || ''}</div>
                         ${creative.cta ? `<div class="card-cta">CTA: ${creative.cta}</div>` : ''}
-                        <div class="caption-copy" data-caption="${creative.caption.replace(/"/g, '&quot;')}" onclick="copyCaption(this)">${creative.caption.substring(0, 80)}...</div>
+                        <div class="caption-copy" data-caption="${(creative.caption||'').replace(/"/g, '&quot;')}" onclick="copyCaption(this)">${(creative.caption||'').substring(0, 80)}...</div>
                         <div class="card-actions">
                             <button class="btn btn-approve ${cardState === 'approved' ? 'active' : ''}" data-id="${creative.id}" data-action="approve">${cardState === 'approved' ? '✓ Approved' : 'Approve'}</button>
                             <button class="btn btn-skip ${cardState === 'skipped' ? 'active' : ''}" data-id="${creative.id}" data-action="skip">${cardState === 'skipped' ? '✗ Skipped' : 'Skip'}</button>

@@ -8,7 +8,7 @@
       "format": "photo-overlay",
       "awareness": "problem-aware",
       "headline": "Still scrolling at 2am because your brain won't stop?",
-      "caption": "Your mind isn't broken. It's stuck in a pattern it learned to protect you. Therapy helps you understand the pattern \u2014 and choose a different one.\n\nOnline therapy across New York State. Insurance accepted.\nBook your free consultation \u2192 link in bio",
+      "caption": "Your mind isn't broken. It's stuck in a pattern it learned to protect you. Therapy helps you understand the pattern — and choose a different one.\n\nOnline therapy across New York State. Insurance accepted.\nBook your free consultation → link in bio",
       "cta": "Book Your Free Consultation",
       "image": "ad-001.png",
       "score": {
@@ -25,7 +25,7 @@
       "format": "photo-overlay",
       "awareness": "unaware",
       "headline": "Your friends are not your therapists. (And they're exhausted.)",
-      "caption": "There's a difference between venting and processing. One leaves you stuck. The other moves you forward.\n\nManhattan Mental Health Counseling \u2014 online therapy across New York State.",
+      "caption": "There's a difference between venting and processing. One leaves you stuck. The other moves you forward.\n\nManhattan Mental Health Counseling — online therapy across New York State.",
       "cta": "Start Real Therapy",
       "image": "ad-002.png",
       "score": {
@@ -59,7 +59,7 @@
       "format": "photo-overlay",
       "awareness": "product-aware",
       "headline": "You Google your symptoms at 3am but won't call a therapist at 3pm.",
-      "caption": "Online therapy across New York State. Insurance accepted. No waitlist.\n\nBook today \u2192 link in bio",
+      "caption": "Online therapy across New York State. Insurance accepted. No waitlist.\n\nBook today → link in bio",
       "cta": "Book Today",
       "image": "ad-004.png",
       "score": {
@@ -76,7 +76,7 @@
       "format": "photo-overlay",
       "awareness": "solution-aware",
       "headline": "Every 'I'm fine' is a tiny loan you'll eventually have to repay.",
-      "caption": "Therapy isn't about being broken. It's maintenance for the mind you use every day.\n\nManhattan Mental Health Counseling \u2014 insurance accepted.",
+      "caption": "Therapy isn't about being broken. It's maintenance for the mind you use every day.\n\nManhattan Mental Health Counseling — insurance accepted.",
       "cta": "Schedule Your Session",
       "image": "ad-005.png",
       "score": {
@@ -127,7 +127,7 @@
       "format": "photo-overlay",
       "awareness": "problem-aware",
       "headline": "Your therapist shouldn't have a 6-week waitlist.",
-      "caption": "80+ therapists. Same-week appointments. Insurance accepted. That's the whole pitch.\n\nManhattan Mental Health Counseling \u2014 online therapy across New York State.",
+      "caption": "80+ therapists. Same-week appointments. Insurance accepted. That's the whole pitch.\n\nManhattan Mental Health Counseling — online therapy across New York State.",
       "cta": "Book This Week",
       "image": "ad-008.png",
       "score": {
@@ -195,7 +195,7 @@
       "format": "photo-overlay",
       "awareness": "product-aware",
       "headline": "Most therapy practices are full. We're not.",
-      "caption": "80+ licensed therapists. Same-week openings. We built the practice that New York actually needed.\n\nManhattan Mental Health Counseling \u2014 insurance accepted.",
+      "caption": "80+ licensed therapists. Same-week openings. We built the practice that New York actually needed.\n\nManhattan Mental Health Counseling — insurance accepted.",
       "cta": "See Available Therapists",
       "image": "ad-012.png",
       "score": {
@@ -212,7 +212,7 @@
       "format": "photo-overlay",
       "awareness": "unaware",
       "headline": "You meal prep. You go to the gym. But when's the last time you worked on your mental health?",
-      "caption": "Mental health is maintenance, not crisis management.\n\nOnline therapy across New York State. Insurance accepted.\nBook today \u2192 link in bio",
+      "caption": "Mental health is maintenance, not crisis management.\n\nOnline therapy across New York State. Insurance accepted.\nBook today → link in bio",
       "cta": "Book Your First Session",
       "image": "ad-013.png",
       "score": {
@@ -365,7 +365,7 @@
       "format": "photo-overlay",
       "awareness": "product-aware",
       "headline": "Finding a therapist in New York shouldn't feel like a second job.",
-      "caption": "We check your insurance. We match your needs. You show up. That's it.\n\nManhattan Mental Health Counseling \u2014 80+ therapists, same-week openings.",
+      "caption": "We check your insurance. We match your needs. You show up. That's it.\n\nManhattan Mental Health Counseling — 80+ therapists, same-week openings.",
       "cta": "Get Matched Now",
       "image": "ad-022.png",
       "score": {
@@ -416,7 +416,7 @@
       "format": "photo-overlay",
       "awareness": "solution-aware",
       "headline": "You already know you need therapy. The hard part was admitting it. The easy part is booking.",
-      "caption": "Same-week appointments. Insurance accepted. 80+ therapists across every specialty.\n\nManhattan Mental Health Counseling \u2014 online therapy across New York State.",
+      "caption": "Same-week appointments. Insurance accepted. 80+ therapists across every specialty.\n\nManhattan Mental Health Counseling — online therapy across New York State.",
       "cta": "Book In 2 Minutes",
       "image": "ad-025.png",
       "score": {
@@ -450,7 +450,7 @@
       "format": "photo-overlay",
       "awareness": "product-aware",
       "headline": "We accept Aetna, Cigna, United, Oscar, Oxford, and more.",
-      "caption": "No more 'we'll give you a superbill.' No more surprise bills. Real insurance. Real coverage.\n\nManhattan Mental Health Counseling \u2014 80+ therapists across New York State.",
+      "caption": "No more 'we'll give you a superbill.' No more surprise bills. Real insurance. Real coverage.\n\nManhattan Mental Health Counseling — 80+ therapists across New York State.",
       "cta": "Check Your Coverage",
       "image": "ad-027.png",
       "score": {
@@ -501,7 +501,7 @@
       "format": "photo-overlay",
       "awareness": "solution-aware",
       "headline": "Therapy isn't just for bad days. It's for people who want better ones.",
-      "caption": "You don't have to be in crisis to start. The best time is before you need it.\n\nManhattan Mental Health Counseling \u2014 online therapy across New York State.",
+      "caption": "You don't have to be in crisis to start. The best time is before you need it.\n\nManhattan Mental Health Counseling — online therapy across New York State.",
       "cta": "Book Your Session",
       "image": "ad-030.png",
       "score": {
@@ -517,35 +517,80 @@
       "type": "organic",
       "format": "photo-overlay",
       "headline": "",
-      "image": "org-001.png"
+      "image": "org-001.png",
+      "awareness": "problem-aware",
+      "caption": "(caption pending)",
+      "score": {
+        "total": 0,
+        "visual": 0,
+        "copy": 0,
+        "cta": 0
+      },
+      "cta": ""
     },
     {
       "id": "org-002",
       "type": "organic",
       "format": "photo-overlay",
       "headline": "",
-      "image": "org-002.png"
+      "image": "org-002.png",
+      "awareness": "problem-aware",
+      "caption": "(caption pending)",
+      "score": {
+        "total": 0,
+        "visual": 0,
+        "copy": 0,
+        "cta": 0
+      },
+      "cta": ""
     },
     {
       "id": "org-003",
       "type": "organic",
       "format": "photo-overlay",
       "headline": "",
-      "image": "org-003.png"
+      "image": "org-003.png",
+      "awareness": "problem-aware",
+      "caption": "(caption pending)",
+      "score": {
+        "total": 0,
+        "visual": 0,
+        "copy": 0,
+        "cta": 0
+      },
+      "cta": ""
     },
     {
       "id": "org-004",
       "type": "organic",
       "format": "photo-overlay",
       "headline": "",
-      "image": "org-004.png"
+      "image": "org-004.png",
+      "awareness": "problem-aware",
+      "caption": "(caption pending)",
+      "score": {
+        "total": 0,
+        "visual": 0,
+        "copy": 0,
+        "cta": 0
+      },
+      "cta": ""
     },
     {
       "id": "org-005",
       "type": "organic",
       "format": "photo-overlay",
       "headline": "",
-      "image": "org-005.png"
+      "image": "org-005.png",
+      "awareness": "problem-aware",
+      "caption": "(caption pending)",
+      "score": {
+        "total": 0,
+        "visual": 0,
+        "copy": 0,
+        "cta": 0
+      },
+      "cta": ""
     },
     {
       "id": "org-006",
@@ -553,7 +598,7 @@
       "format": "photo-overlay",
       "awareness": "unaware",
       "headline": "Normalize canceling plans to do absolutely nothing.",
-      "caption": "Rest isn't laziness. It's your nervous system asking for a break. Listen to it.\n\nWhat's your go-to way to recharge? Drop it below \ud83d\udc47",
+      "caption": "Rest isn't laziness. It's your nervous system asking for a break. Listen to it.\n\nWhat's your go-to way to recharge? Drop it below 👇",
       "cta": "",
       "image": "org-006.png",
       "score": {
@@ -570,7 +615,7 @@
       "format": "photo-overlay",
       "awareness": "problem-aware",
       "headline": "Stop calling anxiety a personality trait.",
-      "caption": "\"I'm just a worrier\" is not a diagnosis \u2014 it's a story you tell yourself so you don't have to face what's underneath.\n\nYou didn't choose anxiety. But at some point, you started wearing it like an identity.\n\n\"I'm just a worrier.\"\n\"I'm just high-strung.\"\n\"That's just how I am.\"\n\nThese aren't personality traits. They're coping narratives \u2014 stories we repeat so often they start to feel like facts.\n\nAnxiety is one of the most treatable conditions in mental health. You don't have to white-knuckle your way through life pretending this is just \"who you are.\"\n\nAt Manhattan Mental Health Counseling, our therapists specialize in anxiety treatment \u2014 online therapy across New York, accepting most major insurance including Medicare.\n\n\ud83d\udcac Drop a \ud83d\ude4b if you've ever said \"I'm just a worrier\" instead of asking for help.\n\n\ud83d\udccc Save this for the next time anxiety tries to convince you it's permanent.",
+      "caption": "\"I'm just a worrier\" is not a diagnosis — it's a story you tell yourself so you don't have to face what's underneath.\n\nYou didn't choose anxiety. But at some point, you started wearing it like an identity.\n\n\"I'm just a worrier.\"\n\"I'm just high-strung.\"\n\"That's just how I am.\"\n\nThese aren't personality traits. They're coping narratives — stories we repeat so often they start to feel like facts.\n\nAnxiety is one of the most treatable conditions in mental health. You don't have to white-knuckle your way through life pretending this is just \"who you are.\"\n\nAt Manhattan Mental Health Counseling, our therapists specialize in anxiety treatment — online therapy across New York, accepting most major insurance including Medicare.\n\n💬 Drop a 🙋 if you've ever said \"I'm just a worrier\" instead of asking for help.\n\n📌 Save this for the next time anxiety tries to convince you it's permanent.",
       "cta": "",
       "image": "org-007.png",
       "score": {
@@ -621,7 +666,7 @@
       "format": "photo-overlay",
       "awareness": "unaware",
       "headline": "Setting a boundary isn't mean. It's a complete sentence.",
-      "caption": "\"No\" doesn't need an explanation. \"I can't\" doesn't need an apology.\n\nWhat boundary are you working on? \ud83d\udcac",
+      "caption": "\"No\" doesn't need an explanation. \"I can't\" doesn't need an apology.\n\nWhat boundary are you working on? 💬",
       "cta": "",
       "image": "org-010.png",
       "score": {
