@@ -1,6 +1,6 @@
 {
-  "batch": "Production-V2",
-  "date": "2026-03-02",
+  "batch": "Final-V2",
+  "date": "2026-03-03",
   "creatives": [
     {
       "id": "ad-001",
@@ -428,176 +428,6 @@
       }
     },
     {
-      "id": "org-006",
-      "type": "organic",
-      "format": "photo-overlay",
-      "awareness": "unaware",
-      "headline": "Normalize canceling plans to do absolutely nothing.",
-      "caption": "Rest isn't laziness. It's your nervous system asking for a break. Listen to it.\n\nWhat's your go-to way to recharge? Drop it below \ud83d\udc47",
-      "cta": "",
-      "image": "org-006.png",
-      "score": {
-        "hook": 4,
-        "cta": 3,
-        "brand": 4,
-        "compliance": "pass",
-        "total": 11
-      }
-    },
-    {
-      "id": "org-007",
-      "type": "organic",
-      "format": "photo-overlay",
-      "awareness": "problem-aware",
-      "headline": "Stop calling anxiety a personality trait.",
-      "caption": "\"I'm just a worrier\" is not a diagnosis \u2014 it's a story you tell yourself so you don't have to face what's underneath.\n\nYou didn't choose anxiety. But at some point, you started wearing it like an identity.\n\n\"I'm just a worrier.\"\n\"I'm just high-strung.\"\n\"That's just how I am.\"\n\nThese aren't personality traits. They're coping narratives \u2014 stories we repeat so often they start to feel like facts.\n\nAnxiety is one of the most treatable conditions in mental health. You don't have to white-knuckle your way through life pretending this is just \"who you are.\"\n\nAt Manhattan Mental Health Counseling, our therapists specialize in anxiety treatment \u2014 online therapy across New York, accepting most major insurance including Medicare.\n\n\ud83d\udcac Drop a \ud83d\ude4b if you've ever said \"I'm just a worrier\" instead of asking for help.\n\n\ud83d\udccc Save this for the next time anxiety tries to convince you it's permanent.",
-      "cta": "",
-      "image": "org-007.png",
-      "score": {
-        "hook": 5,
-        "cta": 4,
-        "brand": 5,
-        "compliance": "pass",
-        "total": 14
-      }
-    },
-    {
-      "id": "org-008",
-      "type": "organic",
-      "format": "photo-overlay",
-      "awareness": "unaware",
-      "headline": "The most productive thing you can do today might be nothing.",
-      "caption": "Hustle culture lied to you. Your worth isn't measured in output.\n\nWhat would you do with a guilt-free day off?",
-      "cta": "",
-      "image": "org-008.png",
-      "score": {
-        "hook": 4,
-        "cta": 3,
-        "brand": 4,
-        "compliance": "pass",
-        "total": 11
-      }
-    },
-    {
-      "id": "org-009",
-      "type": "organic",
-      "format": "photo-overlay",
-      "awareness": "problem-aware",
-      "headline": "3am thoughts hit different.",
-      "caption": "The things you think about at 3am are usually the things you avoid at 3pm. Pay attention to that.\n\nTag someone who needs to hear this.",
-      "cta": "",
-      "image": "org-009.png",
-      "score": {
-        "hook": 5,
-        "cta": 3,
-        "brand": 5,
-        "compliance": "pass",
-        "total": 13
-      }
-    },
-    {
-      "id": "org-010",
-      "type": "organic",
-      "format": "photo-overlay",
-      "awareness": "unaware",
-      "headline": "Setting a boundary isn't mean. It's a complete sentence.",
-      "caption": "\"No\" doesn't need an explanation. \"I can't\" doesn't need an apology.\n\nWhat boundary are you working on? \ud83d\udcac",
-      "cta": "",
-      "image": "org-010.png",
-      "score": {
-        "hook": 5,
-        "cta": 3,
-        "brand": 4,
-        "compliance": "pass",
-        "total": 12
-      }
-    },
-    {
-      "id": "org-011",
-      "type": "organic",
-      "format": "photo-overlay",
-      "awareness": "solution-aware",
-      "headline": "Therapy isn't for broken people. It's for people who refuse to stay stuck.",
-      "caption": "The bravest person in every room? Probably the one who already has a therapist.\n\nThere's a version of you that keeps pushing through. White-knuckling it. Telling yourself you should be able to handle this alone.\n\nAnd then there's the version that says: \"I deserve better than surviving.\"\n\nThat second person isn't weak. They're the one who actually changes.\n\nGoing to therapy doesn't mean something is wrong with you. It means you've decided that \"fine\" isn't good enough anymore.\n\nOur 80+ therapists at Manhattan Mental Health Counseling specialize in helping people move from surviving to thriving \u2014 online therapy in New York, most major insurance accepted.\n\n\ud83d\udcac What finally made you decide to try therapy? Or what's holding you back? Tell us below \ud83d\udc47\n\n\ud83d\udccc Save this and send it to someone who needs to hear it today.",
-      "cta": "",
-      "image": "org-011.png",
-      "score": {
-        "hook": 5,
-        "cta": 5,
-        "brand": 5,
-        "compliance": "pass",
-        "total": 15
-      }
-    },
-    {
-      "id": "org-012",
-      "type": "organic",
-      "format": "photo-overlay",
-      "awareness": "unaware",
-      "headline": "Your inner child didn't get what they needed. Your adult self can.",
-      "caption": "Healing isn't about blaming your parents. It's about giving yourself what they couldn't.\n\nThis one hits different for a lot of people, so sit with it for a second.\n\nYou might have grown up in a home where emotions weren't safe. Where \"I'm fine\" was the only acceptable answer. Where love was conditional, or unpredictable, or absent.\n\nThat doesn't make your parents villains. But it does mean something was missing.\n\nTherapy taught a lot of our clients: you can give yourself what you didn't get.\n\u2192 Validate your own emotions\n\u2192 Set boundaries without guilt\n\u2192 Feel safe in your own body\n\u2192 Stop performing \"okay\" for everyone else\n\nInner child work isn't about staying in the past. It's about stopping the past from running your present.\n\nOur therapists at Manhattan Mental Health Counseling are trained in trauma-informed approaches \u2014 online therapy in New York, most major insurance accepted.\n\n\ud83d\udcac What's one thing your inner child needed that you're learning to give yourself now?\n\n\ud83d\udccc Save this. You might need to read it again later.",
-      "cta": "",
-      "image": "org-012.png",
-      "score": {
-        "hook": 5,
-        "cta": 4,
-        "brand": 5,
-        "compliance": "pass",
-        "total": 14
-      }
-    },
-    {
-      "id": "org-013",
-      "type": "organic",
-      "format": "photo-overlay",
-      "awareness": "problem-aware",
-      "headline": "You don't need more motivation. You need less shame.",
-      "caption": "Shame has never built anything good. So why do we keep using it as fuel?\n\nRead that again. Slowly.\n\nWe live in a culture that treats shame like a productivity hack. \"If I just hate myself enough, I'll finally change.\"\n\nBut shame doesn't motivate. It paralyzes. It makes you hide. It keeps you stuck in the exact cycle you're trying to break.\n\nYou don't need another 5 AM routine. You don't need a new planner. You don't need to \"just try harder.\"\n\nYou need to stop punishing yourself for being human.\n\nReal, lasting change happens when you approach yourself with curiosity instead of contempt. That's not soft \u2014 it's science. Research consistently shows that self-compassion outperforms self-criticism for behavior change.\n\nIf shame worked, you'd be \"fixed\" by now. You're not broken. You just need a different approach.\n\nOnline therapy with Manhattan Mental Health Counseling \u2014 anxiety, depression, trauma treatment in New York. Most insurance accepted.\n\n\ud83d\udcac What's one area of your life where you've been using shame as motivation?\n\n\ud83d\udccc Save this for the next time your inner critic shows up pretending to be helpful.",
-      "cta": "",
-      "image": "org-013.png",
-      "score": {
-        "hook": 5,
-        "cta": 4,
-        "brand": 5,
-        "compliance": "pass",
-        "total": 14
-      }
-    },
-    {
-      "id": "org-014",
-      "type": "organic",
-      "format": "photo-overlay",
-      "awareness": "unaware",
-      "headline": "'Just be positive' is the worst advice in human history.",
-      "caption": "Toxic positivity isn't kindness. It's dismissal with a smile.\n\n\"Look on the bright side.\"\n\"Other people have it worse.\"\n\"Just focus on the positive.\"\n\nIf you've ever heard these and felt worse, not better \u2014 that's not a you problem. That's toxic positivity doing what it always does: dismissing your pain while pretending to help.\n\nHere's what a therapist would say instead:\n\u2192 \"That sounds really hard.\"\n\u2192 \"You're allowed to feel this.\"\n\u2192 \"What do you need right now?\"\n\nFeeling your feelings isn't weakness. It's literally the mechanism by which humans process and heal. When someone tells you to \"just be positive,\" they're not being kind \u2014 they're being uncomfortable with your pain.\n\nYou deserve people (and a therapist) who can sit with you in the hard stuff without rushing you to the other side.\n\nManhattan Mental Health Counseling \u2014 80+ therapists, online therapy in New York, most insurance accepted.\n\n\ud83d\udcac What's the most unhelpful \"positive\" advice you've ever received? Drop it below \ud83d\ude05\n\n\ud83d\udccc Save this and share it with someone who keeps getting told to \"look on the bright side.\"",
-      "cta": "",
-      "image": "org-014.png",
-      "score": {
-        "hook": 5,
-        "cta": 5,
-        "brand": 5,
-        "compliance": "pass",
-        "total": 15
-      }
-    },
-    {
-      "id": "org-015",
-      "type": "organic",
-      "format": "photo-overlay",
-      "awareness": "problem-aware",
-      "headline": "Comparison isn't the thief of joy. It's the architect of your anxiety.",
-      "caption": "You already know their feed isn't real life. So why does it still hurt?\n\nYou know the highlight reel isn't real. You've read the articles. You've seen the \"Instagram vs. Reality\" posts.\n\nSo why does scrolling still make you feel like you're falling behind?\n\nBecause knowing something intellectually and feeling it in your body are two completely different things. Your nervous system doesn't care about logic. When you see 47 people \"living their best life\" before 8 AM, your brain reads that as: you're not enough.\n\nThis isn't a willpower problem. It's a wiring problem. And it's one therapy can actually help with.\n\nHere's what our therapists help clients do:\n\u2192 Recognize comparison triggers before they spiral\n\u2192 Build a sense of self that isn't dependent on external validation\n\u2192 Use social media intentionally instead of reactively\n\nThe irony of posting this on Instagram isn't lost on us \ud83d\ude04 But that's exactly why we're here \u2014 to be the account in your feed that helps instead of hurts.\n\nManhattan Mental Health Counseling \u2014 online therapy for anxiety, self-esteem, and social media overwhelm. New York therapists accepting most insurance.\n\n\ud83d\udcac Be honest: what comparison gets you the most? Career? Relationships? Body? Drop a word below.\n\n\ud83d\udccc Save this for the next time you catch yourself doom-scrolling.",
-      "cta": "",
-      "image": "org-015.png",
-      "score": {
-        "hook": 5,
-        "cta": 5,
-        "brand": 5,
-        "compliance": "pass",
-        "total": 15
-      }
-    },
-    {
       "id": "ad-026",
       "type": "ad",
       "format": "photo-overlay",
@@ -680,6 +510,126 @@
         "brand": 5,
         "compliance": "pass",
         "total": 13
+      }
+    },
+    {
+      "id": "org-001",
+      "type": "organic",
+      "format": "photo-overlay",
+      "headline": "",
+      "image": "org-001.png"
+    },
+    {
+      "id": "org-002",
+      "type": "organic",
+      "format": "photo-overlay",
+      "headline": "",
+      "image": "org-002.png"
+    },
+    {
+      "id": "org-003",
+      "type": "organic",
+      "format": "photo-overlay",
+      "headline": "",
+      "image": "org-003.png"
+    },
+    {
+      "id": "org-004",
+      "type": "organic",
+      "format": "photo-overlay",
+      "headline": "",
+      "image": "org-004.png"
+    },
+    {
+      "id": "org-005",
+      "type": "organic",
+      "format": "photo-overlay",
+      "headline": "",
+      "image": "org-005.png"
+    },
+    {
+      "id": "org-006",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "unaware",
+      "headline": "Normalize canceling plans to do absolutely nothing.",
+      "caption": "Rest isn't laziness. It's your nervous system asking for a break. Listen to it.\n\nWhat's your go-to way to recharge? Drop it below \ud83d\udc47",
+      "cta": "",
+      "image": "org-006.png",
+      "score": {
+        "hook": 4,
+        "cta": 3,
+        "brand": 4,
+        "compliance": "pass",
+        "total": 11
+      }
+    },
+    {
+      "id": "org-007",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "problem-aware",
+      "headline": "Stop calling anxiety a personality trait.",
+      "caption": "\"I'm just a worrier\" is not a diagnosis \u2014 it's a story you tell yourself so you don't have to face what's underneath.\n\nYou didn't choose anxiety. But at some point, you started wearing it like an identity.\n\n\"I'm just a worrier.\"\n\"I'm just high-strung.\"\n\"That's just how I am.\"\n\nThese aren't personality traits. They're coping narratives \u2014 stories we repeat so often they start to feel like facts.\n\nAnxiety is one of the most treatable conditions in mental health. You don't have to white-knuckle your way through life pretending this is just \"who you are.\"\n\nAt Manhattan Mental Health Counseling, our therapists specialize in anxiety treatment \u2014 online therapy across New York, accepting most major insurance including Medicare.\n\n\ud83d\udcac Drop a \ud83d\ude4b if you've ever said \"I'm just a worrier\" instead of asking for help.\n\n\ud83d\udccc Save this for the next time anxiety tries to convince you it's permanent.",
+      "cta": "",
+      "image": "org-007.png",
+      "score": {
+        "hook": 5,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 14
+      }
+    },
+    {
+      "id": "org-008",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "unaware",
+      "headline": "The most productive thing you can do today might be nothing.",
+      "caption": "Hustle culture lied to you. Your worth isn't measured in output.\n\nWhat would you do with a guilt-free day off?",
+      "cta": "",
+      "image": "org-008.png",
+      "score": {
+        "hook": 4,
+        "cta": 3,
+        "brand": 4,
+        "compliance": "pass",
+        "total": 11
+      }
+    },
+    {
+      "id": "org-009",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "problem-aware",
+      "headline": "3am thoughts hit different.",
+      "caption": "The things you think about at 3am are usually the things you avoid at 3pm. Pay attention to that.\n\nTag someone who needs to hear this.",
+      "cta": "",
+      "image": "org-009.png",
+      "score": {
+        "hook": 5,
+        "cta": 3,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "org-010",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "unaware",
+      "headline": "Setting a boundary isn't mean. It's a complete sentence.",
+      "caption": "\"No\" doesn't need an explanation. \"I can't\" doesn't need an apology.\n\nWhat boundary are you working on? \ud83d\udcac",
+      "cta": "",
+      "image": "org-010.png",
+      "score": {
+        "hook": 5,
+        "cta": 3,
+        "brand": 4,
+        "compliance": "pass",
+        "total": 12
       }
     }
   ],
