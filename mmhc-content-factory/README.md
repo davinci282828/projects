@@ -1,6 +1,6 @@
 # mmhc-content-factory
 
-Deployed: 2026-03-03 23:46:51 UTC
+Deployed: 2026-03-04 00:08:03 UTC
 Source: /Users/davinci/.openclaw/workspace/projects/mmhc-instagram-factory/deploy-source/
-Description: Cache-busting for data.json + images, fixed Send to Da Vinci button (tg:// deep link)
+Description: V3 template: centered headline, text-dominant, grid-crop safe
 URL: https://davinci282828.github.io/projects/mmhc-content-factory/
