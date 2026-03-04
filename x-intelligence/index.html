@@ -1442,11 +1442,13 @@
 
       // Wire up action buttons
       const item = items.find(x => x.id === id);
-      if(!item) continue;
+      if(!item){ console.warn("XI: no item for", id); continue; }
       for(const btn of card.querySelectorAll(".btnAction")){
-        btn.addEventListener("click", () => {
-          const action = btn.getAttribute("data-action");
-          triggerAction(action, item, btn);
+        console.log("XI: wiring", btn.getAttribute("data-action"), "for", id);
+        btn.addEventListener("click", function(ev) {
+          console.log("XI: click fired", ev.type);
+          const action = this.getAttribute("data-action");
+          triggerAction(action, item, this);
         });
         // Long-press fallback: copy prompt to clipboard
         let lpTimer;
