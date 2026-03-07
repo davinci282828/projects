@@ -1,0 +1,1632 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent Decision Analyzer</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#101a33;
+      --panel2:#0f1730;
+      --text:#e7ecff;
+      --muted:#a9b4e0;
+      --grid:#243158;
+      --low:#2ecc71;
+      --med:#f1c40f;
+      --high:#e74c3c;
+      --accent:#7aa2ff;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background: radial-gradient(1200px 600px at 20% 0%, rgba(122,162,255,.22), transparent 60%),
+                  radial-gradient(900px 500px at 80% 10%, rgba(46,204,113,.15), transparent 60%),
+                  radial-gradient(1100px 600px at 55% 100%, rgba(231,76,60,.12), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.35;
+    }
+
+    a{ color: var(--accent); }
+
+    header{
+      padding: 22px 22px 6px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .titleRow{
+      display:flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    h1{
+      margin:0;
+      font-size: 20px;
+      letter-spacing: .3px;
+    }
+
+    .sub{
+      margin:0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .container{
+      padding: 12px 22px 28px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 420px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    @media (max-width: 1080px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent 40%),
+                  var(--panel);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .panelHeader{
+      padding: 12px 12px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .panelHeader h2{
+      font-size: 12px;
+      margin:0;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--muted);
+    }
+
+    .panelBody{ padding: 12px; }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .dot{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+    .dot.low{ background: var(--low); }
+    .dot.med{ background: var(--med); }
+    .dot.high{ background: var(--high); }
+
+    .uploadGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .dropZone{
+      border: 1px dashed rgba(255,255,255,.16);
+      background: rgba(0,0,0,.18);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .dropZone.drag{ outline: 2px solid rgba(122,162,255,.55); outline-offset: 2px; }
+
+    .dzTop{ display:flex; align-items:flex-start; justify-content: space-between; gap: 10px; }
+
+    .dzTitle{
+      font-size: 13px;
+      margin:0;
+    }
+
+    .dzHint{
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .dzRight{ display:flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+
+    .btn{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 8px 10px;
+      cursor:pointer;
+      font-size: 12px;
+    }
+    .btn:hover{ background: rgba(255,255,255,.09); }
+
+    input[type=file]{ display:none; }
+
+    .mini{
+      margin-top: 10px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 12px;
+      font-family: var(--mono);
+    }
+
+    .filters{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 520px){
+      .filters{ grid-template-columns: 1fr; }
+    }
+
+    .field{
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .field label{
+      display:block;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .field input[type="datetime-local"],
+    .field input[type="text"],
+    .field select{
+      width:100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(16,26,51,.55);
+      color: var(--text);
+      outline: none;
+      font-size: 13px;
+    }
+
+    .checks{ display:flex; gap:10px; flex-wrap:wrap; }
+    .check{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      user-select:none;
+      cursor:pointer;
+      font-size: 12px;
+      color: var(--text);
+    }
+    .check input{ cursor:pointer; }
+
+    .summary{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 980px){
+      .summary{ grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 520px){
+      .summary{ grid-template-columns: 1fr; }
+    }
+
+    .stat{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), transparent 55%),
+                  rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .stat .k{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .stat .v{
+      margin-top: 8px;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+
+    .stat .s{
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: var(--mono);
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .mainGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 1080px){
+      .mainGrid{ grid-template-columns: 1fr; }
+    }
+
+    .chartWrap{ height: 320px; }
+    .chartWrap.tall{ height: 380px; }
+
+    canvas{ width:100% !important; height:100% !important; }
+
+    .heatmap{
+      overflow:auto;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+    }
+
+    table{
+      border-collapse: separate;
+      border-spacing: 0;
+      width: 100%;
+      min-width: 520px;
+      font-size: 12px;
+    }
+
+    th, td{
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      border-right: 1px solid rgba(255,255,255,.06);
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    th{
+      position: sticky;
+      top: 0;
+      background: rgba(16,26,51,.95);
+      z-index: 2;
+      text-align: left;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 11px;
+    }
+
+    td:first-child, th:first-child{ position: sticky; left: 0; z-index: 1; background: rgba(16,26,51,.95); }
+    th:first-child{ z-index: 3; }
+
+    .riskLabel{ display:inline-flex; align-items:center; gap:8px; }
+
+    .cell{
+      font-family: var(--mono);
+      border-radius: 10px;
+      padding: 6px 8px;
+      display:inline-block;
+      border: 1px solid rgba(255,255,255,.08);
+      min-width: 88px;
+      text-align: right;
+    }
+
+    .muted{ color: var(--muted); }
+
+    .warn{
+      border: 1px solid rgba(241,196,15,.25);
+      background: rgba(241,196,15,.08);
+      color: #ffeaa7;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin: 10px 0 0;
+    }
+
+    .err{
+      border: 1px solid rgba(231,76,60,.25);
+      background: rgba(231,76,60,.08);
+      color: #ffd3cf;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin: 10px 0 0;
+    }
+
+    .ok{
+      border: 1px solid rgba(46,204,113,.25);
+      background: rgba(46,204,113,.08);
+      color: #d6ffe8;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin: 10px 0 0;
+    }
+
+    .split{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .rightTools{
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .kbd{
+      font-family: var(--mono);
+      border: 1px solid rgba(255,255,255,.10);
+      border-bottom-color: rgba(255,255,255,.18);
+      background: rgba(0,0,0,.16);
+      padding: 2px 6px;
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .foot{
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      display:flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .smallTable{
+      width:100%;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      overflow:hidden;
+      background: rgba(0,0,0,.12);
+    }
+
+    .smallTable table{ min-width: 0; }
+    .smallTable th, .smallTable td{ padding: 8px 10px; }
+    .smallTable th{ position: static; }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="titleRow">
+      <div>
+        <h1>Agent Decision Analyzer</h1>
+        <p class="sub">Drop <span class="kbd">actions.log</span> + <span class="kbd">cost.log</span> to get an instant narrative: risk, failures, cost burn.</p>
+      </div>
+      <div class="rightTools">
+        <span class="pill"><span class="dot low"></span>LOW</span>
+        <span class="pill"><span class="dot med"></span>MEDIUM</span>
+        <span class="pill"><span class="dot high"></span>HIGH</span>
+        <button id="btnReset" class="btn" title="Clear files and filters">Reset</button>
+        <button id="btnExport" class="btn" title="Download current filtered view as JSON">Export JSON</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="grid">
+
+      <div class="panel">
+        <div class="panelHeader">
+          <h2>Inputs & Filters</h2>
+          <span class="pill" id="statusPill">Waiting for logs…</span>
+        </div>
+        <div class="panelBody">
+          <div class="uploadGrid">
+
+            <div class="dropZone" id="dzActions">
+              <div class="dzTop">
+                <div>
+                  <p class="dzTitle"><strong>actions.log</strong></p>
+                  <p class="dzHint">Format: <span class="kbd">[timestamp] | RISK_TIER | ACTION_TYPE | description | est_cost | duration_ms | outcome</span></p>
+                </div>
+                <div class="dzRight">
+                  <label class="btn" for="fileActions">Choose file</label>
+                  <input id="fileActions" type="file" accept=".log,.txt" />
+                  <button id="btnClearActions" class="btn">Clear</button>
+                </div>
+              </div>
+              <div class="mini" id="actionsMeta">—</div>
+            </div>
+
+            <div class="dropZone" id="dzCost">
+              <div class="dzTop">
+                <div>
+                  <p class="dzTitle"><strong>cost.log</strong></p>
+                  <p class="dzHint">Format: <span class="kbd">[timestamp] | model | input_tokens | output_tokens | cost_usd | context</span></p>
+                </div>
+                <div class="dzRight">
+                  <label class="btn" for="fileCost">Choose file</label>
+                  <input id="fileCost" type="file" accept=".log,.txt" />
+                  <button id="btnClearCost" class="btn">Clear</button>
+                </div>
+              </div>
+              <div class="mini" id="costMeta">—</div>
+            </div>
+
+          </div>
+
+          <div id="chartJsBanner" class="warn" style="display:none;">
+            Chart.js did not load. The dashboard will still show summary + heatmap, but charts won’t render.
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="filters">
+            <div class="field">
+              <label>Date range (start)</label>
+              <input id="fStart" type="datetime-local" />
+              <div class="muted" style="margin-top:6px; font-size:12px;">If set, invalid timestamps are excluded.</div>
+            </div>
+            <div class="field">
+              <label>Date range (end)</label>
+              <input id="fEnd" type="datetime-local" />
+            </div>
+
+            <div class="field" style="grid-column: 1 / -1;">
+              <label>Risk tiers</label>
+              <div class="checks">
+                <label class="check"><input type="checkbox" id="rLOW" checked> <span class="riskLabel"><span class="dot low"></span>LOW</span></label>
+                <label class="check"><input type="checkbox" id="rMED" checked> <span class="riskLabel"><span class="dot med"></span>MEDIUM</span></label>
+                <label class="check"><input type="checkbox" id="rHIGH" checked> <span class="riskLabel"><span class="dot high"></span>HIGH</span></label>
+                <label class="check"><input type="checkbox" id="rOTHER" checked> OTHER</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Action type (contains)</label>
+              <input id="fTypeText" type="text" placeholder="e.g. FILE_WRITE, BROWSER_FETCH" />
+            </div>
+
+            <div class="field">
+              <label>Action type (select)</label>
+              <select id="fTypeSelect">
+                <option value="">All action types</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="split">
+            <div class="muted" style="font-size:12px;">
+              Tip: drag files anywhere over each drop zone. Filters update instantly.
+            </div>
+            <div class="rightTools">
+              <button id="btnNow" class="btn">Set range to data</button>
+              <button id="btnClearFilters" class="btn">Clear filters</button>
+            </div>
+          </div>
+
+          <div class="foot">
+            <div>Malformed lines are skipped and counted.</div>
+            <div><span class="kbd">Failures</span> are outcomes containing <span class="kbd">fail</span>, <span class="kbd">error</span>, or <span class="kbd">exception</span> (case-insensitive).</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div>
+        <div class="panel">
+          <div class="panelHeader">
+            <h2>Summary (filtered)</h2>
+            <span class="pill" id="filterPill">—</span>
+          </div>
+          <div class="panelBody">
+            <div class="summary">
+              <div class="stat">
+                <div class="k"><span>Total actions</span><span class="kbd" id="kActions">actions</span></div>
+                <div class="v" id="vActions">0</div>
+                <div class="s" id="sActions">Load actions.log</div>
+              </div>
+              <div class="stat">
+                <div class="k"><span>Failure rate</span><span class="kbd" id="kFail">failures</span></div>
+                <div class="v" id="vFailRate">0.0%</div>
+                <div class="s" id="sFail">0 failures</div>
+              </div>
+              <div class="stat">
+                <div class="k"><span>Total cost (USD)</span><span class="kbd">cost.log</span></div>
+                <div class="v" id="vCost">—</div>
+                <div class="s" id="sCost">—</div>
+              </div>
+              <div class="stat">
+                <div class="k"><span>Avg cost / action</span><span class="kbd">USD</span></div>
+                <div class="v" id="vAvg">—</div>
+                <div class="s" id="sAvg">—</div>
+              </div>
+            </div>
+
+            <div style="height:10px"></div>
+
+            <div class="smallTable">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 34%">What happened</th>
+                    <th style="width: 22%">Top action</th>
+                    <th style="width: 22%">Top failure action</th>
+                    <th style="width: 22%">Token est (actions)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td id="tStory" class="muted">—</td>
+                    <td id="tTopAction" class="muted">—</td>
+                    <td id="tTopFail" class="muted">—</td>
+                    <td id="tTokens" class="muted">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div id="parseBanner" class="ok" style="display:none;"></div>
+
+          </div>
+        </div>
+
+        <div style="height:14px"></div>
+
+        <div class="mainGrid">
+
+          <div class="panel">
+            <div class="panelHeader">
+              <h2>Risk Tier Distribution</h2>
+              <span class="pill" id="pRisk">—</span>
+            </div>
+            <div class="panelBody">
+              <div class="chartWrap">
+                <canvas id="cRisk"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panelHeader">
+              <h2>Action Type Frequency (Top 10)</h2>
+              <span class="pill" id="pTypes">—</span>
+            </div>
+            <div class="panelBody">
+              <div class="chartWrap">
+                <canvas id="cTypes"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panelHeader">
+              <h2>Cost Heatmap (est tokens) — action type × risk tier</h2>
+              <span class="pill" id="pHeat">—</span>
+            </div>
+            <div class="panelBody">
+              <div class="heatmap" id="heatWrap"></div>
+              <div class="muted" style="margin-top:8px; font-size:12px;">
+                Heatmap uses <span class="kbd">est_cost</span> from actions.log as token estimate.
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panelHeader">
+              <h2>Token Burn by Category (est tokens)</h2>
+              <span class="pill" id="pCats">—</span>
+            </div>
+            <div class="panelBody">
+              <div class="chartWrap">
+                <canvas id="cCats"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" style="grid-column: 1 / -1;">
+            <div class="panelHeader">
+              <h2>Failure Timeline</h2>
+              <span class="pill" id="pTimeline">—</span>
+            </div>
+            <div class="panelBody">
+              <div class="chartWrap tall">
+                <canvas id="cTimeline"></canvas>
+              </div>
+              <div class="muted" style="margin-top:8px; font-size:12px;">
+                Scatter: x = timestamp, y = action type. Failures are larger & red.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Chart.js (CDN) per task requirements. If offline, charts won't render; summary + heatmap still work. -->
+  <script>
+    // Load Chart.js from CDN without blocking the rest of the app.
+    // Note: This is intentionally dynamic to keep the page responsive even if the CDN is slow/unavailable.
+    (function loadChartJs(){
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js';
+      s.async = true;
+      s.onload = () => window.__chartJsReady = true;
+      s.onerror = () => window.__chartJsReady = false;
+      document.head.appendChild(s);
+    })();
+  </script>
+
+  <script>
+    'use strict';
+
+    // ----------------------------
+    // Utilities
+    // ----------------------------
+
+    const $ = (sel) => document.querySelector(sel);
+
+    function clamp01(x){ return Math.max(0, Math.min(1, x)); }
+
+    function fmtInt(n){
+      if (n == null || Number.isNaN(n)) return '—';
+      const v = Math.round(n);
+      return v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    function fmtUsd(x){
+      if (x == null || Number.isNaN(x)) return '—';
+      const v = Number(x);
+      if (!Number.isFinite(v)) return '—';
+      return v.toLocaleString(undefined, { style:'currency', currency:'USD', maximumFractionDigits: 4 });
+    }
+
+    function fmtPct(x){
+      if (x == null || Number.isNaN(x)) return '—';
+      return (100 * x).toFixed(1) + '%';
+    }
+
+    function safeLower(s){ return String(s ?? '').toLowerCase(); }
+
+    function parseBracketTimestamp(part){
+      // part like: [2026-03-05T03:00:00.123Z]
+      const raw = String(part ?? '').trim();
+      const m = raw.match(/^\[(.*)\]$/);
+      const inner = m ? m[1].trim() : raw.replace(/^\[/,'').replace(/\]$/,'').trim();
+      const d = new Date(inner);
+      return {
+        ok: Number.isFinite(d.getTime()),
+        date: Number.isFinite(d.getTime()) ? d : null,
+        raw: inner
+      };
+    }
+
+    function isFailureOutcome(outcome){
+      const t = safeLower(outcome);
+      return t.includes('fail') || t.includes('error') || t.includes('exception');
+    }
+
+    function normRisk(risk){
+      const r = String(risk ?? '').trim().toUpperCase();
+      if (r === 'LOW' || r === 'MEDIUM' || r === 'HIGH') return r;
+      return r ? 'OTHER' : 'OTHER';
+    }
+
+    function riskColor(risk){
+      const r = normRisk(risk);
+      if (r === 'LOW') return getComputedStyle(document.documentElement).getPropertyValue('--low').trim();
+      if (r === 'MEDIUM') return getComputedStyle(document.documentElement).getPropertyValue('--med').trim();
+      if (r === 'HIGH') return getComputedStyle(document.documentElement).getPropertyValue('--high').trim();
+      return 'rgba(170,180,224,.9)';
+    }
+
+    function categorizeAction(actionType){
+      const t = safeLower(actionType);
+      // Heuristic buckets for fast scanning.
+      if (/(file|read|write|edit|patch|diff|mkdir|rm|delete|copy|move|rename|path)/.test(t)) return 'File ops';
+      if (/(message|chat|notify|email|slack|send|reply|comment)/.test(t)) return 'Messaging';
+      if (/(browser|http|fetch|scrape|crawl|navigate|open_url|search)/.test(t)) return 'Browser/Web';
+      if (/(exec|shell|command|bash|zsh|powershell|run_process)/.test(t)) return 'Shell/Compute';
+      if (/(plan|reason|think|analysis|decide|select|rank)/.test(t)) return 'Planning';
+      if (/(tool|function|api|call|invoke)/.test(t)) return 'Tooling';
+      if (/(auth|secret|token|key|credential|login)/.test(t)) return 'Auth/Security';
+      if (/(db|sql|query|index|schema)/.test(t)) return 'Data/DB';
+      return 'Other';
+    }
+
+    function downloadText(filename, text){
+      const blob = new Blob([text], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    // ----------------------------
+    // Parsing
+    // ----------------------------
+
+    function parseActionsLog(text){
+      const lines = String(text ?? '').split(/\r?\n/);
+      const rows = [];
+      let malformed = 0;
+
+      for (let i=0;i<lines.length;i++){
+        const line = lines[i].trim();
+        if (!line) continue;
+        if (line.startsWith('#')) continue; // skip comment lines
+
+        const parts = line.split('|').map(s => s.trim());
+        if (parts.length < 7){ malformed++; continue; }
+
+        const tsPart = parts[0];
+        const riskPart = parts[1];
+        const typePart = parts[2];
+        const outcomePart = parts[parts.length-1];
+        const durationPart = parts[parts.length-2];
+        const estCostPart = parts[parts.length-3];
+        const descPart = parts.slice(3, parts.length-3).join(' | ');
+
+        const ts = parseBracketTimestamp(tsPart);
+
+        const estCost = Number(estCostPart);
+        const dur = parseInt(durationPart, 10);
+
+        rows.push({
+          idx: i,
+          raw: line,
+          ts: ts.date,
+          tsOk: ts.ok,
+          tsRaw: ts.raw,
+          risk: normRisk(riskPart),
+          actionType: String(typePart ?? '').trim() || 'UNKNOWN',
+          description: descPart,
+          estCost: Number.isFinite(estCost) ? estCost : null,
+          durationMs: Number.isFinite(dur) ? dur : null,
+          outcome: String(outcomePart ?? '').trim(),
+          failure: isFailureOutcome(outcomePart)
+        });
+      }
+
+      return { rows, malformed };
+    }
+
+    function parseCostLog(text){
+      const lines = String(text ?? '').split(/\r?\n/);
+      const rows = [];
+      let malformed = 0;
+
+      for (let i=0;i<lines.length;i++){
+        const line = lines[i].trim();
+        if (!line) continue;
+        if (line.startsWith('#')) continue; // skip comment lines
+
+        const parts = line.split('|').map(s => s.trim());
+        if (parts.length < 6){ malformed++; continue; }
+
+        const tsPart = parts[0];
+        const modelPart = parts[1];
+        const inTokPart = parts[2];
+        const outTokPart = parts[3];
+        const usdPart = parts[4];
+        const ctxPart = parts.slice(5).join(' | ');
+
+        const ts = parseBracketTimestamp(tsPart);
+        const inTok = parseInt(inTokPart, 10);
+        const outTok = parseInt(outTokPart, 10);
+        const usd = Number(usdPart);
+
+        rows.push({
+          idx: i,
+          raw: line,
+          ts: ts.date,
+          tsOk: ts.ok,
+          tsRaw: ts.raw,
+          model: String(modelPart ?? '').trim() || 'UNKNOWN',
+          inputTokens: Number.isFinite(inTok) ? inTok : null,
+          outputTokens: Number.isFinite(outTok) ? outTok : null,
+          costUsd: Number.isFinite(usd) ? usd : null,
+          context: String(ctxPart ?? '').trim()
+        });
+      }
+
+      return { rows, malformed };
+    }
+
+    // ----------------------------
+    // State
+    // ----------------------------
+
+    const state = {
+      actions: [],
+      cost: [],
+      malformedActions: 0,
+      malformedCost: 0,
+      actionsFile: null,
+      costFile: null,
+      charts: {
+        risk: null,
+        types: null,
+        cats: null,
+        timeline: null
+      }
+    };
+
+    function currentFilters(){
+      const startVal = $('#fStart').value;
+      const endVal = $('#fEnd').value;
+      const start = startVal ? new Date(startVal) : null;
+      const end = endVal ? new Date(endVal) : null;
+
+      const risk = {
+        LOW: $('#rLOW').checked,
+        MEDIUM: $('#rMED').checked,
+        HIGH: $('#rHIGH').checked,
+        OTHER: $('#rOTHER').checked
+      };
+
+      const typeText = $('#fTypeText').value.trim();
+      const typeSelect = $('#fTypeSelect').value;
+
+      return { start, end, risk, typeText, typeSelect };
+    }
+
+    function applyActionFilters(actions, filters){
+      const tNeedle = safeLower(filters.typeText);
+      const sNeedle = String(filters.typeSelect ?? '').trim();
+
+      return actions.filter(a => {
+        if (filters.start){
+          if (!a.tsOk) return false;
+          if (a.ts < filters.start) return false;
+        }
+        if (filters.end){
+          if (!a.tsOk) return false;
+          if (a.ts > filters.end) return false;
+        }
+
+        if (!filters.risk[a.risk]) return false;
+
+        if (tNeedle){
+          if (!safeLower(a.actionType).includes(tNeedle)) return false;
+        }
+        if (sNeedle){
+          if (a.actionType !== sNeedle) return false;
+        }
+        return true;
+      });
+    }
+
+    function applyCostFilters(costRows, filters){
+      return costRows.filter(c => {
+        if (filters.start){
+          if (!c.tsOk) return false;
+          if (c.ts < filters.start) return false;
+        }
+        if (filters.end){
+          if (!c.tsOk) return false;
+          if (c.ts > filters.end) return false;
+        }
+        return true;
+      });
+    }
+
+    // ----------------------------
+    // Rendering
+    // ----------------------------
+
+    function updateStatusPill(){
+      const a = !!state.actionsFile;
+      const c = !!state.costFile;
+      const el = $('#statusPill');
+      if (a && c) el.textContent = 'Ready (both logs)';
+      else if (a) el.textContent = 'Loaded actions.log';
+      else if (c) el.textContent = 'Loaded cost.log';
+      else el.textContent = 'Waiting for logs…';
+    }
+
+    function setMeta(){
+      const aEl = $('#actionsMeta');
+      const cEl = $('#costMeta');
+
+      if (state.actionsFile){
+        aEl.textContent = `${state.actionsFile.name} — ${fmtInt(state.actions.length)} parsed, ${fmtInt(state.malformedActions)} malformed`;
+      } else aEl.textContent = '—';
+
+      if (state.costFile){
+        cEl.textContent = `${state.costFile.name} — ${fmtInt(state.cost.length)} parsed, ${fmtInt(state.malformedCost)} malformed`;
+      } else cEl.textContent = '—';
+
+      const banner = $('#parseBanner');
+      const parts = [];
+      if (state.actionsFile) parts.push(`actions: ${fmtInt(state.actions.length)} parsed (${fmtInt(state.malformedActions)} malformed)`);
+      if (state.costFile) parts.push(`cost: ${fmtInt(state.cost.length)} parsed (${fmtInt(state.malformedCost)} malformed)`);
+      if (parts.length){
+        banner.style.display = '';
+        banner.textContent = 'Parsed ' + parts.join(' • ');
+      } else {
+        banner.style.display = 'none';
+      }
+    }
+
+    function populateActionTypeSelect(){
+      const sel = $('#fTypeSelect');
+      const prev = sel.value;
+
+      const types = Array.from(new Set(state.actions.map(a => a.actionType))).sort((a,b) => a.localeCompare(b));
+      sel.innerHTML = '<option value="">All action types</option>';
+      for (const t of types){
+        const opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = t;
+        sel.appendChild(opt);
+      }
+      // try preserve selection
+      if (types.includes(prev)) sel.value = prev;
+    }
+
+    function computeStory(filteredActions){
+      const n = filteredActions.length;
+      if (!n) return 'No actions in scope.';
+
+      const counts = new Map();
+      const failCounts = new Map();
+      let low=0, med=0, high=0, other=0;
+      for (const a of filteredActions){
+        counts.set(a.actionType, (counts.get(a.actionType)||0)+1);
+        if (a.failure) failCounts.set(a.actionType, (failCounts.get(a.actionType)||0)+1);
+        if (a.risk==='LOW') low++;
+        else if (a.risk==='MEDIUM') med++;
+        else if (a.risk==='HIGH') high++;
+        else other++;
+      }
+
+      const top = [...counts.entries()].sort((x,y)=>y[1]-x[1])[0];
+      const topFail = [...failCounts.entries()].sort((x,y)=>y[1]-x[1])[0];
+
+      const hiPct = high/n;
+      const failN = [...filteredActions].filter(a=>a.failure).length;
+      const failPct = failN/n;
+
+      let vibe = 'Mostly routine.';
+      if (failPct >= 0.20) vibe = 'Failing often.';
+      else if (hiPct >= 0.25) vibe = 'High-risk heavy.';
+      else if (failPct > 0) vibe = 'Some instability.';
+
+      const riskMsg = `Risk mix L/M/H: ${low}/${med}/${high}${other?` (+${other} other)`:''}.`;
+      const topMsg = top ? `Most common: ${top[0]} (${top[1]}×).` : '';
+
+      return `${vibe} ${riskMsg} ${topMsg}`.trim();
+    }
+
+    function renderSummary(){
+      const filters = currentFilters();
+      const actionsF = applyActionFilters(state.actions, filters);
+      const costF = applyCostFilters(state.cost, filters);
+
+      $('#filterPill').textContent = `${fmtInt(actionsF.length)} actions in scope`;
+
+      const totalActions = actionsF.length;
+      const failures = actionsF.reduce((acc,a)=>acc+(a.failure?1:0),0);
+      const failRate = totalActions ? failures/totalActions : 0;
+
+      const estTokens = actionsF.reduce((acc,a)=>acc + (a.estCost ?? 0), 0);
+      const estTokensKnown = actionsF.reduce((acc,a)=>acc + (a.estCost!=null ? 1 : 0), 0);
+
+      const costUsd = costF.reduce((acc,c)=>acc + (c.costUsd ?? 0), 0);
+      const costUsdKnown = costF.some(c => c.costUsd != null);
+
+      const avgUsd = (costUsdKnown && totalActions) ? (costUsd / totalActions) : null;
+
+      $('#vActions').textContent = fmtInt(totalActions);
+      $('#sActions').textContent = state.actionsFile ? `${fmtInt(state.actions.length)} total parsed • ${fmtInt(state.malformedActions)} malformed skipped` : 'Load actions.log';
+      $('#kActions').textContent = state.actionsFile ? 'actions' : '—';
+
+      $('#vFailRate').textContent = fmtPct(failRate);
+      $('#sFail').textContent = `${fmtInt(failures)} failures`;
+      $('#kFail').textContent = totalActions ? `${fmtInt(failures)}/${fmtInt(totalActions)}` : '0/0';
+
+      $('#vCost').textContent = (state.costFile && costUsdKnown) ? fmtUsd(costUsd) : '—';
+      if (state.costFile){
+        const inTok = costF.reduce((acc,c)=>acc+(c.inputTokens ?? 0),0);
+        const outTok = costF.reduce((acc,c)=>acc+(c.outputTokens ?? 0),0);
+        $('#sCost').textContent = `tokens: in ${fmtInt(inTok)} / out ${fmtInt(outTok)} • ${fmtInt(state.malformedCost)} malformed`;
+      } else {
+        $('#sCost').textContent = 'Load cost.log to compute USD totals';
+      }
+
+      $('#vAvg').textContent = (avgUsd != null) ? fmtUsd(avgUsd) : '—';
+      $('#sAvg').textContent = (avgUsd != null) ? 'computed from cost.log ÷ filtered actions' : 'needs cost.log and actions in scope';
+
+      // Narrative row
+      const counts = new Map();
+      const failCounts = new Map();
+      for (const a of actionsF){
+        counts.set(a.actionType, (counts.get(a.actionType)||0)+1);
+        if (a.failure) failCounts.set(a.actionType, (failCounts.get(a.actionType)||0)+1);
+      }
+      const top = [...counts.entries()].sort((x,y)=>y[1]-x[1])[0];
+      const topFail = [...failCounts.entries()].sort((x,y)=>y[1]-x[1])[0];
+
+      $('#tStory').textContent = computeStory(actionsF);
+      $('#tTopAction').textContent = top ? `${top[0]} (${top[1]}×)` : '—';
+      $('#tTopFail').textContent = topFail ? `${topFail[0]} (${topFail[1]}×)` : (failures ? '—' : 'No failures');
+      $('#tTokens').textContent = estTokensKnown ? `${fmtInt(estTokens)} tokens est (${fmtInt(estTokensKnown)}/${fmtInt(totalActions)} lines have est_cost)` : '—';
+
+      return { actionsF, costF };
+    }
+
+    function renderHeatmap(actionsF){
+      const wrap = $('#heatWrap');
+      if (!actionsF.length){
+        wrap.innerHTML = '<div class="muted" style="padding: 10px;">Load actions.log (or broaden filters) to view heatmap.</div>';
+        $('#pHeat').textContent = '—';
+        return;
+      }
+
+      // Use the most frequent action types to keep it scannable.
+      const counts = new Map();
+      for (const a of actionsF){
+        counts.set(a.actionType, (counts.get(a.actionType)||0)+1);
+      }
+      const topTypes = [...counts.entries()].sort((x,y)=>y[1]-x[1]).slice(0, 14).map(x=>x[0]);
+
+      const tiers = ['LOW','MEDIUM','HIGH','OTHER'];
+      const sums = {}; // sums[type][tier] = token sum
+      for (const t of topTypes){
+        sums[t] = {LOW:0, MEDIUM:0, HIGH:0, OTHER:0};
+      }
+      for (const a of actionsF){
+        if (!topTypes.includes(a.actionType)) continue;
+        const v = a.estCost ?? 0;
+        sums[a.actionType][a.risk] += v;
+      }
+
+      // Find max for color scaling.
+      let max = 0;
+      for (const t of topTypes){
+        for (const r of tiers){
+          max = Math.max(max, sums[t][r]);
+        }
+      }
+      if (!Number.isFinite(max) || max <= 0) max = 1;
+
+      function cellStyle(v){
+        // Perceptual-ish scale.
+        const p = clamp01(Math.sqrt(v / max));
+        const bg = `rgba(122,162,255,${0.08 + 0.55*p})`;
+        const br = `rgba(255,255,255,${0.06 + 0.18*p})`;
+        return { background: bg, borderColor: br };
+      }
+
+      const header = `
+        <table>
+          <thead>
+            <tr>
+              <th>Action type</th>
+              <th><span class="riskLabel"><span class="dot low"></span>LOW</span></th>
+              <th><span class="riskLabel"><span class="dot med"></span>MEDIUM</span></th>
+              <th><span class="riskLabel"><span class="dot high"></span>HIGH</span></th>
+              <th>OTHER</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      let body = '';
+      for (const t of topTypes){
+        body += `<tr>`;
+        body += `<td style="font-family: var(--mono);">${escapeHtml(t)}</td>`;
+        for (const r of tiers){
+          const v = sums[t][r];
+          const st = cellStyle(v);
+          const hint = `${t} × ${r}: ${fmtInt(v)} est tokens`;
+          body += `<td><span class="cell" title="${escapeHtml(hint)}" style="background:${st.background}; border-color:${st.borderColor}">${fmtInt(v)}</span></td>`;
+        }
+        body += `</tr>`;
+      }
+
+      const footer = `
+          </tbody>
+        </table>
+      `;
+
+      wrap.innerHTML = header + body + footer;
+      $('#pHeat').textContent = `${topTypes.length} action types`;
+    }
+
+    // Small HTML escape to avoid surprises in table.
+    function escapeHtml(s){
+      return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+
+    function ensureChartsReady(timeoutMs=2500){
+      return new Promise(resolve => {
+        const t0 = performance.now();
+        const tick = () => {
+          if (window.Chart){ resolve(true); return; }
+          if (performance.now() - t0 > timeoutMs){ resolve(false); return; }
+          requestAnimationFrame(tick);
+        };
+        tick();
+      });
+    }
+
+    function destroyChart(c){
+      try{ if (c && typeof c.destroy === 'function') c.destroy(); } catch(_){ /* ignore */ }
+    }
+
+    async function renderCharts(actionsF){
+      const ok = await ensureChartsReady();
+      $('#chartJsBanner').style.display = ok ? 'none' : '';
+      if (!ok) return;
+
+      // ---- Risk distribution
+      const riskCounts = {LOW:0, MEDIUM:0, HIGH:0, OTHER:0};
+      for (const a of actionsF) riskCounts[a.risk] = (riskCounts[a.risk]||0)+1;
+      $('#pRisk').textContent = `${fmtInt(actionsF.length)} actions`;
+
+      destroyChart(state.charts.risk);
+      state.charts.risk = new Chart($('#cRisk'), {
+        type: 'pie',
+        data: {
+          labels: ['LOW','MEDIUM','HIGH','OTHER'],
+          datasets: [{
+            data: [riskCounts.LOW, riskCounts.MEDIUM, riskCounts.HIGH, riskCounts.OTHER],
+            backgroundColor: [riskColor('LOW'), riskColor('MEDIUM'), riskColor('HIGH'), 'rgba(170,180,224,.55)'],
+            borderColor: 'rgba(255,255,255,.08)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#e7ecff' } },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.label}: ${ctx.parsed}`
+              }
+            }
+          }
+        }
+      });
+
+      // ---- Action type frequency (top 10)
+      const typeCounts = new Map();
+      for (const a of actionsF){
+        typeCounts.set(a.actionType, (typeCounts.get(a.actionType)||0)+1);
+      }
+      const top = [...typeCounts.entries()].sort((x,y)=>y[1]-x[1]).slice(0, 10);
+      const labels = top.map(x=>x[0]);
+      const vals = top.map(x=>x[1]);
+      $('#pTypes').textContent = top.length ? `${top.length} shown` : '—';
+
+      destroyChart(state.charts.types);
+      state.charts.types = new Chart($('#cTypes'), {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [{
+            label: 'count',
+            data: vals,
+            backgroundColor: 'rgba(122,162,255,.45)',
+            borderColor: 'rgba(255,255,255,.10)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: (ctx) => `${ctx.parsed.y} actions` } }
+          },
+          scales: {
+            x: { ticks: { color: '#a9b4e0', maxRotation: 45, minRotation: 45 }, grid: { color: 'rgba(255,255,255,.06)' } },
+            y: { ticks: { color: '#a9b4e0' }, grid: { color: 'rgba(255,255,255,.06)' }, beginAtZero: true }
+          }
+        }
+      });
+
+      // ---- Token burn by category
+      const catSums = new Map();
+      for (const a of actionsF){
+        const cat = categorizeAction(a.actionType);
+        const v = a.estCost ?? 0;
+        catSums.set(cat, (catSums.get(cat)||0) + v);
+      }
+      const cats = [...catSums.entries()].sort((a,b)=>b[1]-a[1]);
+      const catLabels = cats.map(x=>x[0]);
+      const catVals = cats.map(x=>x[1]);
+      $('#pCats').textContent = `${catLabels.length} categories`;
+
+      const palette = [
+        'rgba(122,162,255,.65)',
+        'rgba(46,204,113,.65)',
+        'rgba(241,196,15,.70)',
+        'rgba(231,76,60,.65)',
+        'rgba(155,89,182,.60)',
+        'rgba(52,152,219,.60)',
+        'rgba(26,188,156,.60)',
+        'rgba(189,195,199,.50)'
+      ];
+
+      destroyChart(state.charts.cats);
+      state.charts.cats = new Chart($('#cCats'), {
+        type: 'pie',
+        data: {
+          labels: catLabels,
+          datasets: [{
+            data: catVals,
+            backgroundColor: catLabels.map((_,i)=>palette[i % palette.length]),
+            borderColor: 'rgba(255,255,255,.08)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#e7ecff' } },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.label}: ${fmtInt(ctx.parsed)} est tokens`
+              }
+            }
+          }
+        }
+      });
+
+      // ---- Failure timeline scatter
+      const valid = actionsF.filter(a=>a.tsOk);
+      const actionTypes = Array.from(new Set(valid.map(a=>a.actionType))).sort((a,b)=>a.localeCompare(b));
+      const yIndex = new Map(actionTypes.map((t,i)=>[t,i]));
+
+      const successPts = [];
+      const failurePts = [];
+      for (const a of valid){
+        const pt = { x: a.ts.getTime(), y: yIndex.get(a.actionType), _type: a.actionType, _risk: a.risk, _outcome: a.outcome };
+        (a.failure ? failurePts : successPts).push(pt);
+      }
+
+      $('#pTimeline').textContent = valid.length ? `${fmtInt(valid.length)} timestamped actions` : 'No valid timestamps';
+
+      destroyChart(state.charts.timeline);
+      state.charts.timeline = new Chart($('#cTimeline'), {
+        type: 'scatter',
+        data: {
+          datasets: [
+            {
+              label: 'success',
+              data: successPts,
+              pointRadius: 2,
+              pointHoverRadius: 4,
+              pointBackgroundColor: 'rgba(169,180,224,.35)',
+              pointBorderColor: 'rgba(255,255,255,.10)'
+            },
+            {
+              label: 'failure',
+              data: failurePts,
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              pointBackgroundColor: riskColor('HIGH'),
+              pointBorderColor: 'rgba(0,0,0,.25)'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#e7ecff' } },
+            tooltip: {
+              callbacks: {
+                title: (items) => {
+                  if (!items || !items.length) return '';
+                  const ts = new Date(items[0].raw.parsed.x);
+                  return ts.toISOString();
+                },
+                label: (ctx) => {
+                  const raw = ctx.raw || {};
+                  const risk = raw._risk ? ` • ${raw._risk}` : '';
+                  const outcome = raw._outcome ? ` • ${raw._outcome}` : '';
+                  return `${raw._type ?? 'UNKNOWN'}${risk}${outcome}`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              type: 'linear',
+              ticks: {
+                color: '#a9b4e0',
+                callback: (v) => {
+                  const d = new Date(v);
+                  if (!Number.isFinite(d.getTime())) return '';
+                  // compact tick label
+                  const hh = String(d.getHours()).padStart(2,'0');
+                  const mm = String(d.getMinutes()).padStart(2,'0');
+                  return `${hh}:${mm}`;
+                }
+              },
+              grid: { color: 'rgba(255,255,255,.06)' }
+            },
+            y: {
+              ticks: {
+                color: '#a9b4e0',
+                callback: (v) => actionTypes[v] ?? ''
+              },
+              grid: { color: 'rgba(255,255,255,.06)' }
+            }
+          }
+        }
+      });
+    }
+
+    function renderAll(){
+      updateStatusPill();
+      setMeta();
+      populateActionTypeSelect();
+
+      const { actionsF } = renderSummary();
+
+      // Update small pills
+      const f = currentFilters();
+      const filterBits = [];
+      if (f.start) filterBits.push('start');
+      if (f.end) filterBits.push('end');
+      if (!f.risk.LOW || !f.risk.MEDIUM || !f.risk.HIGH || !f.risk.OTHER) filterBits.push('risk');
+      if (f.typeText) filterBits.push('type contains');
+      if (f.typeSelect) filterBits.push('type=');
+      $('#filterPill').textContent = filterBits.length ? `Filters: ${filterBits.join(', ')} • ${fmtInt(actionsF.length)} actions` : `No filters • ${fmtInt(actionsF.length)} actions`;
+
+      renderHeatmap(actionsF);
+
+      // Charts depend on Chart.js
+      renderCharts(actionsF);
+
+      // Additional pills
+      $('#pHeat').textContent = $('#pHeat').textContent || '—';
+    }
+
+    // ----------------------------
+    // File I/O
+    // ----------------------------
+
+    async function readFileText(file){
+      return new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => resolve(String(r.result ?? ''));
+        r.onerror = () => reject(r.error || new Error('Failed to read file'));
+        r.readAsText(file);
+      });
+    }
+
+    async function loadActionsFile(file){
+      state.actionsFile = file;
+      const text = await readFileText(file);
+      const parsed = parseActionsLog(text);
+      state.actions = parsed.rows;
+      state.malformedActions = parsed.malformed;
+      renderAll();
+    }
+
+    async function loadCostFile(file){
+      state.costFile = file;
+      const text = await readFileText(file);
+      const parsed = parseCostLog(text);
+      state.cost = parsed.rows;
+      state.malformedCost = parsed.malformed;
+      renderAll();
+    }
+
+    function clearActions(){
+      state.actionsFile = null;
+      state.actions = [];
+      state.malformedActions = 0;
+      $('#fileActions').value = '';
+      destroyChart(state.charts.risk); state.charts.risk = null;
+      destroyChart(state.charts.types); state.charts.types = null;
+      destroyChart(state.charts.cats); state.charts.cats = null;
+      destroyChart(state.charts.timeline); state.charts.timeline = null;
+      renderAll();
+    }
+
+    function clearCost(){
+      state.costFile = null;
+      state.cost = [];
+      state.malformedCost = 0;
+      $('#fileCost').value = '';
+      renderAll();
+    }
+
+    function clearFilters(){
+      $('#fStart').value = '';
+      $('#fEnd').value = '';
+      $('#rLOW').checked = true;
+      $('#rMED').checked = true;
+      $('#rHIGH').checked = true;
+      $('#rOTHER').checked = true;
+      $('#fTypeText').value = '';
+      $('#fTypeSelect').value = '';
+      renderAll();
+    }
+
+    function resetAll(){
+      clearActions();
+      clearCost();
+      clearFilters();
+    }
+
+    function setRangeToData(){
+      const ts = state.actions.filter(a=>a.tsOk).map(a=>a.ts.getTime());
+      if (!ts.length) return;
+      const min = new Date(Math.min(...ts));
+      const max = new Date(Math.max(...ts));
+
+      // datetime-local expects local time without timezone.
+      const toLocalInput = (d) => {
+        const pad = (n) => String(n).padStart(2,'0');
+        const yyyy = d.getFullYear();
+        const mm = pad(d.getMonth()+1);
+        const dd = pad(d.getDate());
+        const hh = pad(d.getHours());
+        const mi = pad(d.getMinutes());
+        return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
+      };
+
+      $('#fStart').value = toLocalInput(min);
+      $('#fEnd').value = toLocalInput(max);
+      renderAll();
+    }
+
+    // ----------------------------
+    // Drag and drop
+    // ----------------------------
+
+    function wireDropZone(zoneEl, onFile){
+      zoneEl.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zoneEl.classList.add('drag');
+      });
+      zoneEl.addEventListener('dragleave', () => zoneEl.classList.remove('drag'));
+      zoneEl.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        zoneEl.classList.remove('drag');
+        const file = e.dataTransfer?.files?.[0];
+        if (!file) return;
+        try { await onFile(file); }
+        catch (err) { console.error(err); alert('Failed to load file: ' + (err?.message || err)); }
+      });
+    }
+
+    // ----------------------------
+    // Events
+    // ----------------------------
+
+    function wireEvents(){
+      // file inputs
+      $('#fileActions').addEventListener('change', async (e) => {
+        const f = e.target.files?.[0];
+        if (!f) return;
+        try { await loadActionsFile(f); }
+        catch (err) { console.error(err); alert('Failed to load actions.log: ' + (err?.message || err)); }
+      });
+
+      $('#fileCost').addEventListener('change', async (e) => {
+        const f = e.target.files?.[0];
+        if (!f) return;
+        try { await loadCostFile(f); }
+        catch (err) { console.error(err); alert('Failed to load cost.log: ' + (err?.message || err)); }
+      });
+
+      // drop zones
+      wireDropZone($('#dzActions'), loadActionsFile);
+      wireDropZone($('#dzCost'), loadCostFile);
+
+      // clear
+      $('#btnClearActions').addEventListener('click', clearActions);
+      $('#btnClearCost').addEventListener('click', clearCost);
+      $('#btnClearFilters').addEventListener('click', clearFilters);
+      $('#btnReset').addEventListener('click', resetAll);
+      $('#btnNow').addEventListener('click', setRangeToData);
+
+      // filters
+      const filterEls = ['#fStart','#fEnd','#rLOW','#rMED','#rHIGH','#rOTHER','#fTypeText','#fTypeSelect'];
+      for (const sel of filterEls){
+        $(sel).addEventListener('input', renderAll);
+        $(sel).addEventListener('change', renderAll);
+      }
+
+      // export
+      $('#btnExport').addEventListener('click', () => {
+        const filters = currentFilters();
+        const actionsF = applyActionFilters(state.actions, filters);
+        const costF = applyCostFilters(state.cost, filters);
+        const payload = {
+          exportedAt: new Date().toISOString(),
+          filters: {
+            start: filters.start ? filters.start.toISOString() : null,
+            end: filters.end ? filters.end.toISOString() : null,
+            risk: filters.risk,
+            typeText: filters.typeText,
+            typeSelect: filters.typeSelect
+          },
+          actions: actionsF,
+          cost: costF,
+          malformed: {
+            actions: state.malformedActions,
+            cost: state.malformedCost
+          }
+        };
+        downloadText('agent-decision-analyzer.export.json', JSON.stringify(payload, null, 2));
+      });
+
+      // if charts load late, re-render once
+      let reRendered = false;
+      const tryRerender = async () => {
+        if (reRendered) return;
+        const ok = await ensureChartsReady(6000);
+        if (ok){ reRendered = true; renderAll(); }
+      };
+      setTimeout(tryRerender, 300);
+      setTimeout(tryRerender, 1200);
+      setTimeout(tryRerender, 2800);
+    }
+
+    function init(){
+      wireEvents();
+      renderAll();
+    }
+
+    init();
+
+  </script>
+</body>
+</html>
