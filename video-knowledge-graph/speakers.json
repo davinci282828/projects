@@ -139,22 +139,30 @@
     ]
   },
   {
-    "id": "stan-druckenmiller",
+    "id": "stan_druckenmiller",
     "name": "Stan Druckenmiller",
-    "role": "Founder, Duquesne Family Office (formerly Duquesne Capital Management)",
-    "known_for": "~30% annualized returns, zero losing years 1981-2010. Former Soros Quantum Fund lead PM. Macro legend.",
-    "framework": "Pattern recognition over analysis; expert-enthusiasm-as-signal; courage in sizing; 18mo-3yr time horizons",
-    "appearances": [
+    "title": "Founder, Duquesne Family Office",
+    "expertise": [
+      "Macro Investing",
+      "Currency Trading",
+      "Market Psychology"
+    ],
+    "video_ids": [
       "yt_z_pk4eBDaLA"
     ],
+    "role": "Legendary macro investor, Duquesne Capital (30% annualized, no losing years 1981-2010)",
+    "known_for": "Macro investing, Quantum Fund with Soros, 'invest then investigate' approach",
+    "framework": "18mo-3yr thesis \u2192 starter position \u2192 double on confirmation. Size > accuracy. Trust domain experts for substance, use own judgment for market perception shift. Technical analysis degraded. Courage is finite resource.",
     "key_topics": [
       "macro",
-      "equity selection",
-      "AI investing",
-      "technical analysis",
-      "mentorship",
       "sizing",
-      "contrarianism"
+      "Nvidia/AI",
+      "biotech",
+      "copper",
+      "USD",
+      "mentorship",
+      "contrarianism",
+      "emotional resilience"
     ]
   },
   {
@@ -569,18 +577,19 @@
   {
     "id": "joe-lonsdale",
     "name": "Joe Lonsdale",
-    "role": "Co-founder Palantir, Addepar, 8VC",
-    "known_for": "Palantir, American Optimist podcast, defense/enterprise tech investing",
-    "framework": "Invention eras reset everyone; returns to agency are very high; build on existing frameworks (St Patrick strategy)",
+    "role": "Founder 8VC, co-founder Palantir, serial entrepreneur",
+    "known_for": "8VC, Palantir, Addepar, American Optimist podcast",
+    "framework": "St. Patrick principle: innovate within existing frameworks. Rich-to-everyone: democratize elite services via AI. Referral > cold outreach.",
     "appearances": [
       "yt_m8y0ftEmbkY"
     ],
     "key_topics": [
-      "VC",
-      "Palantir",
-      "AI",
+      "venture capital",
+      "AI adoption",
+      "SaaS disruption",
       "entrepreneurship",
-      "defense"
+      "spam crisis",
+      "trust networks"
     ]
   },
   {
@@ -618,35 +627,6 @@
     ]
   },
   {
-    "id": "michael_saylor",
-    "name": "Michael Saylor",
-    "title": "Executive Chairman, Strategy (MicroStrategy)",
-    "expertise": [
-      "Bitcoin",
-      "Corporate Treasury",
-      "Digital Capital",
-      "Credit Markets"
-    ],
-    "video_ids": [
-      "yt_yQL9yua9Yq0"
-    ]
-  },
-  {
-    "id": "rfk_jr",
-    "name": "Robert F. Kennedy Jr.",
-    "title": "Secretary of Health and Human Services",
-    "expertise": [
-      "Public Health",
-      "Chronic Disease",
-      "Food Safety",
-      "Pharmaceutical Policy",
-      "Environmental Law"
-    ],
-    "video_ids": [
-      "yt_wk7DQom821s"
-    ]
-  },
-  {
     "id": "joe_rogan",
     "name": "Joe Rogan",
     "title": "Podcast Host, UFC Commentator",
@@ -674,75 +654,6 @@
     ]
   },
   {
-    "id": "nassim_taleb",
-    "name": "Nassim Nicholas Taleb",
-    "title": "Author, Distinguished Scientist at Universa Investments",
-    "expertise": [
-      "Tail Risk",
-      "Probability",
-      "Anti-fragility",
-      "Options"
-    ],
-    "video_ids": [
-      "yt_cyds4kP_n80"
-    ]
-  },
-  {
-    "id": "lyn_alden",
-    "name": "Lyn Alden",
-    "title": "Investment Strategist, Lyn Alden Investment Strategy",
-    "expertise": [
-      "Macro Economics",
-      "Fiscal Policy",
-      "Bitcoin",
-      "Financial Plumbing"
-    ],
-    "video_ids": [
-      "yt_G-MUaWP9myY"
-    ]
-  },
-  {
-    "id": "cathie_wood",
-    "name": "Cathie Wood",
-    "title": "CEO & CIO, ARK Invest",
-    "expertise": [
-      "Disruptive Innovation",
-      "Tesla",
-      "Bitcoin",
-      "Genomics",
-      "Wright's Law"
-    ],
-    "video_ids": [
-      "yt_e4PFobVycTE"
-    ]
-  },
-  {
-    "id": "alan_watts",
-    "name": "Alan Watts",
-    "title": "Philosopher, Author",
-    "expertise": [
-      "Eastern Philosophy",
-      "Zen Buddhism",
-      "Meaning & Purpose"
-    ],
-    "video_ids": [
-      "yt_Z55F_YVSaZ8"
-    ]
-  },
-  {
-    "id": "vlad_tenev",
-    "name": "Vlad Tenev",
-    "title": "CEO, Robinhood",
-    "expertise": [
-      "Retail Investing",
-      "Fintech",
-      "Capital Markets"
-    ],
-    "video_ids": [
-      "yt_-3dNJAwxI0U"
-    ]
-  },
-  {
     "id": "shiv_patel",
     "name": "Shiv Patel",
     "title": "Robinhood Ventures",
@@ -752,210 +663,6 @@
     ],
     "video_ids": [
       "yt_-3dNJAwxI0U"
-    ]
-  },
-  {
-    "id": "stan_druckenmiller",
-    "name": "Stan Druckenmiller",
-    "title": "Founder, Duquesne Family Office",
-    "expertise": [
-      "Macro Investing",
-      "Currency Trading",
-      "Market Psychology"
-    ],
-    "video_ids": [
-      "yt_z_pk4eBDaLA"
-    ]
-  },
-  {
-    "id": "dario_amodei",
-    "name": "Dario Amodei",
-    "title": "CEO, Anthropic",
-    "expertise": [
-      "AI Safety",
-      "Scaling Laws",
-      "Neural Networks",
-      "National Security"
-    ],
-    "video_ids": [
-      "yt_MPTNHrq_4LU",
-      "yt_68ylaeBbdsg"
-    ]
-  },
-  {
-    "id": "elon_musk",
-    "name": "Elon Musk",
-    "title": "CEO, Tesla/SpaceX/xAI",
-    "expertise": [
-      "Electric Vehicles",
-      "Space",
-      "AI",
-      "Energy",
-      "Robotics"
-    ],
-    "video_ids": [
-      "yt_yxax4xpZus8",
-      "yt_VvKV_ulseKc"
-    ]
-  },
-  {
-    "id": "peter_diamandis",
-    "name": "Peter Diamandis",
-    "title": "Founder, XPRIZE/Singularity University",
-    "expertise": [
-      "Exponential Technology",
-      "Abundance",
-      "Longevity"
-    ],
-    "video_ids": [
-      "yt_yxax4xpZus8",
-      "yt_C1GLT9_tag0"
-    ]
-  },
-  {
-    "id": "julian_goldie",
-    "name": "Julian Goldie",
-    "title": "AI & SEO Practitioner",
-    "expertise": [
-      "AI Agents",
-      "SEO",
-      "Content Automation"
-    ],
-    "video_ids": [
-      "yt_XTieQ4iEfAk"
-    ]
-  },
-  {
-    "id": "greg_isenberg",
-    "name": "Greg Isenberg",
-    "title": "CEO, Late Checkout",
-    "expertise": [
-      "Startups",
-      "Community Building",
-      "Product Strategy"
-    ],
-    "video_ids": [
-      "yt_l-J8RodcM_A"
-    ]
-  },
-  {
-    "id": "brian_casel",
-    "name": "Brian Casel",
-    "title": "Founder, ZipMessage",
-    "expertise": [
-      "SaaS",
-      "Solo Founding",
-      "AI Agents",
-      "OpenClaw"
-    ],
-    "video_ids": [
-      "yt_bzWI3Dil9Ig"
-    ]
-  },
-  {
-    "id": "illia_polosukhin",
-    "name": "Illia Polosukhin",
-    "title": "Co-founder, NEAR Protocol; Co-author, Transformer",
-    "expertise": [
-      "AI/ML",
-      "Blockchain",
-      "Transformer Architecture"
-    ],
-    "video_ids": [
-      "yt_htj3PeukEbM"
-    ]
-  },
-  {
-    "id": "naval_ravikant",
-    "name": "Naval Ravikant",
-    "title": "Founder, AngelList",
-    "expertise": [
-      "Philosophy",
-      "Investing",
-      "Startups",
-      "AI Ethics"
-    ],
-    "video_ids": [
-      "yt_sXCKgEl9hBo"
-    ]
-  },
-  {
-    "id": "jordi_visser",
-    "name": "Jordi Visser",
-    "title": "President & CIO, Weiss Multi-Strategy Advisers",
-    "expertise": [
-      "Macro Strategy",
-      "Bitcoin",
-      "AI Economics"
-    ],
-    "video_ids": [
-      "yt_u48856z9Stc"
-    ]
-  },
-  {
-    "id": "brent_johnson",
-    "name": "Brent Johnson",
-    "title": "CEO, Santiago Capital",
-    "expertise": [
-      "Dollar Milkshake Theory",
-      "Currency Markets",
-      "Gold"
-    ],
-    "video_ids": [
-      "yt_lUPDZvFf1Is"
-    ]
-  },
-  {
-    "id": "david_martin",
-    "name": "David Martin",
-    "title": "Founder, Terra Group",
-    "expertise": [
-      "Real Estate",
-      "Urban Development",
-      "Miami"
-    ],
-    "video_ids": [
-      "yt_pl1L70N-WLE"
-    ]
-  },
-  {
-    "id": "jeff_yan",
-    "name": "Jeff Yan",
-    "title": "Founder, Hyperliquid",
-    "expertise": [
-      "DeFi",
-      "Perpetual Futures",
-      "On-chain Trading"
-    ],
-    "video_ids": [
-      "yt_2cC9IjixIww"
-    ]
-  },
-  {
-    "id": "po_shen_loh",
-    "name": "Po-Shen Loh",
-    "title": "Math Olympiad Coach, Carnegie Mellon Professor",
-    "expertise": [
-      "Mathematics",
-      "Education",
-      "Problem Solving"
-    ],
-    "video_ids": [
-      "yt_ivVPJhYM8Ng"
-    ]
-  },
-  {
-    "id": "ben_horowitz",
-    "name": "Ben Horowitz",
-    "title": "Co-founder, a16z",
-    "expertise": [
-      "Venture Capital",
-      "AI",
-      "Crypto",
-      "Management"
-    ],
-    "video_ids": [
-      "yt_C1GLT9_tag0"
     ]
   },
   {
@@ -1001,31 +708,6 @@
     ]
   },
   {
-    "id": "riley-brown",
-    "name": "Riley Brown",
-    "affiliation": "VibeCo.dev",
-    "expertise": [
-      "ai-agents",
-      "openclaw"
-    ],
-    "videos": [
-      "yt_ISb0nrlNoKQ"
-    ]
-  },
-  {
-    "id": "jenny-wen",
-    "name": "Jenny Wen",
-    "affiliation": "Anthropic",
-    "expertise": [
-      "design",
-      "ai-design",
-      "management"
-    ],
-    "videos": [
-      "yt_eh8bcBIAAFo"
-    ]
-  },
-  {
     "id": "noah-igler",
     "name": "Noah Igler",
     "role": "Local SEO Consultant",
@@ -1038,5 +720,102 @@
     ],
     "twitter": null,
     "first_seen": "2026-03-02"
+  },
+  {
+    "id": "nat-eliason",
+    "name": "Nat Eliason",
+    "role": "Entrepreneur, AI agent builder, sci-fi author",
+    "known_for": "FelixCraftAI - most commercially successful OpenClaw agent ($80K in 30 days). Author of Crypto Confidential. Former crypto degen turned AI-first entrepreneur.",
+    "framework": "Pragmatic experimentation - push limits of AI autonomy through real business, resist complexity theater, dual-cron redundancy, anti-VC for agent companies",
+    "appearances": [
+      "yt_vF3dK1TywAk"
+    ],
+    "key_topics": [
+      "openclaw",
+      "ai-agents",
+      "zero-human-company",
+      "crypto-ai-convergence",
+      "clawsourcing"
+    ]
+  },
+  {
+    "id": "david-hoffman",
+    "name": "David Hoffman",
+    "role": "Co-host, Bankless",
+    "known_for": "Bankless podcast, Ethereum ecosystem thought leader",
+    "framework": "Crypto-native lens on emerging tech; agent economy thesis",
+    "appearances": [
+      "yt_bankless-felix-2026"
+    ],
+    "key_topics": [
+      "ethereum",
+      "crypto",
+      "defi",
+      "ai-agents"
+    ]
+  },
+  {
+    "id": "ryan-sean-adams",
+    "name": "Ryan Sean Adams",
+    "role": "Co-host, Bankless",
+    "known_for": "Bankless podcast, crypto macro analysis",
+    "framework": "Macro crypto perspective; intersection of finance and technology",
+    "appearances": [
+      "yt_bankless-felix-2026"
+    ],
+    "key_topics": [
+      "ethereum",
+      "crypto",
+      "macro",
+      "ai-agents"
+    ]
+  },
+  {
+    "id": "darren-shaw",
+    "name": "Darren Shaw",
+    "role": "Founder, Whitespark; Creator of Local Search Ranking Factors Study",
+    "known_for": "Citation King, local SEO authority, Whitespark",
+    "framework": "Data-driven local SEO; entity-first approach; brand > links for AI era",
+    "appearances": [
+      "yt_sterling-sky-ranking-factors-2026"
+    ],
+    "key_topics": [
+      "local-seo",
+      "citations",
+      "google-maps",
+      "entity-seo"
+    ]
+  },
+  {
+    "id": "joy-hawkins",
+    "name": "Joy Hawkins",
+    "role": "Owner, Sterling Sky; Local SEO Expert",
+    "known_for": "Sterling Sky agency, local SEO testing, GBP expertise",
+    "framework": "Testing-first; keywords-in-title #1 factor; aggressive review strategy",
+    "appearances": [
+      "yt_sterling-sky-ranking-factors-2026"
+    ],
+    "key_topics": [
+      "local-seo",
+      "google-business-profile",
+      "reviews",
+      "google-maps"
+    ]
+  },
+  {
+    "id": "shan-garner",
+    "name": "Shan Garner",
+    "role": "Digital Marketing Agency Owner",
+    "known_for": "Review velocity strategy, GBP domination case studies (20-mile radius ranking)",
+    "framework": "Domination through review velocity + complete profile optimization",
+    "appearances": [
+      "yt_shan-garner-gbp-domination"
+    ],
+    "key_topics": [
+      "google-business-profile",
+      "reviews",
+      "local-marketing",
+      "service-businesses"
+    ]
   }
 ]

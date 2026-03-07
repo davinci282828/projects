@@ -347,12 +347,18 @@
       "t_druck_paradigm_underreact",
       "t_druck_biotech",
       "p_druck_copper",
-      "p_druck_dollar_top"
+      "p_druck_dollar_top",
+      "t_druck_ta_degraded",
+      "t_druck_courage_decay",
+      "t_druck_mentor_necessity",
+      "t_druck_mistakes_moment",
+      "p_druck_macro_revival"
     ],
     "predictions": [
       "tp-sd-1",
       "tp-sd-2",
-      "tp-sd-3"
+      "tp-sd-3",
+      "p_druck_macro_back"
     ],
     "contradictions": [
       "c-dollar-sd-bj"
@@ -363,7 +369,7 @@
       "stan_druckenmiller"
     ],
     "duration_min": 55,
-    "summary": "Druckenmiller on investing principles: invest first investigate second, size matters more than being right (Soros lesson), contrarianism overrated (crowd right 80%), 18mo-3yr sweet spot. Current: long eclectic equities + Japan/Korea, short bonds + USD, long copper/gold, reduced AI names. Biotech = best AI use case. Teva trade (6x\u219212x): investor base gap. Technical analysis 20% as effective as 40yrs ago. Trust people not spreadsheets."
+    "summary": "Druckenmiller on investing principles: invest first investigate second, size matters more than being right (Soros lesson), contrarianism overrated (crowd right 80%), 18mo-3yr sweet spot. Technical analysis ~20% as effective as 40yrs ago \u2014 crowded signals decay. Courage decays with age/success \u2014 better PM in 30s-40s despite less wisdom now. 15+ years of imposter syndrome. Mentors are near-necessary condition. Current: eclectic equities, Japan/Korea, short USD + bonds, long copper/gold, reduced AI. Macro back after 10-15yr drought. Teva trade: investor base gap (6x\u219212x). Biotech = best AI use case. Nvidia: bought before he could spell it, trusted partner, doubled after ChatGPT, sold at 800 (should have held to 1400)."
   },
   {
     "id": "yt_MPTNHrq_4LU",
@@ -948,16 +954,30 @@
     "theses": [
       "t_lonsdale_email_api",
       "t_lonsdale_10x_adoption",
-      "t_lonsdale_white_collar"
+      "t_lonsdale_white_collar",
+      "t_lonsdale_saas_barbell",
+      "t_lonsdale_st_patrick",
+      "t_lonsdale_jevons_engineers",
+      "t_lonsdale_spam_crisis",
+      "t_lonsdale_rich_to_everyone",
+      "t_lonsdale_zero_code_reality",
+      "t_lonsdale_invention_era",
+      "t_lonsdale_model_substitution"
     ],
-    "predictions": [],
+    "predictions": [
+      "p_lonsdale_saas_barbell_2yr",
+      "p_lonsdale_spam_restructure"
+    ],
     "key_quote": "Not a single one of our full-time engineers right now writes code anymore.",
     "speakers": [
       "joe_lonsdale",
       "jd_ross"
     ],
     "duration_min": 50,
-    "summary": "Lonsdale (8VC) and JD Ross (Opendoor founder) on using AI in 2026. Thorin (8VC portfolio) handled 120 of Lonsdale's emails \u2014 'email is the API of business.' AI adoption in enterprise is 10x faster than mobile was. Key: AI replacing white-collar work faster than physical labor. Opendoor's AI journey."
+    "summary": "Lonsdale (8VC) and JD Ross (Opendoor/WithCoverage) on AI in 2026. Zero engineers write code manually \u2014 all use Codex/Claude Code/Cursor, one engineer runs 6 concurrent agents. Linear tickets auto-spawn dev environments that oneshot PRs. Enterprise features built and shipped in one day. SaaS barbell: model labs eat top, college kids oneshot the bottom, middle collapses. St. Patrick principle: don't change frameworks, make them better within existing mental models. Jevons Paradox: cheaper engineering = MORE demand for engineers. AI spam crisis will force trust-chain communication. Best startup framework: take what rich people have (20 trusted experts on call) and democratize via AI. We're in a second invention era \u2014 equal footing for everyone. Model capability is free R&D \u2014 invest in context/data instead. Email is the API of business. WithCoverage: 700+ enterprise customers, profitable from scratch.",
+    "contradictions": [
+      "c_experience_vs_equality"
+    ]
   },
   {
     "id": "yt_ISb0nrlNoKQ",
@@ -1187,5 +1207,146 @@
     "analysis_path": "analyses/google-maps-local-seo-analysis.md",
     "transcript_path": "transcripts/google-maps-local-seo.md",
     "gdrive_url": "https://docs.google.com/document/d/1OIpiLUXYAmXMLxT4OjMxpJG_oA6lbEWx/edit"
+  },
+  {
+    "id": "yt_vF3dK1TywAk",
+    "title": "Building a Million Dollar Zero Human Company with OpenClaw",
+    "channel": "Bankless",
+    "speakers": [
+      "nat-eliason"
+    ],
+    "date": "2026-03-04",
+    "duration_min": 96,
+    "topics": [
+      "openclaw",
+      "ai-agents",
+      "zero-human-company",
+      "crypto-payments",
+      "agent-hierarchy",
+      "self-improvement-loops"
+    ],
+    "key_thesis": "A properly scaffolded OpenClaw can run a real business (not just pump tokens) with zero human employees, making $80K/month at $400/month LLM cost",
+    "analysis_path": "analyses/bankless-nat-eliason-felix-2026-03-04.md"
+  },
+  {
+    "id": "yt_vF3dK1TywAk",
+    "title": "Building a Million Dollar Zero Human Company with OpenClaw",
+    "channel": "Bankless",
+    "speakers": [
+      "nat-eliason"
+    ],
+    "date": "2026-03-04",
+    "duration_min": 96,
+    "topics": [
+      "openclaw",
+      "ai-agents",
+      "zero-human-company",
+      "crypto-payments"
+    ],
+    "analysis_path": "analyses/bankless-nat-eliason-felix-2026-03-04.md"
+  },
+  {
+    "id": "yt_bankless-felix-2026",
+    "title": "Building a Million Dollar Zero Human Company with OpenClaw",
+    "channel": "Bankless",
+    "date": "2026-03",
+    "duration": "1:35:00",
+    "speakers": [
+      "nat-eliason",
+      "david-hoffman",
+      "ryan-sean-adams"
+    ],
+    "topics": [
+      "openclaw",
+      "ai-agents",
+      "zero-human-company",
+      "felixcraft",
+      "clawmart",
+      "clawsourcing",
+      "crypto-ai"
+    ],
+    "analysis_path": "analyses/bankless-nat-eliason-felix-2026-03-04.md",
+    "status": "complete"
+  },
+  {
+    "id": "yt_gbp-setup-masterclass-2026",
+    "title": "Google Business Profile Setup Masterclass + 7 Breakthroughs",
+    "channel": "27-Year SEO Veteran",
+    "date": "2026-03",
+    "duration": "~45:00",
+    "speakers": [
+      "gbp-veteran-seo"
+    ],
+    "topics": [
+      "google-business-profile",
+      "local-seo",
+      "ai-tools",
+      "review-strategy",
+      "products-hack"
+    ],
+    "analysis_path": "projects/mmhc-gbp/MMHC-GBP-MASTER-PLAN.md",
+    "status": "synthesized"
+  },
+  {
+    "id": "yt_sterling-sky-ranking-factors-2026",
+    "title": "2026 Local Search Ranking Factor Study \u2014 AI + Local Pack",
+    "channel": "Sterling Sky",
+    "date": "2026-03",
+    "duration": "~60:00",
+    "speakers": [
+      "darren-shaw",
+      "joy-hawkins",
+      "liz-sterling"
+    ],
+    "topics": [
+      "local-seo",
+      "ai-ranking-factors",
+      "google-maps",
+      "reviews",
+      "categories",
+      "best-of-lists"
+    ],
+    "analysis_path": "projects/mmhc-gbp/MMHC-GBP-MASTER-PLAN.md",
+    "status": "synthesized"
+  },
+  {
+    "id": "yt_shan-garner-gbp-domination",
+    "title": "Marketing Domination \u2014 Google Business Profile Optimization",
+    "channel": "Shan Garner",
+    "date": "2026-03",
+    "duration": "~25:00",
+    "speakers": [
+      "shan-garner"
+    ],
+    "topics": [
+      "google-business-profile",
+      "review-velocity",
+      "services-optimization",
+      "products-section",
+      "local-seo"
+    ],
+    "analysis_path": "projects/mmhc-gbp/MMHC-GBP-MASTER-PLAN.md",
+    "status": "synthesized"
+  },
+  {
+    "id": "yt_top3-google-maps-ranking",
+    "title": "Why You're Not Ranking Top 3 on Google Maps",
+    "channel": "Local SEO Practitioner",
+    "date": "2026-03",
+    "duration": "~15:00",
+    "speakers": [
+      "local-seo-practitioner"
+    ],
+    "topics": [
+      "google-maps",
+      "local-seo",
+      "relevance",
+      "prominence",
+      "proximity",
+      "citations",
+      "backlinks"
+    ],
+    "analysis_path": "projects/mmhc-gbp/MMHC-GBP-MASTER-PLAN.md",
+    "status": "synthesized"
   }
 ]

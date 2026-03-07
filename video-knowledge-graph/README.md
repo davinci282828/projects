@@ -1,6 +1,6 @@
 # video-knowledge-graph
 
-Deployed: 2026-03-03 19:55:13 UTC
-Source: /Users/davinci/.openclaw/workspace/projects/video-knowledge-graph/
-Description: Nav bar added
+Deployed: 2026-03-07 23:14:41 UTC
+Source: /tmp/vkg-deploy
+Description: No description
 URL: https://davinci282828.github.io/projects/video-knowledge-graph/

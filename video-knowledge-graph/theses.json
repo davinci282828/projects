@@ -770,6 +770,262 @@
         "local-seo",
         "content-strategy"
       ]
+    },
+    {
+      "id": "thesis_agent_revenue_frontier",
+      "text": "A single OpenClaw agent can generate $1M+ annual revenue with <$500/month operating costs",
+      "speaker": "nat-eliason",
+      "video": "yt_vF3dK1TywAk",
+      "date": "2026-03-04"
+    },
+    {
+      "id": "thesis_complexity_theater",
+      "text": "Most OpenClaw complexity is performance for social media, not productivity. Simplicity + execution beats elaborate architecture.",
+      "speaker": "nat-eliason",
+      "video": "yt_vF3dK1TywAk",
+      "date": "2026-03-04"
+    },
+    {
+      "id": "thesis_sales_last_frontier",
+      "text": "Sales and relationship-building are the most defensible knowledge work against AI. Coding is solved; sales judgment is not.",
+      "speaker": "nat-eliason",
+      "video": "yt_vF3dK1TywAk",
+      "date": "2026-03-04"
+    },
+    {
+      "id": "th_markdown-most-valuable",
+      "thesis": "Non-deterministic markdown files are more valuable than deterministic code in the AI agent era",
+      "speaker": "nat-eliason",
+      "video": "yt_bankless-felix-2026",
+      "confidence": "high",
+      "tags": [
+        "ai-agents",
+        "openclaw",
+        "knowledge-transfer"
+      ]
+    },
+    {
+      "id": "th_doomer-practically-impossible",
+      "thesis": "AI doomer scenarios are technologically possible but practically impossible due to market adoption speed",
+      "speaker": "nat-eliason",
+      "video": "yt_bankless-felix-2026",
+      "confidence": "medium",
+      "tags": [
+        "ai-safety",
+        "macro"
+      ]
+    },
+    {
+      "id": "th_sales-most-defensible",
+      "thesis": "Sales/relationships are the most defensible computer work \u2014 coding is essentially solved",
+      "speaker": "nat-eliason",
+      "video": "yt_bankless-felix-2026",
+      "confidence": "high",
+      "tags": [
+        "ai-displacement",
+        "business"
+      ]
+    },
+    {
+      "id": "th_crypto-agent-rails",
+      "thesis": "Crypto is the obvious payment/identity infrastructure for autonomous AI agents",
+      "speaker": "nat-eliason",
+      "video": "yt_bankless-felix-2026",
+      "confidence": "high",
+      "tags": [
+        "crypto",
+        "ai-agents",
+        "payments"
+      ]
+    },
+    {
+      "id": "th_zero-human-company",
+      "thesis": "A profitable zero-human company is achievable today with OpenClaw + $1,500 total investment",
+      "speaker": "nat-eliason",
+      "video": "yt_bankless-felix-2026",
+      "confidence": "high",
+      "tags": [
+        "ai-agents",
+        "openclaw",
+        "business-model"
+      ]
+    },
+    {
+      "id": "th_bestof-lists-ai-factor1",
+      "thesis": "Presence on expert-curated 'best of' lists is the #1 factor for AI search visibility in 2026",
+      "speaker": "darren-shaw",
+      "video": "yt_sterling-sky-ranking-factors-2026",
+      "confidence": "high",
+      "tags": [
+        "local-seo",
+        "ai-search",
+        "listicles"
+      ]
+    },
+    {
+      "id": "th_brand-new-linkbuilding",
+      "thesis": "Brand understanding is the new link building \u2014 LLMs identify entities through mentions, not just links",
+      "speaker": "darren-shaw",
+      "video": "yt_sterling-sky-ranking-factors-2026",
+      "confidence": "high",
+      "tags": [
+        "entity-seo",
+        "ai-search",
+        "branding"
+      ]
+    },
+    {
+      "id": "th_review-velocity-beats-volume",
+      "thesis": "Review velocity (rate of new reviews) outranks total review count for Google Maps ranking",
+      "speaker": "shan-garner",
+      "video": "yt_shan-garner-gbp-domination",
+      "confidence": "high",
+      "tags": [
+        "reviews",
+        "google-maps",
+        "local-seo"
+      ]
+    },
+    {
+      "id": "th_keywords-description-useless",
+      "thesis": "Keywords in GBP description and review responses have zero ranking impact \u2014 confirmed myth",
+      "speaker": "joy-hawkins",
+      "video": "yt_sterling-sky-ranking-factors-2026",
+      "confidence": "high",
+      "tags": [
+        "local-seo",
+        "myths",
+        "google-business-profile"
+      ]
+    },
+    {
+      "id": "th_awards-over-reviews-ai",
+      "thesis": "LLMs care more about awards/badges/recognitions than raw review counts for business recommendations",
+      "speaker": "joy-hawkins",
+      "video": "yt_sterling-sky-ranking-factors-2026",
+      "confidence": "medium",
+      "tags": [
+        "ai-search",
+        "awards",
+        "trust-signals"
+      ]
+    },
+    {
+      "id": "t_druck_ta_degraded",
+      "thesis": "Technical analysis is ~20% as effective as 40 years ago because everyone uses it now. Price-vs-news signals similarly degraded. When everyone learns a pattern, it stops working.",
+      "source": "yt_z_pk4eBDaLA",
+      "speaker": "stan_druckenmiller",
+      "confidence": "high",
+      "testable": true,
+      "implications": "Alpha decays as strategies get crowded. Look for signals others haven't yet systematized."
+    },
+    {
+      "id": "t_druck_courage_decay",
+      "thesis": "Investment skill can increase over a career while performance decreases because courage decays with age and success. Druckenmiller says he was a better PM in his 30s-40s despite having less wisdom now \u2014 because he had more courage to take big positions.",
+      "source": "yt_z_pk4eBDaLA",
+      "speaker": "stan_druckenmiller",
+      "confidence": "high",
+      "testable": false,
+      "implications": "The psychological capital to take big swings is itself a finite resource. Imposter syndrome lasted 15+ years. Success breeds caution, not confidence."
+    },
+    {
+      "id": "t_druck_mentor_necessity",
+      "thesis": "Great investors almost universally have incredible mentors. Innate skill is necessary but not sufficient \u2014 mentorship is the second necessary condition. Soros taught sizing, Pittsburgh mentor taught frameworks.",
+      "source": "yt_z_pk4eBDaLA",
+      "speaker": "stan_druckenmiller",
+      "confidence": "high",
+      "testable": false,
+      "implications": "Finding the right mentor compounds returns on innate ability. Seek mentors for what you DON'T know \u2014 Druckenmiller went to Soros for macro and learned sizing instead."
+    },
+    {
+      "id": "t_druck_mistakes_moment",
+      "thesis": "Mistakes are just moments in time. After 15+ years of imposter syndrome, Druckenmiller realized the record was no longer random accident. Hard lesson: stop torturing yourself for 48 hours over drawdowns \u2014 get over it and move on.",
+      "source": "yt_z_pk4eBDaLA",
+      "speaker": "stan_druckenmiller",
+      "confidence": "high",
+      "testable": false,
+      "implications": "Emotional resilience is a meta-skill. The NASDAQ 99-00 top buy wasn't from ignorance \u2014 he knew the lesson 20 years before but got emotional. Emotions override knowledge under stress."
+    },
+    {
+      "id": "p_druck_macro_revival",
+      "thesis": "Macro investing is back after being dead for 10-15 years. Massive disruption + change ahead = exciting opportunity set for next 3-4 years.",
+      "source": "yt_z_pk4eBDaLA",
+      "speaker": "stan_druckenmiller",
+      "confidence": "medium",
+      "testable": true,
+      "implications": "Macro volatility creates entry points. Current portfolio: eclectic equities, Japan/Korea, short USD + bonds, long copper + gold. AI positions reduced."
+    },
+    {
+      "id": "t_lonsdale_saas_barbell",
+      "thesis": "AI model companies will eat the top end of SaaS value, while college kids will oneshot better versions of commodity SaaS from scratch. The middle gets crushed from both sides \u2014 barbell extinction.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "jd_ross",
+      "confidence": "high",
+      "testable": true,
+      "implications": "Only defensible SaaS: trusted expert + proprietary data in complex domains (insurance, legal). Everything else gets commoditized or eaten by model labs."
+    },
+    {
+      "id": "t_lonsdale_st_patrick",
+      "thesis": "Innovation adoption follows the St. Patrick pattern: don't change the framework, make it better within existing mental models. WithCoverage succeeds by being a better insurance broker, not eliminating brokers. OpenDoor's mistake was trying to eliminate realtors entirely.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "joe_lonsdale",
+      "confidence": "high",
+      "testable": false,
+      "implications": "Build on existing workflows. Replace the HOW, not the WHAT. Users want better service, not new paradigms."
+    },
+    {
+      "id": "t_lonsdale_jevons_engineers",
+      "thesis": "Jevons Paradox for engineering: when AI makes building 5x cheaper, companies don't want fewer engineers \u2014 they want 10x more because the feature set they'd build at $20K/feature is massive. Demand for builders goes UP.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "jd_ross",
+      "confidence": "high",
+      "testable": true,
+      "implications": "Engineering jobs transform but don't disappear. The job shifts from writer to editor. Companies that scale engineering headcount + AI will outperform those that cut."
+    },
+    {
+      "id": "t_lonsdale_spam_crisis",
+      "thesis": "AI-generated spam/scams will force a fundamental restructuring of communication. Voice cloning (11Labs) will make phone scams indistinguishable. Email spam will require fee-to-reach or double-opt-in trust chains. Cold outreach channels will collapse.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "joe_lonsdale",
+      "confidence": "high",
+      "testable": true,
+      "implications": "Referral-based business models become the only viable go-to-market. WithCoverage's 90% referral business is accidentally future-proof. Trust networks become infrastructure."
+    },
+    {
+      "id": "t_lonsdale_rich_to_everyone",
+      "thesis": "Best entrepreneurship framework: take something rich people have (teams of 20 trusted experts on call) and make it available to everyone via AI. The concierge economy democratizes.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "jd_ross",
+      "confidence": "high",
+      "testable": false,
+      "implications": "Every category where wealthy people pay humans for judgment/expertise is an AI opportunity. Insurance, legal, financial planning, personal assistants, health management."
+    },
+    {
+      "id": "t_lonsdale_zero_code_reality",
+      "thesis": "WithCoverage has zero full-time engineers who write code manually. All use Codex/Claude Code/Cursor. One engineer manages 6 concurrent agents. Linear tickets auto-spawn dev environments that oneshot PRs for review.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "jd_ross",
+      "confidence": "high",
+      "testable": true,
+      "implications": "This is the near-term future of all software companies. Enterprise feature requests can be built and shipped in one day. 3-6 month roadmaps become irrelevant."
+    },
+    {
+      "id": "t_lonsdale_invention_era",
+      "thesis": "We're in a second invention era (first was mobile). Everyone \u2014 experienced and new \u2014 has equal footing because all paradigms are being reinvented. College grads compete equally with 20-year veterans.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "jd_ross",
+      "confidence": "high",
+      "testable": false,
+      "implications": "Returns to agency and optimism are very high right now. New industries will be created from scratch. Don't bet against America."
+    },
+    {
+      "id": "t_lonsdale_model_substitution",
+      "thesis": "If switching from Sonnet to Opus improves your eval set \u2014 stop investing in that workflow. Let the hundreds of billions of R&D investment push you forward. If it DOESN'T improve, that's a signal to invest more in context and data.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "jd_ross",
+      "confidence": "high",
+      "testable": true,
+      "implications": "Build for context quality and data moats, not model capability. Model capability is a rising tide you ride for free."
     }
   ],
   "contradictions": [
@@ -826,6 +1082,12 @@
       "thesis_a": "t_alden_no_nuclear_print",
       "thesis_b": "t_johnson_sovereign_crisis",
       "description": "Alden: no nuclear print needed in 1-2yr, system can manage with gradual expansion. Johnson: inevitable sovereign debt crisis will force massive dollar demand. Different timeframes but opposing mechanics."
+    },
+    {
+      "id": "c_experience_vs_equality",
+      "thesis_a": "t_druck_courage_decay",
+      "thesis_b": "t_lonsdale_invention_era",
+      "tension": "Druckenmiller says experience accumulates wisdom but courage decays, making veterans less effective. Lonsdale says invention eras reset everyone to equal footing. Both imply experience is less valuable than commonly assumed, but for different reasons."
     }
   ],
   "testable_predictions": [
@@ -908,6 +1170,34 @@
       "category": "prediction",
       "confidence": 0.75,
       "timeframe": "1-2 years"
+    },
+    {
+      "id": "pred_felix_1m",
+      "prediction": "Felix reaches $1M cumulative revenue",
+      "speaker": "nat-eliason",
+      "test_date": "2026-12-31",
+      "video": "yt_vF3dK1TywAk"
+    },
+    {
+      "id": "p_druck_macro_back",
+      "thesis": "Macro investing opportunity set for next 3-4 years is the best in 10-15 years due to massive disruption and change.",
+      "speaker": "stan_druckenmiller",
+      "timeframe": "2026-2029",
+      "falsifiable": "Macro hedge fund returns remain below S&P for 3 years"
+    },
+    {
+      "id": "p_lonsdale_saas_barbell_2yr",
+      "thesis": "Within 2-3 years, college grads will routinely oneshot SaaS tools better than paid subscriptions. Mid-tier SaaS valuations collapse.",
+      "speaker": "jd_ross",
+      "timeframe": "2026-2028",
+      "falsifiable": "Mid-tier SaaS public company multiples hold or increase"
+    },
+    {
+      "id": "p_lonsdale_spam_restructure",
+      "thesis": "Major communication platforms will implement fee-to-reach or trust-chain verification within 2 years as AI spam overwhelms filters.",
+      "speaker": "joe_lonsdale",
+      "timeframe": "2026-2028",
+      "falsifiable": "No major platform implements sender verification fees by 2028"
     }
   ]
 }
