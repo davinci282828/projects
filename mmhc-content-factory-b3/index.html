@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MMHC Content Factory — Batch 3</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; }
+  .header { background: linear-gradient(135deg, #1E4129 0%, #0A2540 100%); padding: 48px 32px; text-align: center; }
+  .header h1 { font-size: 36px; font-weight: 800; color: #A1E681; margin-bottom: 8px; }
+  .header p { font-size: 18px; color: #88b898; }
+  .stats { display: flex; justify-content: center; gap: 32px; margin-top: 24px; flex-wrap: wrap; }
+  .stat { background: rgba(255,255,255,0.08); padding: 16px 28px; border-radius: 12px; text-align: center; }
+  .stat .num { font-size: 32px; font-weight: 800; color: #A1E681; }
+  .stat .label { font-size: 13px; color: #88b898; margin-top: 4px; }
+  .tabs { display: flex; justify-content: center; gap: 12px; padding: 24px; background: #111; position: sticky; top: 0; z-index: 10; }
+  .tab { padding: 10px 24px; border-radius: 8px; background: #222; color: #999; cursor: pointer; font-weight: 600; font-size: 14px; border: none; }
+  .tab.active { background: #A1E681; color: #1E4129; }
+  .section { padding: 32px; display: none; }
+  .section.active { display: block; }
+  .section h2 { font-size: 24px; font-weight: 700; color: #A1E681; margin-bottom: 24px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+  .card { background: #1a1a1a; border-radius: 16px; overflow: hidden; }
+  .card img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+  .card .meta { padding: 16px; }
+  .card .meta .theme { font-size: 11px; text-transform: uppercase; color: #A1E681; letter-spacing: 1px; margin-bottom: 6px; }
+  .card .meta .cite { font-size: 12px; color: #888; margin-bottom: 8px; font-style: italic; }
+  .card .meta .caption { font-size: 13px; color: #ccc; line-height: 1.5; white-space: pre-wrap; max-height: 120px; overflow-y: auto; }
+  .carousel-group { margin-bottom: 40px; }
+  .carousel-group h3 { font-size: 18px; color: #e0e0e0; margin-bottom: 16px; }
+  .carousel-slides { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 16px; }
+  .carousel-slides img { height: 400px; border-radius: 12px; flex-shrink: 0; }
+  .linkedin-card { background: #1a1a1a; border-radius: 16px; padding: 28px; margin-bottom: 20px; }
+  .linkedin-card h3 { font-size: 20px; color: #e0e0e0; margin-bottom: 12px; }
+  .linkedin-card .cite { font-size: 12px; color: #A1E681; margin-bottom: 12px; font-style: italic; }
+  .linkedin-card .body { font-size: 14px; color: #ccc; line-height: 1.7; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>MMHC Content Factory — Batch 3</h1>
+  <p>Research-Backed Authority Content • BetterHelp Strategy Applied</p>
+  <div class="stats">
+    <div class="stat"><div class="num">20</div><div class="label">Ads</div></div>
+    <div class="stat"><div class="num">10</div><div class="label">Organic</div></div>
+    <div class="stat"><div class="num">5</div><div class="label">Carousels</div></div>
+    <div class="stat"><div class="num">30</div><div class="label">Slides</div></div>
+    <div class="stat"><div class="num">5</div><div class="label">LinkedIn</div></div>
+    <div class="stat"><div class="num">40</div><div class="label">Total Items</div></div>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="show('ads')">Ads (20)</button>
+  <button class="tab" onclick="show('organic')">Organic (10)</button>
+  <button class="tab" onclick="show('carousels')">Carousels (5)</button>
+  <button class="tab" onclick="show('linkedin')">LinkedIn (5)</button>
+</div>
+<div class="section active" id="sec-ads"><h2>Ad Creatives</h2><div class="grid"><div class="card">
+  <img src="batch-3/b3-ad-001.png" alt="b3-ad-001" loading="lazy">
+  <div class="meta">
+    <div class="theme">therapy-matching</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">A new JAMA meta-analysis of 375 clinical trials found that CBT effect sizes vary by 4x depending on the condition. The right match matters more than the method.
+
+80+ licensed therapists. Multiple modalities. Online across New York State.
+Find your match → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-002.png" alt="b3-ad-002" loading="lazy">
+  <div class="meta">
+    <div class="theme">therapy-matching</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">The largest CBT meta-analysis ever conducted (375 RCTs, 32,968 patients) shows a 4x gap in effectiveness across disorders. Your condition deserves the right approach.
+
+Online therapy with 80+ specialists.
+Learn more → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-003.png" alt="b3-ad-003" loading="lazy">
+  <div class="meta">
+    <div class="theme">therapy-matching</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">New research from JAMA Psychiatry is clear: the therapy-condition match predicts outcomes better than the therapy itself.
+
+80+ therapists trained in CBT, DBT, EMDR, and more.
+Explore your options → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-004.png" alt="b3-ad-004" loading="lazy">
+  <div class="meta">
+    <div class="theme">therapy-matching</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">PTSD responds powerfully to CBT (effect size 1.27). Bipolar? Not so much (0.31). Same therapy. Completely different story.
+
+We match you with a therapist who specializes in YOUR condition.
+Find your match → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-005.png" alt="b3-ad-005" loading="lazy">
+  <div class="meta">
+    <div class="theme">therapy-matching</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">Evidence-based therapy is a starting point, not a finish line. The latest JAMA data shows massive variation in how well CBT works across different conditions.
+
+80+ therapists. The right approach for you.
+Learn more → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-006.png" alt="b3-ad-006" loading="lazy">
+  <div class="meta">
+    <div class="theme">dropout-retention</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">The research is paradoxical: PTSD responds best to therapy (effect size 1.27) but has a 24% dropout rate — the highest of any condition studied.
+
+We're built for both: effective treatment AND keeping you in it.
+Start today → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-007.png" alt="b3-ad-007" loading="lazy">
+  <div class="meta">
+    <div class="theme">dropout-retention</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">JAMA data: nearly 1 in 4 trauma patients leave therapy prematurely. Retention isn't about willpower — it's about fit.
+
+80+ therapists who specialize in keeping you supported.
+Book a consultation → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-008.png" alt="b3-ad-008" loading="lazy">
+  <div class="meta">
+    <div class="theme">dropout-retention</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">Dropout rates in therapy are a clinical problem, not a personal failure. Research shows the therapist-client match is key to retention.
+
+Online therapy across New York State.
+Find your match → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-009.png" alt="b3-ad-009" loading="lazy">
+  <div class="meta">
+    <div class="theme">modality-diversity</div>
+    <div class="cite">Goldstein et al. 2024, JAMA Psychiatry</div>
+    <div class="caption">A 2024 JAMA study found DBT reduced suicide attempts by 68% in adolescents with bipolar disorder. CBT alone can't claim that.
+
+80+ therapists trained across multiple modalities.
+Explore your options → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-010.png" alt="b3-ad-010" loading="lazy">
+  <div class="meta">
+    <div class="theme">modality-diversity</div>
+    <div class="cite">Goldstein et al. 2024, JAMA Psychiatry; Miklowitz et al. 2020</div>
+    <div class="caption">For bipolar disorder, CBT has an effect size of just 0.31. Meanwhile, DBT shows a 68% reduction in suicide attempts (JAMA 2024). The right modality matters.
+
+We offer CBT, DBT, EMDR, IPSRT, and more.
+Learn more → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-011.png" alt="b3-ad-011" loading="lazy">
+  <div class="meta">
+    <div class="theme">modality-diversity</div>
+    <div class="cite">Steardo et al. 2020, Ann Gen Psychiatry</div>
+    <div class="caption">Research shows different conditions respond to different therapies. IPSRT stabilizes circadian rhythms in bipolar. DBT builds emotional regulation. We match you with the right approach.
+
+80+ licensed therapists online across NY.
+Find your match → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-012.png" alt="b3-ad-012" loading="lazy">
+  <div class="meta">
+    <div class="theme">research-stat</div>
+    <div class="cite">Goldstein et al. 2024, JAMA Psychiatry</div>
+    <div class="caption">68% — that's how much DBT reduced suicide attempts in adolescents with bipolar disorder (JAMA Psychiatry, 2024). The right therapy saves lives.
+
+Online therapy with 80+ specialists.
+Learn more → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-013.png" alt="b3-ad-013" loading="lazy">
+  <div class="meta">
+    <div class="theme">research-stat</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">CBT's effect size for bipolar: 0.31. For PTSD: 1.27. Same therapy, 4x different results. The largest meta-analysis ever (375 RCTs) just confirmed it.
+
+80+ therapists. The right match for you.
+Explore your options → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-014.png" alt="b3-ad-014" loading="lazy">
+  <div class="meta">
+    <div class="theme">research-stat</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">24% of people in PTSD therapy drop out before it works — despite PTSD having the strongest treatment response of any condition studied (JAMA 2025).
+
+We specialize in both treatment AND retention.
+Start today → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-015.png" alt="b3-ad-015" loading="lazy">
+  <div class="meta">
+    <div class="theme">research-stat</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">The largest CBT meta-analysis ever published — 375 randomized controlled trials — just landed in JAMA Psychiatry. The takeaway? Matching matters more than method.
+
+80+ therapists across multiple specialties.
+Find your match → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-016.png" alt="b3-ad-016" loading="lazy">
+  <div class="meta">
+    <div class="theme">authority</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">A good therapist can explain why they're using a specific approach for your specific condition — backed by research, not habit.
+
+80+ therapists who specialize by condition.
+Book a consultation → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-017.png" alt="b3-ad-017" loading="lazy">
+  <div class="meta">
+    <div class="theme">authority</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">Knowing when CBT isn't the right fit is a clinical skill. With 80+ therapists across CBT, DBT, EMDR, IPSRT, and more — we match the therapy to you, not the other way around.
+
+Learn more → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-018.png" alt="b3-ad-018" loading="lazy">
+  <div class="meta">
+    <div class="theme">authority</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">"Evidence-based" is a starting point. The real question: evidence for what, compared to what, for whom? Our therapists think at that level.
+
+80+ specialists. Online across New York State.
+Explore your options → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-019.png" alt="b3-ad-019" loading="lazy">
+  <div class="meta">
+    <div class="theme">retained-b2</div>
+    <div class="cite">APA Clinical Practice Guidelines, 2024</div>
+    <div class="caption">High-functioning depression is clinically recognized but often missed. APA guidelines note that high-achievers may mask symptoms through productivity.
+
+Online therapy with 80+ licensed therapists.
+Start today → link in bio</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-ad-020.png" alt="b3-ad-020" loading="lazy">
+  <div class="meta">
+    <div class="theme">retained-b2</div>
+    <div class="cite">Gottman Institute Research</div>
+    <div class="caption">69% of relationship conflicts are unsolvable — they're perpetual patterns, not problems to fix. Gottman research shows the goal is management, not resolution.
+
+80+ therapists. Couples specialists available.
+Book a consultation → link in bio</div>
+  </div>
+</div></div></div><div class="section" id="sec-organic"><h2>Organic Posts</h2><div class="grid"><div class="card">
+  <img src="batch-3/b3-org-001.png" alt="b3-org-001" loading="lazy">
+  <div class="meta">
+    <div class="theme">meta-analysis</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">JAMA Psychiatry just published the largest CBT meta-analysis in history — 375 randomized controlled trials, 32,968 patients.
+
+The key finding: CBT effect sizes vary by 4x depending on the condition. PTSD? Highly responsive (1.27). Bipolar? Much less so (0.31).
+
+The takeaway isn't that CBT doesn't work. It's that the right match changes everything.
+
+Online therapy with 80+ specialists across multiple modalities.
+manhattanmhc.com</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-org-002.png" alt="b3-org-002" loading="lazy">
+  <div class="meta">
+    <div class="theme">effect-sizes</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">When we say "therapy works," we need to ask: for what?
+
+The latest JAMA data shows a 4x difference in CBT effectiveness:
+• PTSD: 1.27 (strong)
+• Anxiety: 0.5-1.0 (moderate-strong)
+• Depression: 0.5-1.0 (moderate-strong)
+• Bipolar: 0.31 (limited)
+
+This is why we don't do one-size-fits-all. 80+ therapists, multiple modalities.
+manhattanmhc.com</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-org-003.png" alt="b3-org-003" loading="lazy">
+  <div class="meta">
+    <div class="theme">modality-education</div>
+    <div class="cite">Goldstein et al. 2024; Steardo et al. 2020</div>
+    <div class="caption">CBT gets the headlines, but it's not the only evidence-based approach.
+
+• DBT: 68% reduction in suicide attempts for bipolar (JAMA 2024)
+• IPSRT: stabilizes circadian rhythms disrupted by bipolar
+• FFT: prevents mood episodes in high-risk youth
+
+We hire therapists across all of these modalities — because one approach can't cover every condition.
+
+80+ licensed therapists online.
+manhattanmhc.com</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-org-004.png" alt="b3-org-004" loading="lazy">
+  <div class="meta">
+    <div class="theme">retention</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">Here's the paradox: PTSD responds most strongly to therapy (effect size 1.27) but has a 24% dropout rate — the highest of any condition studied.
+
+Dropout isn't a character flaw. It's a clinical challenge. The right therapist-client fit, the right pacing, the right modality — these keep people in treatment.
+
+We take retention as seriously as treatment.
+manhattanmhc.com</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-org-005.png" alt="b3-org-005" loading="lazy">
+  <div class="meta">
+    <div class="theme">beyond-cbt</div>
+    <div class="cite">Goldstein et al. 2024; Miklowitz et al. 2020; Steardo et al. 2020</div>
+    <div class="caption">CBT addresses thought patterns. But bipolar disorder involves circadian disruption, emotional dysregulation, and family dynamics that CBT wasn't designed for.
+
+The research:
+• DBT: 68% fewer suicide attempts (Goldstein 2024)
+• FFT: prevents episodes in high-risk youth (Miklowitz 2020)
+• IPSRT: stabilizes sleep-wake cycles (Steardo 2020)
+
+The right therapy depends on what you're treating.
+manhattanmhc.com</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-org-006.png" alt="b3-org-006" loading="lazy">
+  <div class="meta">
+    <div class="theme">research-literacy</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">"Evidence-based" is a starting point, not a finish line.
+
+When you read that therapy "works," ask:
+• Compared to what? (Waitlist? Medication? Another therapy?)
+• For whom? (Age, condition, severity?)
+• How much? (Effect size tells you magnitude, not just direction)
+
+We hire therapists who think about research this carefully. Because your care deserves nuance.
+manhattanmhc.com</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-org-007.png" alt="b3-org-007" loading="lazy">
+  <div class="meta">
+    <div class="theme">patient-empowerment</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">You're allowed to ask your therapist hard questions:
+
+1. What's the evidence for this approach with my condition?
+2. Have you treated this before? How often?
+3. What's your plan if this approach isn't working after 8 weeks?
+4. Are there other modalities I should consider?
+
+A good therapist welcomes these questions. They're not challenges — they're collaboration.
+manhattanmhc.com</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-org-008.png" alt="b3-org-008" loading="lazy">
+  <div class="meta">
+    <div class="theme">matching</div>
+    <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+    <div class="caption">Why do we have 80+ therapists?
+
+Not because bigger is better. Because matching is everything.
+
+The latest JAMA research confirms: therapy effectiveness varies 4x by condition. That means the right therapist-condition match determines your outcome more than any single method.
+
+80+ therapists. CBT, DBT, EMDR, IPSRT, and more. Online across New York State.
+manhattanmhc.com</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-org-009.png" alt="b3-org-009" loading="lazy">
+  <div class="meta">
+    <div class="theme">bipolar-care</div>
+    <div class="cite">Goldstein et al. 2024; Cuijpers et al. 2025</div>
+    <div class="caption">Bipolar disorder is one of the hardest conditions to treat with standard CBT (effect size just 0.31).
+
+But that doesn't mean therapy doesn't work for bipolar. It means different therapy works:
+• DBT: 68% fewer suicide attempts
+• FFT: prevents mood episodes
+• IPSRT: stabilizes daily rhythms
+
+We offer all of these. Because bipolar deserves specialized care.
+manhattanmhc.com</div>
+  </div>
+</div><div class="card">
+  <img src="batch-3/b3-org-010.png" alt="b3-org-010" loading="lazy">
+  <div class="meta">
+    <div class="theme">telehealth</div>
+    <div class="cite">APA Telehealth Guidelines, 2024</div>
+    <div class="caption">The evidence on telehealth is clear: online therapy produces equivalent outcomes to in-person for most conditions.
+
+What you gain:
+• Access from anywhere in New York State
+• No commute, no waiting room
+• Same licensed therapists, same evidence-based approaches
+• Flexibility that fits your schedule
+
+80+ therapists. Fully online. Insurance accepted.
+manhattanmhc.com</div>
+  </div>
+</div></div></div><div class="section" id="sec-carousels"><h2>Instagram Carousels</h2><div class="carousel-group"><h3>b3-car-001: research-findings</h3><div class="cite" style="font-size:12px;color:#A1E681;margin-bottom:12px;font-style:italic">Cuijpers et al. 2025, JAMA Psychiatry; Goldstein et al. 2024</div><div class="carousel-slides"><img src="batch-3-carousels/b3-car-001-slide-01.png" alt="slide 1" loading="lazy"><img src="batch-3-carousels/b3-car-001-slide-02.png" alt="slide 2" loading="lazy"><img src="batch-3-carousels/b3-car-001-slide-03.png" alt="slide 3" loading="lazy"><img src="batch-3-carousels/b3-car-001-slide-04.png" alt="slide 4" loading="lazy"><img src="batch-3-carousels/b3-car-001-slide-05.png" alt="slide 5" loading="lazy"><img src="batch-3-carousels/b3-car-001-slide-06.png" alt="slide 6" loading="lazy"><img src="batch-3-carousels/b3-car-001-slide-07.png" alt="slide 7" loading="lazy"></div><div class="caption" style="font-size:13px;color:#ccc;margin-top:12px;white-space:pre-wrap;max-width:600px">The largest CBT meta-analysis ever just dropped in JAMA Psychiatry — and it changes how we think about therapy matching.
+
+Swipe through the 5 biggest takeaways from 375 studies and 33,000 patients.
+
+80+ therapists across CBT, DBT, EMDR, IPSRT, and more.
+manhattanmhc.com</div></div><div class="carousel-group"><h3>b3-car-002: modality-comparison</h3><div class="cite" style="font-size:12px;color:#A1E681;margin-bottom:12px;font-style:italic">Cuijpers et al. 2025; Goldstein et al. 2024; Steardo et al. 2020</div><div class="carousel-slides"><img src="batch-3-carousels/b3-car-002-slide-01.png" alt="slide 1" loading="lazy"><img src="batch-3-carousels/b3-car-002-slide-02.png" alt="slide 2" loading="lazy"><img src="batch-3-carousels/b3-car-002-slide-03.png" alt="slide 3" loading="lazy"><img src="batch-3-carousels/b3-car-002-slide-04.png" alt="slide 4" loading="lazy"><img src="batch-3-carousels/b3-car-002-slide-05.png" alt="slide 5" loading="lazy"><img src="batch-3-carousels/b3-car-002-slide-06.png" alt="slide 6" loading="lazy"></div><div class="caption" style="font-size:13px;color:#ccc;margin-top:12px;white-space:pre-wrap;max-width:600px">CBT, DBT, EMDR — you've heard the acronyms. But which one is right for you?
+
+Swipe for a research-backed breakdown of what each therapy does best.
+
+80+ specialists online.
+manhattanmhc.com</div></div><div class="carousel-group"><h3>b3-car-003: matching-guide</h3><div class="cite" style="font-size:12px;color:#A1E681;margin-bottom:12px;font-style:italic">Cuijpers et al. 2025, JAMA Psychiatry</div><div class="carousel-slides"><img src="batch-3-carousels/b3-car-003-slide-01.png" alt="slide 1" loading="lazy"><img src="batch-3-carousels/b3-car-003-slide-02.png" alt="slide 2" loading="lazy"><img src="batch-3-carousels/b3-car-003-slide-03.png" alt="slide 3" loading="lazy"><img src="batch-3-carousels/b3-car-003-slide-04.png" alt="slide 4" loading="lazy"><img src="batch-3-carousels/b3-car-003-slide-05.png" alt="slide 5" loading="lazy"></div><div class="caption" style="font-size:13px;color:#ccc;margin-top:12px;white-space:pre-wrap;max-width:600px">Finding the right therapist isn't about luck. It's about matching.
+
+Swipe through our evidence-based matching guide — and skip the trial and error.
+
+80+ licensed therapists online.
+manhattanmhc.com</div></div><div class="carousel-group"><h3>b3-car-004: therapy-myths</h3><div class="cite" style="font-size:12px;color:#A1E681;margin-bottom:12px;font-style:italic">Cuijpers et al. 2025; Goldstein et al. 2024</div><div class="carousel-slides"><img src="batch-3-carousels/b3-car-004-slide-01.png" alt="slide 1" loading="lazy"><img src="batch-3-carousels/b3-car-004-slide-02.png" alt="slide 2" loading="lazy"><img src="batch-3-carousels/b3-car-004-slide-03.png" alt="slide 3" loading="lazy"><img src="batch-3-carousels/b3-car-004-slide-04.png" alt="slide 4" loading="lazy"><img src="batch-3-carousels/b3-car-004-slide-05.png" alt="slide 5" loading="lazy"><img src="batch-3-carousels/b3-car-004-slide-06.png" alt="slide 6" loading="lazy"></div><div class="caption" style="font-size:13px;color:#ccc;margin-top:12px;white-space:pre-wrap;max-width:600px">Some things you "know" about therapy aren't backed by the latest research.
+
+Swipe through 4 common myths — and what 375 clinical trials actually show.
+
+manhattanmhc.com</div></div><div class="carousel-group"><h3>b3-car-005: meta-analysis-findings</h3><div class="cite" style="font-size:12px;color:#A1E681;margin-bottom:12px;font-style:italic">Cuijpers et al. 2025, JAMA Psychiatry</div><div class="carousel-slides"><img src="batch-3-carousels/b3-car-005-slide-01.png" alt="slide 1" loading="lazy"><img src="batch-3-carousels/b3-car-005-slide-02.png" alt="slide 2" loading="lazy"><img src="batch-3-carousels/b3-car-005-slide-03.png" alt="slide 3" loading="lazy"><img src="batch-3-carousels/b3-car-005-slide-04.png" alt="slide 4" loading="lazy"><img src="batch-3-carousels/b3-car-005-slide-05.png" alt="slide 5" loading="lazy"><img src="batch-3-carousels/b3-car-005-slide-06.png" alt="slide 6" loading="lazy"></div><div class="caption" style="font-size:13px;color:#ccc;margin-top:12px;white-space:pre-wrap;max-width:600px">JAMA Psychiatry just published the largest CBT meta-analysis in history.
+
+33,000 patients. 375 trials. The findings are reshaping how we think about therapy matching.
+
+Swipe for the highlights.
+manhattanmhc.com</div></div></div><div class="section" id="sec-linkedin"><h2>LinkedIn Posts (Steven's Profile)</h2><div class="linkedin-card">
+  <h3>375 Studies Changed How I Think About Hiring Therapists</h3>
+  <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+  <div class="body">JAMA Psychiatry just published the largest CBT meta-analysis in history — 375 randomized controlled trials, 32,968 patients.
+
+The finding that stopped me: CBT effect sizes vary by 4x depending on the condition being treated.
+
+PTSD: 1.27 (strong). Bipolar: 0.31 (limited). Anxiety and depression: somewhere in between.
+
+For years, the hiring standard in mental health has been: "Do they do CBT?" Check. Next question.
+
+But if the data shows a 4x gap in outcomes depending on the match — we've been asking the wrong question.
+
+At MMHC, we now hire for condition-specific expertise, not just modality. We ask: "When is CBT NOT the right choice for your patients?" And if they can't answer, that tells us something.
+
+80+ therapists. Multiple modalities. Because the research says matching matters more than method.
+
+What's your hiring filter for clinical talent?</div>
+</div><div class="linkedin-card">
+  <h3>The Interview Question That Separates Great Therapists</h3>
+  <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+  <div class="body">We added one question to our therapist interviews last year:
+
+"When is CBT not the right choice?"
+
+The answers are revealing.
+
+Some candidates pause. Some deflect. The best ones light up — because they've been thinking about this clinically for years.
+
+They'll say: "Bipolar. The effect size is 0.31. I'd go DBT or IPSRT first." Or: "Complex trauma with dissociation. I'd start with stabilization, not cognitive restructuring."
+
+The JAMA meta-analysis of 375 trials confirms what great clinicians already know: the therapy has to match the condition. A 4x gap in effectiveness isn't a rounding error.
+
+We don't hire for "does CBT." We hire for clinical judgment.
+
+80+ therapists. Multiple modalities. The right match for every patient.
+
+What's the one question you wish more practices asked in interviews?</div>
+</div><div class="linkedin-card">
+  <h3>We Track Dropout Rates by Disorder. Most Practices Don't.</h3>
+  <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+  <div class="body">Here's a number most therapy practices don't track: 24%.
+
+That's the PTSD therapy dropout rate from the largest CBT meta-analysis ever published (375 trials, JAMA 2025).
+
+The paradox: PTSD has the strongest treatment response (effect size 1.27) AND the highest dropout rate. The most treatable condition is the hardest to retain.
+
+Most practices measure: new clients per month, session utilization, revenue per clinician.
+
+We also measure: retention by condition, dropout timing, re-engagement rates.
+
+Because if 1 in 4 trauma patients leave before treatment works, that's not a patient problem. That's a clinical operations problem.
+
+Retention isn't about making therapy "nicer." It's about matching, pacing, and specialization.
+
+80+ therapists. We take retention as seriously as treatment.
+
+What clinical outcomes does your practice track beyond the basics?</div>
+</div><div class="linkedin-card">
+  <h3>Why 80+ Therapists Isn't About Size — It's About Matching</h3>
+  <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+  <div class="body">People sometimes ask: why does MMHC have 80+ therapists?
+
+It's not about being the biggest practice. It's about having enough clinical depth to match properly.
+
+The JAMA meta-analysis of 375 trials shows CBT effectiveness varies by 4x depending on the condition. That means the therapist-condition match determines outcomes more than any individual therapy method.
+
+With 5 therapists, you can offer CBT and maybe DBT.
+
+With 80+, you can offer:
+- CBT specialists for anxiety and PTSD
+- DBT-trained clinicians for bipolar and BPD
+- EMDR practitioners for trauma
+- IPSRT for circadian rhythm disruption
+- Couples specialists trained in Gottman methodology
+- Clinicians who speak your language, understand your culture, match your communication style
+
+Scale isn't the point. Matching is the point. Scale enables matching.
+
+How does your practice handle therapy matching beyond "next available"?</div>
+</div><div class="linkedin-card">
+  <h3>The Control Group Problem in Therapy Marketing</h3>
+  <div class="cite">Cuijpers et al. 2025, JAMA Psychiatry</div>
+  <div class="body">Every therapy practice says "evidence-based." It's become meaningless.
+
+Here's why: when a study says "therapy works," the comparison group changes everything.
+
+Therapy vs. waitlist? Of course it works better than nothing.
+Therapy vs. active placebo? Now we're talking.
+Therapy A vs. Therapy B for a specific condition? That's the data that actually helps patients choose.
+
+The JAMA meta-analysis of 375 trials gets specific: CBT effect size of 1.27 for PTSD. Just 0.31 for bipolar. These aren't the same thing, but both get labeled "evidence-based."
+
+As a practice leader, I think we have a responsibility to be more honest about what the evidence actually shows — and doesn't show.
+
+"Evidence-based" should mean: "Here's the specific evidence for this specific approach with your specific condition."
+
+Anything less is marketing, not medicine.
+
+What does "evidence-based" actually mean at your organization?</div>
+</div></div>
+<script>
+function show(tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body></html>
