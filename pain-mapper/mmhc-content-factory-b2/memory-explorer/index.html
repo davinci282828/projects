@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Memory Explorer</title>
+  <style>
+    :root{
+      --bg:#1a1a2e;
+      --panel:#161629;
+      --panel2:#121223;
+      --text:#e0e0e0;
+      --muted:#a9a9b3;
+      --accent:#4FC3F7;
+      --border:rgba(255,255,255,0.10);
+      --shadow:0 10px 30px rgba(0,0,0,0.35);
+      --hl:#ffd54f;
+      --hlText:#1a1a2e;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:var(--sans);
+      overflow:hidden;
+    }
+
+    .app{
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* Top bar */
+    .topbar{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 14px;
+      border-bottom:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.00));
+      backdrop-filter: blur(6px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 180px;
+    }
+    .brand .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 0 4px rgba(79,195,247,0.15);
+    }
+    .brand .title{
+      font-weight:600;
+      letter-spacing:0.2px;
+    }
+
+    .searchWrap{ flex:1; display:flex; gap:10px; }
+
+    .search{
+      flex:1;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:rgba(0,0,0,0.20);
+      transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+    .search:focus-within{
+      border-color: rgba(79,195,247,0.7);
+      box-shadow: 0 0 0 4px rgba(79,195,247,0.12);
+      background:rgba(0,0,0,0.26);
+    }
+    .search input{
+      width:100%;
+      border:0;
+      outline:none;
+      background:transparent;
+      color:var(--text);
+      font-size:14px;
+    }
+    .search .hint{
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    .btn{
+      border:1px solid var(--border);
+      color:var(--text);
+      background:rgba(0,0,0,0.20);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      transition: transform 120ms ease, border-color 160ms ease, background 160ms ease;
+      user-select:none;
+      font-size:13px;
+    }
+    .btn:hover{ border-color:rgba(255,255,255,0.18); background:rgba(0,0,0,0.28); }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{
+      border-color: rgba(79,195,247,0.55);
+      background: rgba(79,195,247,0.10);
+    }
+    .btn.primary:hover{ border-color: rgba(79,195,247,0.75); background: rgba(79,195,247,0.14); }
+
+    /* Main layout */
+    .main{
+      flex:1;
+      display:flex;
+      min-height:0;
+    }
+
+    .sidebar{
+      width:250px;
+      border-right:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(0,0,0,0.16), rgba(0,0,0,0.10));
+      transition: width 220ms ease, transform 220ms ease;
+      display:flex;
+      flex-direction:column;
+      min-width:250px;
+    }
+
+    .sidebarHeader{
+      padding:12px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .sidebarHeader .meta{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .dropzone{
+      margin:12px;
+      padding:12px;
+      border:1px dashed rgba(255,255,255,0.22);
+      border-radius:14px;
+      background: rgba(0,0,0,0.12);
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.35;
+      transition: border-color 160ms ease, background 160ms ease;
+    }
+    .dropzone.dragover{
+      border-color: rgba(79,195,247,0.75);
+      background: rgba(79,195,247,0.08);
+      color: var(--text);
+    }
+
+    .fileList{
+      flex:1;
+      overflow:auto;
+      padding:8px;
+    }
+
+    .fileItem{
+      border:1px solid transparent;
+      border-radius:14px;
+      padding:10px 10px;
+      margin:6px 4px;
+      cursor:pointer;
+      background: rgba(0,0,0,0.12);
+      transition: background 160ms ease, border-color 160ms ease, transform 120ms ease;
+    }
+    .fileItem:hover{ background: rgba(0,0,0,0.18); border-color: rgba(255,255,255,0.10); }
+    .fileItem:active{ transform: translateY(1px); }
+    .fileItem.selected{
+      border-color: rgba(79,195,247,0.55);
+      background: rgba(79,195,247,0.10);
+    }
+
+    .fileRow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .fileName{
+      font-size:13px;
+      font-weight:600;
+      line-height:1.25;
+      word-break:break-word;
+    }
+
+    .fileBadges{ display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+
+    .badge{
+      font-size:10px;
+      letter-spacing:0.35px;
+      padding:3px 7px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.20);
+      color: var(--text);
+      text-transform:uppercase;
+      user-select:none;
+    }
+    .badge.decision{ border-color: rgba(79,195,247,0.35); background: rgba(79,195,247,0.12); }
+    .badge.task{ border-color: rgba(129,199,132,0.35); background: rgba(129,199,132,0.12); }
+    .badge.fact{ border-color: rgba(255,213,79,0.35); background: rgba(255,213,79,0.10); }
+    .badge.lesson{ border-color: rgba(186,104,200,0.35); background: rgba(186,104,200,0.12); }
+    .badge.risk{ border-color: rgba(239,83,80,0.35); background: rgba(239,83,80,0.12); }
+    .badge.pref{ border-color: rgba(255,167,38,0.35); background: rgba(255,167,38,0.10); }
+
+    .fileMeta{
+      margin-top:6px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:11px;
+      gap:10px;
+    }
+
+    .content{
+      flex:1;
+      min-width:0;
+      overflow:auto;
+      position:relative;
+      background: radial-gradient(1200px 500px at 30% -10%, rgba(79,195,247,0.07), transparent 60%),
+                  radial-gradient(900px 450px at 90% 10%, rgba(186,104,200,0.06), transparent 55%);
+    }
+
+    .contentInner{
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 18px 18px 70px;
+    }
+
+    .contentHeader{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      padding: 14px 14px;
+      border:1px solid var(--border);
+      border-radius:16px;
+      background: rgba(0,0,0,0.14);
+      box-shadow: var(--shadow);
+    }
+
+    .contentTitle{
+      font-weight:700;
+      font-size:14px;
+      line-height:1.25;
+      word-break:break-word;
+    }
+
+    .contentSub{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .contentBadges{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+
+    .md{
+      margin-top: 14px;
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text);
+      padding: 16px 16px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(0,0,0,0.14);
+      box-shadow: var(--shadow);
+    }
+
+    .md h1,.md h2,.md h3{
+      font-family: var(--sans);
+      margin: 18px 0 10px;
+      letter-spacing: 0.2px;
+    }
+    .md h1{ font-size: 22px; }
+    .md h2{ font-size: 18px; }
+    .md h3{ font-size: 15px; }
+
+    .md p{ margin: 10px 0; }
+    .md ul{ margin: 10px 0 10px 22px; padding:0; }
+    .md li{ margin: 4px 0; }
+    .md code{
+      font-family: var(--mono);
+      font-size: 0.95em;
+      padding: 2px 6px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 8px;
+      background: rgba(0,0,0,0.22);
+    }
+    .md pre{
+      margin: 12px 0;
+      padding: 12px 12px;
+      overflow:auto;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.30);
+    }
+    .md pre code{
+      padding: 0;
+      border: 0;
+      background: transparent;
+      display:block;
+      white-space: pre;
+    }
+    .md a{
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(79,195,247,0.55);
+    }
+    .md a:hover{ border-bottom-style:solid; }
+
+    mark.hl{
+      background: var(--hl);
+      color: var(--hlText);
+      border-radius: 6px;
+      padding: 0 2px;
+    }
+
+    .empty{
+      margin-top: 16px;
+      padding: 18px;
+      border: 1px dashed rgba(255,255,255,0.18);
+      border-radius: 16px;
+      color: var(--muted);
+      background: rgba(0,0,0,0.10);
+    }
+
+    /* Footer */
+    .footer{
+      height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 0 14px;
+      border-top:1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      background: rgba(0,0,0,0.12);
+    }
+
+    .kbd{
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.20);
+      color: var(--text);
+    }
+
+    /* Responsive: collapse sidebar */
+    .sidebarToggle{ display:none; }
+
+    @media (max-width: 860px){
+      body{ overflow:hidden; }
+      .brand{ min-width:auto; }
+      .sidebar{
+        position:absolute;
+        top:57px; /* approx topbar height */
+        bottom:44px; /* footer height */
+        left:0;
+        z-index:20;
+        transform: translateX(-102%);
+        box-shadow: var(--shadow);
+      }
+      .sidebar.open{ transform: translateX(0); }
+      .sidebarToggle{ display:inline-flex; }
+      .main{ position:relative; }
+    }
+
+    /* Smooth scrollbars */
+    .fileList::-webkit-scrollbar, .content::-webkit-scrollbar{ height:10px; width:10px; }
+    .fileList::-webkit-scrollbar-thumb, .content::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+    }
+    .fileList::-webkit-scrollbar-thumb:hover, .content::-webkit-scrollbar-thumb:hover{
+      background: rgba(255,255,255,0.18);
+    }
+  </style>
+</head>
+<body>
+  <div class="app" id="app">
+    <div class="topbar">
+      <div class="brand" title="Memory Explorer">
+        <div class="dot"></div>
+        <div class="title">Memory Explorer</div>
+      </div>
+
+      <div class="searchWrap">
+        <button class="btn sidebarToggle" id="sidebarBtn" type="button">Sidebar</button>
+        <div class="search" role="search">
+          <input id="searchInput" type="text" placeholder="Search across loaded markdown…" autocomplete="off" spellcheck="false" />
+          <div class="hint"><span class="kbd">/</span> to focus</div>
+        </div>
+      </div>
+
+      <input id="fileInput" type="file" accept=".md,text/markdown" multiple hidden />
+      <button class="btn primary" id="pickBtn" type="button">Add .md files</button>
+      <button class="btn" id="clearBtn" type="button" title="Remove all loaded files">Clear</button>
+    </div>
+
+    <div class="main" id="main">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebarHeader">
+          <div>
+            <div style="font-weight:600; font-size:13px;">Files</div>
+            <div class="meta" id="sidebarMeta">Drop .md files or use the picker</div>
+          </div>
+        </div>
+
+        <div class="dropzone" id="dropzone" tabindex="0">
+          <div style="color: var(--text); font-weight:600; margin-bottom:4px;">Drop markdown here</div>
+          <div>Supports: headings (#/##/###), <b>bold</b>, <i>italic</i>, <code>inline code</code>, code blocks, lists, links.</div>
+        </div>
+
+        <div class="fileList" id="fileList" aria-label="Loaded files"></div>
+      </aside>
+
+      <section class="content" id="content">
+        <div class="contentInner">
+          <div class="contentHeader">
+            <div>
+              <div class="contentTitle" id="contentTitle">No file selected</div>
+              <div class="contentSub" id="contentSub">Add some .md files to start browsing.</div>
+            </div>
+            <div class="contentBadges" id="contentBadges"></div>
+          </div>
+
+          <div class="md" id="md">
+            <div class="empty">
+              <div style="font-weight:600; color: var(--text); margin-bottom:8px;">Load markdown files</div>
+              <div>1) Click <b>Add .md files</b> or drag-and-drop files onto the left panel.</div>
+              <div>2) Use the search bar to filter and highlight matches.</div>
+              <div style="margin-top:10px;">Tip: Press <span class="kbd">/</span> to jump to search.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">
+      <div id="counts">Files: 0 • Words: 0</div>
+      <div>Search highlights in <span style="color: var(--hl); font-weight:600;">yellow</span></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      "use strict";
+
+      const TAGS = ["DECISION","TASK","FACT","LESSON","RISK","PREF"];
+      const TAG_CLASS = {
+        DECISION: "decision",
+        TASK: "task",
+        FACT: "fact",
+        LESSON: "lesson",
+        RISK: "risk",
+        PREF: "pref",
+      };
+
+      /** State */
+      const state = {
+        files: new Map(), // name -> { name, text, tags:Set, wordCount:number }
+        selected: null,
+        query: "",
+        sidebarOpen: false,
+      };
+
+      /** Elements */
+      const els = {
+        searchInput: document.getElementById("searchInput"),
+        fileInput: document.getElementById("fileInput"),
+        pickBtn: document.getElementById("pickBtn"),
+        clearBtn: document.getElementById("clearBtn"),
+        dropzone: document.getElementById("dropzone"),
+        fileList: document.getElementById("fileList"),
+        sidebar: document.getElementById("sidebar"),
+        sidebarBtn: document.getElementById("sidebarBtn"),
+        sidebarMeta: document.getElementById("sidebarMeta"),
+        contentTitle: document.getElementById("contentTitle"),
+        contentSub: document.getElementById("contentSub"),
+        contentBadges: document.getElementById("contentBadges"),
+        md: document.getElementById("md"),
+        counts: document.getElementById("counts"),
+        main: document.getElementById("main"),
+      };
+
+      function escapeHtml(s){
+        return s
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+      }
+
+      function wordCount(text){
+        const m = text.match(/\b[\p{L}\p{N}_]+\b/gu);
+        return m ? m.length : 0;
+      }
+
+      function scanTags(text){
+        const found = new Set();
+        for(const t of TAGS){
+          if(text.includes(`[${t}]`)) found.add(t);
+        }
+        return found;
+      }
+
+      function sortedFiles(){
+        return Array.from(state.files.values())
+          .sort((a,b) => b.name.localeCompare(a.name, undefined, {numeric:true, sensitivity:"base"}));
+      }
+
+      function matchesQuery(file, q){
+        if(!q) return true;
+        const needle = q.toLowerCase();
+        return file.name.toLowerCase().includes(needle) || file.text.toLowerCase().includes(needle);
+      }
+
+      function highlightHtmlSafe(text, q){
+        // For filenames only (no HTML in input), safe to embed as escaped + mark.
+        const t = escapeHtml(text);
+        if(!q) return t;
+        const escapedQ = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const re = new RegExp(escapedQ, "ig");
+        return t.replace(re, (m)=>`<mark class="hl">${m}</mark>`);
+      }
+
+      function renderBadges(tags){
+        const parts = [];
+        for(const t of TAGS){
+          if(tags.has(t)){
+            const cls = TAG_CLASS[t] || "";
+            parts.push(`<span class="badge ${cls}">${t}</span>`);
+          }
+        }
+        return parts.join("");
+      }
+
+      function parseMarkdownToHtml(mdText){
+        // Minimal markdown support:
+        // headings (#, ##, ###), **bold**, *italic*, `code`, ```code blocks```, - lists, [links](url)
+        const lines = mdText.replace(/\r\n?/g, "\n").split("\n");
+        let i = 0;
+        let html = "";
+
+        function inline(s){
+          // s is already escaped
+          // Links first (so we don't bold inside href etc)
+          s = s.replace(/\[([^\]]+?)\]\(([^)\s]+?)\)/g, (m, text, url) => {
+            const safeText = text;
+            const safeUrl = url.replaceAll('"','%22');
+            return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeText}</a>`;
+          });
+          // Inline code
+          s = s.replace(/`([^`]+?)`/g, (m, code) => `<code>${code}</code>`);
+          // Bold
+          s = s.replace(/\*\*([^*]+?)\*\*/g, (m, inner) => `<strong>${inner}</strong>`);
+          // Italic (simple)
+          s = s.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g, (m, pre, inner) => `${pre}<em>${inner}</em>`);
+          return s;
+        }
+
+        while(i < lines.length){
+          const raw = lines[i];
+
+          // Code blocks
+          if(raw.trim().startsWith("```")){
+            const fence = raw.trim();
+            i++;
+            const codeLines = [];
+            while(i < lines.length && !lines[i].trim().startsWith("```")){
+              codeLines.push(lines[i]);
+              i++;
+            }
+            if(i < lines.length && lines[i].trim().startsWith("```")) i++;
+            const codeEsc = escapeHtml(codeLines.join("\n"));
+            html += `<pre><code>${codeEsc}</code></pre>`;
+            continue;
+          }
+
+          // Headings
+          const h3 = raw.match(/^###\s+(.*)$/);
+          if(h3){ html += `<h3>${inline(escapeHtml(h3[1]))}</h3>`; i++; continue; }
+          const h2 = raw.match(/^##\s+(.*)$/);
+          if(h2){ html += `<h2>${inline(escapeHtml(h2[1]))}</h2>`; i++; continue; }
+          const h1 = raw.match(/^#\s+(.*)$/);
+          if(h1){ html += `<h1>${inline(escapeHtml(h1[1]))}</h1>`; i++; continue; }
+
+          // Lists
+          if(raw.startsWith("- ")){
+            const items = [];
+            while(i < lines.length && lines[i].startsWith("- ")){
+              const item = lines[i].slice(2);
+              items.push(`<li>${inline(escapeHtml(item))}</li>`);
+              i++;
+            }
+            html += `<ul>${items.join("")}</ul>`;
+            continue;
+          }
+
+          // Blank line
+          if(raw.trim() === ""){
+            i++;
+            continue;
+          }
+
+          // Paragraph: gather until blank line
+          const para = [];
+          while(i < lines.length && lines[i].trim() !== "" && !lines[i].trim().startsWith("```") && !lines[i].startsWith("- ")
+                && !/^#{1,3}\s+/.test(lines[i])){
+            para.push(lines[i]);
+            i++;
+          }
+          const joined = escapeHtml(para.join("\n")).replaceAll("\n", "<br>");
+          html += `<p>${inline(joined)}</p>`;
+        }
+
+        return html;
+      }
+
+      function clearHighlights(root){
+        const marks = root.querySelectorAll("mark.hl");
+        for(const m of marks){
+          const t = document.createTextNode(m.textContent || "");
+          m.replaceWith(t);
+        }
+        // Normalize text nodes
+        root.normalize();
+      }
+
+      function applyHighlights(root, q){
+        if(!q) return;
+        const needle = q.toLowerCase();
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode(node){
+            if(!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+            const parent = node.parentElement;
+            if(!parent) return NodeFilter.FILTER_REJECT;
+            if(parent.closest("pre, code")) return NodeFilter.FILTER_REJECT; // keep code readable
+            return NodeFilter.FILTER_ACCEPT;
+          }
+        });
+
+        const nodes = [];
+        while(walker.nextNode()) nodes.push(walker.currentNode);
+
+        for(const node of nodes){
+          const text = node.nodeValue;
+          const lower = text.toLowerCase();
+          let idx = lower.indexOf(needle);
+          if(idx === -1) continue;
+
+          const frag = document.createDocumentFragment();
+          let last = 0;
+          while(idx !== -1){
+            if(idx > last) frag.appendChild(document.createTextNode(text.slice(last, idx)));
+            const mark = document.createElement("mark");
+            mark.className = "hl";
+            mark.textContent = text.slice(idx, idx + q.length);
+            frag.appendChild(mark);
+            last = idx + q.length;
+            idx = lower.indexOf(needle, last);
+          }
+          if(last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+          node.parentNode.replaceChild(frag, node);
+        }
+      }
+
+      function updateCounts(){
+        const fileCount = state.files.size;
+        let words = 0;
+        if(state.selected && state.files.has(state.selected)){
+          words = state.files.get(state.selected).wordCount;
+        }
+        els.counts.textContent = `Files: ${fileCount} • Words: ${words}`;
+      }
+
+      function renderSidebar(){
+        const q = state.query.trim();
+        const all = sortedFiles();
+        const filtered = all.filter(f => matchesQuery(f, q));
+
+        els.sidebarMeta.textContent = `${filtered.length} shown / ${all.length} loaded`;
+
+        els.fileList.innerHTML = filtered.map(f => {
+          const selected = (f.name === state.selected) ? "selected" : "";
+          const nameHtml = highlightHtmlSafe(f.name, q);
+          const badges = renderBadges(f.tags);
+          const meta = `${f.wordCount} words`;
+          return `
+            <div class="fileItem ${selected}" data-name="${escapeHtml(f.name)}" role="button" tabindex="0" aria-label="Open ${escapeHtml(f.name)}">
+              <div class="fileRow">
+                <div class="fileName">${nameHtml}</div>
+                <div class="fileBadges">${badges}</div>
+              </div>
+              <div class="fileMeta"><span>${meta}</span><span style="font-family:var(--mono);">.md</span></div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function renderContent(){
+        const q = state.query.trim();
+        const selName = state.selected;
+        if(!selName || !state.files.has(selName)){
+          els.contentTitle.textContent = "No file selected";
+          els.contentSub.textContent = "Add some .md files to start browsing.";
+          els.contentBadges.innerHTML = "";
+          els.md.innerHTML = `
+            <div class="empty">
+              <div style="font-weight:600; color: var(--text); margin-bottom:8px;">Load markdown files</div>
+              <div>1) Click <b>Add .md files</b> or drag-and-drop files onto the left panel.</div>
+              <div>2) Use the search bar to filter and highlight matches.</div>
+              <div style="margin-top:10px;">Tip: Press <span class="kbd">/</span> to jump to search.</div>
+            </div>
+          `;
+          updateCounts();
+          return;
+        }
+
+        const file = state.files.get(selName);
+        els.contentTitle.textContent = file.name;
+        els.contentSub.textContent = `${file.wordCount} words`;
+        els.contentBadges.innerHTML = renderBadges(file.tags);
+
+        els.md.innerHTML = parseMarkdownToHtml(file.text);
+
+        // Highlight search matches in rendered content
+        clearHighlights(els.md);
+        applyHighlights(els.md, q);
+
+        updateCounts();
+      }
+
+      function selectFile(name){
+        if(!state.files.has(name)) return;
+        state.selected = name;
+        renderSidebar();
+        renderContent();
+        // on narrow screens, close sidebar after selection
+        if(window.matchMedia("(max-width: 860px)").matches){
+          state.sidebarOpen = false;
+          els.sidebar.classList.remove("open");
+        }
+      }
+
+      async function addFiles(fileList){
+        const files = Array.from(fileList || []).filter(f => /\.md$/i.test(f.name) || f.type === "text/markdown");
+        if(files.length === 0) return;
+
+        const reads = files.map(f => new Promise((resolve) => {
+          const r = new FileReader();
+          r.onload = () => resolve({ name: f.name, text: String(r.result || "") });
+          r.onerror = () => resolve({ name: f.name, text: "" });
+          r.readAsText(f);
+        }));
+
+        const results = await Promise.all(reads);
+        for(const r of results){
+          const text = r.text;
+          const rec = {
+            name: r.name,
+            text,
+            tags: scanTags(text),
+            wordCount: wordCount(text),
+          };
+          state.files.set(r.name, rec);
+        }
+
+        // Ensure selection
+        if(!state.selected || !state.files.has(state.selected)){
+          const first = sortedFiles()[0];
+          state.selected = first ? first.name : null;
+        }
+
+        renderSidebar();
+        renderContent();
+      }
+
+      function clearAll(){
+        state.files.clear();
+        state.selected = null;
+        renderSidebar();
+        renderContent();
+      }
+
+      /** Events */
+      els.pickBtn.addEventListener("click", () => els.fileInput.click());
+      els.fileInput.addEventListener("change", async (e) => {
+        await addFiles(e.target.files);
+        els.fileInput.value = "";
+      });
+
+      els.clearBtn.addEventListener("click", () => clearAll());
+
+      els.searchInput.addEventListener("input", (e) => {
+        state.query = e.target.value;
+        renderSidebar();
+        renderContent();
+      });
+
+      // Sidebar interactions
+      els.fileList.addEventListener("click", (e) => {
+        const item = e.target.closest(".fileItem");
+        if(!item) return;
+        const name = item.getAttribute("data-name");
+        if(!name) return;
+        selectFile(name);
+      });
+      els.fileList.addEventListener("keydown", (e) => {
+        if(e.key !== "Enter" && e.key !== " ") return;
+        const item = e.target.closest(".fileItem");
+        if(!item) return;
+        e.preventDefault();
+        const name = item.getAttribute("data-name");
+        if(name) selectFile(name);
+      });
+
+      // Global key: / focuses search (like many dashboards)
+      window.addEventListener("keydown", (e) => {
+        if(e.key === "/" && !(e.ctrlKey || e.metaKey || e.altKey)){
+          const tag = (document.activeElement && document.activeElement.tagName) ? document.activeElement.tagName.toLowerCase() : "";
+          if(tag !== "input" && tag !== "textarea"){
+            e.preventDefault();
+            els.searchInput.focus();
+          }
+        }
+        if(e.key === "Escape"){
+          // close sidebar on mobile
+          state.sidebarOpen = false;
+          els.sidebar.classList.remove("open");
+        }
+      });
+
+      // Drag and drop
+      function setDragover(on){
+        els.dropzone.classList.toggle("dragover", on);
+      }
+
+      ["dragenter","dragover"].forEach(evt => {
+        els.dropzone.addEventListener(evt, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setDragover(true);
+        });
+      });
+      ["dragleave","drop"].forEach(evt => {
+        els.dropzone.addEventListener(evt, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setDragover(false);
+        });
+      });
+      els.dropzone.addEventListener("drop", async (e) => {
+        const dt = e.dataTransfer;
+        if(dt && dt.files) await addFiles(dt.files);
+      });
+
+      // Also allow dropping anywhere in main area for convenience
+      ["dragenter","dragover"].forEach(evt => {
+        els.main.addEventListener(evt, (e) => {
+          e.preventDefault();
+        });
+      });
+      els.main.addEventListener("drop", async (e) => {
+        e.preventDefault();
+        const dt = e.dataTransfer;
+        if(dt && dt.files && dt.files.length) await addFiles(dt.files);
+      });
+
+      // Sidebar toggle (responsive)
+      els.sidebarBtn.addEventListener("click", () => {
+        state.sidebarOpen = !state.sidebarOpen;
+        els.sidebar.classList.toggle("open", state.sidebarOpen);
+      });
+
+      // Click outside sidebar to close it (mobile)
+      document.addEventListener("click", (e) => {
+        if(!window.matchMedia("(max-width: 860px)").matches) return;
+        if(!els.sidebar.classList.contains("open")) return;
+        const withinSidebar = e.target.closest("#sidebar");
+        const withinBtn = e.target.closest("#sidebarBtn");
+        if(!withinSidebar && !withinBtn){
+          state.sidebarOpen = false;
+          els.sidebar.classList.remove("open");
+        }
+      });
+
+      // Initial render
+      renderSidebar();
+      renderContent();
+      updateCounts();
+
+    })();
+  </script>
+</body>
+</html>

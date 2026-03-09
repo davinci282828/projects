@@ -1,0 +1,2 @@
+PASS: index.html rendered, 0 console errors, screenshot saved
+PASS: Smoke test: 1/1 passed

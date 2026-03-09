@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manhattan Mental Health Counseling — AI Anxiety Therapy</title>
+
+  <!-- Google Fonts: DM Serif Display (headings) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --green:#1e4129;
+      --bg:#effaf3;
+      --warm:#d4a574;
+      --white:#ffffff;
+      --text:#2B2B2B;
+
+      --serif:"DM Serif Display", Georgia, serif;
+      --sans:"DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+
+      --radius:22px;
+      --shadow: 0 18px 45px rgba(30,65,41,.16);
+      --shadow-soft: 0 10px 30px rgba(43,43,43,.10);
+      --max: 1120px;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background:linear-gradient(180deg, #f7fff9 0%, var(--bg) 80%);
+    }
+
+    .wrap{
+      width:min(var(--max), 92vw);
+      margin-inline:auto;
+      padding:42px 0 84px;
+    }
+
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--warm);
+      box-shadow:0 0 0 4px rgba(212,165,116,.25);
+      flex:0 0 auto;
+    }
+
+    .hero{
+      border-radius:var(--radius);
+      overflow:hidden;
+      position:relative;
+      min-height:460px; /* target ~400-500px on desktop */
+      box-shadow:var(--shadow);
+    }
+
+    .hero .inner{
+      width:min(var(--max), 92vw);
+      margin-inline:auto;
+      padding:64px 0;
+      position:relative;
+      z-index:2;
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(30,65,41,.22);
+      background:rgba(255,255,255,.55);
+      backdrop-filter: blur(10px);
+      font-size:14px;
+      color:rgba(30,65,41,.92);
+    }
+
+    h1{
+      font-family:var(--serif);
+      font-weight:400;
+      letter-spacing:-0.02em;
+      margin:18px 0 12px;
+      line-height:1.02;
+    }
+
+    p{
+      margin:0;
+      line-height:1.55;
+      font-size:18px;
+      color:rgba(43,43,43,.82);
+      max-width:62ch;
+    }
+
+    .cta-row{display:flex;gap:14px;align-items:center;margin-top:26px;flex-wrap:wrap;}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:14px 18px;
+      border-radius:999px;
+      border:1px solid transparent;
+      font-weight:700;
+      letter-spacing:0.01em;
+      text-decoration:none;
+      transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, color .18s ease, border-color .18s ease;
+      user-select:none;
+      cursor:pointer;
+      will-change: transform;
+    }
+    .btn:focus{outline:3px solid rgba(212,165,116,.5); outline-offset:3px;}
+    .btn-primary{
+      background:var(--green);
+      color:var(--white);
+      box-shadow: 0 14px 30px rgba(30,65,41,.22);
+    }
+    .btn-primary:hover{transform: translateY(-2px); box-shadow: 0 18px 40px rgba(30,65,41,.28);}
+    .btn-ghost{
+      background:rgba(255,255,255,.55);
+      color:var(--green);
+      border-color: rgba(30,65,41,.22);
+    }
+    .btn-ghost:hover{transform: translateY(-2px); box-shadow: var(--shadow-soft); background:rgba(255,255,255,.78);}
+
+    .micro{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      margin-top:22px;
+      color:rgba(43,43,43,.70);
+      font-size:14px;
+    }
+    .micro span{display:inline-flex;align-items:center;gap:8px;}
+    .check{
+      width:18px;height:18px;border-radius:6px;
+      background:rgba(30,65,41,.12);
+      border:1px solid rgba(30,65,41,.18);
+      display:inline-grid;place-items:center;
+      color:var(--green);
+      font-weight:900;
+      font-size:12px;
+      flex:0 0 auto;
+    }
+
+    /* ---------- Variant C: The Data-Driven Hook ---------- */
+    .hero-c{
+      background:
+        linear-gradient(90deg, rgba(30,65,41,1) 0 28%, rgba(239,250,243,1) 28% 100%);
+      border: 1px solid rgba(30,65,41,.18);
+    }
+    .hero-c .inner{padding:64px 0;}
+    .hero-c .layout{
+      display:grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap:42px;
+      align-items:center;
+    }
+
+    .stat{
+      color: var(--white);
+      padding: 22px;
+      border-radius: 18px;
+      position:relative;
+    }
+    .stat .big{
+      font-family: var(--serif);
+      font-size: clamp(84px, 10vw, 170px);
+      letter-spacing:-0.04em;
+      line-height: .9;
+      margin:0;
+      text-shadow: 0 14px 50px rgba(0,0,0,.18);
+    }
+    .stat .meta{
+      margin-top:14px;
+      font-size:14px;
+      color: rgba(255,255,255,.86);
+      max-width: 34ch;
+      line-height:1.45;
+    }
+    .stat:before{
+      content:"";
+      position:absolute;
+      inset:-10px;
+      border-radius: 22px;
+      background:
+        radial-gradient(closest-side, rgba(212,165,116,.42), transparent 60%) 10% 18%/260px 260px no-repeat,
+        radial-gradient(closest-side, rgba(255,255,255,.18), transparent 60%) 84% 66%/260px 260px no-repeat;
+      opacity:.9;
+      pointer-events:none;
+      filter: blur(.2px);
+    }
+
+    .c-panel{
+      background: rgba(255,255,255,.70);
+      border: 1px solid rgba(30,65,41,.16);
+      border-radius: 26px;
+      padding: 28px;
+      box-shadow: 0 18px 55px rgba(30,65,41,.14);
+      backdrop-filter: blur(12px);
+    }
+    .c-kicker{border-color: rgba(30,65,41,.22); background: rgba(255,255,255,.6)}
+    .c-head{font-size: clamp(34px, 3.7vw, 56px);}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero{min-height:auto;}
+      .hero .inner{padding:42px 0;}
+      .hero-c .layout{grid-template-columns: 1fr;}
+      .stat{padding: 14px 14px 10px;}
+      .hero-c{background: linear-gradient(180deg, rgba(30,65,41,1) 0 190px, rgba(239,250,243,1) 190px 100%);}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .btn{transition:none;}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap" aria-label="Therapy service hero">
+    <section class="hero hero-c" aria-label="AI-era anxiety therapy hero">
+      <div class="inner">
+        <div class="layout">
+          <div class="stat" aria-label="Statistic highlight">
+            <p class="big" aria-label="Seventy-seven percent">77%</p>
+            <div class="meta">of professionals are anxious about AI replacing their jobs. Therapy is how the other 23% turned fear into a plan.</div>
+          </div>
+
+          <div class="c-panel" aria-label="Hero content panel">
+            <div class="kicker c-kicker"><span class="dot" aria-hidden="true"></span> Evidence-Based Therapy for AI-Era Anxiety • NYC</div>
+            <h1 class="c-head">77% of Professionals Worry About AI. The Ones Who Sleep at Night? They Started Therapy.</h1>
+            <p>
+              At Manhattan Mental Health Counseling, our licensed therapists use CBT, ACT, and somatic techniques to help NYC professionals turn AI-driven panic into clarity. This isn't a chatbot or a career course — it's real, clinical therapy designed for the specific anxiety that comes with working in an industry AI is reshaping.
+            </p>
+
+            <div class="cta-row">
+              <a class="btn btn-primary" href="#" aria-label="Book your first session">Book Your First Session <span aria-hidden="true">→</span></a>
+              <a class="btn btn-ghost" href="#" aria-label="How therapy helps">How Therapy Helps</a>
+            </div>
+
+            <div class="micro" aria-label="Key benefits">
+              <span><span class="check" aria-hidden="true">✓</span> Licensed NYC therapists</span>
+              <span><span class="check" aria-hidden="true">✓</span> Insurance accepted</span>
+              <span><span class="check" aria-hidden="true">✓</span> Online &amp; in-person</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

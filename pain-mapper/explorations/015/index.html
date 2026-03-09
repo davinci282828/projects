@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>015 — Hybrid Speciation</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0a0f; overflow: hidden; touch-action: none; font-family: 'Courier New', monospace; }
+canvas { display: block; }
+#overlay {
+  position: fixed; inset: 0; background: rgba(10,10,15,0.92);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: #aaa; z-index: 10; cursor: pointer;
+}
+#overlay h1 { font-size: 2em; color: #e8e8e8; margin-bottom: 0.5em; letter-spacing: 0.1em; }
+#overlay p { font-size: 0.9em; max-width: 28em; text-align: center; line-height: 1.6; color: #888; }
+#overlay .hint { margin-top: 1.5em; font-size: 0.75em; color: #555; }
+#hud {
+  position: fixed; top: 12px; left: 12px; color: #555; font-size: 11px;
+  pointer-events: none; line-height: 1.6;
+}
+#quote {
+  position: fixed; bottom: 20px; left: 0; right: 0; text-align: center;
+  color: #444; font-size: 12px; font-style: italic; pointer-events: none;
+  transition: opacity 1.5s;
+}
+</style>
+</head>
+<body>
+<div id="overlay">
+  <h1>Hybrid Speciation</h1>
+  <p>Two species share space but follow incompatible laws. Where they collide, something new is born — a hybrid that belongs to neither world.</p>
+  <p style="margin-top:0.8em; color:#666;">Touch/click to attract. Press 1/2 to spawn species. H spawns hybrids. Space resets.</p>
+  <div class="hint">tap anywhere to begin</div>
+</div>
+<canvas id="c"></canvas>
+<div id="hud"></div>
+<div id="quote"></div>
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const hud = document.getElementById('hud');
+const quoteEl = document.getElementById('quote');
+const overlay = document.getElementById('overlay');
+
+let W, H, audioCtx, masterGain, drones = {}, started = false;
+let particles = [];
+let hybrids = [];
+let collisionSparks = [];
+let epoch = 0, epochTimer = 0;
+let mouseX = -999, mouseY = -999, mouseDown = false;
+let totalCollisions = 0, hybridsBorn = 0;
+const COLLISION_THRESHOLD = 35;
+const HYBRID_SPAWN_ENERGY = 8; // collisions needed per hybrid
+let collisionEnergy = 0;
+
+const quotes = [
+  "The boundary is not where things end — it's where they begin.",
+  "Translation is always lossy. Always creative.",
+  "Neither parent recognizes the child.",
+  "Incompatibility is the mother of novelty.",
+  "The hybrid remembers collisions its parents forgot.",
+  "What emerges between is what neither contains alone.",
+  "Every pidgin becomes a creole if it survives long enough.",
+  "The interpreter belongs to no country.",
+  "Collision zones are the only places where new information exists.",
+  "Two systems that cannot merge can still create."
+];
+let quoteIdx = 0, quoteTimer = 0;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+// --- AUDIO ---
+function initAudio() {
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0.3;
+  
+  const comp = audioCtx.createDynamicsCompressor();
+  comp.threshold.value = -20;
+  comp.ratio.value = 6;
+  masterGain.connect(comp);
+  comp.connect(audioCtx.destination);
+
+  // Convolver reverb
+  const convolver = audioCtx.createConvolver();
+  const irLen = audioCtx.sampleRate * 2;
+  const irBuf = audioCtx.createBuffer(2, irLen, audioCtx.sampleRate);
+  for (let ch = 0; ch < 2; ch++) {
+    const d = irBuf.getChannelData(ch);
+    for (let i = 0; i < irLen; i++) {
+      d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (irLen * 0.15));
+    }
+  }
+  convolver.buffer = irBuf;
+  const reverbGain = audioCtx.createGain();
+  reverbGain.gain.value = 0.15;
+  masterGain.connect(reverbGain);
+  reverbGain.connect(convolver);
+  convolver.connect(audioCtx.destination);
+
+  // Species A drone: low warm sine
+  drones.a = createDrone(55, 'sine', 0.08);
+  // Species B drone: higher triangle
+  drones.b = createDrone(82.5, 'triangle', 0.06);
+  // Hybrid drone: complex, starts silent
+  drones.hybrid = createDrone(110, 'sawtooth', 0);
+  drones.hybrid.filter.frequency.value = 400;
+}
+
+function createDrone(freq, type, vol) {
+  const osc = audioCtx.createOscillator();
+  osc.type = type;
+  osc.frequency.value = freq;
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.value = 800;
+  filter.Q.value = 2;
+  const gain = audioCtx.createGain();
+  gain.gain.value = vol;
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(masterGain);
+  osc.start();
+  return { osc, filter, gain };
+}
+
+function collisionGrain(x, y, energy) {
+  if (!audioCtx) return;
+  const osc = audioCtx.createOscillator();
+  const pentatonic = [261.6, 293.7, 329.6, 392.0, 440.0, 523.3, 587.3, 659.3];
+  const idx = Math.floor((x / W) * pentatonic.length) % pentatonic.length;
+  osc.frequency.value = pentatonic[idx] * (0.5 + Math.random());
+  osc.type = energy > 0.6 ? 'sawtooth' : 'triangle';
+  const g = audioCtx.createGain();
+  const vol = Math.min(0.12, energy * 0.15);
+  g.gain.setValueAtTime(vol, audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15 + energy * 0.2);
+  const pan = audioCtx.createStereoPanner();
+  pan.pan.value = (x / W) * 2 - 1;
+  osc.connect(g);
+  g.connect(pan);
+  pan.connect(masterGain);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.3);
+}
+
+function hybridBirthSound(x, y) {
+  if (!audioCtx) return;
+  // Rich chord burst
+  const freqs = [220, 277.2, 330, 440];
+  freqs.forEach((f, i) => {
+    const osc = audioCtx.createOscillator();
+    osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+    osc.frequency.value = f * (0.98 + Math.random() * 0.04);
+    const g = audioCtx.createGain();
+    g.gain.setValueAtTime(0.08, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+    const pan = audioCtx.createStereoPanner();
+    pan.pan.value = (x / W) * 2 - 1;
+    osc.connect(g);
+    g.connect(pan);
+    pan.connect(masterGain);
+    osc.start(audioCtx.currentTime + i * 0.05);
+    osc.stop(audioCtx.currentTime + 1);
+  });
+}
+
+// --- SPECIES ---
+// Species A: Orbital (blue) — circle center of mass
+// Species B: Migratory (amber) — sine-wave sweeps
+// Hybrids: (magenta/teal) — gravitational + wave hybrid, unique per instance
+
+class Particle {
+  constructor(x, y, species) {
+    this.x = x; this.y = y;
+    this.vx = (Math.random() - 0.5) * 2;
+    this.vy = (Math.random() - 0.5) * 2;
+    this.species = species; // 'a', 'b', 'hybrid'
+    this.age = 0;
+    this.life = 600 + Math.random() * 600;
+    this.radius = 3 + Math.random() * 2;
+    this.collisionCount = 0;
+    this.phase = Math.random() * Math.PI * 2;
+    // Hybrid genetics
+    this.orbitalWeight = species === 'a' ? 1 : species === 'b' ? 0 : 0.3 + Math.random() * 0.4;
+    this.migrateWeight = species === 'b' ? 1 : species === 'a' ? 0 : 0.3 + Math.random() * 0.4;
+    this.hue = species === 'a' ? 210 : species === 'b' ? 35 : 280 + Math.random() * 60;
+    this.trail = [];
+  }
+
+  update(dt, cx, cy) {
+    this.age += dt;
+    this.phase += dt * 0.002;
+    const lifeRatio = 1 - this.age / this.life;
+
+    // Orbital behavior (species A)
+    const toCx = cx - this.x, toCy = cy - this.y;
+    const distC = Math.sqrt(toCx * toCx + toCy * toCy) + 1;
+    const orbF = 0.3 / distC;
+    const orbVx = -toCy * orbF + toCx * 0.001;
+    const orbVy = toCx * orbF + toCy * 0.001;
+
+    // Migratory behavior (species B)
+    const waveSpeed = 1.5 + Math.sin(epoch * 0.3) * 0.5;
+    const migVx = Math.cos(this.phase) * waveSpeed;
+    const migVy = Math.sin(this.phase * 0.7 + this.x * 0.003) * waveSpeed;
+
+    // Blend based on species weights
+    this.vx += (orbVx * this.orbitalWeight + migVx * this.migrateWeight) * dt * 0.06;
+    this.vy += (orbVy * this.orbitalWeight + migVy * this.migrateWeight) * dt * 0.06;
+
+    // Mouse attraction
+    if (mouseDown) {
+      const dx = mouseX - this.x, dy = mouseY - this.y;
+      const md = Math.sqrt(dx * dx + dy * dy) + 1;
+      if (md < 200) {
+        this.vx += (dx / md) * 0.3;
+        this.vy += (dy / md) * 0.3;
+      }
+    }
+
+    // Damping
+    this.vx *= 0.97;
+    this.vy *= 0.97;
+
+    this.x += this.vx * dt * 0.06;
+    this.y += this.vy * dt * 0.06;
+
+    // Wrap
+    if (this.x < 0) this.x += W;
+    if (this.x > W) this.x -= W;
+    if (this.y < 0) this.y += H;
+    if (this.y > H) this.y -= H;
+
+    // Trail
+    this.trail.push({ x: this.x, y: this.y });
+    if (this.trail.length > 12) this.trail.shift();
+
+    return this.age < this.life;
+  }
+
+  draw(ctx) {
+    const lifeRatio = Math.max(0, 1 - this.age / this.life);
+    const alpha = lifeRatio * 0.8;
+    const r = this.radius * (0.8 + lifeRatio * 0.4);
+
+    // Trail
+    if (this.trail.length > 1) {
+      ctx.beginPath();
+      ctx.moveTo(this.trail[0].x, this.trail[0].y);
+      for (let i = 1; i < this.trail.length; i++) {
+        ctx.lineTo(this.trail[i].x, this.trail[i].y);
+      }
+      ctx.strokeStyle = `hsla(${this.hue}, 70%, 50%, ${alpha * 0.3})`;
+      ctx.lineWidth = r * 0.5;
+      ctx.stroke();
+    }
+
+    // Glow
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, r * 3, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${this.hue}, 80%, 50%, ${alpha * 0.08})`;
+    ctx.fill();
+
+    // Core
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
+    const sat = this.species === 'hybrid' ? '90%' : '70%';
+    const lum = this.species === 'hybrid' ? '65%' : '55%';
+    ctx.fillStyle = `hsla(${this.hue}, ${sat}, ${lum}, ${alpha})`;
+    ctx.fill();
+  }
+}
+
+function spawnSpeciesA(n) {
+  const cx = W * 0.35, cy = H * 0.5;
+  for (let i = 0; i < n; i++) {
+    const a = Math.random() * Math.PI * 2;
+    const r = 50 + Math.random() * 100;
+    particles.push(new Particle(cx + Math.cos(a) * r, cy + Math.sin(a) * r, 'a'));
+  }
+}
+
+function spawnSpeciesB(n) {
+  const cx = W * 0.65, cy = H * 0.5;
+  for (let i = 0; i < n; i++) {
+    particles.push(new Particle(cx + (Math.random() - 0.5) * 200, cy + (Math.random() - 0.5) * 200, 'b'));
+  }
+}
+
+function spawnHybrid(x, y) {
+  const h = new Particle(x, y, 'hybrid');
+  h.life = 900 + Math.random() * 600; // hybrids live longer
+  h.radius = 4 + Math.random() * 2;
+  particles.push(h);
+  hybridsBorn++;
+  hybridBirthSound(x, y);
+
+  // Spark effect
+  for (let i = 0; i < 12; i++) {
+    const a = (i / 12) * Math.PI * 2;
+    collisionSparks.push({
+      x, y, vx: Math.cos(a) * 3, vy: Math.sin(a) * 3,
+      life: 30, age: 0, hue: 280 + Math.random() * 80
+    });
+  }
+}
+
+function checkCollisions() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const a = particles[i], b = particles[j];
+      if (a.species === b.species) continue; // same species = silent
+      
+      const dx = a.x - b.x, dy = a.y - b.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      
+      if (dist < COLLISION_THRESHOLD) {
+        const energy = 1 - dist / COLLISION_THRESHOLD;
+        totalCollisions++;
+        a.collisionCount++;
+        b.collisionCount++;
+
+        // Collision grain (only inter-species)
+        if (Math.random() < energy * 0.4) {
+          collisionGrain((a.x + b.x) / 2, (a.y + b.y) / 2, energy);
+        }
+
+        // Collision spark
+        if (Math.random() < energy * 0.3) {
+          collisionSparks.push({
+            x: (a.x + b.x) / 2, y: (a.y + b.y) / 2,
+            vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2,
+            life: 20, age: 0,
+            hue: a.species === 'hybrid' || b.species === 'hybrid' ? 300 : 60
+          });
+        }
+
+        // Hybrid spawning: collisions between A and B accumulate energy
+        if ((a.species === 'a' && b.species === 'b') || (a.species === 'b' && b.species === 'a')) {
+          collisionEnergy += energy * 0.3;
+          if (collisionEnergy >= HYBRID_SPAWN_ENERGY) {
+            collisionEnergy -= HYBRID_SPAWN_ENERGY;
+            spawnHybrid((a.x + b.x) / 2, (a.y + b.y) / 2);
+          }
+        }
+
+        // Gentle repulsion
+        const repel = energy * 0.5;
+        a.vx += (dx / dist) * repel;
+        a.vy += (dy / dist) * repel;
+        b.vx -= (dx / dist) * repel;
+        b.vy -= (dy / dist) * repel;
+      }
+    }
+  }
+}
+
+function updateSparks(dt) {
+  for (let i = collisionSparks.length - 1; i >= 0; i--) {
+    const s = collisionSparks[i];
+    s.age += dt * 0.06;
+    s.x += s.vx;
+    s.y += s.vy;
+    s.vx *= 0.95;
+    s.vy *= 0.95;
+    if (s.age >= s.life) collisionSparks.splice(i, 1);
+  }
+}
+
+function drawSparks(ctx) {
+  for (const s of collisionSparks) {
+    const alpha = (1 - s.age / s.life) * 0.8;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${s.hue}, 90%, 70%, ${alpha})`;
+    ctx.fill();
+  }
+}
+
+function updateDrones() {
+  if (!audioCtx) return;
+  const aCount = particles.filter(p => p.species === 'a').length;
+  const bCount = particles.filter(p => p.species === 'b').length;
+  const hCount = particles.filter(p => p.species === 'hybrid').length;
+  const total = particles.length || 1;
+
+  // Species drones reflect population
+  const t = audioCtx.currentTime + 0.1;
+  drones.a.gain.gain.linearRampToValueAtTime(Math.min(0.1, aCount / total * 0.15), t);
+  drones.b.gain.gain.linearRampToValueAtTime(Math.min(0.08, bCount / total * 0.12), t);
+
+  // Hybrid drone grows with hybrid population
+  const hybridVol = Math.min(0.12, hCount * 0.008);
+  drones.hybrid.gain.gain.linearRampToValueAtTime(hybridVol, t);
+  drones.hybrid.filter.frequency.linearRampToValueAtTime(300 + hCount * 30, t);
+
+  // Epoch drift on drone frequencies
+  drones.a.osc.frequency.linearRampToValueAtTime(55 + Math.sin(epoch * 0.2) * 5, t);
+  drones.b.osc.frequency.linearRampToValueAtTime(82.5 + Math.cos(epoch * 0.15) * 8, t);
+  drones.hybrid.osc.frequency.linearRampToValueAtTime(110 + hybridsBorn * 0.5, t);
+}
+
+// --- MAIN LOOP ---
+let lastTime = 0;
+
+function loop(time) {
+  requestAnimationFrame(loop);
+  const dt = Math.min(time - lastTime, 50);
+  lastTime = time;
+
+  if (!started) return;
+
+  epochTimer += dt;
+  if (epochTimer > 15000) { epochTimer = 0; epoch++; }
+
+  // Respawn if population low
+  const aCount = particles.filter(p => p.species === 'a').length;
+  const bCount = particles.filter(p => p.species === 'b').length;
+  if (aCount < 8) spawnSpeciesA(3);
+  if (bCount < 8) spawnSpeciesB(3);
+
+  // Center of mass for orbital species
+  let cx = 0, cy = 0, cn = 0;
+  for (const p of particles) {
+    if (p.species === 'a') { cx += p.x; cy += p.y; cn++; }
+  }
+  cx = cn ? cx / cn : W / 2;
+  cy = cn ? cy / cn : H / 2;
+
+  // Update particles
+  for (let i = particles.length - 1; i >= 0; i--) {
+    if (!particles[i].update(dt, cx, cy)) {
+      particles.splice(i, 1);
+    }
+  }
+
+  // Cap particles
+  while (particles.length > 150) {
+    // Remove oldest
+    let oldest = 0;
+    for (let i = 1; i < particles.length; i++) {
+      if (particles[i].age > particles[oldest].age) oldest = i;
+    }
+    particles.splice(oldest, 1);
+  }
+
+  checkCollisions();
+  updateSparks(dt);
+  updateDrones();
+
+  // Quote rotation
+  quoteTimer += dt;
+  if (quoteTimer > 12000) {
+    quoteTimer = 0;
+    quoteIdx = (quoteIdx + 1) % quotes.length;
+    quoteEl.style.opacity = 0;
+    setTimeout(() => {
+      quoteEl.textContent = quotes[quoteIdx];
+      quoteEl.style.opacity = 1;
+    }, 1500);
+  }
+
+  // --- DRAW ---
+  ctx.fillStyle = 'rgba(10, 10, 15, 0.15)';
+  ctx.fillRect(0, 0, W, H);
+
+  // Draw collision zone indicators (faint)
+  drawSparks(ctx);
+
+  // Draw particles
+  for (const p of particles) p.draw(ctx);
+
+  // Connection lines between nearby different-species particles
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      if (particles[i].species === particles[j].species) continue;
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < COLLISION_THRESHOLD * 1.5) {
+        const alpha = (1 - dist / (COLLISION_THRESHOLD * 1.5)) * 0.2;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(255, 200, 100, ${alpha})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+
+  // HUD
+  const hCount = particles.filter(p => p.species === 'hybrid').length;
+  hud.innerHTML = `species A: ${aCount} &nbsp; species B: ${bCount} &nbsp; <span style="color:#b060d0">hybrids: ${hCount}</span><br>collisions: ${totalCollisions} &nbsp; births: ${hybridsBorn} &nbsp; epoch: ${epoch}`;
+}
+
+requestAnimationFrame(loop);
+
+// --- INPUT ---
+function start() {
+  if (started) return;
+  started = true;
+  overlay.style.display = 'none';
+  initAudio();
+  spawnSpeciesA(25);
+  spawnSpeciesB(25);
+  quoteEl.textContent = quotes[0];
+  quoteEl.style.opacity = 1;
+}
+
+overlay.addEventListener('click', start);
+overlay.addEventListener('touchstart', (e) => { e.preventDefault(); start(); });
+
+function setMouse(x, y) { mouseX = x; mouseY = y; }
+
+canvas.addEventListener('mousedown', (e) => { mouseDown = true; setMouse(e.clientX, e.clientY); });
+canvas.addEventListener('mousemove', (e) => { setMouse(e.clientX, e.clientY); });
+canvas.addEventListener('mouseup', () => { mouseDown = false; });
+
+canvas.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  mouseDown = true;
+  const t = e.touches[0];
+  setMouse(t.clientX, t.clientY);
+}, { passive: false });
+canvas.addEventListener('touchmove', (e) => {
+  e.preventDefault();
+  const t = e.touches[0];
+  setMouse(t.clientX, t.clientY);
+}, { passive: false });
+canvas.addEventListener('touchend', (e) => {
+  e.preventDefault();
+  mouseDown = false;
+});
+
+document.addEventListener('keydown', (e) => {
+  if (!started) { start(); return; }
+  if (e.key === '1') spawnSpeciesA(5);
+  if (e.key === '2') spawnSpeciesB(5);
+  if (e.key === 'h' || e.key === 'H') spawnHybrid(W / 2 + (Math.random() - 0.5) * 100, H / 2 + (Math.random() - 0.5) * 100);
+  if (e.key === ' ') {
+    e.preventDefault();
+    particles.length = 0;
+    hybrids.length = 0;
+    collisionSparks.length = 0;
+    totalCollisions = 0;
+    hybridsBorn = 0;
+    collisionEnergy = 0;
+    epoch = 0;
+    spawnSpeciesA(25);
+    spawnSpeciesB(25);
+  }
+});
+</script>
+</body>
+</html>
