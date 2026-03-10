@@ -756,6 +756,7 @@
                 <div style="margin-top:15px; display:flex; gap:10px; flex-wrap:wrap;">
                     <button class="export-btn" onclick="event.stopPropagation(); exportFeedback();">📊 Export Feedback Data</button>
                     <button class="export-btn secondary" onclick="event.stopPropagation(); exportBatchBrief();">📋 Export Batch Brief</button>
+                    <button class="export-btn" style="background:#E1306C; color:white;" onclick="event.stopPropagation(); exportForAaron();">📧 Send to Aaron</button>
                 </div>
             </div>
         </div>
@@ -1343,6 +1344,81 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+        }
+
+        // Export approved ads for Aaron — formatted email brief
+        function exportForAaron() {
+            const approved = data.creatives.filter(c => getState(c.id) === 'approved');
+            
+            if (approved.length === 0) {
+                alert('No approved ads yet. Approve some creatives first, then send to Aaron.');
+                return;
+            }
+
+            // Build formatted text: each ad with name, image URL, and caption
+            const baseUrl = window.location.href.replace(/\?.*$/, '').replace(/index\.html$/, '');
+            let emailBody = `MMHC Content Factory — Approved Ads for Posting\n`;
+            emailBody += `Batch: ${data.batch || 'V3'} | Date: ${new Date().toLocaleDateString()}\n`;
+            emailBody += `Total approved: ${approved.length}\n`;
+            emailBody += `${'═'.repeat(60)}\n\n`;
+            
+            approved.forEach((ad, i) => {
+                emailBody += `━━━ ${i + 1}. ${ad.id} ━━━\n`;
+                emailBody += `Type: ${ad.type} | Theme: ${ad.theme || ad.awareness || '—'}\n`;
+                if (ad.research_cite) emailBody += `Source: ${ad.research_cite}\n`;
+                emailBody += `Image: ${baseUrl}${ad.image}\n`;
+                emailBody += `\nHEADLINE:\n${ad.headline}\n`;
+                emailBody += `\nCAPTION (copy this for the post):\n${ad.caption}\n`;
+                emailBody += `\n${'─'.repeat(60)}\n\n`;
+            });
+            
+            emailBody += `\nNote: Download images directly from the links above, or use the dashboard:\n${window.location.href}\n`;
+
+            // Build JSON payload for Da Vinci to send via email
+            const payload = {
+                action: 'email_to_aaron',
+                timestamp: new Date().toISOString(),
+                batch: data.batch,
+                approved_count: approved.length,
+                items: approved.map(ad => ({
+                    id: ad.id,
+                    type: ad.type,
+                    theme: ad.theme || ad.awareness,
+                    headline: ad.headline,
+                    caption: ad.caption,
+                    image_url: `${baseUrl}${ad.image}`,
+                    image_path: ad.image,
+                    research_cite: ad.research_cite || null
+                }))
+            };
+
+            // Copy formatted email body to clipboard
+            navigator.clipboard.writeText(emailBody).then(() => {
+                // Also download JSON for Da Vinci to process
+                const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `aaron-export-${Date.now()}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert(`✅ ${approved.length} ads ready!\n\n1. Email text copied to clipboard\n2. JSON file downloaded\n\nSend the JSON to Da Vinci with "send to Aaron" and he'll email the ads with images attached.`);
+            }).catch(() => {
+                // Fallback: just download
+                const blob = new Blob([emailBody], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `aaron-brief-${Date.now()}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                alert(`${approved.length} ads exported as text file. Send to Da Vinci with "send to Aaron".`);
+            });
         }
 
         // Load data
