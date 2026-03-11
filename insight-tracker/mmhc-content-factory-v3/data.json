@@ -1,0 +1,576 @@
+{
+  "batch": "Batch-3-V3-Cinematic",
+  "date": "2026-03-10",
+  "creatives": [
+    {
+      "id": "b3-ad-001",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "375 studies. 33,000 patients. One finding.",
+      "caption": "A new JAMA meta-analysis of 375 clinical trials found that CBT effect sizes vary by 4x depending on the condition. The right match matters more than the method.\n\n80+ licensed therapists. Multiple modalities. Online across New York State.\nFind your match \u2192 link in bio",
+      "cta": "Find Your Match",
+      "image": "batch-3-v3/b3-ad-001.png",
+      "theme": "therapy-matching",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-002",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "CBT works. But not equally for everything.",
+      "caption": "The largest CBT meta-analysis ever conducted (375 RCTs, 32,968 patients) shows a 4x gap in effectiveness across disorders. Your condition deserves the right approach.\n\nOnline therapy with 80+ specialists.\nLearn more \u2192 link in bio",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-ad-002.png",
+      "theme": "therapy-matching",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-003",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "Your disorder isn't generic. Your therapy shouldn't be either.",
+      "caption": "New research from JAMA Psychiatry is clear: the therapy-condition match predicts outcomes better than the therapy itself.\n\n80+ therapists trained in CBT, DBT, EMDR, and more.\nExplore your options \u2192 link in bio",
+      "cta": "Explore Your Options",
+      "image": "batch-3-v3/b3-ad-003.png",
+      "theme": "therapy-matching",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-004",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "PTSD, anxiety, depression \u2014 same therapist?",
+      "caption": "PTSD responds powerfully to CBT (effect size 1.27). Bipolar? Not so much (0.31). Same therapy. Completely different story.\n\nWe match you with a therapist who specializes in YOUR condition.\nFind your match \u2192 link in bio",
+      "cta": "Find Your Match",
+      "image": "batch-3-v3/b3-ad-004.png",
+      "theme": "therapy-matching",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-005",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "problem-aware",
+      "headline": "\"Evidence-based\" doesn't mean \"works for everyone.\"",
+      "caption": "Evidence-based therapy is a starting point, not a finish line. The latest JAMA data shows massive variation in how well CBT works across different conditions.\n\n80+ therapists. The right approach for you.\nLearn more \u2192 link in bio",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-ad-005.png",
+      "theme": "therapy-matching",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-006",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "problem-aware",
+      "headline": "1 in 4 people in trauma therapy drop out.",
+      "caption": "The research is paradoxical: PTSD responds best to therapy (effect size 1.27) but has a 24% dropout rate \u2014 the highest of any condition studied.\n\nWe're built for both: effective treatment AND keeping you in it.\nStart today \u2192 link in bio",
+      "cta": "Start Today",
+      "image": "batch-3-v3/b3-ad-006.png",
+      "theme": "dropout-retention",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-007",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "problem-aware",
+      "headline": "Starting therapy is hard. Staying is harder.",
+      "caption": "JAMA data: nearly 1 in 4 trauma patients leave therapy prematurely. Retention isn't about willpower \u2014 it's about fit.\n\n80+ therapists who specialize in keeping you supported.\nBook a consultation \u2192 link in bio",
+      "cta": "Book a Consultation",
+      "image": "batch-3-v3/b3-ad-007.png",
+      "theme": "dropout-retention",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-008",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "problem-aware",
+      "headline": "The best therapy in the world doesn't work if you can't stay in it.",
+      "caption": "Dropout rates in therapy are a clinical problem, not a personal failure. Research shows the therapist-client match is key to retention.\n\nOnline therapy across New York State.\nFind your match \u2192 link in bio",
+      "cta": "Find Your Match",
+      "image": "batch-3-v3/b3-ad-008.png",
+      "theme": "dropout-retention",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-009",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "CBT isn't the answer for everything.",
+      "caption": "A 2024 JAMA study found DBT reduced suicide attempts by 68% in adolescents with bipolar disorder. CBT alone can't claim that.\n\n80+ therapists trained across multiple modalities.\nExplore your options \u2192 link in bio",
+      "cta": "Explore Your Options",
+      "image": "batch-3-v3/b3-ad-009.png",
+      "theme": "modality-diversity",
+      "research_cite": "Goldstein et al. 2024, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-010",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "Bipolar responds to DBT, not just CBT. The research is clear.",
+      "caption": "For bipolar disorder, CBT has an effect size of just 0.31. Meanwhile, DBT shows a 68% reduction in suicide attempts (JAMA 2024). The right modality matters.\n\nWe offer CBT, DBT, EMDR, IPSRT, and more.\nLearn more \u2192 link in bio",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-ad-010.png",
+      "theme": "modality-diversity",
+      "research_cite": "Goldstein et al. 2024, JAMA Psychiatry; Miklowitz et al. 2020",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-011",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "80+ therapists. Multiple modalities. Because one size doesn't fit all.",
+      "caption": "Research shows different conditions respond to different therapies. IPSRT stabilizes circadian rhythms in bipolar. DBT builds emotional regulation. We match you with the right approach.\n\n80+ licensed therapists online across NY.\nFind your match \u2192 link in bio",
+      "cta": "Find Your Match",
+      "image": "batch-3-v3/b3-ad-011.png",
+      "theme": "modality-diversity",
+      "research_cite": "Steardo et al. 2020, Ann Gen Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-012",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "unaware",
+      "headline": "68%",
+      "caption": "68% \u2014 that's how much DBT reduced suicide attempts in adolescents with bipolar disorder (JAMA Psychiatry, 2024). The right therapy saves lives.\n\nOnline therapy with 80+ specialists.\nLearn more \u2192 link in bio",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-ad-012.png",
+      "theme": "research-stat",
+      "research_cite": "Goldstein et al. 2024, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-013",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "unaware",
+      "headline": "0.31 vs 1.27",
+      "caption": "CBT's effect size for bipolar: 0.31. For PTSD: 1.27. Same therapy, 4x different results. The largest meta-analysis ever (375 RCTs) just confirmed it.\n\n80+ therapists. The right match for you.\nExplore your options \u2192 link in bio",
+      "cta": "Explore Your Options",
+      "image": "batch-3-v3/b3-ad-013.png",
+      "theme": "research-stat",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-014",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "unaware",
+      "headline": "24%",
+      "caption": "24% of people in PTSD therapy drop out before it works \u2014 despite PTSD having the strongest treatment response of any condition studied (JAMA 2025).\n\nWe specialize in both treatment AND retention.\nStart today \u2192 link in bio",
+      "cta": "Start Today",
+      "image": "batch-3-v3/b3-ad-014.png",
+      "theme": "research-stat",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-015",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "unaware",
+      "headline": "375",
+      "caption": "The largest CBT meta-analysis ever published \u2014 375 randomized controlled trials \u2014 just landed in JAMA Psychiatry. The takeaway? Matching matters more than method.\n\n80+ therapists across multiple specialties.\nFind your match \u2192 link in bio",
+      "cta": "Find Your Match",
+      "image": "batch-3-v3/b3-ad-015.png",
+      "theme": "research-stat",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-016",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "Ask your therapist: what's the evidence for this approach with MY condition?",
+      "caption": "A good therapist can explain why they're using a specific approach for your specific condition \u2014 backed by research, not habit.\n\n80+ therapists who specialize by condition.\nBook a consultation \u2192 link in bio",
+      "cta": "Book a Consultation",
+      "image": "batch-3-v3/b3-ad-016.png",
+      "theme": "authority",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-017",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "The best therapists don't just do CBT. They know when NOT to.",
+      "caption": "Knowing when CBT isn't the right fit is a clinical skill. With 80+ therapists across CBT, DBT, EMDR, IPSRT, and more \u2014 we match the therapy to you, not the other way around.\n\nLearn more \u2192 link in bio",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-ad-017.png",
+      "theme": "authority",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-018",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "When a study says \"therapy works,\" always ask: compared to what?",
+      "caption": "\"Evidence-based\" is a starting point. The real question: evidence for what, compared to what, for whom? Our therapists think at that level.\n\n80+ specialists. Online across New York State.\nExplore your options \u2192 link in bio",
+      "cta": "Explore Your Options",
+      "image": "batch-3-v3/b3-ad-018.png",
+      "theme": "authority",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-019",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "problem-aware",
+      "headline": "Exhausted but productive. Struggling but smiling.",
+      "caption": "High-functioning depression is clinically recognized but often missed. APA guidelines note that high-achievers may mask symptoms through productivity.\n\nOnline therapy with 80+ licensed therapists.\nStart today \u2192 link in bio",
+      "cta": "Start Today",
+      "image": "batch-3-v3/b3-ad-019.png",
+      "theme": "retained-b2",
+      "research_cite": "APA Clinical Practice Guidelines, 2024",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-ad-020",
+      "type": "ad",
+      "format": "photo-overlay",
+      "awareness": "problem-aware",
+      "headline": "You're not fighting about the dishes. You never were.",
+      "caption": "69% of relationship conflicts are unsolvable \u2014 they're perpetual patterns, not problems to fix. Gottman research shows the goal is management, not resolution.\n\n80+ therapists. Couples specialists available.\nBook a consultation \u2192 link in bio",
+      "cta": "Book a Consultation",
+      "image": "batch-3-v3/b3-ad-020.png",
+      "theme": "retained-b2",
+      "research_cite": "Gottman Institute Research",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-org-001",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "375 Studies. One Takeaway.",
+      "caption": "JAMA Psychiatry just published the largest CBT meta-analysis in history \u2014 375 randomized controlled trials, 32,968 patients.\n\nThe key finding: CBT effect sizes vary by 4x depending on the condition. PTSD? Highly responsive (1.27). Bipolar? Much less so (0.31).\n\nThe takeaway isn't that CBT doesn't work. It's that the right match changes everything.\n\nOnline therapy with 80+ specialists across multiple modalities.\nmanhattanmhc.com",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-org-001.png",
+      "theme": "meta-analysis",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-org-002",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "The 4x Gap",
+      "caption": "When we say \"therapy works,\" we need to ask: for what?\n\nThe latest JAMA data shows a 4x difference in CBT effectiveness:\n\u2022 PTSD: 1.27 (strong)\n\u2022 Anxiety: 0.5-1.0 (moderate-strong)\n\u2022 Depression: 0.5-1.0 (moderate-strong)\n\u2022 Bipolar: 0.31 (limited)\n\nThis is why we don't do one-size-fits-all. 80+ therapists, multiple modalities.\nmanhattanmhc.com",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-org-002.png",
+      "theme": "effect-sizes",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-org-003",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "Why We Offer More Than CBT",
+      "caption": "CBT gets the headlines, but it's not the only evidence-based approach.\n\n\u2022 DBT: 68% reduction in suicide attempts for bipolar (JAMA 2024)\n\u2022 IPSRT: stabilizes circadian rhythms disrupted by bipolar\n\u2022 FFT: prevents mood episodes in high-risk youth\n\nWe hire therapists across all of these modalities \u2014 because one approach can't cover every condition.\n\n80+ licensed therapists online.\nmanhattanmhc.com",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-org-003.png",
+      "theme": "modality-education",
+      "research_cite": "Goldstein et al. 2024; Steardo et al. 2020",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-org-004",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "1 in 4 Quit Trauma Therapy",
+      "caption": "Here's the paradox: PTSD responds most strongly to therapy (effect size 1.27) but has a 24% dropout rate \u2014 the highest of any condition studied.\n\nDropout isn't a character flaw. It's a clinical challenge. The right therapist-client fit, the right pacing, the right modality \u2014 these keep people in treatment.\n\nWe take retention as seriously as treatment.\nmanhattanmhc.com",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-org-004.png",
+      "theme": "retention",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-org-005",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "When CBT Isn't Enough",
+      "caption": "CBT addresses thought patterns. But bipolar disorder involves circadian disruption, emotional dysregulation, and family dynamics that CBT wasn't designed for.\n\nThe research:\n\u2022 DBT: 68% fewer suicide attempts (Goldstein 2024)\n\u2022 FFT: prevents episodes in high-risk youth (Miklowitz 2020)\n\u2022 IPSRT: stabilizes sleep-wake cycles (Steardo 2020)\n\nThe right therapy depends on what you're treating.\nmanhattanmhc.com",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-org-005.png",
+      "theme": "beyond-cbt",
+      "research_cite": "Goldstein et al. 2024; Miklowitz et al. 2020; Steardo et al. 2020",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-org-006",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "The Control Group Problem",
+      "caption": "\"Evidence-based\" is a starting point, not a finish line.\n\nWhen you read that therapy \"works,\" ask:\n\u2022 Compared to what? (Waitlist? Medication? Another therapy?)\n\u2022 For whom? (Age, condition, severity?)\n\u2022 How much? (Effect size tells you magnitude, not just direction)\n\nWe hire therapists who think about research this carefully. Because your care deserves nuance.\nmanhattanmhc.com",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-org-006.png",
+      "theme": "research-literacy",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-org-007",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "What to Ask Your Therapist",
+      "caption": "You're allowed to ask your therapist hard questions:\n\n1. What's the evidence for this approach with my condition?\n2. Have you treated this before? How often?\n3. What's your plan if this approach isn't working after 8 weeks?\n4. Are there other modalities I should consider?\n\nA good therapist welcomes these questions. They're not challenges \u2014 they're collaboration.\nmanhattanmhc.com",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-org-007.png",
+      "theme": "patient-empowerment",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-org-008",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "Matching Matters More Than Method",
+      "caption": "Why do we have 80+ therapists?\n\nNot because bigger is better. Because matching is everything.\n\nThe latest JAMA research confirms: therapy effectiveness varies 4x by condition. That means the right therapist-condition match determines your outcome more than any single method.\n\n80+ therapists. CBT, DBT, EMDR, IPSRT, and more. Online across New York State.\nmanhattanmhc.com",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-org-008.png",
+      "theme": "matching",
+      "research_cite": "Cuijpers et al. 2025, JAMA Psychiatry",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-org-009",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "Bipolar Deserves Better Than Generic CBT",
+      "caption": "Bipolar disorder is one of the hardest conditions to treat with standard CBT (effect size just 0.31).\n\nBut that doesn't mean therapy doesn't work for bipolar. It means different therapy works:\n\u2022 DBT: 68% fewer suicide attempts\n\u2022 FFT: prevents mood episodes\n\u2022 IPSRT: stabilizes daily rhythms\n\nWe offer all of these. Because bipolar deserves specialized care.\nmanhattanmhc.com",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-org-009.png",
+      "theme": "bipolar-care",
+      "research_cite": "Goldstein et al. 2024; Cuijpers et al. 2025",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    },
+    {
+      "id": "b3-org-010",
+      "type": "organic",
+      "format": "photo-overlay",
+      "awareness": "solution-aware",
+      "headline": "Online Therapy. Same Results, Different Setting.",
+      "caption": "The evidence on telehealth is clear: online therapy produces equivalent outcomes to in-person for most conditions.\n\nWhat you gain:\n\u2022 Access from anywhere in New York State\n\u2022 No commute, no waiting room\n\u2022 Same licensed therapists, same evidence-based approaches\n\u2022 Flexibility that fits your schedule\n\n80+ therapists. Fully online. Insurance accepted.\nmanhattanmhc.com",
+      "cta": "Learn More",
+      "image": "batch-3-v3/b3-org-010.png",
+      "theme": "telehealth",
+      "research_cite": "APA Telehealth Guidelines, 2024",
+      "score": {
+        "hook": 4,
+        "cta": 4,
+        "brand": 5,
+        "compliance": "pass",
+        "total": 13
+      }
+    }
+  ]
+}

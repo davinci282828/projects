@@ -1,0 +1,115 @@
+:root {
+  color-scheme: light dark;
+  --bg: #0b1020;
+  --fg: #e8ecff;
+  --muted: rgba(232, 236, 255, 0.65);
+  --card: rgba(255, 255, 255, 0.06);
+  --border: rgba(232, 236, 255, 0.18);
+  --btn: rgba(255, 255, 255, 0.10);
+  --btn-hover: rgba(255, 255, 255, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+    Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: radial-gradient(1200px 700px at 20% 10%, #1b2a6b 0%, transparent 55%),
+    radial-gradient(900px 600px at 90% 40%, #5b1b6b 0%, transparent 55%),
+    var(--bg);
+  color: var(--fg);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.app {
+  width: min(520px, 100%);
+  border: 1px solid var(--border);
+  background: var(--card);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.title {
+  margin: 0 0 18px 0;
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: 0.2px;
+}
+
+.counter {
+  display: grid;
+  grid-template-columns: 56px 1fr 56px;
+  gap: 12px;
+  align-items: center;
+}
+
+.value {
+  display: block;
+  text-align: center;
+  font-size: 42px;
+  font-weight: 750;
+  padding: 14px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--btn);
+  color: var(--fg);
+  border-radius: 12px;
+  height: 56px;
+  width: 56px;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn:hover {
+  background: var(--btn-hover);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline: 2px solid rgba(232, 236, 255, 0.55);
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f6f7ff;
+    --fg: #0d1330;
+    --muted: rgba(13, 19, 48, 0.65);
+    --card: rgba(255, 255, 255, 0.75);
+    --border: rgba(13, 19, 48, 0.14);
+    --btn: rgba(13, 19, 48, 0.05);
+    --btn-hover: rgba(13, 19, 48, 0.08);
+  }
+
+  body {
+    background: radial-gradient(1200px 700px at 20% 10%, #d7ddff 0%, transparent 55%),
+      radial-gradient(900px 600px at 90% 40%, #ffd7f3 0%, transparent 55%), var(--bg);
+  }
+
+  .value {
+    background: rgba(255, 255, 255, 0.7);
+  }
+}

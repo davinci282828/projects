@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Portfolio Pulse</title>
+<style>
+:root{--bg:#0b0f14;--panel:#0f1620;--muted:#93a0b4;--text:#e8eef7;--line:rgba(255,255,255,.08);--shadow:0 10px 28px rgba(0,0,0,.35)}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:radial-gradient(900px 600px at 20% -10%,rgba(78,140,255,.12),transparent 55%),radial-gradient(900px 600px at 120% 10%,rgba(0,255,170,.10),transparent 55%),var(--bg);color:var(--text);font:14px/1.35 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 16px 28px}
+header{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;padding:10px 12px;border:1px solid var(--line);background:rgba(16,24,35,.55);backdrop-filter:blur(10px);border-radius:16px;box-shadow:var(--shadow)}
+.brand{display:flex;gap:10px;align-items:center}
+.pulse{width:12px;height:12px;border-radius:999px;background:#2b8cff;box-shadow:0 0 0 0 rgba(43,140,255,.65);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(43,140,255,.65)}70%{box-shadow:0 0 0 10px rgba(43,140,255,0)}100%{box-shadow:0 0 0 0 rgba(43,140,255,0)}}
+.h1{font-size:18px;font-weight:750;letter-spacing:.2px}
+.sub{color:var(--muted);font-size:12px;margin-top:2px}
+.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.btn{appearance:none;border:1px solid var(--line);background:rgba(17,25,38,.7);color:var(--text);padding:8px 10px;border-radius:12px;cursor:pointer;transition:transform .12s ease,background .12s ease,border-color .12s ease}
+.btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.16)}
+.btn:active{transform:translateY(0)}
+.sel{border:1px solid var(--line);background:rgba(17,25,38,.7);color:var(--text);padding:8px 10px;border-radius:12px}
+.pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:7px 10px;background:rgba(17,25,38,.55);color:var(--muted);font-size:12px}
+.dot{width:8px;height:8px;border-radius:999px;background:#64748b}
+.dot.ok{background:#22c55e}.dot.warn{background:#f59e0b}.dot.bad{background:#ef4444}
+.row{display:grid;grid-template-columns:1.3fr .7fr;gap:12px;margin-top:12px}
+@media (max-width:900px){.row{grid-template-columns:1fr}}
+.widgets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.widgets{grid-template-columns:1fr}}
+.widget{border:1px solid var(--line);background:rgba(16,24,35,.45);border-radius:14px;padding:10px 12px;box-shadow:var(--shadow)}
+.widget .k{color:var(--muted);font-size:12px}
+.widget .v{font-size:18px;font-weight:800;margin-top:2px}
+.widget .s{color:var(--muted);font-size:12px;margin-top:2px}
+.summary{border:1px solid var(--line);background:rgba(16,24,35,.45);border-radius:14px;padding:10px 12px;box-shadow:var(--shadow);display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.summary b{font-weight:800}
+.small{color:var(--muted);font-size:12px}
+.grid{margin-top:12px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+@media (max-width:1100px){.grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media (max-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:700px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card{position:relative;border-radius:14px;padding:10px 10px 8px;border:1px solid rgba(255,255,255,.10);box-shadow:0 10px 22px rgba(0,0,0,.28);transition:transform .13s ease,filter .13s ease,border-color .13s ease;min-height:98px;overflow:hidden;opacity:0;transform:translateY(6px);animation:in .28s ease forwards}
+@keyframes in{to{opacity:1;transform:translateY(0)}}
+.card:hover{transform:translateY(-2px);filter:saturate(1.06);border-color:rgba(255,255,255,.18)}
+.sym{font-size:16px;font-weight:900;letter-spacing:.5px}
+.price{margin-top:2px;font-size:14px;font-weight:750}
+.delta{margin-top:2px;font-size:12px;color:rgba(255,255,255,.86)}
+.delta .muted{color:rgba(255,255,255,.72)}
+.tag{position:absolute;top:8px;right:8px;font-size:11px;color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.16);padding:3px 7px;border-radius:999px}
+.tag.stale{border-color:rgba(245,158,11,.35);color:rgba(245,158,11,.95)}
+.spark{margin-top:6px;height:22px;opacity:.95}
+.spark svg{width:100%;height:22px;display:block}
+.spark polyline{fill:none;stroke:rgba(255,255,255,.82);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.card.muted{filter:saturate(.2) brightness(.95)}
+.notice{margin-top:10px;color:var(--muted);font-size:12px}
+kbd{font:12px ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;color:#d5deea;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);padding:2px 6px;border-radius:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="pulse" aria-hidden="true"></div>
+      <div>
+        <div class="h1">Portfolio Pulse</div>
+        <div class="sub"><span id="now">—</span> · Last refresh: <span id="last">—</span></div>
+        <div class="sub" id="keyHint" style="display:none">Alpha Vantage key missing. Add <kbd>?key=YOUR_KEY</kbd> (or <kbd>?av_key=YOUR_KEY</kbd>).</div>
+      </div>
+    </div>
+    <div class="controls">
+      <span class="pill"><span id="statusDot" class="dot"></span><span id="statusText">Idle</span></span>
+      <select id="sort" class="sel" title="Sort">
+        <option value="alpha">Sort: A→Z</option>
+        <option value="best">Sort: % best</option>
+        <option value="worst">Sort: % worst</option>
+      </select>
+      <label class="pill" title="Auto-refresh every 5 minutes"><input id="auto" type="checkbox" style="accent-color:#2b8cff"> Auto (5m)</label>
+      <button id="refresh" class="btn">Refresh</button>
+    </div>
+  </header>
+
+  <div class="row">
+    <div class="summary">
+      <div>
+        <div><b id="mood">—</b> <span class="small">· <span id="counts">—</span></span></div>
+        <div class="small">Best: <span id="best">—</span> · Worst: <span id="worst">—</span></div>
+      </div>
+      <button id="copy" class="btn" title="Copy snapshot">Copy snapshot</button>
+    </div>
+    <div class="widgets">
+      <div class="widget" id="fngW">
+        <div class="k">Fear &amp; Greed</div>
+        <div class="v" id="fngV">—</div>
+        <div class="s" id="fngS">—</div>
+      </div>
+      <div class="widget" id="goldW">
+        <div class="k">Gold (XAU/USD)</div>
+        <div class="v" id="goldV">—</div>
+        <div class="s" id="goldS">—</div>
+      </div>
+      <div class="widget" id="silverW">
+        <div class="k">Silver (XAG/USD)</div>
+        <div class="v" id="silverV">—</div>
+        <div class="s" id="silverS">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notice" id="notice"></div>
+  <div class="grid" id="grid" aria-live="polite"></div>
+</div>
+
+<script>
+(() => {
+  const STOCKS=["SPY","QQQ","AAPL","MSFT","NVDA","TSLA","MSTR","OKLO","PLTR","IREN","NBIS","OSCR","MOH","RKLB","HOOD","GOOGL","AMZN","META"];
+  const CRYPTO=[{id:"bitcoin",sym:"BTC",name:"Bitcoin"},{id:"ethereum",sym:"ETH",name:"Ethereum"},{id:"solana",sym:"SOL",name:"Solana"}];
+  const TOTAL=STOCKS.length+CRYPTO.length;
+  const $=id=>document.getElementById(id);
+  const grid=$("grid"), sortSel=$("sort"), auto=$("auto"), notice=$("notice");
+  const statusDot=$("statusDot"), statusText=$("statusText");
+  const keyHint=$("keyHint");
+
+  const state={assets:new Map(), widgets:{}, lastRefresh:0, rateLimited:false, inFlight:false, loaded:0, total:TOTAL, cacheUsed:false};
+
+  const fmtMoney=v=>v==null||!isFinite(v)?"—":(Math.abs(v)>=1000? v.toLocaleString(undefined,{maximumFractionDigits:2}):v.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}));
+  const fmtPrice=v=>v==null||!isFinite(v)?"—":"$"+fmtMoney(v);
+  const fmtPct=v=>v==null||!isFinite(v)?"—":(v>=0?"+":"")+v.toFixed(2)+"%";
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+  function mix(c1,c2,t){
+    const a=parseInt(c1.slice(1),16), b=parseInt(c2.slice(1),16);
+    const r1=(a>>16)&255,g1=(a>>8)&255,b1=a&255;
+    const r2=(b>>16)&255,g2=(b>>8)&255,b2=b&255;
+    const r=Math.round(r1+(r2-r1)*t), g=Math.round(g1+(g2-g1)*t), bl=Math.round(b1+(b2-b1)*t);
+    return `rgb(${r},${g},${bl})`;
+  }
+  function bgForPct(p){
+    if(p==null||!isFinite(p)) return "rgba(16,24,35,.55)";
+    const x=clamp(p,-5,5);
+    const RED="#5a1111", NEU="#2b2f36", GRN="#0f4d2e";
+    if(x<0){const t=(x+5)/5;return mix(RED,NEU,t);} 
+    const t=x/5;return mix(NEU,GRN,t);
+  }
+
+  function setStatus(kind,text){
+    statusDot.className="dot"+(kind?" "+kind:"");
+    statusText.textContent=text;
+  }
+
+  function nowStr(){
+    const d=new Date();
+    return d.toLocaleString(undefined,{weekday:"short",month:"short",day:"2-digit",hour:"2-digit",minute:"2-digit"});
+  }
+
+  function getAvKey(){
+    const p=new URLSearchParams(location.search);
+    return p.get("key")||p.get("av_key")||p.get("avKey")||"ALPHA_VANTAGE_KEY";
+  }
+
+  function sparkSVG(values){
+    if(!values||values.length<2) return "";
+    const w=100,h=22,pad=2;
+    const min=Math.min(...values), max=Math.max(...values);
+    const span=(max-min)||1;
+    const pts=values.map((v,i)=>{
+      const x=pad+(w-2*pad)*(i/(values.length-1));
+      const y=pad+(h-2*pad)*(1-(v-min)/span);
+      return x.toFixed(2)+","+y.toFixed(2);
+    }).join(" ");
+    return `<div class="spark"><svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${pts}"></polyline></svg></div>`;
+  }
+
+  function render(){
+    const list=[...state.assets.values()];
+    const sort=sortSel.value;
+    list.sort((a,b)=>{
+      if(sort==="alpha") return a.sym.localeCompare(b.sym);
+      const ap=(a.changePct??-9999), bp=(b.changePct??-9999);
+      if(sort==="best") return (bp-ap);
+      if(sort==="worst") return (ap-bp);
+      return 0;
+    });
+
+    grid.innerHTML=list.map(a=>{
+      const bg=bgForPct(a.changePct);
+      const muted=a.error||a.price==null;
+      const stale=state.cacheUsed && (Date.now()-state.lastRefresh>60*1000);
+      const tag=a.type==="crypto"?"CRYPTO":"STOCK";
+      const tag2=stale?"<span class=\"tag stale\">stale</span>":`<span class="tag">${tag}</span>`;
+      const deltaTxt=(a.change==null||a.changePct==null)?"<span class=\"muted\">—</span>":`${(a.change>=0?"+":"")} $${fmtMoney(a.change)} <span class="muted">(${fmtPct(a.changePct)})</span>`;
+      return `<div class="card ${muted?"muted":""}" style="background:${bg}">
+        ${tag2}
+        <div class="sym">${a.sym}</div>
+        <div class="price">${fmtPrice(a.price)}</div>
+        <div class="delta">${deltaTxt}</div>
+        ${a.spark? sparkSVG(a.spark):""}
+      </div>`;
+    }).join("");
+
+    // Summary
+    const ok=list.filter(x=>isFinite(x.changePct));
+    const green=ok.filter(x=>x.changePct>0.05).length;
+    const red=ok.filter(x=>x.changePct<-0.05).length;
+    const flat=ok.length-green-red;
+    $("counts").textContent=`${green} green, ${red} red, ${flat} flat`;
+    let mood="Mixed";
+    if(green>red) mood="Mostly Green";
+    if(red>green) mood="Mostly Red";
+    if(ok.length===0) mood="—";
+    $("mood").textContent=mood;
+
+    const best=ok.slice().sort((a,b)=>b.changePct-a.changePct)[0];
+    const worst=ok.slice().sort((a,b)=>a.changePct-b.changePct)[0];
+    $("best").textContent=best?`${best.sym} (${fmtPct(best.changePct)})`:"—";
+    $("worst").textContent=worst?`${worst.sym} (${fmtPct(worst.changePct)})`:"—";
+  }
+
+  function saveCache(){
+    try{
+      const payload={t:Date.now(), assets:[...state.assets.values()], widgets:state.widgets};
+      localStorage.setItem("pp_cache_v1", JSON.stringify(payload));
+    }catch(e){}
+  }
+  function loadCache(){
+    try{
+      const raw=localStorage.getItem("pp_cache_v1");
+      if(!raw) return false;
+      const payload=JSON.parse(raw);
+      if(!payload||!payload.assets) return false;
+      state.assets=new Map(payload.assets.map(a=>[a.sym,a]));
+      state.widgets=payload.widgets||{};
+      state.lastRefresh=payload.t||0;
+      state.cacheUsed=true;
+      applyWidgets();
+      render();
+      $("last").textContent= payload.t? new Date(payload.t).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"}) : "—";
+      return true;
+    }catch(e){return false;}
+  }
+
+  function applyWidgets(){
+    const f=state.widgets.fng||{};
+    $("fngV").textContent = f.value!=null? String(f.value):"—";
+    $("fngS").textContent = f.label||"—";
+    if(f.color) $("fngW").style.borderColor=f.color;
+
+    const g=state.widgets.gold||{};
+    $("goldV").textContent = g.price!=null? ("$"+fmtMoney(g.price)) : "—";
+    $("goldS").textContent = g.time||"—";
+
+    const s=state.widgets.silver||{};
+    $("silverV").textContent = s.price!=null? ("$"+fmtMoney(s.price)) : "—";
+    $("silverS").textContent = s.time||"—";
+  }
+
+  async function fetchJSON(url){
+    const r=await fetch(url,{cache:"no-store"});
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    return r.json();
+  }
+
+  async function fetchFNG(){
+    try{
+      const j=await fetchJSON("https://api.alternative.me/fng/?limit=1&format=json");
+      const d=j?.data?.[0];
+      const value=d?Number(d.value):null;
+      const cls=d?.value_classification||"";
+      const label=cls||"—";
+      let color="rgba(255,255,255,.14)";
+      if(/Extreme Fear/i.test(label)) color="rgba(239,68,68,.45)";
+      else if(/^Fear/i.test(label)) color="rgba(245,158,11,.45)";
+      else if(/Neutral/i.test(label)) color="rgba(148,163,184,.35)";
+      else if(/^Greed/i.test(label)) color="rgba(34,197,94,.45)";
+      else if(/Extreme Greed/i.test(label)) color="rgba(34,197,94,.55)";
+      state.widgets.fng={value:isFinite(value)?value:null,label,color};
+    }catch(e){state.widgets.fng={value:null,label:"Unavailable"};}
+  }
+
+  async function fetchMetal(from,to){
+    const key=getAvKey();
+    if(!key||key==="ALPHA_VANTAGE_KEY") throw new Error("No AV key");
+    const url=`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${encodeURIComponent(from)}&to_currency=${encodeURIComponent(to)}&apikey=${encodeURIComponent(key)}`;
+    const j=await fetchJSON(url);
+    const ex=j["Realtime Currency Exchange Rate"];
+    const rate=ex?Number(ex["5. Exchange Rate"]):null;
+    const time=ex?.["6. Last Refreshed"]||"";
+    if(j?.Note||j?.Information) throw new Error("Rate limited");
+    return {price:isFinite(rate)?rate:null,time};
+  }
+
+  async function fetchMetals(){
+    try{ state.widgets.gold=await fetchMetal("XAU","USD"); }catch(e){ state.widgets.gold={price:null,time:"—"}; }
+    try{ state.widgets.silver=await fetchMetal("XAG","USD"); }catch(e){ state.widgets.silver={price:null,time:"—"}; }
+  }
+
+  async function fetchCrypto(){
+    const ids=CRYPTO.map(c=>c.id).join(",");
+    try{
+      const url=`https://api.coingecko.com/api/v3/simple/price?ids=${encodeURIComponent(ids)}&vs_currencies=usd&include_24hr_change=true`;
+      const j=await fetchJSON(url);
+      for(const c of CRYPTO){
+        const o=j?.[c.id];
+        const price=o?.usd!=null?Number(o.usd):null;
+        const pct=o?.usd_24h_change!=null?Number(o.usd_24h_change):null;
+        const change=(price!=null&&pct!=null)? (price-(price/(1+pct/100))):null;
+        state.assets.set(c.sym,{type:"crypto",sym:c.sym,name:c.name,price,change,changePct:pct,spark:null,error:!(price!=null)});
+      }
+      // Sparklines (last 5 days) - light: 1 call per coin
+      for(const c of CRYPTO){
+        try{
+          const url=`https://api.coingecko.com/api/v3/coins/${encodeURIComponent(c.id)}/market_chart?vs_currency=usd&days=5&interval=daily`;
+          const j2=await fetchJSON(url);
+          const pts=(j2?.prices||[]).map(p=>Number(p[1])).filter(v=>isFinite(v));
+          const a=state.assets.get(c.sym); if(a) a.spark=pts.length>=2?pts:null;
+        }catch(e){}
+      }
+    }catch(e){
+      for(const c of CRYPTO){
+        state.assets.set(c.sym,{type:"crypto",sym:c.sym,name:c.name,price:null,change:null,changePct:null,spark:null,error:true});
+      }
+    }
+  }
+
+  async function fetchStock(sym){
+    const key=getAvKey();
+    if(!key||key==="ALPHA_VANTAGE_KEY") throw new Error("No AV key");
+    const url=`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${encodeURIComponent(sym)}&apikey=${encodeURIComponent(key)}`;
+    const j=await fetchJSON(url);
+    if(j?.Note||j?.Information){ state.rateLimited=true; throw new Error("Rate limited"); }
+    const q=j?.["Global Quote"]; 
+    const price=q?Number(q["05. price"]):null;
+    const change=q?Number(q["09. change"]):null;
+    const pctStr=q?.["10. change percent"];
+    const pct=pctStr?Number(String(pctStr).replace("%","")):null;
+    if(!isFinite(price)) throw new Error("Bad quote");
+    return {price,change:isFinite(change)?change:null,changePct:isFinite(pct)?pct:null};
+  }
+
+  function ensurePlaceholders(){
+    for(const s of STOCKS){ if(!state.assets.has(s)) state.assets.set(s,{type:"stock",sym:s,price:null,change:null,changePct:null,spark:null,error:true}); }
+    for(const c of CRYPTO){ if(!state.assets.has(c.sym)) state.assets.set(c.sym,{type:"crypto",sym:c.sym,price:null,change:null,changePct:null,spark:null,error:true}); }
+  }
+
+  async function fetchStocksBatched(){
+    const remaining=[...STOCKS];
+    const chunkSize=5;
+    while(remaining.length){
+      const chunk=remaining.splice(0,chunkSize);
+      await Promise.all(chunk.map(async sym=>{
+        try{
+          const r=await fetchStock(sym);
+          state.assets.set(sym,{type:"stock",sym,price:r.price,change:r.change,changePct:r.changePct,spark:null,error:false});
+        }catch(e){
+          const existing=state.assets.get(sym)||{type:"stock",sym};
+          state.assets.set(sym,{...existing,price:existing.price??null,change:existing.change??null,changePct:existing.changePct??null,spark:null,error:true});
+        } finally {
+          state.loaded++;
+          setStatus(state.rateLimited?"warn":"ok",`Loading ${Math.min(state.loaded,state.total)}/${state.total}…`);
+          render();
+        }
+      }));
+      if(remaining.length){
+        notice.textContent = state.rateLimited?"Alpha Vantage rate limited — refreshing in batches. Will continue after backoff." : "Refreshing stocks in batches to respect Alpha Vantage free-tier limits.";
+        const waitMs = state.rateLimited? 60_000 : 12_000;
+        await new Promise(r=>setTimeout(r,waitMs));
+      }
+    }
+  }
+
+  async function refreshAll(){
+    if(state.inFlight) return;
+    state.inFlight=true; state.rateLimited=false; state.loaded=0; state.total=TOTAL; state.cacheUsed=false;
+    notice.textContent="";
+
+    const key=getAvKey();
+    keyHint.style.display = (!key || key==="ALPHA_VANTAGE_KEY") ? "block":"none";
+
+    setStatus("warn","Loading 0/"+TOTAL+"…");
+    ensurePlaceholders();
+    render();
+
+    // Widgets (parallel)
+    await Promise.all([fetchFNG(), fetchMetals()]);
+    applyWidgets();
+
+    // Crypto (counts toward progress)
+    await fetchCrypto();
+    state.loaded += CRYPTO.length;
+    setStatus(state.rateLimited?"warn":"ok",`Loading ${Math.min(state.loaded,state.total)}/${state.total}…`);
+    render();
+
+    // Stocks (batched)
+    if(key && key!=="ALPHA_VANTAGE_KEY"){
+      await fetchStocksBatched();
+    } else {
+      // Mark stocks as unavailable without key
+      for(const s of STOCKS){ state.assets.set(s,{type:"stock",sym:s,price:null,change:null,changePct:null,spark:null,error:true}); }
+    }
+
+    state.lastRefresh=Date.now();
+    $("last").textContent=new Date(state.lastRefresh).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+    setStatus(state.rateLimited?"warn":"ok", state.rateLimited?"Partial (rate limited)":"Updated");
+    saveCache();
+    state.inFlight=false;
+  }
+
+  function snapshotText(){
+    const list=[...state.assets.values()].sort((a,b)=>a.sym.localeCompare(b.sym));
+    const lines=[];
+    lines.push(`Portfolio Pulse — ${new Date().toLocaleString()}`);
+    lines.push(`Last refresh: ${state.lastRefresh? new Date(state.lastRefresh).toLocaleString():"—"}`);
+    lines.push("");
+    for(const a of list){
+      const p=a.price==null?"—":("$"+fmtMoney(a.price));
+      const d=(a.changePct==null)?"—":(`${(a.changePct>=0?"+":"")}${a.changePct.toFixed(2)}%`);
+      lines.push(`${a.sym.padEnd(5)} ${p.padEnd(12)} ${d}`);
+    }
+    const f=state.widgets.fng||{};
+    lines.push("");
+    lines.push(`Fear & Greed: ${f.value!=null?f.value:"—"} ${f.label||""}`.trim());
+    const g=state.widgets.gold||{}; const s=state.widgets.silver||{};
+    lines.push(`Gold XAU/USD: ${g.price!=null? ("$"+fmtMoney(g.price)) : "—"}`);
+    lines.push(`Silver XAG/USD: ${s.price!=null? ("$"+fmtMoney(s.price)) : "—"}`);
+    return lines.join("\n");
+  }
+
+  // Wiring
+  $("now").textContent=nowStr();
+  setInterval(()=>$("now").textContent=nowStr(), 30_000);
+  sortSel.addEventListener("change",render);
+  $("refresh").addEventListener("click",refreshAll);
+  $("copy").addEventListener("click", async ()=>{
+    try{await navigator.clipboard.writeText(snapshotText()); notice.textContent="Snapshot copied."; setTimeout(()=>{if(notice.textContent==="Snapshot copied.") notice.textContent="";},2500);}catch(e){notice.textContent="Clipboard unavailable.";}
+  });
+  auto.addEventListener("change",()=>{
+    if(auto.checked){
+      refreshAll();
+      auto._t=setInterval(()=>refreshAll(), 300_000);
+    } else {
+      clearInterval(auto._t); auto._t=null;
+    }
+  });
+
+  // Startup
+  loadCache();
+  refreshAll();
+})();
+</script>
+</body>
+</html>

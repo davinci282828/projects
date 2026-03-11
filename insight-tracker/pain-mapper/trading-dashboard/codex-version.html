@@ -1,0 +1,1718 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Realtime Trading Dashboard</title>
+  <style>
+    :root{
+      --bg: #0b0f14;
+      --panel: #0f1620;
+      --panel2: #0c121b;
+      --text: #d8e1ea;
+      --muted: #8aa0b4;
+      --grid: rgba(136, 164, 189, 0.12);
+      --grid2: rgba(136, 164, 189, 0.18);
+      --border: rgba(136, 164, 189, 0.18);
+      --up: #20c997;
+      --down: #ff5c7c;
+      --accent: #00d4ff;
+      --warn: #ffd166;
+      --good: #36d399;
+      --bad: #ff5c7c;
+      --shadow: rgba(0,0,0,.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    body.theme-light{
+      --bg: #f7f9fc;
+      --panel: #ffffff;
+      --panel2: #fbfdff;
+      --text: #17212b;
+      --muted: #556676;
+      --grid: rgba(23, 33, 43, 0.09);
+      --grid2: rgba(23, 33, 43, 0.14);
+      --border: rgba(23, 33, 43, 0.16);
+      --shadow: rgba(0,0,0,.08);
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin:0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow: hidden;
+    }
+
+    .app{
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 260px 1fr 360px;
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas:
+        "sidebar header header"
+        "sidebar main right"
+        "sidebar status status";
+    }
+
+    .sidebar{
+      grid-area: sidebar;
+      background: linear-gradient(180deg, var(--panel) 0%, var(--panel2) 100%);
+      border-right: 1px solid var(--border);
+      box-shadow: 0 10px 30px var(--shadow);
+      padding: 14px 12px;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 240px;
+      z-index: 30;
+    }
+
+    .brand{
+      display:flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.02);
+    }
+    .brand .title{
+      font-family: var(--mono);
+      letter-spacing: .04em;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    .brand .subtitle{
+      font-family: var(--mono);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .watchlist{
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.02);
+      overflow: auto;
+    }
+
+    .watchlist h3{
+      margin: 0 0 10px 0;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: var(--mono);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .ticker{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 10px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      user-select:none;
+      transition: background .15s ease, border-color .15s ease, transform .05s ease;
+      font-family: var(--mono);
+    }
+    .ticker:active{ transform: translateY(1px); }
+    .ticker:hover{ background: rgba(255,255,255,0.04); }
+    .ticker.active{
+      border-color: rgba(0, 212, 255, 0.38);
+      background: rgba(0, 212, 255, 0.08);
+    }
+    .ticker .sym{ font-weight: 800; letter-spacing: .04em; }
+    .ticker .px{ color: var(--muted); font-size: 12px; }
+
+    .header{
+      grid-area: header;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.00) 100%);
+    }
+
+    .header-left{
+      display:flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .pill{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      padding: 8px 10px;
+      border-radius: 999px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+
+    .headline{
+      min-width: 0;
+      display:flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .headline .sym{
+      font-family: var(--mono);
+      font-weight: 900;
+      letter-spacing: .06em;
+      font-size: 14px;
+    }
+    .headline .meta{
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .btn{
+      appearance:none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      cursor:pointer;
+      transition: transform .05s ease, background .15s ease, border-color .15s ease;
+    }
+    .btn:hover{ background: rgba(255,255,255,0.05); }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{ border-color: rgba(0, 212, 255, 0.35); }
+
+    .main{
+      grid-area: main;
+      padding: 14px;
+      overflow: auto;
+    }
+
+    .right{
+      grid-area: right;
+      padding: 14px;
+      border-left: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.00) 100%);
+      overflow: auto;
+    }
+
+    .card{
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+      box-shadow: 0 10px 30px var(--shadow);
+      padding: 12px;
+    }
+
+    .card h3{
+      margin: 0 0 10px 0;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .stack{ display:flex; flex-direction: column; gap: 12px; }
+
+    .chart-card{ padding: 12px; }
+
+    .chart-grid{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    canvas{
+      width: 100%;
+      height: 100%;
+      display:block;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.08);
+      border: 1px solid var(--border);
+    }
+
+    .canvas-wrap{
+      position: relative;
+      height: 420px;
+    }
+
+    .subcharts{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .subchart{
+      height: 140px;
+      position: relative;
+    }
+
+    .hint{
+      position:absolute;
+      top: 10px;
+      left: 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(255,255,255,0.65);
+      pointer-events:none;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      mix-blend-mode: normal;
+    }
+    body.theme-light .hint{ color: rgba(23,33,43,0.65); }
+
+    .orderbook{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .spread{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-family: var(--mono);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .spread .lbl{ color: var(--muted); font-size: 11px; }
+    .spread .val{ font-weight: 800; letter-spacing: .04em; }
+
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    thead th{
+      text-align: right;
+      color: var(--muted);
+      font-weight: 700;
+      padding: 8px 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody td{
+      padding: 7px 6px;
+      border-bottom: 1px solid rgba(136,164,189,0.10);
+      text-align: right;
+      position: relative;
+    }
+
+    tbody tr:last-child td{ border-bottom: none; }
+
+    .td-bar{
+      position:absolute;
+      inset: 0;
+      opacity: .22;
+      border-radius: 6px;
+      pointer-events:none;
+    }
+
+    .bid{ color: var(--good); }
+    .ask{ color: var(--bad); }
+
+    .portfolio-row{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr 1fr 1fr;
+      gap: 8px;
+      padding: 8px 6px;
+      border-bottom: 1px solid rgba(136,164,189,0.10);
+      font-family: var(--mono);
+      font-size: 12px;
+      align-items:center;
+    }
+    .portfolio-row.header{
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: 11px;
+      padding-top: 4px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .portfolio-row:last-child{ border-bottom: none; }
+
+    .pnl.pos{ color: var(--good); }
+    .pnl.neg{ color: var(--bad); }
+
+    .status{
+      grid-area: status;
+      border-top: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.00) 0%, rgba(255,255,255,0.02) 100%);
+      padding: 10px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      overflow: hidden;
+    }
+
+    .status .left, .status .right{
+      display:flex;
+      align-items:center;
+      gap: 14px;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .kv{
+      display:flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.02);
+      white-space: nowrap;
+    }
+
+    .kv .k{ color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+    .kv .v{ font-weight: 800; letter-spacing: .02em; }
+
+    /* Mobile / responsive */
+    .mobile-watch-btn{ display:none; }
+
+    .sidebar-overlay{
+      display:none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 25;
+    }
+
+    @media (max-width: 1100px){
+      .app{
+        grid-template-columns: 260px 1fr;
+        grid-template-areas:
+          "sidebar header"
+          "sidebar main"
+          "sidebar status";
+      }
+      .right{ display:none; }
+    }
+
+    @media (max-width: 900px){
+      body{ overflow: auto; }
+      .app{
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr auto;
+        grid-template-areas:
+          "header"
+          "main"
+          "right"
+          "status";
+      }
+      .right{
+        display:block;
+        border-left: none;
+        border-top: 1px solid var(--border);
+      }
+
+      /* Sidebar hides on mobile (Requirement #15). We provide a drawer toggle for usability. */
+      .sidebar{
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: min(86vw, 320px);
+        transform: translateX(-105%);
+        transition: transform .2s ease;
+      }
+      body.sidebar-open .sidebar{ transform: translateX(0); }
+      body.sidebar-open .sidebar-overlay{ display:block; }
+      .mobile-watch-btn{ display:inline-flex; }
+
+      .main{ padding: 12px; }
+      .right{ padding: 12px; }
+      .canvas-wrap{ height: 360px; }
+      .subchart{ height: 130px; }
+    }
+
+    /* Small polish */
+    .muted{ color: var(--muted); }
+    .sep{ opacity: .5; }
+  </style>
+</head>
+<body>
+  <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+  <div class="app">
+    <aside class="sidebar" aria-label="Watchlist">
+      <div class="brand">
+        <div class="title">Terminal</div>
+        <div class="subtitle">RTD v1.0</div>
+      </div>
+
+      <div class="watchlist">
+        <h3>Watchlist</h3>
+        <div id="watchlist"></div>
+      </div>
+
+      <div class="card" style="padding:10px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-family: var(--mono);">
+          <div style="font-size:11px; color: var(--muted); letter-spacing:.06em; text-transform: uppercase;">Update</div>
+          <div id="updateInfo" style="font-size:12px; font-weight:800;">1.5s</div>
+        </div>
+      </div>
+    </aside>
+
+    <header class="header">
+      <div class="header-left">
+        <button class="btn mobile-watch-btn" id="watchBtn" type="button" aria-label="Open watchlist">Watch</button>
+
+        <div class="headline">
+          <div class="sym" id="headlineSym">—</div>
+          <div class="meta" id="headlineMeta">Real-time simulated market data • Candles: 200 • Indicators: RSI/MACD/BB/SMA</div>
+        </div>
+
+        <div class="pill" aria-label="Selected ticker last price">
+          <span class="muted">Last</span>
+          <span id="headlineLast" style="font-weight:900;">—</span>
+          <span class="sep">|</span>
+          <span class="muted">Chg</span>
+          <span id="headlineChg" style="font-weight:900;">—</span>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button class="btn primary" id="themeToggle" type="button" aria-label="Toggle theme">Theme</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="stack">
+        <section class="card chart-card" aria-label="Charts">
+          <h3>Price / Volume</h3>
+
+          <div class="chart-grid">
+            <div class="canvas-wrap">
+              <canvas id="priceCanvas"></canvas>
+              <div class="hint">Candles • Volume • SMA20/50 • Bollinger (20,2)</div>
+            </div>
+
+            <div class="subcharts">
+              <div class="subchart">
+                <canvas id="rsiCanvas"></canvas>
+                <div class="hint">RSI (14) • Wilder smoothing • 30/70</div>
+              </div>
+              <div class="subchart">
+                <canvas id="macdCanvas"></canvas>
+                <div class="hint">MACD (12,26,9) • Signal • Histogram</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <aside class="right">
+      <div class="stack">
+        <section class="card" aria-label="Order book">
+          <h3>Order Book</h3>
+          <div class="orderbook">
+            <div class="spread">
+              <div>
+                <div class="lbl">Spread</div>
+                <div class="val" id="spreadVal">—</div>
+              </div>
+              <div style="text-align:right">
+                <div class="lbl">Mid</div>
+                <div class="val" id="midVal">—</div>
+              </div>
+            </div>
+
+            <div class="card" style="padding:10px; background: rgba(255,255,255,0.01); box-shadow:none;">
+              <table aria-label="Order book levels">
+                <thead>
+                  <tr>
+                    <th style="text-align:right;">Bid Sz</th>
+                    <th style="text-align:right;">Bid</th>
+                    <th style="text-align:right;">Ask</th>
+                    <th style="text-align:right;">Ask Sz</th>
+                  </tr>
+                </thead>
+                <tbody id="orderbookBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" aria-label="Portfolio">
+          <h3>Portfolio</h3>
+          <div class="portfolio-row header">
+            <div>Symbol</div>
+            <div style="text-align:right;">Qty</div>
+            <div style="text-align:right;">Avg</div>
+            <div style="text-align:right;">P&amp;L</div>
+          </div>
+          <div id="portfolioRows"></div>
+
+          <div style="display:flex; justify-content: space-between; gap: 10px; margin-top: 10px; font-family: var(--mono);">
+            <div class="muted" style="font-size:11px; letter-spacing:.06em; text-transform:uppercase;">Total P&amp;L</div>
+            <div id="portfolioTotal" style="font-weight:900;">—</div>
+          </div>
+        </section>
+      </div>
+    </aside>
+
+    <footer class="status" aria-label="Status bar">
+      <div class="left" id="statusLeft">
+        <div class="kv"><span class="k">RSI</span><span class="v" id="stRSI">—</span></div>
+        <div class="kv"><span class="k">MACD</span><span class="v" id="stMACD">—</span></div>
+        <div class="kv"><span class="k">Signal</span><span class="v" id="stSignal">—</span></div>
+      </div>
+      <div class="right" id="statusRight">
+        <div class="kv"><span class="k">BB U</span><span class="v" id="stBBU">—</span></div>
+        <div class="kv"><span class="k">BB L</span><span class="v" id="stBBL">—</span></div>
+        <div class="kv"><span class="k">Vol</span><span class="v" id="stVol">—</span></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    'use strict';
+
+    /**
+     * Realtime Trading Dashboard
+     * - Single-file, vanilla JS
+     * - Canvas rendering (no libraries)
+     */
+
+    // ------------------------------
+    // Utilities
+    // ------------------------------
+
+    function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
+
+    function roundTo(v, decimals){
+      const p = Math.pow(10, decimals);
+      return Math.round(v * p) / p;
+    }
+
+    function fmtNum(v, decimals=2){
+      if (!Number.isFinite(v)) return '—';
+      return v.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    }
+
+    function fmtSigned(v, decimals=2){
+      if (!Number.isFinite(v)) return '—';
+      const s = v >= 0 ? '+' : '';
+      return s + fmtNum(v, decimals);
+    }
+
+    function isCrypto(symbol){
+      return ['BTC','ETH','SOL','DOGE','AVAX'].includes(symbol);
+    }
+
+    function priceDecimals(symbol){
+      // Crypto often has 2-4+ decimals; keep readable
+      if (symbol === 'DOGE') return 4;
+      if (isCrypto(symbol)) return 2;
+      return 2;
+    }
+
+    function volumeDecimals(symbol){
+      // Show volume as integer-ish but compact
+      return isCrypto(symbol) ? 0 : 0;
+    }
+
+    function compactInt(n){
+      if (!Number.isFinite(n)) return '—';
+      const abs = Math.abs(n);
+      const sign = n < 0 ? '-' : '';
+      if (abs >= 1e9) return sign + (abs/1e9).toFixed(2) + 'B';
+      if (abs >= 1e6) return sign + (abs/1e6).toFixed(2) + 'M';
+      if (abs >= 1e3) return sign + (abs/1e3).toFixed(2) + 'K';
+      return sign + Math.round(abs).toString();
+    }
+
+    // Deterministic-ish PRNG per ticker for stable feel
+    function hashStr(s){
+      let h = 2166136261;
+      for (let i=0;i<s.length;i++){
+        h ^= s.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      return h >>> 0;
+    }
+
+    function mulberry32(seed){
+      let t = seed >>> 0;
+      return function(){
+        t += 0x6D2B79F5;
+        let x = t;
+        x = Math.imul(x ^ (x >>> 15), x | 1);
+        x ^= x + Math.imul(x ^ (x >>> 7), x | 61);
+        return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    function randn(rng){
+      // Box-Muller transform
+      let u = 0, v = 0;
+      while (u === 0) u = rng();
+      while (v === 0) v = rng();
+      return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    }
+
+    // ------------------------------
+    // Indicator math (REAL calculations)
+    // ------------------------------
+
+    function sma(values, period){
+      const out = new Array(values.length).fill(null);
+      let sum = 0;
+      for (let i=0;i<values.length;i++){
+        const v = values[i];
+        sum += v;
+        if (i >= period) sum -= values[i - period];
+        if (i >= period - 1) out[i] = sum / period;
+      }
+      return out;
+    }
+
+    function stddev(values, period){
+      const out = new Array(values.length).fill(null);
+      let sum = 0;
+      let sumSq = 0;
+      for (let i=0;i<values.length;i++){
+        const v = values[i];
+        sum += v;
+        sumSq += v*v;
+        if (i >= period){
+          const old = values[i - period];
+          sum -= old;
+          sumSq -= old*old;
+        }
+        if (i >= period - 1){
+          const mean = sum / period;
+          const variance = (sumSq / period) - mean*mean;
+          out[i] = Math.sqrt(Math.max(0, variance));
+        }
+      }
+      return out;
+    }
+
+    function bollingerBands(closes, period=20, k=2){
+      const mid = sma(closes, period);
+      const sd = stddev(closes, period);
+      const upper = new Array(closes.length).fill(null);
+      const lower = new Array(closes.length).fill(null);
+      for (let i=0;i<closes.length;i++){
+        if (mid[i] == null || sd[i] == null) continue;
+        upper[i] = mid[i] + k * sd[i];
+        lower[i] = mid[i] - k * sd[i];
+      }
+      return { mid, upper, lower };
+    }
+
+    // RSI (14) with Wilder's smoothing
+    function rsiWilder(closes, period=14){
+      const out = new Array(closes.length).fill(null);
+      if (closes.length < period + 1) return out;
+
+      let gainSum = 0;
+      let lossSum = 0;
+      for (let i=1;i<=period;i++){
+        const change = closes[i] - closes[i-1];
+        gainSum += Math.max(0, change);
+        lossSum += Math.max(0, -change);
+      }
+
+      let avgGain = gainSum / period;
+      let avgLoss = lossSum / period;
+
+      // First computed RSI at index = period
+      let rs = avgLoss === 0 ? Infinity : (avgGain / avgLoss);
+      out[period] = 100 - (100 / (1 + rs));
+
+      for (let i=period+1;i<closes.length;i++){
+        const change = closes[i] - closes[i-1];
+        const gain = Math.max(0, change);
+        const loss = Math.max(0, -change);
+        avgGain = (avgGain * (period - 1) + gain) / period;
+        avgLoss = (avgLoss * (period - 1) + loss) / period;
+        rs = avgLoss === 0 ? Infinity : (avgGain / avgLoss);
+        out[i] = 100 - (100 / (1 + rs));
+      }
+
+      return out;
+    }
+
+    function ema(values, period){
+      const out = new Array(values.length).fill(null);
+      if (values.length === 0) return out;
+
+      const k = 2 / (period + 1);
+      let prev = values[0];
+      out[0] = prev;
+      for (let i=1;i<values.length;i++){
+        const v = values[i];
+        prev = v * k + prev * (1 - k);
+        out[i] = prev;
+      }
+      return out;
+    }
+
+    // MACD (12,26,9)
+    function macd(closes, fast=12, slow=26, signalPeriod=9){
+      const emaFast = ema(closes, fast);
+      const emaSlow = ema(closes, slow);
+      const macdLine = new Array(closes.length).fill(null);
+      for (let i=0;i<closes.length;i++) macdLine[i] = emaFast[i] - emaSlow[i];
+      const signal = ema(macdLine, signalPeriod);
+      const hist = new Array(closes.length).fill(null);
+      for (let i=0;i<closes.length;i++) hist[i] = macdLine[i] - signal[i];
+      return { macdLine, signal, hist };
+    }
+
+    // ------------------------------
+    // Market simulation
+    // ------------------------------
+
+    const TICKERS = [
+      { sym: 'BTC', name: 'Bitcoin' },
+      { sym: 'ETH', name: 'Ethereum' },
+      { sym: 'SOL', name: 'Solana' },
+      { sym: 'DOGE', name: 'Dogecoin' },
+      { sym: 'AVAX', name: 'Avalanche' },
+      { sym: 'AAPL', name: 'Apple' },
+      { sym: 'TSLA', name: 'Tesla' },
+      { sym: 'NVDA', name: 'NVIDIA' },
+      { sym: 'MSFT', name: 'Microsoft' },
+      { sym: 'GOOGL', name: 'Alphabet' },
+      { sym: 'AMZN', name: 'Amazon' },
+      { sym: 'META', name: 'Meta' },
+    ];
+
+    // Per-ticker baseline price and volatility (Requirement #13)
+    const BASE = {
+      BTC: { price: 52000, vol: 0.020 },
+      ETH: { price: 2900, vol: 0.024 },
+      SOL: { price: 110, vol: 0.032 },
+      DOGE:{ price: 0.135, vol: 0.050 },
+      AVAX:{ price: 38, vol: 0.034 },
+      AAPL:{ price: 185, vol: 0.010 },
+      TSLA:{ price: 210, vol: 0.018 },
+      NVDA:{ price: 840, vol: 0.016 },
+      MSFT:{ price: 410, vol: 0.009 },
+      GOOGL:{ price: 148, vol: 0.011 },
+      AMZN:{ price: 172, vol: 0.012 },
+      META:{ price: 485, vol: 0.014 },
+    };
+
+    const CANDLE_COUNT = 200; // Requirement #1
+    const UPDATE_MS = 1500;   // Requirement #14
+
+    function genNextCandle(prevClose, rng, vol, symbol){
+      // A realistic-ish random walk:
+      // - drift towards a weak mean-reversion anchor
+      // - volatility scales with price
+      // - use log returns to keep positive
+      const anchor = BASE[symbol].price;
+      const reversionStrength = isCrypto(symbol) ? 0.0022 : 0.0012;
+      const drift = (Math.log(anchor) - Math.log(prevClose)) * reversionStrength;
+
+      // Volatility shaping (fatter tails)
+      const shock = randn(rng);
+      const shock2 = randn(rng) * 0.35;
+      const logRet = drift + (shock + shock2) * vol;
+
+      const open = prevClose;
+      const close = Math.max(1e-8, open * Math.exp(logRet));
+
+      // Intracandle range: proportional to volatility & absolute movement
+      const baseRange = Math.max(open, close) * vol * (0.55 + rng() * 0.9);
+      const extra = Math.abs(close - open) * (0.45 + rng() * 0.8);
+      const range = baseRange + extra;
+
+      const high = Math.max(open, close) + range * (0.35 + rng() * 0.55);
+      const low  = Math.min(open, close) - range * (0.35 + rng() * 0.55);
+
+      // Volume correlates with volatility & range
+      const baseVol = isCrypto(symbol) ? 3.2e4 : 2.2e6;
+      const volScale = isCrypto(symbol) ? (1.0 + 120 * Math.abs(logRet)) : (1.0 + 60 * Math.abs(logRet));
+      const volume = Math.max(1, Math.round(baseVol * volScale * (0.65 + rng() * 0.9)));
+
+      return { open, high, low, close, volume, t: Date.now() };
+    }
+
+    function seedCandles(symbol){
+      const seed = hashStr('seed:' + symbol);
+      const rng = mulberry32(seed);
+
+      const { price, vol } = BASE[symbol];
+      let last = price * (0.92 + rng() * 0.16);
+
+      const candles = [];
+      for (let i=0;i<CANDLE_COUNT;i++){
+        const c = genNextCandle(last, rng, vol, symbol);
+        // Add a gentle trend early so indicators have texture
+        const trend = (i - CANDLE_COUNT/2) / CANDLE_COUNT;
+        c.close *= (1 + trend * vol * 0.25);
+        c.open = last;
+        c.high = Math.max(c.high, c.open, c.close);
+        c.low = Math.min(c.low, c.open, c.close);
+        candles.push(c);
+        last = c.close;
+      }
+
+      return { rng, candles };
+    }
+
+    function buildOrderBook(symbol, mid, rng){
+      // 5 levels each side (Requirement #5)
+      const tick = isCrypto(symbol) ? (symbol === 'DOGE' ? 0.0001 : 0.05) : 0.01;
+      const baseSpread = (isCrypto(symbol) ? 0.0006 : 0.00025) * mid;
+      const spread = Math.max(tick * 2, baseSpread * (0.7 + rng() * 0.9));
+      const bestBid = Math.max(tick, mid - spread/2);
+      const bestAsk = mid + spread/2;
+
+      const levels = [];
+
+      const sizeBase = isCrypto(symbol) ? 18 : 900;
+      const sizeJitter = isCrypto(symbol) ? 40 : 1800;
+
+      for (let i=0;i<5;i++){
+        const step = (i + 1) * tick * (isCrypto(symbol) ? 2 : 6);
+        const bidPx = bestBid - step;
+        const askPx = bestAsk + step;
+
+        // Sizes: skew towards top of book a bit
+        const bidSz = Math.max(1, (sizeBase + sizeJitter * (0.25 + rng())) * (1.0 - i*0.12));
+        const askSz = Math.max(1, (sizeBase + sizeJitter * (0.25 + rng())) * (1.0 - i*0.12));
+
+        levels.push({
+          bidPx, bidSz,
+          askPx, askSz
+        });
+      }
+
+      return {
+        bestBid, bestAsk,
+        mid: (bestBid + bestAsk) / 2,
+        spreadAbs: (bestAsk - bestBid),
+        spreadPct: (bestAsk - bestBid) / ((bestAsk + bestBid)/2),
+        levels
+      };
+    }
+
+    // ------------------------------
+    // App state
+    // ------------------------------
+
+    const state = {
+      selected: 'BTC',
+      markets: {},
+      positions: [
+        { sym: 'BTC', qty: 0.42, avg: 46850 },
+        { sym: 'AAPL', qty: 75, avg: 172.40 },
+        { sym: 'TSLA', qty: 28, avg: 231.10 },
+        { sym: 'ETH', qty: 2.6, avg: 2605 },
+      ],
+      theme: 'dark'
+    };
+
+    // Initialize all tickers
+    for (const t of TICKERS){
+      state.markets[t.sym] = seedCandles(t.sym);
+    }
+
+    // ------------------------------
+    // DOM
+    // ------------------------------
+
+    const el = {
+      watchlist: document.getElementById('watchlist'),
+      headlineSym: document.getElementById('headlineSym'),
+      headlineLast: document.getElementById('headlineLast'),
+      headlineChg: document.getElementById('headlineChg'),
+      spreadVal: document.getElementById('spreadVal'),
+      midVal: document.getElementById('midVal'),
+      orderbookBody: document.getElementById('orderbookBody'),
+      portfolioRows: document.getElementById('portfolioRows'),
+      portfolioTotal: document.getElementById('portfolioTotal'),
+      stRSI: document.getElementById('stRSI'),
+      stMACD: document.getElementById('stMACD'),
+      stSignal: document.getElementById('stSignal'),
+      stBBU: document.getElementById('stBBU'),
+      stBBL: document.getElementById('stBBL'),
+      stVol: document.getElementById('stVol'),
+      themeToggle: document.getElementById('themeToggle'),
+      watchBtn: document.getElementById('watchBtn'),
+      sidebarOverlay: document.getElementById('sidebarOverlay'),
+      priceCanvas: document.getElementById('priceCanvas'),
+      rsiCanvas: document.getElementById('rsiCanvas'),
+      macdCanvas: document.getElementById('macdCanvas')
+    };
+
+    function cssVar(name){
+      return getComputedStyle(document.body).getPropertyValue(name).trim();
+    }
+
+    // ------------------------------
+    // Canvas helpers
+    // ------------------------------
+
+    function resizeCanvasToDisplaySize(canvas){
+      const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+      const rect = canvas.getBoundingClientRect();
+      const w = Math.max(1, Math.floor(rect.width * dpr));
+      const h = Math.max(1, Math.floor(rect.height * dpr));
+      if (canvas.width !== w || canvas.height !== h){
+        canvas.width = w;
+        canvas.height = h;
+        return true;
+      }
+      return false;
+    }
+
+    function clear(ctx, w, h){
+      ctx.clearRect(0,0,w,h);
+    }
+
+    function drawGrid(ctx, plot, rows=6, cols=8){
+      const grid = cssVar('--grid');
+      ctx.save();
+      ctx.strokeStyle = grid;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let r=0;r<=rows;r++){
+        const y = plot.y + (plot.h * r/rows);
+        ctx.moveTo(plot.x, y);
+        ctx.lineTo(plot.x + plot.w, y);
+      }
+      for (let c=0;c<=cols;c++){
+        const x = plot.x + (plot.w * c/cols);
+        ctx.moveTo(x, plot.y);
+        ctx.lineTo(x, plot.y + plot.h);
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawText(ctx, text, x, y, color, align='left', baseline='alphabetic', font){
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.textAlign = align;
+      ctx.textBaseline = baseline;
+      ctx.font = font || `${12 * (window.devicePixelRatio||1)}px ${cssVar('--mono')}`;
+      ctx.fillText(text, x, y);
+      ctx.restore();
+    }
+
+    function pathLine(ctx, points){
+      let started = false;
+      for (const p of points){
+        if (!p || !Number.isFinite(p.x) || !Number.isFinite(p.y)) continue;
+        if (!started){ ctx.moveTo(p.x, p.y); started = true; }
+        else ctx.lineTo(p.x, p.y);
+      }
+    }
+
+    // ------------------------------
+    // Rendering
+    // ------------------------------
+
+    function getSelectedMarket(){
+      return state.markets[state.selected];
+    }
+
+    function getCandles(sym){
+      return state.markets[sym].candles;
+    }
+
+    function lastCandle(sym){
+      const c = getCandles(sym);
+      return c[c.length - 1];
+    }
+
+    function renderWatchlist(){
+      const frag = document.createDocumentFragment();
+      for (const t of TICKERS){
+        const candles = getCandles(t.sym);
+        const last = candles[candles.length - 1];
+        const prev = candles[candles.length - 2] || last;
+        const dec = priceDecimals(t.sym);
+        const chg = last.close - prev.close;
+
+        const div = document.createElement('div');
+        div.className = 'ticker' + (t.sym === state.selected ? ' active' : '');
+        div.setAttribute('role','button');
+        div.setAttribute('tabindex','0');
+        div.setAttribute('aria-label', `Select ${t.sym}`);
+
+        const left = document.createElement('div');
+        left.innerHTML = `<div class="sym">${t.sym}</div><div class="px">${fmtNum(last.close, dec)}</div>`;
+
+        const right = document.createElement('div');
+        right.style.textAlign = 'right';
+        right.style.fontSize = '12px';
+        right.style.fontWeight = '900';
+        right.style.color = chg >= 0 ? cssVar('--good') : cssVar('--bad');
+        right.textContent = fmtSigned(chg, dec);
+
+        div.appendChild(left);
+        div.appendChild(right);
+
+        const onSelect = () => {
+          if (state.selected !== t.sym){
+            state.selected = t.sym;
+            renderAll();
+          }
+          closeSidebar();
+        };
+
+        div.addEventListener('click', onSelect);
+        div.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') onSelect();
+        });
+
+        frag.appendChild(div);
+      }
+      el.watchlist.innerHTML = '';
+      el.watchlist.appendChild(frag);
+    }
+
+    function renderHeader(){
+      const sym = state.selected;
+      const candles = getCandles(sym);
+      const last = candles[candles.length - 1];
+      const prev = candles[candles.length - 2] || last;
+      const dec = priceDecimals(sym);
+      const chg = last.close - prev.close;
+      const chgPct = prev.close ? (chg / prev.close) : 0;
+
+      el.headlineSym.textContent = sym;
+      el.headlineLast.textContent = fmtNum(last.close, dec);
+
+      const txt = `${fmtSigned(chg, dec)} (${fmtSigned(chgPct*100, 2)}%)`;
+      el.headlineChg.textContent = txt;
+      el.headlineChg.style.color = chg >= 0 ? cssVar('--good') : cssVar('--bad');
+    }
+
+    function renderOrderBook(){
+      const sym = state.selected;
+      const mkt = state.markets[sym];
+      const last = lastCandle(sym);
+      const book = buildOrderBook(sym, last.close, mkt.rng);
+      const dec = priceDecimals(sym);
+
+      el.spreadVal.textContent = `${fmtNum(book.spreadAbs, dec)} (${fmtNum(book.spreadPct*100, 3)}%)`;
+      el.midVal.textContent = fmtNum(book.mid, dec);
+
+      // Depth bars (Requirement #5)
+      const maxBid = Math.max(...book.levels.map(l => l.bidSz));
+      const maxAsk = Math.max(...book.levels.map(l => l.askSz));
+
+      const rows = [];
+      for (let i=0;i<book.levels.length;i++){
+        const lv = book.levels[i];
+        const bidW = clamp((lv.bidSz / maxBid) * 100, 0, 100);
+        const askW = clamp((lv.askSz / maxAsk) * 100, 0, 100);
+
+        const bidSz = isCrypto(sym) ? lv.bidSz : Math.round(lv.bidSz);
+        const askSz = isCrypto(sym) ? lv.askSz : Math.round(lv.askSz);
+
+        rows.push(`
+          <tr>
+            <td class="bid">
+              <div class="td-bar" style="background: ${cssVar('--good')}; width:${bidW}%; left:0; right:auto;"></div>
+              ${compactInt(bidSz)}
+            </td>
+            <td class="bid">${fmtNum(lv.bidPx, dec)}</td>
+            <td class="ask">${fmtNum(lv.askPx, dec)}</td>
+            <td class="ask">
+              <div class="td-bar" style="background: ${cssVar('--bad')}; width:${askW}%; right:0; left:auto;"></div>
+              ${compactInt(askSz)}
+            </td>
+          </tr>
+        `);
+      }
+
+      el.orderbookBody.innerHTML = rows.join('');
+    }
+
+    function renderPortfolio(){
+      let total = 0;
+      const rows = [];
+      for (const p of state.positions){
+        const sym = p.sym;
+        const last = lastCandle(sym).close;
+        const pnl = (last - p.avg) * p.qty;
+        total += pnl;
+
+        const dec = isCrypto(sym) ? 2 : 2;
+        const pnlDec = isCrypto(sym) ? 2 : 2;
+
+        const cls = pnl >= 0 ? 'pos' : 'neg';
+
+        rows.push(`
+          <div class="portfolio-row">
+            <div style="font-weight:900; letter-spacing:.04em;">${sym}</div>
+            <div style="text-align:right;">${fmtNum(p.qty, isCrypto(sym) ? 2 : 0)}</div>
+            <div style="text-align:right; color: var(--muted);">${fmtNum(p.avg, dec)}</div>
+            <div style="text-align:right; font-weight:900;" class="pnl ${cls}">${fmtSigned(pnl, pnlDec)}</div>
+          </div>
+        `);
+      }
+
+      el.portfolioRows.innerHTML = rows.join('');
+      el.portfolioTotal.textContent = fmtSigned(total, 2);
+      el.portfolioTotal.style.color = total >= 0 ? cssVar('--good') : cssVar('--bad');
+    }
+
+    function renderStatus(ind){
+      const sym = state.selected;
+      const dec = priceDecimals(sym);
+
+      const rsi = ind.rsi[ind.rsi.length - 1];
+      const macdV = ind.macd.macdLine[ind.macd.macdLine.length - 1];
+      const sigV = ind.macd.signal[ind.macd.signal.length - 1];
+      const bbu = ind.bb.upper[ind.bb.upper.length - 1];
+      const bbl = ind.bb.lower[ind.bb.lower.length - 1];
+      const vol = ind.volumes[ind.volumes.length - 1];
+
+      el.stRSI.textContent = Number.isFinite(rsi) ? fmtNum(rsi, 2) : '—';
+      // Color RSI zones 30/70
+      if (Number.isFinite(rsi)){
+        if (rsi >= 70) el.stRSI.style.color = cssVar('--warn');
+        else if (rsi <= 30) el.stRSI.style.color = cssVar('--accent');
+        else el.stRSI.style.color = cssVar('--text');
+      } else {
+        el.stRSI.style.color = cssVar('--text');
+      }
+
+      el.stMACD.textContent = fmtNum(macdV, 4);
+      el.stSignal.textContent = fmtNum(sigV, 4);
+      el.stBBU.textContent = Number.isFinite(bbu) ? fmtNum(bbu, dec) : '—';
+      el.stBBL.textContent = Number.isFinite(bbl) ? fmtNum(bbl, dec) : '—';
+      el.stVol.textContent = compactInt(vol);
+    }
+
+    function computeIndicators(candles){
+      const closes = candles.map(c => c.close);
+      const volumes = candles.map(c => c.volume);
+
+      // Overlays
+      const sma20 = sma(closes, 20);
+      const sma50 = sma(closes, 50);
+      const bb = bollingerBands(closes, 20, 2);
+
+      // Subcharts
+      const rsi = rsiWilder(closes, 14);
+      const m = macd(closes, 12, 26, 9);
+
+      return { closes, volumes, sma20, sma50, bb, rsi, macd: m };
+    }
+
+    function renderPriceChart(candles, ind){
+      const canvas = el.priceCanvas;
+      resizeCanvasToDisplaySize(canvas);
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width, h = canvas.height;
+
+      clear(ctx, w, h);
+
+      // Layout
+      const pad = 10 * (window.devicePixelRatio || 1);
+      const axisW = 76 * (window.devicePixelRatio || 1);
+      const topPad = 10 * (window.devicePixelRatio || 1);
+      const bottomPad = 10 * (window.devicePixelRatio || 1);
+
+      const plotX = pad;
+      const plotY = topPad;
+      const plotW = w - pad - axisW;
+      const plotH = h - topPad - bottomPad;
+
+      // Split: price area + volume bars at bottom (Requirement #7)
+      const volH = Math.max(70 * (window.devicePixelRatio||1), plotH * 0.22);
+      const priceH = plotH - volH - (8 * (window.devicePixelRatio||1));
+
+      const pricePlot = { x: plotX, y: plotY, w: plotW, h: priceH };
+      const volPlot = { x: plotX, y: plotY + priceH + (8 * (window.devicePixelRatio||1)), w: plotW, h: volH };
+
+      // Background grid + border
+      drawGrid(ctx, { x: plotX, y: plotY, w: plotW, h: plotH }, 6, 10);
+
+      // Price scaling
+      let minP = Infinity, maxP = -Infinity;
+      for (const c of candles){
+        minP = Math.min(minP, c.low);
+        maxP = Math.max(maxP, c.high);
+      }
+      const range = Math.max(1e-9, maxP - minP);
+      // Add breathing room
+      minP -= range * 0.06;
+      maxP += range * 0.06;
+
+      function yPrice(p){
+        return pricePlot.y + (maxP - p) / (maxP - minP) * pricePlot.h;
+      }
+
+      // Price axis labels (Requirement #9)
+      const rows = 6;
+      const dec = priceDecimals(state.selected);
+      ctx.save();
+      ctx.fillStyle = cssVar('--muted');
+      ctx.font = `${12 * (window.devicePixelRatio||1)}px ${cssVar('--mono')}`;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      for (let r=0;r<=rows;r++){
+        const y = pricePlot.y + (pricePlot.h * r/rows);
+        const p = maxP - (maxP - minP) * r/rows;
+        ctx.fillText(fmtNum(p, dec), plotX + plotW + 10 * (window.devicePixelRatio||1), y);
+      }
+      ctx.restore();
+
+      // Candles
+      const n = candles.length;
+      const dx = plotW / n;
+      const bodyW = Math.max(2, dx * 0.62);
+      const wickW = Math.max(1, Math.floor((window.devicePixelRatio||1)));
+
+      for (let i=0;i<n;i++){
+        const c = candles[i];
+        const xCenter = plotX + (i + 0.5) * dx;
+        const up = c.close >= c.open;
+        const col = up ? cssVar('--up') : cssVar('--down');
+
+        const yO = yPrice(c.open);
+        const yC = yPrice(c.close);
+        const yH = yPrice(c.high);
+        const yL = yPrice(c.low);
+
+        // Wick
+        ctx.save();
+        ctx.strokeStyle = col;
+        ctx.lineWidth = wickW;
+        ctx.beginPath();
+        ctx.moveTo(xCenter, yH);
+        ctx.lineTo(xCenter, yL);
+        ctx.stroke();
+        ctx.restore();
+
+        // Body
+        const top = Math.min(yO, yC);
+        const bot = Math.max(yO, yC);
+        const height = Math.max(1, bot - top);
+        ctx.save();
+        ctx.fillStyle = col;
+        ctx.globalAlpha = 0.92;
+        ctx.fillRect(xCenter - bodyW/2, top, bodyW, height);
+        ctx.restore();
+      }
+
+      // Overlays: SMA20, SMA50 (Requirement #4), Bollinger Bands (Requirement #4)
+      function drawOverlayLine(series, color, width=2, alpha=0.9){
+        ctx.save();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width;
+        ctx.globalAlpha = alpha;
+        ctx.beginPath();
+        const pts = [];
+        for (let i=0;i<n;i++){
+          const v = series[i];
+          if (v == null) { pts.push(null); continue; }
+          pts.push({ x: plotX + (i + 0.5) * dx, y: yPrice(v) });
+        }
+        pathLine(ctx, pts);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // Bollinger bands
+      drawOverlayLine(ind.bb.upper, 'rgba(0, 212, 255, 0.65)', 2, 0.75);
+      drawOverlayLine(ind.bb.lower, 'rgba(0, 212, 255, 0.65)', 2, 0.75);
+      // Midline (BB SMA20) subtly
+      drawOverlayLine(ind.bb.mid, 'rgba(0, 212, 255, 0.25)', 2, 0.55);
+
+      drawOverlayLine(ind.sma20, 'rgba(255, 209, 102, 0.85)', 2, 0.9);
+      drawOverlayLine(ind.sma50, 'rgba(204, 238, 255, 0.65)', 2, 0.85);
+
+      // Volume bars (Requirement #7)
+      const vols = ind.volumes;
+      const maxV = Math.max(1, ...vols);
+      for (let i=0;i<n;i++){
+        const c = candles[i];
+        const v = vols[i];
+        const x = plotX + i * dx;
+        const barW = Math.max(1, dx * 0.9);
+        const barH = (v / maxV) * volPlot.h;
+        const y = volPlot.y + (volPlot.h - barH);
+        const col = c.close >= c.open ? cssVar('--up') : cssVar('--down');
+        ctx.save();
+        ctx.fillStyle = col;
+        ctx.globalAlpha = 0.55;
+        ctx.fillRect(x + dx*0.05, y, barW, barH);
+        ctx.restore();
+      }
+
+      // Volume axis label (small)
+      drawText(ctx, 'VOL', volPlot.x + 6 * (window.devicePixelRatio||1), volPlot.y + 14 * (window.devicePixelRatio||1), cssVar('--muted'), 'left', 'middle');
+
+      // Current price dashed line + label (Requirement #8)
+      const last = candles[candles.length - 1];
+      const yLast = yPrice(last.close);
+      ctx.save();
+      ctx.setLineDash([6 * (window.devicePixelRatio||1), 6 * (window.devicePixelRatio||1)]);
+      ctx.strokeStyle = cssVar('--accent');
+      ctx.globalAlpha = 0.85;
+      ctx.lineWidth = Math.max(1, Math.floor((window.devicePixelRatio||1)));
+      ctx.beginPath();
+      ctx.moveTo(pricePlot.x, yLast);
+      ctx.lineTo(pricePlot.x + pricePlot.w, yLast);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Label box at right
+      const label = fmtNum(last.close, dec);
+      const font = `${12 * (window.devicePixelRatio||1)}px ${cssVar('--mono')}`;
+      ctx.font = font;
+      const tw = ctx.measureText(label).width;
+      const boxW = tw + 18 * (window.devicePixelRatio||1);
+      const boxH = 20 * (window.devicePixelRatio||1);
+      const bx = pricePlot.x + pricePlot.w + 6 * (window.devicePixelRatio||1);
+      const by = clamp(yLast - boxH/2, pricePlot.y, pricePlot.y + pricePlot.h - boxH);
+
+      ctx.fillStyle = 'rgba(0, 212, 255, 0.12)';
+      ctx.strokeStyle = 'rgba(0, 212, 255, 0.35)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(bx, by, boxW, boxH, 8 * (window.devicePixelRatio||1));
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = cssVar('--text');
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(label, bx + 9 * (window.devicePixelRatio||1), by + boxH/2);
+      ctx.restore();
+
+      // Subtle divider line between price and volume area
+      ctx.save();
+      ctx.strokeStyle = cssVar('--grid2');
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(pricePlot.x, volPlot.y - 4 * (window.devicePixelRatio||1));
+      ctx.lineTo(pricePlot.x + pricePlot.w, volPlot.y - 4 * (window.devicePixelRatio||1));
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function renderRSI(ind){
+      const canvas = el.rsiCanvas;
+      resizeCanvasToDisplaySize(canvas);
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width, h = canvas.height;
+
+      clear(ctx, w, h);
+
+      const pad = 10 * (window.devicePixelRatio || 1);
+      const axisW = 54 * (window.devicePixelRatio || 1);
+
+      const plot = { x: pad, y: pad, w: w - pad - axisW, h: h - pad*2 };
+
+      drawGrid(ctx, plot, 4, 10);
+
+      // 30/70 zones (Requirement #4)
+      const y30 = plot.y + (100 - 30)/100 * plot.h;
+      const y70 = plot.y + (100 - 70)/100 * plot.h;
+
+      ctx.save();
+      ctx.fillStyle = 'rgba(255, 209, 102, 0.05)';
+      ctx.fillRect(plot.x, plot.y, plot.w, y70 - plot.y);
+      ctx.fillStyle = 'rgba(0, 212, 255, 0.05)';
+      ctx.fillRect(plot.x, y30, plot.w, plot.y + plot.h - y30);
+
+      ctx.strokeStyle = cssVar('--grid2');
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(plot.x, y70); ctx.lineTo(plot.x + plot.w, y70);
+      ctx.moveTo(plot.x, y30); ctx.lineTo(plot.x + plot.w, y30);
+      ctx.stroke();
+      ctx.restore();
+
+      // Axis labels
+      const labels = [70, 50, 30];
+      ctx.save();
+      ctx.fillStyle = cssVar('--muted');
+      ctx.font = `${11 * (window.devicePixelRatio||1)}px ${cssVar('--mono')}`;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      for (const v of labels){
+        const y = plot.y + (100 - v)/100 * plot.h;
+        ctx.fillText(String(v), plot.x + plot.w + 10 * (window.devicePixelRatio||1), y);
+      }
+      ctx.restore();
+
+      // RSI line
+      const rsi = ind.rsi;
+      const n = rsi.length;
+      const dx = plot.w / n;
+
+      const pts = [];
+      for (let i=0;i<n;i++){
+        const v = rsi[i];
+        if (v == null) { pts.push(null); continue; }
+        const x = plot.x + (i + 0.5) * dx;
+        const y = plot.y + (100 - v)/100 * plot.h;
+        pts.push({x,y});
+      }
+
+      ctx.save();
+      ctx.strokeStyle = cssVar('--accent');
+      ctx.lineWidth = Math.max(2, 2 * (window.devicePixelRatio||1));
+      ctx.globalAlpha = 0.85;
+      ctx.beginPath();
+      pathLine(ctx, pts);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function renderMACD(ind){
+      const canvas = el.macdCanvas;
+      resizeCanvasToDisplaySize(canvas);
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width, h = canvas.height;
+
+      clear(ctx, w, h);
+
+      const pad = 10 * (window.devicePixelRatio || 1);
+      const axisW = 54 * (window.devicePixelRatio || 1);
+      const plot = { x: pad, y: pad, w: w - pad - axisW, h: h - pad*2 };
+
+      drawGrid(ctx, plot, 4, 10);
+
+      const m = ind.macd;
+      const macdLine = m.macdLine;
+      const signal = m.signal;
+      const hist = m.hist;
+      const n = macdLine.length;
+
+      // Scale based on visible range
+      let minV = Infinity, maxV = -Infinity;
+      for (let i=0;i<n;i++){
+        const a = macdLine[i], b = signal[i], c = hist[i];
+        minV = Math.min(minV, a, b, c);
+        maxV = Math.max(maxV, a, b, c);
+      }
+      const padV = (maxV - minV) * 0.15 + 1e-9;
+      minV -= padV;
+      maxV += padV;
+
+      function y(v){
+        return plot.y + (maxV - v) / (maxV - minV) * plot.h;
+      }
+
+      const zeroY = y(0);
+
+      // Center line
+      ctx.save();
+      ctx.strokeStyle = cssVar('--grid2');
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(plot.x, zeroY);
+      ctx.lineTo(plot.x + plot.w, zeroY);
+      ctx.stroke();
+      ctx.restore();
+
+      const dx = plot.w / n;
+
+      // Histogram bars
+      for (let i=0;i<n;i++){
+        const v = hist[i];
+        const x = plot.x + i * dx;
+        const barW = Math.max(1, dx * 0.9);
+        const yv = y(v);
+        const top = Math.min(zeroY, yv);
+        const hh = Math.max(1, Math.abs(yv - zeroY));
+        const col = v >= 0 ? cssVar('--up') : cssVar('--down');
+        ctx.save();
+        ctx.fillStyle = col;
+        ctx.globalAlpha = 0.45;
+        ctx.fillRect(x + dx*0.05, top, barW, hh);
+        ctx.restore();
+      }
+
+      // Lines
+      function drawLine(series, color, alpha){
+        const pts = [];
+        for (let i=0;i<n;i++){
+          pts.push({ x: plot.x + (i + 0.5) * dx, y: y(series[i]) });
+        }
+        ctx.save();
+        ctx.strokeStyle = color;
+        ctx.globalAlpha = alpha;
+        ctx.lineWidth = Math.max(2, 2 * (window.devicePixelRatio||1));
+        ctx.beginPath();
+        pathLine(ctx, pts);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      drawLine(macdLine, cssVar('--accent'), 0.85);
+      drawLine(signal, 'rgba(255, 209, 102, 0.95)', 0.85);
+
+      // Axis labels (few)
+      const ticks = [maxV, (maxV+minV)/2, minV].map(v => roundTo(v, 3));
+      ctx.save();
+      ctx.fillStyle = cssVar('--muted');
+      ctx.font = `${11 * (window.devicePixelRatio||1)}px ${cssVar('--mono')}`;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      for (const v of ticks){
+        ctx.fillText(fmtNum(v, 3), plot.x + plot.w + 10 * (window.devicePixelRatio||1), y(v));
+      }
+      ctx.restore();
+    }
+
+    function renderCharts(){
+      const sym = state.selected;
+      const candles = getCandles(sym);
+      const ind = computeIndicators(candles);
+
+      renderPriceChart(candles, ind);
+      renderRSI(ind);
+      renderMACD(ind);
+      renderStatus(ind);
+    }
+
+    function renderAll(){
+      renderWatchlist();
+      renderHeader();
+      renderCharts();
+      renderOrderBook();
+      renderPortfolio();
+    }
+
+    // ------------------------------
+    // Theme toggle (Requirement #11)
+    // ------------------------------
+
+    function applyTheme(theme){
+      state.theme = theme;
+      document.body.classList.toggle('theme-light', theme === 'light');
+      try { localStorage.setItem('rtd_theme', theme); } catch {}
+      // Theme affects colors used by canvas: redraw
+      renderAll();
+    }
+
+    function initTheme(){
+      let saved = null;
+      try { saved = localStorage.getItem('rtd_theme'); } catch {}
+      if (saved === 'light' || saved === 'dark'){
+        applyTheme(saved);
+        return;
+      }
+      // Default to dark for Bloomberg aesthetic (Requirement #10)
+      applyTheme('dark');
+    }
+
+    el.themeToggle.addEventListener('click', () => {
+      applyTheme(state.theme === 'dark' ? 'light' : 'dark');
+    });
+
+    // ------------------------------
+    // Mobile sidebar drawer
+    // ------------------------------
+
+    function openSidebar(){ document.body.classList.add('sidebar-open'); }
+    function closeSidebar(){ document.body.classList.remove('sidebar-open'); }
+
+    el.watchBtn.addEventListener('click', openSidebar);
+    el.sidebarOverlay.addEventListener('click', closeSidebar);
+
+    // Close sidebar on escape
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSidebar();
+    });
+
+    // ------------------------------
+    // Update loop (Requirement #14)
+    // ------------------------------
+
+    function tick(){
+      // Update all markets so watchlist remains live
+      for (const t of TICKERS){
+        const sym = t.sym;
+        const mkt = state.markets[sym];
+        const candles = mkt.candles;
+        const last = candles[candles.length - 1];
+        const { vol } = BASE[sym];
+        const next = genNextCandle(last.close, mkt.rng, vol, sym);
+        candles.push(next);
+        while (candles.length > CANDLE_COUNT) candles.shift();
+      }
+
+      renderAll();
+    }
+
+    // Resize handler
+    let resizeT = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeT);
+      resizeT = setTimeout(() => renderAll(), 80);
+    });
+
+    // Polyfill for roundRect (older browsers)
+    (function ensureRoundRect(){
+      const ctx = document.createElement('canvas').getContext('2d');
+      if (!ctx || typeof ctx.roundRect === 'function') return;
+      CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r){
+        const rr = Array.isArray(r) ? r[0] : r;
+        const radius = Math.max(0, Math.min(rr, Math.min(w,h)/2));
+        this.beginPath();
+        this.moveTo(x + radius, y);
+        this.arcTo(x + w, y, x + w, y + h, radius);
+        this.arcTo(x + w, y + h, x, y + h, radius);
+        this.arcTo(x, y + h, x, y, radius);
+        this.arcTo(x, y, x + w, y, radius);
+        this.closePath();
+        return this;
+      };
+    })();
+
+    // ------------------------------
+    // Boot
+    // ------------------------------
+
+    function boot(){
+      initTheme();
+      renderAll();
+      setInterval(tick, UPDATE_MS);
+    }
+
+    boot();
+  </script>
+</body>
+</html>

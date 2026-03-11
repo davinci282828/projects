@@ -1,0 +1,1248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Codex Run Analyzer</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1622;
+      --panel2:#0c121c;
+      --text:#e7eefc;
+      --muted:#a9b6cf;
+      --faint:#6b7893;
+      --border:rgba(255,255,255,.08);
+      --accent:#5aa2ff;
+      --good:#2dd4bf;
+      --bad:#fb7185;
+      --warn:#fbbf24;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background:radial-gradient(1200px 800px at 20% 0%, rgba(90,162,255,.10), transparent 55%),
+                 radial-gradient(900px 600px at 90% 10%, rgba(45,212,191,.08), transparent 50%),
+                 var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit}
+    .wrap{max-width:1200px;margin:0 auto;padding:20px 16px 40px}
+    header{
+      display:flex; gap:14px; align-items:flex-start; justify-content:space-between;
+      margin:8px 0 18px;
+    }
+    .title{
+      display:flex; flex-direction:column; gap:6px;
+    }
+    .title h1{margin:0;font-size:20px;letter-spacing:.2px}
+    .title p{margin:0;color:var(--muted);font-size:13px;line-height:1.35}
+
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      border:1px solid var(--border);
+      padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.03);
+      color:var(--muted); font-size:12px;
+    }
+    .pill b{color:var(--text);font-weight:600}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius:14px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .panel .hd{
+      padding:12px 12px 10px;
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.00));
+    }
+    .panel .hd h2{margin:0;font-size:13px;letter-spacing:.25px;text-transform:uppercase;color:var(--muted)}
+    .panel .bd{padding:12px}
+
+    .controls{display:grid;gap:10px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .field{display:flex;flex-direction:column;gap:6px;min-width:220px;flex:1}
+    label{font-size:12px;color:var(--muted)}
+    input[type="text"], input[type="date"], select{
+      background:rgba(0,0,0,.25);
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:10px 10px;
+      color:var(--text);
+      outline:none;
+    }
+    input[type="file"]{color:var(--muted)}
+    textarea{
+      width:100%;
+      min-height:160px;
+      resize:vertical;
+      background:rgba(0,0,0,.25);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:10px 10px;
+      color:var(--text);
+      font-family:var(--mono);
+      font-size:12px;
+      line-height:1.35;
+      outline:none;
+    }
+    .btn{
+      appearance:none;border:1px solid var(--border);
+      background:rgba(90,162,255,.12);
+      color:var(--text);
+      padding:10px 12px;border-radius:12px;
+      font-weight:600;font-size:12px;letter-spacing:.2px;
+      cursor:pointer;
+    }
+    .btn.secondary{background:rgba(255,255,255,.04)}
+    .btn:active{transform:translateY(1px)}
+
+    .status{
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+      padding:10px 12px;
+      border:1px dashed rgba(255,255,255,.14);
+      border-radius:12px;
+      background:rgba(0,0,0,.18);
+    }
+    .status .left{display:flex;flex-direction:column;gap:2px}
+    .status .left .k{font-size:12px;color:var(--muted)}
+    .status .left .v{font-size:13px}
+    .status .right{font-family:var(--mono);font-size:12px;color:var(--faint)}
+
+    .kpi{
+      display:grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap:10px;
+    }
+    @media (max-width: 1100px){
+      .kpi{grid-template-columns: repeat(3, 1fr)}
+    }
+    @media (max-width: 520px){
+      .kpi{grid-template-columns: repeat(2, 1fr)}
+    }
+    .card{
+      background:rgba(0,0,0,.18);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:10px 10px;
+    }
+    .card .k{font-size:11px;color:var(--muted);letter-spacing:.2px;text-transform:uppercase}
+    .card .v{margin-top:6px;font-size:16px;font-weight:700}
+    .card .s{margin-top:2px;font-size:12px;color:var(--faint)}
+
+    .charts{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 980px){
+      .charts{grid-template-columns:1fr}
+    }
+
+    .chartWrap{height:270px}
+    .chartWrap.tall{height:310px}
+    canvas{width:100% !important; height:100% !important; display:block}
+
+    .legend{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      font-size:12px; color:var(--muted)
+    }
+    .swatch{width:10px;height:10px;border-radius:999px;display:inline-block;margin-right:6px;border:1px solid rgba(255,255,255,.18)}
+
+    .heatmapWrap{display:grid; gap:8px}
+    .heatmapMeta{display:flex;justify-content:space-between;gap:10px;align-items:center;color:var(--muted);font-size:12px}
+    .heatmap{
+      display:grid;
+      grid-template-columns: 60px repeat(24, 1fr);
+      gap:4px;
+      align-items:center;
+    }
+    .heatmap .h{
+      font-size:11px;color:var(--faint);text-align:center;
+      padding:4px 0;
+    }
+    .heatmap .day{
+      font-size:11px;color:var(--muted);
+      text-align:right;padding-right:6px;
+      font-variant-numeric:tabular-nums;
+    }
+    .cell{
+      height:14px;border-radius:4px;
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(255,255,255,.03);
+    }
+    .cell:hover{outline:1px solid rgba(90,162,255,.6)}
+
+    .foot{
+      margin-top:14px;
+      color:var(--faint);
+      font-size:12px;
+      line-height:1.35;
+    }
+    .mono{font-family:var(--mono)}
+
+    .badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--border);font-size:11px;color:var(--muted)}
+    .good{color:var(--good)}
+    .bad{color:var(--bad)}
+    .warn{color:var(--warn)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Codex Run Analyzer</h1>
+        <p>
+          Drop in <span class="mono">codex-runs.log</span> lines and get a 10‑second scan: success rate, durations, mode usage, failure breakdown, and a time‑of‑day heatmap.
+          Works with log format: <span class="mono">YYYY-MM-DD HH:MM:SS | mode | status | duration | exit=N | dir=path | output=path | prompt=text</span>
+        </p>
+      </div>
+      <div class="pill" title="Demo runs are embedded; you can also paste logs or load a file.">
+        <span>Data:</span> <b id="dataSourceLabel">Embedded sample</b>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="panel" aria-label="Controls">
+        <div class="hd">
+          <h2>Input & Filters</h2>
+          <div class="legend">
+            <span class="badge">Dark theme</span>
+            <span class="badge">Single-file</span>
+            <span class="badge">Offline</span>
+          </div>
+        </div>
+        <div class="bd controls">
+          <div class="status" id="parseStatus">
+            <div class="left">
+              <div class="k">Parsed</div>
+              <div class="v"><span id="parsedCount">0</span> runs <span id="parsedHint" class="mono"></span></div>
+            </div>
+            <div class="right" id="parseErrors">ok</div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="fileInput">Load log file (client-side)</label>
+              <input id="fileInput" type="file" accept=".log,.txt" />
+            </div>
+            <div class="field">
+              <label>&nbsp;</label>
+              <div class="row">
+                <button class="btn" id="useSample">Use embedded sample</button>
+                <button class="btn secondary" id="clear">Clear</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="paste">Paste log lines</label>
+            <textarea id="paste" spellcheck="false" placeholder="Paste codex-runs.log lines here…"></textarea>
+          </div>
+
+          <div class="row">
+            <div class="field" style="min-width:160px;flex:0.7">
+              <label for="fromDate">From</label>
+              <input id="fromDate" type="date" />
+            </div>
+            <div class="field" style="min-width:160px;flex:0.7">
+              <label for="toDate">To</label>
+              <input id="toDate" type="date" />
+            </div>
+            <div class="field" style="min-width:170px;flex:0.8">
+              <label for="modeFilter">Mode</label>
+              <select id="modeFilter">
+                <option value="all">All</option>
+                <option value="cleanroom">cleanroom</option>
+                <option value="workspace">workspace</option>
+              </select>
+            </div>
+            <div class="field" style="min-width:170px;flex:0.8">
+              <label for="statusFilter">Status</label>
+              <select id="statusFilter">
+                <option value="all">All</option>
+                <option value="success">Success</option>
+                <option value="fail">Fail</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn" id="analyze">Analyze</button>
+            <span class="pill" title="Tip">Tip: the default path is <span class="mono">~/.openclaw/logs/codex-runs.log</span>. Load that file here.</span>
+          </div>
+
+          <div class="foot">
+            Notes: parsing is lenient (extra spaces ok). Duration supports <span class="mono">ms</span>, <span class="mono">s</span>, <span class="mono">m</span>, <span class="mono">h</span>. Failure mode “missing files” is inferred from the status/prompt text.
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="KPIs">
+        <div class="hd">
+          <h2>At a glance</h2>
+          <div class="legend">
+            <span><span class="swatch" style="background:var(--good)"></span>Success</span>
+            <span><span class="swatch" style="background:var(--bad)"></span>Fail</span>
+            <span><span class="swatch" style="background:var(--accent)"></span>All</span>
+          </div>
+        </div>
+        <div class="bd">
+          <div class="kpi">
+            <div class="card">
+              <div class="k">Runs</div>
+              <div class="v" id="kRuns">—</div>
+              <div class="s" id="kRunsS">—</div>
+            </div>
+            <div class="card">
+              <div class="k">Success rate</div>
+              <div class="v" id="kSuccess">—</div>
+              <div class="s" id="kSuccessS">—</div>
+            </div>
+            <div class="card">
+              <div class="k">Median duration</div>
+              <div class="v" id="kMedian">—</div>
+              <div class="s" id="kMedianS">—</div>
+            </div>
+            <div class="card">
+              <div class="k">P95 duration</div>
+              <div class="v" id="kP95">—</div>
+              <div class="s" id="kP95S">—</div>
+            </div>
+            <div class="card">
+              <div class="k">Top failure</div>
+              <div class="v" id="kFail">—</div>
+              <div class="s" id="kFailS">—</div>
+            </div>
+            <div class="card">
+              <div class="k">Busiest hour</div>
+              <div class="v" id="kHour">—</div>
+              <div class="s" id="kHourS">—</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel" style="margin-top:14px" aria-label="Charts">
+      <div class="hd">
+        <h2>Visualizations</h2>
+        <div class="legend">
+          <span class="badge">Success/fail timeline</span>
+          <span class="badge">Duration histogram</span>
+          <span class="badge">Mode usage</span>
+          <span class="badge">Failure breakdown</span>
+          <span class="badge">Time-of-day heatmap</span>
+        </div>
+      </div>
+      <div class="bd">
+        <div class="charts">
+          <div class="panel" style="box-shadow:none">
+            <div class="hd"><h2>1) Success/Fail Timeline</h2><div class="legend" id="timelineLegend"></div></div>
+            <div class="bd"><div class="chartWrap tall"><canvas id="timeline"></canvas></div></div>
+          </div>
+          <div class="panel" style="box-shadow:none">
+            <div class="hd"><h2>2) Duration Histogram</h2><div class="legend" id="histLegend"></div></div>
+            <div class="bd"><div class="chartWrap"><canvas id="hist"></canvas></div></div>
+          </div>
+          <div class="panel" style="box-shadow:none">
+            <div class="hd"><h2>3) Mode Usage</h2><div class="legend" id="modeLegend"></div></div>
+            <div class="bd"><div class="chartWrap"><canvas id="mode"></canvas></div></div>
+          </div>
+          <div class="panel" style="box-shadow:none">
+            <div class="hd"><h2>4) Failure Mode Breakdown</h2><div class="legend" id="failLegend"></div></div>
+            <div class="bd"><div class="chartWrap"><canvas id="fail"></canvas></div></div>
+          </div>
+          <div class="panel" style="box-shadow:none; grid-column:1 / -1">
+            <div class="hd"><h2>5) Time-of-Day Heatmap</h2><div class="legend" id="heatLegend"></div></div>
+            <div class="bd">
+              <div class="heatmapWrap">
+                <div class="heatmapMeta">
+                  <div>
+                    <span class="badge">Rows: weekday</span>
+                    <span class="badge">Cols: hour (0–23)</span>
+                  </div>
+                  <div id="heatSummary" class="mono">—</div>
+                </div>
+                <div id="heatmap" class="heatmap" aria-label="Heatmap"></div>
+                <div class="foot">
+                  Hover cells for details. Color indicates volume; border tint indicates success rate (more green = higher success).
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="foot" style="margin-top:16px">
+      Built for the <span class="mono">codex-runs.log</span> format. Everything is computed in your browser; nothing is uploaded.
+    </div>
+  </div>
+
+  <script>
+  /*
+    Minimal, self-contained Chart.js-style renderer.
+    This file is intentionally offline & single-file.
+
+    API subset used:
+      new Chart(ctx, { type: 'bar'|'line'|'doughnut', data: { labels:[], datasets:[{label, data, backgroundColor, borderColor}] }, options:{} })
+      chart.destroy()
+
+    It is not a full Chart.js distribution; it implements the small set needed for this dashboard.
+  */
+  (function(){
+    const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const styles = getComputedStyle(document.documentElement);
+    const C = {
+      text: styles.getPropertyValue('--text').trim(),
+      muted: styles.getPropertyValue('--muted').trim(),
+      faint: styles.getPropertyValue('--faint').trim(),
+      border: 'rgba(255,255,255,.10)',
+    };
+
+    function clamp(n,a,b){ return Math.max(a, Math.min(b,n)); }
+    function fmt(n){
+      if (Math.abs(n) >= 1000) return n.toLocaleString();
+      return String(n);
+    }
+
+    function setupCanvas(canvas){
+      const rect = canvas.getBoundingClientRect();
+      const w = Math.max(10, Math.floor(rect.width));
+      const h = Math.max(10, Math.floor(rect.height));
+      canvas.width = Math.floor(w * DPR);
+      canvas.height = Math.floor(h * DPR);
+      const ctx = canvas.getContext('2d');
+      ctx.setTransform(DPR,0,0,DPR,0,0);
+      ctx.clearRect(0,0,w,h);
+      return {ctx, w, h};
+    }
+
+    function niceMax(max){
+      if (max <= 0) return 1;
+      const pow = Math.pow(10, Math.floor(Math.log10(max)));
+      const scaled = max / pow;
+      const nice = scaled <= 1 ? 1 : scaled <= 2 ? 2 : scaled <= 5 ? 5 : 10;
+      return nice * pow;
+    }
+
+    function drawAxes(ctx, x0, y0, x1, y1){
+      ctx.save();
+      ctx.strokeStyle = 'rgba(255,255,255,.12)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x0, y1);
+      ctx.lineTo(x1, y1);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawGridY(ctx, x0, y0, x1, y1, steps){
+      ctx.save();
+      ctx.strokeStyle = 'rgba(255,255,255,.06)';
+      ctx.lineWidth = 1;
+      for(let i=0;i<=steps;i++){
+        const y = y1 + (y0 - y1) * (i/steps);
+        ctx.beginPath();
+        ctx.moveTo(x0, y);
+        ctx.lineTo(x1, y);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function drawYLabels(ctx, x0, y0, y1, steps, maxV){
+      ctx.save();
+      ctx.fillStyle = C.faint;
+      ctx.font = '11px ui-sans-serif, system-ui';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      for(let i=0;i<=steps;i++){
+        const t = i/steps;
+        const v = Math.round(maxV * (1 - t));
+        const y = y1 + (y0 - y1) * (1 - t);
+        ctx.fillText(fmt(v), x0 - 8, y);
+      }
+      ctx.restore();
+    }
+
+    function drawXLabels(ctx, x0, y1, x1, labels, step){
+      ctx.save();
+      ctx.fillStyle = C.faint;
+      ctx.font = '11px ui-sans-serif, system-ui';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      const n = labels.length;
+      for(let i=0;i<n;i+=step){
+        const x = x0 + (x1 - x0) * (n===1 ? 0.5 : i/(n-1));
+        ctx.fillText(labels[i], x, y1 + 8);
+      }
+      ctx.restore();
+    }
+
+    function colorWithAlpha(col, a){
+      if (!col) return `rgba(90,162,255,${a})`;
+      if (col.startsWith('rgba(')){
+        return col.replace(/rgba\(([^,]+),([^,]+),([^,]+),([^\)]+)\)/, (m,r,g,b)=>`rgba(${r},${g},${b},${a})`);
+      }
+      if (col.startsWith('#') && col.length===7){
+        const r = parseInt(col.slice(1,3),16), g = parseInt(col.slice(3,5),16), b = parseInt(col.slice(5,7),16);
+        return `rgba(${r},${g},${b},${a})`;
+      }
+      return col;
+    }
+
+    class Chart {
+      constructor(ctxOrCanvas, config){
+        this.canvas = ctxOrCanvas?.canvas ? ctxOrCanvas.canvas : ctxOrCanvas;
+        this.ctx = ctxOrCanvas?.canvas ? ctxOrCanvas : this.canvas.getContext('2d');
+        this.config = config;
+        this._onResize = () => this.render();
+        window.addEventListener('resize', this._onResize);
+        this.render();
+      }
+      destroy(){
+        window.removeEventListener('resize', this._onResize);
+        const {ctx, w, h} = setupCanvas(this.canvas);
+        ctx.clearRect(0,0,w,h);
+      }
+      render(){
+        const canvas = this.canvas;
+        const {ctx, w, h} = setupCanvas(canvas);
+        const type = this.config.type;
+        const data = this.config.data || {labels:[], datasets:[]};
+        const labels = data.labels || [];
+        const ds = (data.datasets || [])[0] || {data:[]};
+        const values = (ds.data || []).map(x => (typeof x === 'number' ? x : (x?.y ?? 0)));
+
+        // Background
+        ctx.save();
+        ctx.fillStyle = 'rgba(0,0,0,.05)';
+        ctx.fillRect(0,0,w,h);
+        ctx.restore();
+
+        if (type === 'doughnut'){
+          this._drawDoughnut(ctx, w, h, data);
+          return;
+        }
+
+        const padL = 44, padR = 14, padT = 12, padB = 34;
+        const x0 = padL, y0 = padT, x1 = w - padR, y1 = h - padB;
+        const maxV = niceMax(Math.max(1, ...values));
+        const steps = 4;
+        drawGridY(ctx, x0, y0, x1, y1, steps);
+        drawAxes(ctx, x0, y0, x1, y1);
+        drawYLabels(ctx, x0, y0, y1, steps, maxV);
+
+        if (type === 'bar'){
+          this._drawBars(ctx, x0, y0, x1, y1, labels, ds, maxV);
+          drawXLabels(ctx, x0, y1, x1, labels, Math.max(1, Math.ceil(labels.length / 8)));
+          return;
+        }
+        if (type === 'line'){
+          this._drawLine(ctx, x0, y0, x1, y1, labels, ds, maxV);
+          drawXLabels(ctx, x0, y1, x1, labels, Math.max(1, Math.ceil(labels.length / 8)));
+          return;
+        }
+      }
+
+      _drawBars(ctx, x0, y0, x1, y1, labels, ds, maxV){
+        const n = Math.max(1, labels.length);
+        const values = (ds.data || []).map(v => (typeof v === 'number' ? v : (v?.y ?? 0)));
+        const barW = (x1 - x0) / n;
+        const gap = Math.max(2, Math.min(8, barW * 0.18));
+        const fill = ds.backgroundColor || 'rgba(90,162,255,.55)';
+        const stroke = ds.borderColor || 'rgba(90,162,255,.95)';
+        for (let i=0;i<n;i++){
+          const v = values[i] ?? 0;
+          const t = v / maxV;
+          const x = x0 + i*barW + gap/2;
+          const bw = Math.max(1, barW - gap);
+          const y = y1 - (y1 - y0) * t;
+          const bh = (y1 - y);
+
+          const g = ctx.createLinearGradient(0, y, 0, y1);
+          g.addColorStop(0, colorWithAlpha(fill, .75));
+          g.addColorStop(1, colorWithAlpha(fill, .15));
+
+          ctx.save();
+          ctx.fillStyle = g;
+          ctx.strokeStyle = colorWithAlpha(stroke, .55);
+          ctx.lineWidth = 1;
+          roundRect(ctx, x, y, bw, bh, 6);
+          ctx.fill();
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+
+      _drawLine(ctx, x0, y0, x1, y1, labels, ds, maxV){
+        const n = Math.max(1, labels.length);
+        const values = (ds.data || []).map(v => (typeof v === 'number' ? v : (v?.y ?? 0)));
+        const stroke = ds.borderColor || 'rgba(90,162,255,1)';
+        const fill = ds.backgroundColor || 'rgba(90,162,255,.25)';
+
+        const pts = [];
+        for (let i=0;i<n;i++){
+          const t = (n===1 ? 0.5 : i/(n-1));
+          const x = x0 + (x1 - x0) * t;
+          const v = values[i] ?? 0;
+          const y = y1 - (y1 - y0) * (v/maxV);
+          pts.push({x,y});
+        }
+
+        // Area
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, y1);
+        pts.forEach(p => ctx.lineTo(p.x, p.y));
+        ctx.lineTo(pts[pts.length-1].x, y1);
+        ctx.closePath();
+        const g = ctx.createLinearGradient(0, y0, 0, y1);
+        g.addColorStop(0, colorWithAlpha(fill, .35));
+        g.addColorStop(1, colorWithAlpha(fill, .05));
+        ctx.fillStyle = g;
+        ctx.fill();
+        ctx.restore();
+
+        // Line
+        ctx.save();
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for(let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x, pts[i].y);
+        ctx.stroke();
+        ctx.restore();
+
+        // Points
+        ctx.save();
+        ctx.fillStyle = stroke;
+        pts.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 2.6, 0, Math.PI*2);
+          ctx.fill();
+        });
+        ctx.restore();
+      }
+
+      _drawDoughnut(ctx, w, h, data){
+        const labels = data.labels || [];
+        const ds = (data.datasets || [])[0] || {data:[]};
+        const values = (ds.data || []).map(v => +v || 0);
+        const colors = Array.isArray(ds.backgroundColor) ? ds.backgroundColor : values.map((_,i)=>`hsla(${(i*80)%360}, 90%, 60%, .85)`);
+        const total = values.reduce((a,b)=>a+b,0) || 1;
+
+        const cx = w/2, cy = h/2 + 6;
+        const r = Math.min(w, h) * 0.33;
+        const r0 = r * 0.62;
+
+        // Ring background
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255,255,255,.08)';
+        ctx.lineWidth = (r - r0);
+        ctx.beginPath();
+        ctx.arc(cx, cy, (r+r0)/2, 0, Math.PI*2);
+        ctx.stroke();
+        ctx.restore();
+
+        let ang = -Math.PI/2;
+        for(let i=0;i<values.length;i++){
+          const frac = values[i]/total;
+          const a2 = ang + frac * Math.PI*2;
+          ctx.save();
+          ctx.strokeStyle = colors[i];
+          ctx.lineWidth = (r - r0);
+          ctx.lineCap = 'butt';
+          ctx.beginPath();
+          ctx.arc(cx, cy, (r+r0)/2, ang, a2);
+          ctx.stroke();
+          ctx.restore();
+          ang = a2;
+        }
+
+        // Center label
+        ctx.save();
+        ctx.fillStyle = C.text;
+        ctx.font = '700 18px ui-sans-serif, system-ui';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(fmt(total), cx, cy-6);
+        ctx.fillStyle = C.muted;
+        ctx.font = '12px ui-sans-serif, system-ui';
+        ctx.fillText('runs', cx, cy+14);
+        ctx.restore();
+
+        // Small legend right under
+        // (legend containers are handled by the dashboard code)
+      }
+    }
+
+    function roundRect(ctx, x, y, w, h, r){
+      const rr = Math.min(r, w/2, h/2);
+      ctx.beginPath();
+      ctx.moveTo(x+rr, y);
+      ctx.arcTo(x+w, y, x+w, y+h, rr);
+      ctx.arcTo(x+w, y+h, x, y+h, rr);
+      ctx.arcTo(x, y+h, x, y, rr);
+      ctx.arcTo(x, y, x+w, y, rr);
+      ctx.closePath();
+    }
+
+    window.Chart = Chart;
+  })();
+  </script>
+
+  <script>
+    // ---------- Sample data (embedded) ----------
+    const SAMPLE_LOG = `2026-02-03 09:14:02 | cleanroom | success | 12.4s | exit=0 | dir=/repo/app | output=/tmp/out1.txt | prompt=Refactor utils and run tests
+2026-02-03 09:29:51 | workspace | fail | 6.1s | exit=2 | dir=/repo/app | output=/tmp/out2.txt | prompt=Fix failing unit tests (TypeError)
+2026-02-03 12:07:11 | cleanroom | fail | 3.4s | exit=1 | dir=/repo/api | output=/tmp/out3.txt | prompt=missing files: TASK.md not found
+2026-02-03 18:45:25 | workspace | success | 28.8s | exit=0 | dir=/repo/web | output=/tmp/out4.txt | prompt=Add dashboard cards and improve layout
+2026-02-04 08:02:31 | cleanroom | success | 10.2s | exit=0 | dir=/repo/app | output=/tmp/out5.txt | prompt=Update README
+2026-02-04 10:44:08 | workspace | fail | 14.9s | exit=137 | dir=/repo/app | output=/tmp/out6.txt | prompt=Process killed (OOM)
+2026-02-04 13:21:05 | workspace | success | 9.7s | exit=0 | dir=/repo/app | output=/tmp/out7.txt | prompt=Improve parser robustness
+2026-02-04 16:05:09 | cleanroom | fail | 2.3s | exit=1 | dir=/repo/cli | output=/tmp/out8.txt | prompt=ENOENT: file not found
+2026-02-05 00:15:49 | cleanroom | success | 18.1s | exit=0 | dir=/repo/web | output=/tmp/out9.txt | prompt=Add charts
+2026-02-05 09:10:14 | workspace | success | 8.5s | exit=0 | dir=/repo/app | output=/tmp/out10.txt | prompt=Run format and lint
+2026-02-05 11:37:22 | workspace | fail | 4.0s | exit=1 | dir=/repo/api | output=/tmp/out11.txt | prompt=Exit code 1
+2026-02-05 15:52:07 | cleanroom | success | 22.0s | exit=0 | dir=/repo/app | output=/tmp/out12.txt | prompt=Add histogram view
+2026-02-06 07:41:52 | workspace | success | 7.9s | exit=0 | dir=/repo/app | output=/tmp/out13.txt | prompt=Fix typo
+2026-02-06 12:25:33 | cleanroom | fail | 3.1s | exit=1 | dir=/repo/app | output=/tmp/out14.txt | prompt=missing file: package-lock.json
+2026-02-06 18:08:40 | workspace | success | 16.3s | exit=0 | dir=/repo/web | output=/tmp/out15.txt | prompt=Improve accessibility
+2026-02-07 08:57:09 | cleanroom | success | 11.6s | exit=0 | dir=/repo/app | output=/tmp/out16.txt | prompt=Add filters for date range
+2026-02-07 10:11:12 | workspace | fail | 5.5s | exit=2 | dir=/repo/app | output=/tmp/out17.txt | prompt=Test failures
+2026-02-07 21:26:55 | cleanroom | success | 20.2s | exit=0 | dir=/repo/api | output=/tmp/out18.txt | prompt=Implement heatmap
+2026-02-08 01:03:47 | workspace | success | 6.2s | exit=0 | dir=/repo/app | output=/tmp/out19.txt | prompt=Cleanup
+2026-02-08 11:18:36 | cleanroom | fail | 2.7s | exit=1 | dir=/repo/cli | output=/tmp/out20.txt | prompt=missing files: config.yml
+2026-02-08 14:39:20 | workspace | success | 13.4s | exit=0 | dir=/repo/web | output=/tmp/out21.txt | prompt=Add legend polish
+2026-02-09 09:05:18 | cleanroom | success | 12.0s | exit=0 | dir=/repo/app | output=/tmp/out22.txt | prompt=Refactor
+2026-02-09 15:43:03 | workspace | fail | 9.1s | exit=1 | dir=/repo/api | output=/tmp/out23.txt | prompt=Unhandled exception
+2026-02-10 07:58:44 | cleanroom | success | 17.5s | exit=0 | dir=/repo/web | output=/tmp/out24.txt | prompt=UI tweaks
+2026-02-10 11:06:14 | workspace | success | 8.9s | exit=0 | dir=/repo/app | output=/tmp/out25.txt | prompt=Speed up parsing
+2026-02-10 17:32:01 | cleanroom | fail | 3.0s | exit=1 | dir=/repo/app | output=/tmp/out26.txt | prompt=No such file or directory
+2026-02-11 09:22:17 | workspace | success | 10.8s | exit=0 | dir=/repo/app | output=/tmp/out27.txt | prompt=Update analyzer
+2026-02-11 19:12:48 | cleanroom | success | 24.1s | exit=0 | dir=/repo/web | output=/tmp/out28.txt | prompt=Add responsive layout
+2026-02-12 08:46:10 | workspace | fail | 6.9s | exit=2 | dir=/repo/app | output=/tmp/out29.txt | prompt=Command failed
+2026-02-12 12:33:51 | cleanroom | success | 15.0s | exit=0 | dir=/repo/api | output=/tmp/out30.txt | prompt=Improve breakdown chart
+2026-02-12 16:59:07 | workspace | success | 9.4s | exit=0 | dir=/repo/app | output=/tmp/out31.txt | prompt=Cleanup warnings
+2026-02-13 10:07:33 | cleanroom | fail | 2.6s | exit=1 | dir=/repo/app | output=/tmp/out32.txt | prompt=missing files: .env
+2026-02-13 12:49:22 | workspace | success | 12.7s | exit=0 | dir=/repo/web | output=/tmp/out33.txt | prompt=Add scannable KPIs
+2026-02-13 21:45:05 | cleanroom | success | 18.3s | exit=0 | dir=/repo/app | output=/tmp/out34.txt | prompt=Refactor aggregations
+2026-02-14 07:31:18 | workspace | success | 7.1s | exit=0 | dir=/repo/app | output=/tmp/out35.txt | prompt=Polish
+2026-02-14 11:20:09 | cleanroom | fail | 4.8s | exit=1 | dir=/repo/cli | output=/tmp/out36.txt | prompt=ENOENT: not found
+2026-02-14 17:02:14 | workspace | success | 14.2s | exit=0 | dir=/repo/web | output=/tmp/out37.txt | prompt=Improve heatmap colors
+2026-02-15 09:14:49 | cleanroom | success | 13.1s | exit=0 | dir=/repo/app | output=/tmp/out38.txt | prompt=Add tooltips
+2026-02-15 10:53:27 | workspace | fail | 5.9s | exit=1 | dir=/repo/api | output=/tmp/out39.txt | prompt=missing file: schema.json
+2026-02-15 22:06:08 | cleanroom | success | 20.8s | exit=0 | dir=/repo/web | output=/tmp/out40.txt | prompt=Final pass
+`;
+
+    // ---------- Parsing & analysis ----------
+    function parseDurationToSeconds(s){
+      if (!s) return NaN;
+      const t = String(s).trim().toLowerCase();
+      const m = t.match(/^([0-9]+(?:\.[0-9]+)?)\s*(ms|s|m|h)?$/);
+      if (!m) return NaN;
+      const v = parseFloat(m[1]);
+      const unit = m[2] || 's';
+      if (unit === 'ms') return v / 1000;
+      if (unit === 's') return v;
+      if (unit === 'm') return v * 60;
+      if (unit === 'h') return v * 3600;
+      return v;
+    }
+
+    function parseLine(line){
+      const raw = line;
+      const s = line.trim();
+      if (!s) return null;
+
+      // Expected:
+      // YYYY-MM-DD HH:MM:SS | mode | status | duration | exit=N | dir=path | output=path | prompt=text
+      const re = /^(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2}:\d{2})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*exit=([^|]+?)\s*\|\s*dir=([^|]+?)\s*\|\s*output=([^|]+?)\s*\|\s*prompt=(.*)$/;
+      const m = s.match(re);
+      if (!m){
+        return { __parseError: 'format', raw };
+      }
+
+      const dateStr = m[1];
+      const timeStr = m[2];
+      const mode = m[3].trim();
+      const statusRaw = m[4].trim();
+      const durationRaw = m[5].trim();
+      const exitRaw = m[6].trim();
+      const dir = m[7].trim();
+      const output = m[8].trim();
+      const prompt = (m[9] ?? '').trim();
+
+      const ts = new Date(dateStr + 'T' + timeStr);
+      if (Number.isNaN(+ts)){
+        return { __parseError: 'timestamp', raw };
+      }
+
+      const exitCode = parseInt(exitRaw, 10);
+      const durationSec = parseDurationToSeconds(durationRaw);
+
+      const statusLower = statusRaw.toLowerCase();
+      const isSuccess = statusLower.includes('success') || statusLower === 'ok' || exitCode === 0;
+
+      const hay = (statusLower + ' ' + prompt.toLowerCase());
+      const missing = /missing\s+files?|no\s+such\s+file|not\s+found|enoent/.test(hay);
+
+      return {
+        raw,
+        ts,
+        date: dateStr,
+        time: timeStr,
+        hour: ts.getHours(),
+        weekday: ts.getDay(), // 0=Sun
+        mode,
+        statusRaw,
+        isSuccess,
+        durationRaw,
+        durationSec: Number.isFinite(durationSec) ? durationSec : NaN,
+        exitCode: Number.isFinite(exitCode) ? exitCode : NaN,
+        dir,
+        output,
+        prompt,
+        missingFiles: missing && !isSuccess,
+      };
+    }
+
+    function parseLog(text){
+      const lines = String(text || '').split(/\r?\n/);
+      const runs = [];
+      const errors = {format:0, timestamp:0};
+      for (const line of lines){
+        const r = parseLine(line);
+        if (!r) continue;
+        if (r.__parseError){
+          errors[r.__parseError] = (errors[r.__parseError] || 0) + 1;
+          continue;
+        }
+        runs.push(r);
+      }
+      runs.sort((a,b)=>a.ts-b.ts);
+      return {runs, errors};
+    }
+
+    function pct(n){
+      if (!Number.isFinite(n)) return '—';
+      return (n*100).toFixed(n>=0.1 ? 0 : 1) + '%';
+    }
+
+    function fmtSec(s){
+      if (!Number.isFinite(s)) return '—';
+      if (s < 1) return Math.round(s*1000) + 'ms';
+      if (s < 60) return s.toFixed(s < 10 ? 1 : 0) + 's';
+      const m = Math.floor(s/60);
+      const r = Math.round(s - m*60);
+      return m + 'm ' + r + 's';
+    }
+
+    function quantile(arr, q){
+      const a = arr.filter(Number.isFinite).slice().sort((x,y)=>x-y);
+      if (!a.length) return NaN;
+      const pos = (a.length - 1) * q;
+      const base = Math.floor(pos);
+      const rest = pos - base;
+      if (a[base+1] === undefined) return a[base];
+      return a[base] + rest*(a[base+1]-a[base]);
+    }
+
+    function groupBy(arr, keyFn){
+      const m = new Map();
+      for (const x of arr){
+        const k = keyFn(x);
+        if (!m.has(k)) m.set(k, []);
+        m.get(k).push(x);
+      }
+      return m;
+    }
+
+    function dayKey(d){
+      // d is Date
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,'0');
+      const da = String(d.getDate()).padStart(2,'0');
+      return `${y}-${m}-${da}`;
+    }
+
+    function applyFilters(runs){
+      const from = document.getElementById('fromDate').value;
+      const to = document.getElementById('toDate').value;
+      const mode = document.getElementById('modeFilter').value;
+      const status = document.getElementById('statusFilter').value;
+
+      const fromT = from ? new Date(from + 'T00:00:00') : null;
+      const toT = to ? new Date(to + 'T23:59:59') : null;
+
+      return runs.filter(r => {
+        if (fromT && r.ts < fromT) return false;
+        if (toT && r.ts > toT) return false;
+        if (mode !== 'all' && r.mode.toLowerCase() !== mode) return false;
+        if (status !== 'all'){
+          if (status === 'success' && !r.isSuccess) return false;
+          if (status === 'fail' && r.isSuccess) return false;
+        }
+        return true;
+      });
+    }
+
+    // ---------- Dashboard rendering ----------
+    let charts = {timeline:null, hist:null, mode:null, fail:null};
+
+    function setLegend(elId, items){
+      const el = document.getElementById(elId);
+      if (!el) return;
+      el.innerHTML = items.map(i => `<span><span class="swatch" style="background:${i.color}"></span>${escapeHtml(i.label)}</span>`).join('');
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>\"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function updateKPIs(runs){
+      const total = runs.length;
+      const succ = runs.filter(r=>r.isSuccess).length;
+      const fail = total - succ;
+      const rate = total ? succ/total : NaN;
+
+      const durations = runs.map(r=>r.durationSec).filter(Number.isFinite);
+      const med = quantile(durations, 0.5);
+      const p95 = quantile(durations, 0.95);
+
+      const failures = runs.filter(r=>!r.isSuccess);
+      const failCat = failureCategories(failures);
+      let topFail = '—', topFailCount = 0;
+      for (const [k,v] of Object.entries(failCat)){
+        if (v > topFailCount){ topFailCount = v; topFail = k; }
+      }
+
+      // busiest hour
+      const hourCounts = new Array(24).fill(0);
+      runs.forEach(r=>{ hourCounts[r.hour]++; });
+      let bh = 0; for (let i=1;i<24;i++) if (hourCounts[i]>hourCounts[bh]) bh=i;
+
+      const range = total ? `${runs[0].date} → ${runs[runs.length-1].date}` : '—';
+
+      document.getElementById('kRuns').textContent = total ? total.toLocaleString() : '0';
+      document.getElementById('kRunsS').textContent = range;
+
+      document.getElementById('kSuccess').innerHTML = total ? `<span class="${rate>=0.8?'good':rate>=0.6?'warn':'bad'}">${pct(rate)}</span>` : '—';
+      document.getElementById('kSuccessS').textContent = total ? `${succ} success / ${fail} fail` : '—';
+
+      document.getElementById('kMedian').textContent = fmtSec(med);
+      document.getElementById('kMedianS').textContent = durations.length ? 'typical run' : 'no durations';
+
+      document.getElementById('kP95').textContent = fmtSec(p95);
+      document.getElementById('kP95S').textContent = durations.length ? 'slow tail' : 'no durations';
+
+      document.getElementById('kFail').textContent = topFail;
+      document.getElementById('kFailS').textContent = topFailCount ? `${topFailCount} occurrences` : (fail ? `${fail} failures` : 'no failures');
+
+      document.getElementById('kHour').textContent = total ? `${String(bh).padStart(2,'0')}:00` : '—';
+      document.getElementById('kHourS').textContent = total ? `${hourCounts[bh]} runs` : '—';
+    }
+
+    function timelineSeries(runs){
+      if (!runs.length) return {labels:[], success:[], fail:[]};
+      const byDay = new Map();
+      for (const r of runs){
+        if (!byDay.has(r.date)) byDay.set(r.date, {success:0, fail:0});
+        const o = byDay.get(r.date);
+        if (r.isSuccess) o.success++; else o.fail++;
+      }
+      const labels = Array.from(byDay.keys()).sort();
+      const success = labels.map(d=>byDay.get(d).success);
+      const fail = labels.map(d=>byDay.get(d).fail);
+      // Make labels shorter (MM-DD) for dense timelines
+      const shortLabels = labels.map(d => d.slice(5));
+      return {labels, shortLabels, success, fail};
+    }
+
+    function durationHistogram(runs){
+      const vals = runs.map(r=>r.durationSec).filter(Number.isFinite);
+      if (!vals.length) return {labels:[], counts:[]};
+      const max = Math.max(...vals);
+      const bins = 10;
+      const upper = Math.max(1, max);
+      const step = upper / bins;
+      const counts = new Array(bins).fill(0);
+      for (const v of vals){
+        const i = Math.min(bins-1, Math.floor(v / step));
+        counts[i]++;
+      }
+      const labels = counts.map((_,i)=>{
+        const a = i*step;
+        const b = (i+1)*step;
+        return `${fmtSec(a)}–${fmtSec(b)}`;
+      });
+      return {labels, counts, step};
+    }
+
+    function modeUsage(runs){
+      const c = {cleanroom:0, workspace:0, other:0};
+      for (const r of runs){
+        const m = (r.mode||'').toLowerCase();
+        if (m === 'cleanroom') c.cleanroom++;
+        else if (m === 'workspace') c.workspace++;
+        else c.other++;
+      }
+      const labels = ['cleanroom','workspace'];
+      const data = [c.cleanroom, c.workspace];
+      if (c.other){ labels.push('other'); data.push(c.other); }
+      return {labels, data};
+    }
+
+    function failureCategories(fails){
+      const out = {};
+      for (const r of fails){
+        if (r.missingFiles){
+          out['missing files'] = (out['missing files']||0)+1;
+        } else if (Number.isFinite(r.exitCode)){
+          out[`exit=${r.exitCode}`] = (out[`exit=${r.exitCode}`]||0)+1;
+        } else {
+          out['unknown'] = (out['unknown']||0)+1;
+        }
+      }
+      return out;
+    }
+
+    function renderHeatmap(runs){
+      const el = document.getElementById('heatmap');
+      el.innerHTML = '';
+
+      const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+      // Header row
+      el.appendChild(document.createElement('div')); // empty corner
+      for (let h=0; h<24; h++){
+        const hd = document.createElement('div');
+        hd.className = 'h';
+        hd.textContent = (h%6===0) ? String(h) : '·';
+        hd.title = `Hour ${h}`;
+        el.appendChild(hd);
+      }
+
+      // Build matrices: counts & successes
+      const counts = Array.from({length:7}, ()=>new Array(24).fill(0));
+      const succ = Array.from({length:7}, ()=>new Array(24).fill(0));
+      for (const r of runs){
+        counts[r.weekday][r.hour]++;
+        if (r.isSuccess) succ[r.weekday][r.hour]++;
+      }
+      let maxC = 0;
+      for (let d=0; d<7; d++) for (let h=0; h<24; h++) maxC = Math.max(maxC, counts[d][h]);
+
+      const total = runs.length;
+      const distinctDays = new Set(runs.map(r=>r.date)).size;
+      document.getElementById('heatSummary').textContent = total ? `${total} runs across ${distinctDays} day(s)` : '—';
+
+      for (let d=0; d<7; d++){
+        const day = document.createElement('div');
+        day.className = 'day';
+        day.textContent = dayNames[d];
+        el.appendChild(day);
+        for (let h=0; h<24; h++){
+          const c = counts[d][h];
+          const s = succ[d][h];
+          const rate = c ? (s/c) : null;
+          const intensity = maxC ? (c / maxC) : 0;
+
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+
+          // Volume: blue glow strength
+          const baseA = 0.05 + intensity * 0.55;
+          const volColor = `rgba(90,162,255,${baseA.toFixed(3)})`;
+          cell.style.background = volColor;
+
+          // Success rate: border shifts red->green
+          if (rate === null){
+            cell.style.borderColor = 'rgba(255,255,255,.06)';
+          } else {
+            const g = Math.round(90 + 130*rate);
+            const r = Math.round(240 - 170*rate);
+            cell.style.borderColor = `rgba(${r}, ${g}, 160, .55)`;
+          }
+
+          cell.title = `${dayNames[d]} ${String(h).padStart(2,'0')}:00\n${c} runs\n${rate===null?'—':Math.round(rate*100)+'%'} success`;
+          el.appendChild(cell);
+        }
+      }
+
+      setLegend('heatLegend', [
+        {label:'More runs = brighter', color:'rgba(90,162,255,.65)'},
+        {label:'Higher success = greener border', color:'rgba(45,212,191,.9)'},
+        {label:'Lower success = redder border', color:'rgba(251,113,133,.9)'}
+      ]);
+    }
+
+    function renderCharts(runs){
+      // Destroy previous
+      for (const k of Object.keys(charts)){
+        if (charts[k] && charts[k].destroy) charts[k].destroy();
+        charts[k] = null;
+      }
+
+      // 1) Timeline (stacked-ish by drawing two lines: success and fail)
+      const tl = timelineSeries(runs);
+      const totalPerDay = tl.labels.map((_,i)=>tl.success[i]+tl.fail[i]);
+      const successRate = tl.labels.map((_,i)=> totalPerDay[i] ? (tl.success[i]/totalPerDay[i])*100 : 0);
+
+      charts.timeline = new Chart(document.getElementById('timeline'), {
+        type:'line',
+        data:{
+          labels: tl.shortLabels,
+          datasets:[{label:'Success rate (%)', data: successRate, borderColor:'rgba(45,212,191,1)', backgroundColor:'rgba(45,212,191,.22)'}]
+        }
+      });
+      setLegend('timelineLegend', [
+        {label:'Success rate', color:'rgba(45,212,191,1)'},
+      ]);
+
+      // 2) Duration histogram
+      const hist = durationHistogram(runs);
+      charts.hist = new Chart(document.getElementById('hist'), {
+        type:'bar',
+        data:{
+          labels: hist.labels,
+          datasets:[{label:'Runs', data: hist.counts, backgroundColor:'rgba(90,162,255,.62)', borderColor:'rgba(90,162,255,1)'}]
+        }
+      });
+      setLegend('histLegend', [{label:'Runs per duration bucket', color:'rgba(90,162,255,.62)'}]);
+
+      // 3) Mode usage
+      const mu = modeUsage(runs);
+      const modeColors = mu.labels.map(l => l==='cleanroom' ? 'rgba(90,162,255,.85)' : l==='workspace' ? 'rgba(245,158,11,.85)' : 'rgba(148,163,184,.65)');
+      charts.mode = new Chart(document.getElementById('mode'), {
+        type:'doughnut',
+        data:{ labels: mu.labels, datasets:[{ data: mu.data, backgroundColor: modeColors }] }
+      });
+      setLegend('modeLegend', mu.labels.map((l,i)=>({label:`${l} (${mu.data[i]})`, color:modeColors[i]})));
+
+      // 4) Failure breakdown
+      const fails = runs.filter(r=>!r.isSuccess);
+      const cats = failureCategories(fails);
+      const catLabels = Object.keys(cats).sort((a,b)=>cats[b]-cats[a]).slice(0,8);
+      const catCounts = catLabels.map(k=>cats[k]);
+      charts.fail = new Chart(document.getElementById('fail'), {
+        type:'bar',
+        data:{ labels: catLabels, datasets:[{ label:'Failures', data: catCounts, backgroundColor:'rgba(251,113,133,.58)', borderColor:'rgba(251,113,133,1)'}] }
+      });
+      setLegend('failLegend', [
+        {label:`Total failures: ${fails.length}`, color:'rgba(251,113,133,.58)'},
+        {label:'Includes inferred “missing files”', color:'rgba(251,113,133,1)'}
+      ]);
+
+      // 5) Heatmap
+      renderHeatmap(runs);
+    }
+
+    function updateParseStatus(parsed){
+      const {runs, errors} = parsed;
+      document.getElementById('parsedCount').textContent = runs.length.toLocaleString();
+      const hint = runs.length ? `(${runs[0].date} → ${runs[runs.length-1].date})` : '';
+      document.getElementById('parsedHint').textContent = hint;
+      const errCount = Object.values(errors).reduce((a,b)=>a+(b||0),0);
+      const errEl = document.getElementById('parseErrors');
+      if (!errCount){
+        errEl.textContent = 'ok';
+        errEl.style.color = 'var(--good)';
+      } else {
+        errEl.textContent = `skipped ${errCount} line(s)`;
+        errEl.style.color = 'var(--warn)';
+      }
+    }
+
+    function autoSetDateRange(runs){
+      if (!runs.length) return;
+      const from = runs[0].date;
+      const to = runs[runs.length-1].date;
+      const fromEl = document.getElementById('fromDate');
+      const toEl = document.getElementById('toDate');
+      if (!fromEl.value) fromEl.value = from;
+      if (!toEl.value) toEl.value = to;
+    }
+
+    // ---------- Wire up UI ----------
+    let currentParsed = parseLog(SAMPLE_LOG);
+
+    function analyzeNow(){
+      updateParseStatus(currentParsed);
+      const filtered = applyFilters(currentParsed.runs);
+      updateKPIs(filtered);
+      renderCharts(filtered);
+    }
+
+    function setDataSource(label){
+      document.getElementById('dataSourceLabel').textContent = label;
+    }
+
+    document.getElementById('useSample').addEventListener('click', () => {
+      document.getElementById('paste').value = SAMPLE_LOG;
+      currentParsed = parseLog(SAMPLE_LOG);
+      setDataSource('Embedded sample');
+      autoSetDateRange(currentParsed.runs);
+      analyzeNow();
+    });
+
+    document.getElementById('clear').addEventListener('click', () => {
+      document.getElementById('paste').value = '';
+      currentParsed = parseLog('');
+      setDataSource('Empty');
+      // keep filters
+      analyzeNow();
+    });
+
+    document.getElementById('analyze').addEventListener('click', () => {
+      const txt = document.getElementById('paste').value;
+      currentParsed = parseLog(txt);
+      setDataSource(txt.trim() ? 'Pasted text' : 'Empty');
+      autoSetDateRange(currentParsed.runs);
+      analyzeNow();
+    });
+
+    document.getElementById('fileInput').addEventListener('change', async (e) => {
+      const f = e.target.files && e.target.files[0];
+      if (!f) return;
+      const txt = await f.text();
+      document.getElementById('paste').value = txt;
+      currentParsed = parseLog(txt);
+      setDataSource('Loaded file');
+      autoSetDateRange(currentParsed.runs);
+      analyzeNow();
+    });
+
+    ['fromDate','toDate','modeFilter','statusFilter'].forEach(id => {
+      document.getElementById(id).addEventListener('change', analyzeNow);
+    });
+
+    // Init with sample preloaded for immediate demo
+    document.getElementById('paste').value = SAMPLE_LOG;
+    autoSetDateRange(currentParsed.runs);
+    analyzeNow();
+  </script>
+</body>
+</html>

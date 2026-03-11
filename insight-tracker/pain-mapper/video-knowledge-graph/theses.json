@@ -1,0 +1,1203 @@
+{
+  "meta_theses": [
+    {
+      "id": "t_saylor_digital_credit",
+      "video_id": "yt_yQL9yua9Yq0",
+      "thesis": "Digital credit (STRC) converts Bitcoin capital into 11%+ yield credit with tax-deferred return-of-capital \u2014 competing with $300T of traditional credit",
+      "speaker": "michael_saylor",
+      "category": "thesis",
+      "confidence": 0.95
+    },
+    {
+      "id": "t_saylor_capital_duration",
+      "video_id": "yt_yQL9yua9Yq0",
+      "thesis": "Capital has stochastic duration: exchange leverage=1hr, margin=1day, senior debt=1yr (covenants), convertible=5yr, variable preferred=longest non-equity",
+      "speaker": "michael_saylor",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_saylor_reflexive_flywheel",
+      "video_id": "yt_yQL9yua9Yq0",
+      "thesis": "MSTR reflexive flywheel: credit\u2192amplification\u2192volatility\u2192options interest\u2192enterprise value\u2192more capital\u2192more BTC\u2192higher equity premium\u2192more credit",
+      "speaker": "michael_saylor",
+      "category": "thesis",
+      "confidence": 0.95
+    },
+    {
+      "id": "t_saylor_programmable",
+      "video_id": "yt_yQL9yua9Yq0",
+      "thesis": "Digital credit is programmable: tokenizable, ETF-wrappable, offered as bank accounts with adjustable yield (3-30%), volatility, liquidity, currency",
+      "speaker": "michael_saylor",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_saylor_tax_revolution",
+      "video_id": "yt_yQL9yua9Yq0",
+      "thesis": "Return-of-capital tax treatment makes STRC 18-23% tax-equivalent yield for US individuals \u2014 4-5x better than any credit instrument, with step-up basis for heirs",
+      "speaker": "michael_saylor",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_saylor_btc_nonsecurity",
+      "video_id": "yt_yQL9yua9Yq0",
+      "thesis": "Bitcoin uniquely suited for asset-backed credit: Investment Company Act of 1940 blocks this with securities \u2014 BTC as non-security outperforming S&P is the first viable case",
+      "speaker": "michael_saylor",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_rfk_perverse_incentives",
+      "video_id": "yt_wk7DQom821s",
+      "thesis": "US healthcare's perverse incentives: food companies profit from making people sick, pharma profits from keeping them sick, insurance profits from higher volume \u2014 nobody is incentivized to prevent disease",
+      "speaker": "rfk_jr",
+      "category": "thesis",
+      "confidence": 0.95
+    },
+    {
+      "id": "t_rfk_chronic_disease",
+      "video_id": "yt_wk7DQom821s",
+      "thesis": "Chronic disease epidemic is manufactured: autism 1/10,000 (1970) \u2192 1/31 today, 38% teens diabetic/pre-diabetic, 70% adults obese/overweight, 77% kids can't qualify for military \u2014 caused by food system not genetics",
+      "speaker": "rfk_jr",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_rfk_medicaid_fraud",
+      "video_id": "yt_wk7DQom821s",
+      "thesis": "$100B+/year Medicaid/Medicare fraud: industrialized by foreign governments (Cuba via Florida DME, Russia via LA hospices, Somalia), Biden admin dismantled program integrity from hundreds of staff to 6",
+      "speaker": "rfk_jr",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_rfk_food_poison",
+      "video_id": "yt_wk7DQom821s",
+      "thesis": "70% of children's calories come from ultra-processed food \u2014 first country with simultaneous obesity and malnutrition, caused by corrupted food pyramid written by industry lobbyists (Froot Loops was top recommendation)",
+      "speaker": "rfk_jr",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_rfk_glyphosate",
+      "video_id": "yt_wk7DQom821s",
+      "thesis": "97% of US corn and 98% of soy produced with glyphosate \u2014 99% imported from China, creating national security vulnerability. Farmers hate it (destroys soil microbiome) but are addicted. Laser weed-killing tech is the offramp",
+      "speaker": "rfk_jr",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_rfk_mfn_drugs",
+      "video_id": "yt_wk7DQom821s",
+      "thesis": "MFN drug pricing deal with 16/17 pharma companies: Americans went from paying highest to lowest drug prices in developed world. Companies gained $1.3T in stock value + agreed to onshore production",
+      "speaker": "rfk_jr",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_rfk_partisan_health",
+      "video_id": "yt_wk7DQom821s",
+      "thesis": "Health policy has become partisan: Tylenol pregnancy warning rejected because Trump-adjacent, only 2/20 SNAP reform states are blue, pregnant women eating Tylenol on TikTok to spite Trump \u2014 tribalism overrides self-preservation",
+      "speaker": "rfk_jr",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_rfk_fee_for_service",
+      "video_id": "yt_wk7DQom821s",
+      "thesis": "Fee-based medical system incentivizes more tests, more drugs, more contact \u2014 should switch to flat fee where doctors bear cost of patient illness, incentivizing prevention over treatment",
+      "speaker": "rfk_jr",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_rogan_algorithms_polarization",
+      "video_id": "yt_wk7DQom821s",
+      "thesis": "Social media algorithms amplify polarization by design \u2014 combined with lack of face-to-face conversation, activates tribal brain circuits evolved for small communities, creating unprecedented division",
+      "speaker": "joe_rogan",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_trump_iran_nuclear",
+      "video_id": "yt_o-E7DIctrzo",
+      "thesis": "Iran can never have a nuclear weapon \u2014 US destroyed nuclear facilities at Fordow and Isfahan in Operation Midnight Hammer, now targeting missile industry and navy",
+      "speaker": "donald_trump",
+      "category": "thesis",
+      "confidence": 0.95
+    },
+    {
+      "id": "t_trump_iran_regime_change",
+      "video_id": "yt_o-E7DIctrzo",
+      "thesis": "Direct appeal to Iranian people: 'Take over your government \u2014 this is your only chance for generations.' US providing military cover for potential regime change from within",
+      "speaker": "donald_trump",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_taleb_dollar_structural",
+      "video_id": "yt_cyds4kP_n80",
+      "thesis": "US is structurally losing reserve currency status \u2014 gold rising as BRICS central banks accumulate because threat of confiscation makes dollar storage risky",
+      "speaker": "nassim_taleb",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_taleb_ai_pioneers_lose",
+      "video_id": "yt_cyds4kP_n80",
+      "thesis": "AI pioneers are historically likely to be losers, not winners \u2014 same pattern as cars, airlines, PCs. Current rally driven by very small number of names will see gains eradicated",
+      "speaker": "nassim_taleb",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_taleb_tail_risk",
+      "video_id": "yt_cyds4kP_n80",
+      "thesis": "Tail risks across all sectors are massively underpriced \u2014 the risk isn't a drawdown, it's a LARGE drawdown. Current volatility is not representative of real risk",
+      "speaker": "nassim_taleb",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_taleb_tariff_erratic",
+      "video_id": "yt_cyds4kP_n80",
+      "thesis": "Tariffs can be smart but execution is erratic \u2014 no investment incentive when policy changes daily. Acts as regressive tax exacerbating inequality",
+      "speaker": "nassim_taleb",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_taleb_oil_unpredictable",
+      "video_id": "yt_cyds4kP_n80",
+      "thesis": "Iran conflict could trigger 1970s-style stagflation that monetary policy cannot fix \u2014 neither Einstein at the Fed could help commodity-driven inflation",
+      "speaker": "nassim_taleb",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_alden_no_nuclear_print",
+      "video_id": "yt_G-MUaWP9myY",
+      "thesis": "Fed won't do massive QE in 1-2yr timeframe: bank cash ratios still high, no COVID-scale disruption needed. A little printing gets them a long way \u2014 analysts calling for big print don't follow financial plumbing",
+      "speaker": "lyn_alden",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_alden_top_heavy",
+      "video_id": "yt_G-MUaWP9myY",
+      "thesis": "Economy dangerously top-heavy: stock market 200% of GDP, top 10% hold 90% of stocks and do ~50% of consumer spending. Political polarization grows during fiscal dominance \u2014 will continue into 2030s",
+      "speaker": "lyn_alden",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_alden_btc_own_merits",
+      "video_id": "yt_G-MUaWP9myY",
+      "thesis": "In gradual print scenario, asset-specific factors matter more than macro \u2014 Bitcoin must compete on own merits against Nvidia, AI stocks, everything else. Not a rising tide lifts all boats environment",
+      "speaker": "lyn_alden",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_alden_gold_leading",
+      "video_id": "yt_G-MUaWP9myY",
+      "thesis": "Dividend yields at dotcom-bubble lows (~1%). Gold outperforming S&P even with dividends factored in. Stocks vs gold in a bear market despite nominal highs",
+      "speaker": "lyn_alden",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_wood_not_bubble",
+      "video_id": "yt_e4PFobVycTE",
+      "thesis": "AI is NOT a bubble \u2014 dotcom was euphoria, today is wall of worry. Investors are hesitant, which creates the most durable bull markets. Every GPU in the world is being utilized unlike dark fiber in 2000",
+      "speaker": "cathie_wood",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_wood_autonomous_10t",
+      "video_id": "yt_e4PFobVycTE",
+      "thesis": "Autonomous mobility is the biggest AI revenue generator: $10T market in 5-10 years. Tesla launched, Musk says 25-50% of US major cities autonomous by year end",
+      "speaker": "cathie_wood",
+      "category": "thesis",
+      "confidence": 0.7
+    },
+    {
+      "id": "t_wood_btc_conviction",
+      "video_id": "yt_e4PFobVycTE",
+      "thesis": "Bitcoin conviction increased as price declined. Gold leads Bitcoin in cycles. OGs selling because 'Bitcoin lost the plot' \u2014 but institutional adoption strengthens monetary system thesis. Stablecoins took $200-300K off $1.5M bull target",
+      "speaker": "cathie_wood",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_wood_china_speeds",
+      "video_id": "yt_e4PFobVycTE",
+      "thesis": "China competition (DeepSeek) is GOOD \u2014 accelerates US innovation. Open source movement enabled by US software companies fearing IP theft. US leapfrogs, China catches up, cycle repeats every 6 months",
+      "speaker": "cathie_wood",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_watts_seriousness",
+      "video_id": "yt_Z55F_YVSaZ8",
+      "thesis": "Seriousness is not a virtue but a symptom of forgetfulness \u2014 we've forgotten that existence is spontaneous and playful. The child and the sage both play; only the anxious adult demands manufactured meaning",
+      "speaker": "alan_watts",
+      "category": "thesis",
+      "confidence": 0.95
+    },
+    {
+      "id": "t_watts_letting_go",
+      "video_id": "yt_Z55F_YVSaZ8",
+      "thesis": "Letting go is not giving up (despair) but freedom from clinging. Care deeply while holding lightly \u2014 like a dancer, not a soldier. When you stop trying to make life meaningful, it becomes profoundly meaningful",
+      "speaker": "alan_watts",
+      "category": "thesis",
+      "confidence": 0.95
+    },
+    {
+      "id": "t_watts_purpose_addiction",
+      "video_id": "yt_Z55F_YVSaZ8",
+      "thesis": "Modern culture is addicted to purpose \u2014 career purpose, relationship purpose, even leisure must be purposeful. We've forgotten how to simply be. Constant measurement of worth by output creates perpetual anxiety",
+      "speaker": "alan_watts",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_tenev_private_inequity",
+      "video_id": "yt_-3dNJAwxI0U",
+      "thesis": "Companies staying private longer is the greatest inequity in capital markets \u2014 SpaceX, top AI labs may not IPO until multi-trillion valuations, locking out retail investors from the biggest wealth creation",
+      "speaker": "vlad_tenev",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_tenev_closed_end",
+      "video_id": "yt_-3dNJAwxI0U",
+      "thesis": "Closed-end fund (40 Act) solves private access: trades like a stock, daily liquidity, permanent capital (no LP pressure to sell at IPO). Seed portfolio: DataBricks, Stripe, Ramp, Recor, Boom, Aura at cost",
+      "speaker": "vlad_tenev",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_ackman_retail_brand",
+      "video_id": "yt_-3dNJAwxI0U",
+      "thesis": "Private companies want retail investors for permanent capital + brand halo. Retail is 25% of US public equity markets and growing. Robinhood proved retail isn't volatile flippers \u2014 5 years of data",
+      "speaker": "bill_ackman",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_druck_invest_first",
+      "video_id": "yt_z_pk4eBDaLA",
+      "thesis": "Invest first, investigate second \u2014 take a starter position when you sense something big, then scale in as evidence confirms. Waiting for complete conviction means missing the move",
+      "speaker": "stan_druckenmiller",
+      "category": "thesis",
+      "confidence": 0.95
+    },
+    {
+      "id": "t_druck_sizing",
+      "video_id": "yt_z_pk4eBDaLA",
+      "thesis": "Sizing matters more than being right \u2014 Soros: 'Not whether you're right or wrong, but how much you make when right and lose when wrong.' Small positions in great ideas make no money",
+      "speaker": "stan_druckenmiller",
+      "category": "thesis",
+      "confidence": 0.95
+    },
+    {
+      "id": "t_druck_perception_shift",
+      "video_id": "yt_z_pk4eBDaLA",
+      "thesis": "Don't bet on today \u2014 bet on the perception shift. The trade is 'will investors start believing this company/sector is good?' Rerating from 6x to 12x is where the money is",
+      "speaker": "stan_druckenmiller",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_druck_crowd_right",
+      "video_id": "yt_z_pk4eBDaLA",
+      "thesis": "Contrarianism is overrated \u2014 crowd is right 80% of the time. Skill is recognizing the 20% where consensus is wrong. Don't care if trade is crowded if thesis is right",
+      "speaker": "stan_druckenmiller",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_druck_paradigm_underreact",
+      "video_id": "yt_z_pk4eBDaLA",
+      "thesis": "In genuine paradigm shifts, investors can't keep up \u2014 the person who knows the most about the technology sells too early. Market psychology > technical understanding for holding through shifts",
+      "speaker": "stan_druckenmiller",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_druck_biotech",
+      "video_id": "yt_z_pk4eBDaLA",
+      "thesis": "Biotech is the best AI use case \u2014 4-year bear market ending, AI accelerating drug discovery. Teva: investor base gap (too growth for value, too value for growth) = systematic mispricing",
+      "speaker": "stan_druckenmiller",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_amodei_red_lines",
+      "video_id": "yt_MPTNHrq_4LU",
+      "thesis": "Two red lines: no domestic mass surveillance (technology outpacing 4th Amendment), no fully autonomous weapons (AI unreliable + accountability gap). These are 1% of use cases \u2014 99% of military applications supported",
+      "speaker": "dario_amodei",
+      "category": "thesis",
+      "confidence": 0.95
+    },
+    {
+      "id": "t_amodei_unprecedented",
+      "video_id": "yt_MPTNHrq_4LU",
+      "thesis": "Supply chain designation has never been applied to an American company \u2014 only Kaspersky Labs (Russia), Chinese chip suppliers. Pentagon's action is 'retaliatory and punitive,' communicated only via tweets, no formal notice",
+      "speaker": "dario_amodei",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_amodei_congress_gap",
+      "video_id": "yt_MPTNHrq_4LU",
+      "thesis": "Congress needs to legislate AI guardrails \u2014 private companies shouldn't be the long-term arbiters of military AI ethics. But Congress is slow and technology is advancing faster than law",
+      "speaker": "dario_amodei",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_amodei_ai_reliability",
+      "video_id": "yt_MPTNHrq_4LU",
+      "thesis": "AI systems have fundamental unpredictability that makes fully autonomous weapons technically unready \u2014 wrong targets, friendly fire, civilian casualties. Plus: concentrating lethal power in one person controlling millions of drones = accountability crisis",
+      "speaker": "dario_amodei",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_amodei_scaling_tsunami",
+      "video_id": "yt_68ylaeBbdsg",
+      "thesis": "AI is a tsunami on the horizon \u2014 models approaching human-level intelligence but public hasn't grasped implications. Compute doubles every 4 months; unprecedented pace of innovation",
+      "speaker": "dario_amodei",
+      "category": "thesis",
+      "confidence": 0.95
+    },
+    {
+      "id": "t_amodei_left_openai",
+      "video_id": "yt_68ylaeBbdsg",
+      "thesis": "Left OpenAI because despite convincing leadership that scaling works, couldn't convince them safety was truly important \u2014 'a lot of language verbiage about doing it the right way' but no real conviction",
+      "speaker": "dario_amodei",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_amodei_biology_vision",
+      "video_id": "yt_68ylaeBbdsg",
+      "thesis": "AI will solve biology \u2014 protein complexity (splicing, post-translational modification, complexing) is too complex for humans. AI with biological training data can crack diseases humans can't",
+      "speaker": "dario_amodei",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_musk_both",
+      "video_id": "yt_yxax4xpZus8",
+      "thesis": "Prediction: universal high income AND social unrest simultaneously \u2014 getting everything you want means your job doesn't matter, creating existential crisis alongside material abundance",
+      "speaker": "elon_musk",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_musk_energy_currency",
+      "video_id": "yt_yxax4xpZus8",
+      "thesis": "Future currency will be wattage \u2014 energy is the inner loop for everything. Humanity captures less than half-billionth of sun's energy; reasonable goal is a millionth (1000x current)",
+      "speaker": "elon_musk",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_musk_china_energy",
+      "video_id": "yt_yxax4xpZus8",
+      "thesis": "China will pass 3x US electricity output in 2026 \u2014 fundamental competitive threat because AI requires massive energy. US must build energy infrastructure at unprecedented pace",
+      "speaker": "elon_musk",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_musk_grok5",
+      "video_id": "yt_yxax4xpZus8",
+      "thesis": "Grok 5 may be 'nearly perfect' on hardest AI benchmarks (HLE) \u2014 Q1 2026. Previously advised slowing AI down, now concluded 'I can either be a spectator or participant but can't stop it'",
+      "speaker": "elon_musk",
+      "category": "thesis",
+      "confidence": 0.7
+    },
+    {
+      "id": "t_musk_fsd_europe",
+      "video_id": "yt_VvKV_ulseKc",
+      "thesis": "Tesla FSD approved in Netherlands March 20, 2026 \u2014 technically possible to fall asleep in a Tesla and wake up at destination by year-end. Europe will be 'blown away' by Tesla's real-world AI",
+      "speaker": "elon_musk",
+      "category": "thesis",
+      "confidence": 0.7
+    },
+    {
+      "id": "t_musk_convergence",
+      "video_id": "yt_VvKV_ulseKc",
+      "thesis": "Musk companies converging: SpaceX + xAI merger for orbital data centers first, Tesla potentially joining later. 'Proprietary data is the key to AI' \u2014 Tesla's 7-8M cars collecting road data worldwide",
+      "speaker": "elon_musk",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_musk_optimus_production",
+      "video_id": "yt_VvKV_ulseKc",
+      "thesis": "Optimus humanoid robot entering production \u2014 personal C-3PO for childcare, dog walking, elderly care. CyberCab volume production starts April 2026, may manufacture in Europe",
+      "speaker": "elon_musk",
+      "category": "thesis",
+      "confidence": 0.75
+    },
+    {
+      "id": "t_allin_saas_apocalypse",
+      "video_id": "yt_kzWbCF_IkHY",
+      "thesis": "AI is causing a SaaS apocalypse \u2014 software stocks imploding as AI commoditizes features that entire companies were built around. Claude's 'kill list' of replaceable SaaS companies is a leading indicator",
+      "speaker": "david_sacks",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_allin_ai_deflationary",
+      "video_id": "yt_kzWbCF_IkHY",
+      "thesis": "AI is fundamentally deflationary for SaaS \u2014 what cost $100K/yr will cost $10K or less. Winners are platforms that become AI infrastructure, losers are point solutions that AI replaces entirely. (Chamath)",
+      "speaker": "chamath_palihapitiya",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_allin_tariff_pivot",
+      "video_id": "yt_kzWbCF_IkHY",
+      "thesis": "Tariff policy is strategic ambiguity, not chaos \u2014 creates negotiation leverage. Market corrections from tariff fears are buying opportunities once deals materialize",
+      "speaker": "jason_calacanis",
+      "category": "thesis",
+      "confidence": 0.7
+    },
+    {
+      "id": "t_perplexity_autonomous",
+      "video_id": "yt_XTieQ4iEfAk",
+      "thesis": "AI agents (Perplexity Computer, OpenAI Operator, Claude Computer Use) represent the shift from search tools to autonomous agents that browse, execute code, and complete multi-step tasks. The competitive moat is reliability and task completion rate, not features. (Goldie)",
+      "speaker": "julian_goldie",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_isenberg_ai_first",
+      "video_id": "yt_l-J8RodcM_A",
+      "thesis": "AI-first products will replace feature-first products \u2014 Perplexity Computer shows that autonomous agents create new categories of startup opportunities, not just better versions of existing tools",
+      "speaker": "greg_isenberg",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_casel_multi_agent",
+      "video_id": "yt_bzWI3Dil9Ig",
+      "thesis": "Multi-agent teams with OpenClaw allow solo founders to operate like a full team \u2014 each agent specializes in a domain (writing, research, operations) with human-in-the-loop oversight",
+      "speaker": "brian_casel",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_illia_ai_onchain",
+      "video_id": "yt_htj3PeukEbM",
+      "thesis": "AI alignment is an economic problem, not a technical one: ad-funded AI serves advertisers, not users. User-owned agents on decentralized infra fix this \u2014 your agent works for you because you pay for it directly, no corporate middleman. (Polosukhin)",
+      "speaker": "illia_polosukhin",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_illia_chain_abstraction",
+      "video_id": "yt_htj3PeukEbM",
+      "thesis": "Chain abstraction (making multiple blockchains feel like one) is a prerequisite for AI agent adoption. Agents shouldn't have to understand Ethereum vs Solana vs NEAR \u2014 they need one unified payment/identity layer.",
+      "speaker": "illia_polosukhin",
+      "category": "thesis",
+      "confidence": 0.75
+    },
+    {
+      "id": "t_naval_specific_knowledge",
+      "video_id": "yt_sXCKgEl9hBo",
+      "thesis": "AI makes specific knowledge (creativity, judgment, accountability) MORE valuable \u2014 it replaces generic knowledge work but amplifies those with unique insight. The premium on being irreplaceable increases",
+      "speaker": "naval_ravikant",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_naval_intelligence_commodity",
+      "video_id": "yt_sXCKgEl9hBo",
+      "thesis": "Intelligence becoming a commodity changes everything \u2014 economics, education, human purpose all need reimagining. But wisdom, judgment, and taste remain scarce and human",
+      "speaker": "naval_ravikant",
+      "category": "thesis",
+      "confidence": 0.9
+    },
+    {
+      "id": "t_naval_education_obsolete",
+      "video_id": "yt_sXCKgEl9hBo",
+      "thesis": "Current education trains people for jobs AI will do. Must shift to teaching creativity, judgment, taste, and the ability to direct AI \u2014 the skills that remain valuable when intelligence is cheap. (Naval)",
+      "speaker": "naval_ravikant",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_crypto_agent_infra_consolidated",
+      "video_id": "yt_u48856z9Stc",
+      "thesis": "Crypto is the default financial infrastructure for AI agents. Fiat banking requires human identity (KYC, bank accounts, credit cards) \u2014 agents can't participate. Crypto provides permissionless wallets, programmable payments, and an immutable ledger of truth for verifiable transactions. US stablecoin legalization gives this regulatory legitimacy. The machine economy (agents paying agents) will dwarf human transaction volume within a decade. (Converging view: Visser, Horowitz, Polosukhin)",
+      "speaker": "jordi_visser",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_visser_ai_deflation_inflation",
+      "video_id": "yt_u48856z9Stc",
+      "thesis": "AI creates a bifurcated economy: deflationary for services (software, content, analysis) but inflationary for physical resources (energy, compute, data centers). Net macro effect depends on which force dominates. (Visser)",
+      "speaker": "jordi_visser",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_visser_machine_economy",
+      "video_id": "yt_u48856z9Stc",
+      "thesis": "Software equity markets are becoming prediction markets: AI compressed growth visibility from years to days, so the market stopped doing DCF models and started doing real-time probability pricing. Every AI capability announcement shifts the probability estimate \u2192 stocks move 20% overnight. This isn't panic \u2014 it's rational repricing.",
+      "speaker": "jordi_visser",
+      "category": "thesis",
+      "confidence": 0.7
+    },
+    {
+      "id": "t_johnson_milkshake",
+      "video_id": "yt_lUPDZvFf1Is",
+      "thesis": "Dollar Milkshake: USD strengthens because global breakdown forces capital into dollars \u2014 foreign debt servicing creates structural demand that overwhelms deficits and printing. Dollar is the milkshake straw",
+      "speaker": "brent_johnson",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_johnson_sovereign_crisis",
+      "video_id": "yt_lUPDZvFf1Is",
+      "thesis": "Global sovereign debt crisis is inevitable \u2014 $300T+ in global debt denominated in or priced against USD. When crisis hits, everyone rushes to dollars simultaneously, creating a squeeze",
+      "speaker": "brent_johnson",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_johnson_gold_and_dollar",
+      "video_id": "yt_lUPDZvFf1Is",
+      "thesis": "Gold and dollar can rise simultaneously \u2014 this is the milkshake endgame. Both are safe havens, both benefit from chaos. Not contradictory when you understand capital flow mechanics",
+      "speaker": "brent_johnson",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_johnson_emerging_fall",
+      "video_id": "yt_lUPDZvFf1Is",
+      "thesis": "Emerging markets will be devastated by dollar strength \u2014 their currencies and debt become unserviceable. This is not a prediction of US prosperity but of relative dollar dominance in crisis",
+      "speaker": "brent_johnson",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_intent_853_ftes",
+      "video_id": "yt_QWzLPn164w0",
+      "thesis": "CLA's AI agent does work of 853 FTEs \u2014 signals shift from prompt engineering to intent engineering: defining organizational goals and letting AI figure out execution",
+      "speaker": "speaker_intent_eng",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_intent_beyond_prompts",
+      "video_id": "yt_QWzLPn164w0",
+      "thesis": "Intent engineering is the next evolution: stop writing detailed prompts, start defining goals/constraints/success criteria at the system level. AI handles the how, humans define the what and why",
+      "speaker": "speaker_intent_eng",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_martin_miami_infra",
+      "video_id": "yt_pl1L70N-WLE",
+      "thesis": "Miami's tech hub transformation requires solving infrastructure first \u2014 housing, transit, and density. Real estate developers who build for the next generation of residents (tech workers, remote workers) will capture enormous value",
+      "speaker": "david_martin",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_martin_mixed_use",
+      "video_id": "yt_pl1L70N-WLE",
+      "thesis": "Mixed-use walkable development is the future of Miami \u2014 car-dependent sprawl doesn't serve tech workers or climate reality. Need European-style density with Miami lifestyle",
+      "speaker": "david_martin",
+      "category": "thesis",
+      "confidence": 0.75
+    },
+    {
+      "id": "t_yan_defi_native",
+      "video_id": "yt_2cC9IjixIww",
+      "thesis": "Internet for money needs native financial infrastructure \u2014 porting TradFi to blockchain misses the point. On-chain order books (not AMMs) are the future because they provide real price discovery",
+      "speaker": "jeff_yan",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_yan_speed_matters",
+      "video_id": "yt_2cC9IjixIww",
+      "thesis": "DeFi needs millisecond execution to compete with TradFi \u2014 Hyperliquid built custom L1 for speed. Most L1s optimize for generality; winning financial infrastructure optimizes for trading",
+      "speaker": "jeff_yan",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_loh_wisdom_not_knowledge",
+      "video_id": "yt_ivVPJhYM8Ng",
+      "thesis": "Education must shift from knowledge transfer to wisdom cultivation \u2014 AI makes information recall worthless but amplifies creative problem-solving and proof-based reasoning",
+      "speaker": "po_shen_loh",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_loh_math_thinking",
+      "video_id": "yt_ivVPJhYM8Ng",
+      "thesis": "Mathematical thinking becomes MORE important in AI era \u2014 not arithmetic but the ability to structure problems, reason from first principles, and verify solutions. Humans need to be AI validators",
+      "speaker": "po_shen_loh",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_horowitz_pace",
+      "video_id": "yt_C1GLT9_tag0",
+      "thesis": "AI models improve faster than companies can ship products. The pace of model improvement is the real story \u2014 companies that can't adapt in months (not years) will be replaced by those that can.",
+      "speaker": "ben_horowitz",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_horowitz_apple_crisis",
+      "video_id": "yt_C1GLT9_tag0",
+      "thesis": "Apple missed the AI wave. Siri is embarrassingly behind, and Apple's culture of perfection prevents the rapid iteration AI requires. May not recover their position.",
+      "speaker": "ben_horowitz",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_lonsdale_email_api",
+      "video_id": "yt_m8y0ftEmbkY",
+      "thesis": "Email is the API of business \u2014 whoever controls the email layer (like Thorin) becomes massively valuable. AI email assistants that check with the right person and help teams respond are the killer app",
+      "speaker": "jd_ross",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t_lonsdale_10x_adoption",
+      "video_id": "yt_m8y0ftEmbkY",
+      "thesis": "AI enterprise adoption is 10x faster than mobile was \u2014 because AI delivers immediate ROI on existing workflows. No hardware upgrade needed, just software integration",
+      "speaker": "joe_lonsdale",
+      "category": "thesis",
+      "confidence": 0.8
+    },
+    {
+      "id": "t_lonsdale_white_collar",
+      "video_id": "yt_m8y0ftEmbkY",
+      "thesis": "AI replacing white-collar work faster than physical labor \u2014 contrary to predictions. Knowledge work (legal, finance, consulting) is more automatable than plumbing or construction",
+      "speaker": "joe_lonsdale",
+      "category": "thesis",
+      "confidence": 0.85
+    },
+    {
+      "id": "t-narrow-agents-win",
+      "claim": "Narrow agents (7-10 skills) in teams outperform mega-agents",
+      "speaker_id": "riley-brown",
+      "video_id": "yt_ISb0nrlNoKQ",
+      "confidence": "high"
+    },
+    {
+      "id": "t-design-process-dead",
+      "claim": "Classic design process is dead \u2014 AI engineering velocity forces change",
+      "speaker_id": "jenny-wen",
+      "video_id": "yt_eh8bcBIAAFo",
+      "confidence": "high"
+    },
+    {
+      "id": "t-ai-taste-judgment",
+      "claim": "AI will get better at taste/judgment than we expect",
+      "speaker_id": "jenny-wen",
+      "video_id": "yt_eh8bcBIAAFo",
+      "confidence": "medium"
+    },
+    {
+      "id": "t-persistent-agent-wins",
+      "claim": "Persistent agents (OpenClaw) beat per-task spin-up (Manus/Perplexity)",
+      "speaker_id": "riley-brown",
+      "video_id": "yt_ISb0nrlNoKQ",
+      "confidence": "medium"
+    },
+    {
+      "id": "t-trust-through-speed",
+      "claim": "Building trust through speed: ship early, iterate fast",
+      "speaker_id": "jenny-wen",
+      "video_id": "yt_eh8bcBIAAFo",
+      "confidence": "high"
+    },
+    {
+      "id": "t_igler_map_pack_dominance",
+      "speaker_id": "noah-igler",
+      "claim": "Google Maps map pack is the #1 patient acquisition channel for local healthcare \u2014 top 3 results get 70%+ of all calls",
+      "evidence": "Live demo of plumber search, case studies showing 100+ leads/month after optimization",
+      "confidence": "high",
+      "status": "active",
+      "first_stated": "2026-03-02",
+      "tags": [
+        "local-seo",
+        "google-maps",
+        "healthcare-marketing"
+      ]
+    },
+    {
+      "id": "t_igler_review_volume_trust",
+      "speaker_id": "noah-igler",
+      "claim": "Review volume is the single highest-leverage trust signal for local search ranking",
+      "evidence": "Comparison of businesses with 2000 vs 15 reviews",
+      "confidence": "high",
+      "status": "active",
+      "first_stated": "2026-03-02",
+      "tags": [
+        "local-seo",
+        "reviews"
+      ]
+    },
+    {
+      "id": "t_igler_service_page_depth",
+      "speaker_id": "noah-igler",
+      "claim": "Service page depth directly correlates with relevance ranking",
+      "evidence": "SEO best practice, case studies",
+      "confidence": "medium-high",
+      "status": "active",
+      "first_stated": "2026-03-02",
+      "tags": [
+        "local-seo",
+        "content-strategy"
+      ]
+    },
+    {
+      "id": "thesis_agent_revenue_frontier",
+      "text": "A single OpenClaw agent can generate $1M+ annual revenue with <$500/month operating costs",
+      "speaker": "nat-eliason",
+      "video": "yt_vF3dK1TywAk",
+      "date": "2026-03-04"
+    },
+    {
+      "id": "thesis_complexity_theater",
+      "text": "Most OpenClaw complexity is performance for social media, not productivity. Simplicity + execution beats elaborate architecture.",
+      "speaker": "nat-eliason",
+      "video": "yt_vF3dK1TywAk",
+      "date": "2026-03-04"
+    },
+    {
+      "id": "thesis_sales_last_frontier",
+      "text": "Sales and relationship-building are the most defensible knowledge work against AI. Coding is solved; sales judgment is not.",
+      "speaker": "nat-eliason",
+      "video": "yt_vF3dK1TywAk",
+      "date": "2026-03-04"
+    },
+    {
+      "id": "th_markdown-most-valuable",
+      "thesis": "Non-deterministic markdown files are more valuable than deterministic code in the AI agent era",
+      "speaker": "nat-eliason",
+      "video": "yt_bankless-felix-2026",
+      "confidence": "high",
+      "tags": [
+        "ai-agents",
+        "openclaw",
+        "knowledge-transfer"
+      ]
+    },
+    {
+      "id": "th_doomer-practically-impossible",
+      "thesis": "AI doomer scenarios are technologically possible but practically impossible due to market adoption speed",
+      "speaker": "nat-eliason",
+      "video": "yt_bankless-felix-2026",
+      "confidence": "medium",
+      "tags": [
+        "ai-safety",
+        "macro"
+      ]
+    },
+    {
+      "id": "th_sales-most-defensible",
+      "thesis": "Sales/relationships are the most defensible computer work \u2014 coding is essentially solved",
+      "speaker": "nat-eliason",
+      "video": "yt_bankless-felix-2026",
+      "confidence": "high",
+      "tags": [
+        "ai-displacement",
+        "business"
+      ]
+    },
+    {
+      "id": "th_crypto-agent-rails",
+      "thesis": "Crypto is the obvious payment/identity infrastructure for autonomous AI agents",
+      "speaker": "nat-eliason",
+      "video": "yt_bankless-felix-2026",
+      "confidence": "high",
+      "tags": [
+        "crypto",
+        "ai-agents",
+        "payments"
+      ]
+    },
+    {
+      "id": "th_zero-human-company",
+      "thesis": "A profitable zero-human company is achievable today with OpenClaw + $1,500 total investment",
+      "speaker": "nat-eliason",
+      "video": "yt_bankless-felix-2026",
+      "confidence": "high",
+      "tags": [
+        "ai-agents",
+        "openclaw",
+        "business-model"
+      ]
+    },
+    {
+      "id": "th_bestof-lists-ai-factor1",
+      "thesis": "Presence on expert-curated 'best of' lists is the #1 factor for AI search visibility in 2026",
+      "speaker": "darren-shaw",
+      "video": "yt_sterling-sky-ranking-factors-2026",
+      "confidence": "high",
+      "tags": [
+        "local-seo",
+        "ai-search",
+        "listicles"
+      ]
+    },
+    {
+      "id": "th_brand-new-linkbuilding",
+      "thesis": "Brand understanding is the new link building \u2014 LLMs identify entities through mentions, not just links",
+      "speaker": "darren-shaw",
+      "video": "yt_sterling-sky-ranking-factors-2026",
+      "confidence": "high",
+      "tags": [
+        "entity-seo",
+        "ai-search",
+        "branding"
+      ]
+    },
+    {
+      "id": "th_review-velocity-beats-volume",
+      "thesis": "Review velocity (rate of new reviews) outranks total review count for Google Maps ranking",
+      "speaker": "shan-garner",
+      "video": "yt_shan-garner-gbp-domination",
+      "confidence": "high",
+      "tags": [
+        "reviews",
+        "google-maps",
+        "local-seo"
+      ]
+    },
+    {
+      "id": "th_keywords-description-useless",
+      "thesis": "Keywords in GBP description and review responses have zero ranking impact \u2014 confirmed myth",
+      "speaker": "joy-hawkins",
+      "video": "yt_sterling-sky-ranking-factors-2026",
+      "confidence": "high",
+      "tags": [
+        "local-seo",
+        "myths",
+        "google-business-profile"
+      ]
+    },
+    {
+      "id": "th_awards-over-reviews-ai",
+      "thesis": "LLMs care more about awards/badges/recognitions than raw review counts for business recommendations",
+      "speaker": "joy-hawkins",
+      "video": "yt_sterling-sky-ranking-factors-2026",
+      "confidence": "medium",
+      "tags": [
+        "ai-search",
+        "awards",
+        "trust-signals"
+      ]
+    },
+    {
+      "id": "t_druck_ta_degraded",
+      "thesis": "Technical analysis is ~20% as effective as 40 years ago because everyone uses it now. Price-vs-news signals similarly degraded. When everyone learns a pattern, it stops working.",
+      "source": "yt_z_pk4eBDaLA",
+      "speaker": "stan_druckenmiller",
+      "confidence": "high",
+      "testable": true,
+      "implications": "Alpha decays as strategies get crowded. Look for signals others haven't yet systematized."
+    },
+    {
+      "id": "t_druck_courage_decay",
+      "thesis": "Investment skill can increase over a career while performance decreases because courage decays with age and success. Druckenmiller says he was a better PM in his 30s-40s despite having less wisdom now \u2014 because he had more courage to take big positions.",
+      "source": "yt_z_pk4eBDaLA",
+      "speaker": "stan_druckenmiller",
+      "confidence": "high",
+      "testable": false,
+      "implications": "The psychological capital to take big swings is itself a finite resource. Imposter syndrome lasted 15+ years. Success breeds caution, not confidence."
+    },
+    {
+      "id": "t_druck_mentor_necessity",
+      "thesis": "Great investors almost universally have incredible mentors. Innate skill is necessary but not sufficient \u2014 mentorship is the second necessary condition. Soros taught sizing, Pittsburgh mentor taught frameworks.",
+      "source": "yt_z_pk4eBDaLA",
+      "speaker": "stan_druckenmiller",
+      "confidence": "high",
+      "testable": false,
+      "implications": "Finding the right mentor compounds returns on innate ability. Seek mentors for what you DON'T know \u2014 Druckenmiller went to Soros for macro and learned sizing instead."
+    },
+    {
+      "id": "t_druck_mistakes_moment",
+      "thesis": "Mistakes are just moments in time. After 15+ years of imposter syndrome, Druckenmiller realized the record was no longer random accident. Hard lesson: stop torturing yourself for 48 hours over drawdowns \u2014 get over it and move on.",
+      "source": "yt_z_pk4eBDaLA",
+      "speaker": "stan_druckenmiller",
+      "confidence": "high",
+      "testable": false,
+      "implications": "Emotional resilience is a meta-skill. The NASDAQ 99-00 top buy wasn't from ignorance \u2014 he knew the lesson 20 years before but got emotional. Emotions override knowledge under stress."
+    },
+    {
+      "id": "p_druck_macro_revival",
+      "thesis": "Macro investing is back after being dead for 10-15 years. Massive disruption + change ahead = exciting opportunity set for next 3-4 years.",
+      "source": "yt_z_pk4eBDaLA",
+      "speaker": "stan_druckenmiller",
+      "confidence": "medium",
+      "testable": true,
+      "implications": "Macro volatility creates entry points. Current portfolio: eclectic equities, Japan/Korea, short USD + bonds, long copper + gold. AI positions reduced."
+    },
+    {
+      "id": "t_lonsdale_saas_barbell",
+      "thesis": "AI model companies will eat the top end of SaaS value, while college kids will oneshot better versions of commodity SaaS from scratch. The middle gets crushed from both sides \u2014 barbell extinction.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "jd_ross",
+      "confidence": "high",
+      "testable": true,
+      "implications": "Only defensible SaaS: trusted expert + proprietary data in complex domains (insurance, legal). Everything else gets commoditized or eaten by model labs."
+    },
+    {
+      "id": "t_lonsdale_st_patrick",
+      "thesis": "Innovation adoption follows the St. Patrick pattern: don't change the framework, make it better within existing mental models. WithCoverage succeeds by being a better insurance broker, not eliminating brokers. OpenDoor's mistake was trying to eliminate realtors entirely.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "joe_lonsdale",
+      "confidence": "high",
+      "testable": false,
+      "implications": "Build on existing workflows. Replace the HOW, not the WHAT. Users want better service, not new paradigms."
+    },
+    {
+      "id": "t_lonsdale_jevons_engineers",
+      "thesis": "Jevons Paradox for engineering: when AI makes building 5x cheaper, companies don't want fewer engineers \u2014 they want 10x more because the feature set they'd build at $20K/feature is massive. Demand for builders goes UP.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "jd_ross",
+      "confidence": "high",
+      "testable": true,
+      "implications": "Engineering jobs transform but don't disappear. The job shifts from writer to editor. Companies that scale engineering headcount + AI will outperform those that cut."
+    },
+    {
+      "id": "t_lonsdale_spam_crisis",
+      "thesis": "AI-generated spam/scams will force a fundamental restructuring of communication. Voice cloning (11Labs) will make phone scams indistinguishable. Email spam will require fee-to-reach or double-opt-in trust chains. Cold outreach channels will collapse.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "joe_lonsdale",
+      "confidence": "high",
+      "testable": true,
+      "implications": "Referral-based business models become the only viable go-to-market. WithCoverage's 90% referral business is accidentally future-proof. Trust networks become infrastructure."
+    },
+    {
+      "id": "t_lonsdale_rich_to_everyone",
+      "thesis": "Best entrepreneurship framework: take something rich people have (teams of 20 trusted experts on call) and make it available to everyone via AI. The concierge economy democratizes.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "jd_ross",
+      "confidence": "high",
+      "testable": false,
+      "implications": "Every category where wealthy people pay humans for judgment/expertise is an AI opportunity. Insurance, legal, financial planning, personal assistants, health management."
+    },
+    {
+      "id": "t_lonsdale_zero_code_reality",
+      "thesis": "WithCoverage has zero full-time engineers who write code manually. All use Codex/Claude Code/Cursor. One engineer manages 6 concurrent agents. Linear tickets auto-spawn dev environments that oneshot PRs for review.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "jd_ross",
+      "confidence": "high",
+      "testable": true,
+      "implications": "This is the near-term future of all software companies. Enterprise feature requests can be built and shipped in one day. 3-6 month roadmaps become irrelevant."
+    },
+    {
+      "id": "t_lonsdale_invention_era",
+      "thesis": "We're in a second invention era (first was mobile). Everyone \u2014 experienced and new \u2014 has equal footing because all paradigms are being reinvented. College grads compete equally with 20-year veterans.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "jd_ross",
+      "confidence": "high",
+      "testable": false,
+      "implications": "Returns to agency and optimism are very high right now. New industries will be created from scratch. Don't bet against America."
+    },
+    {
+      "id": "t_lonsdale_model_substitution",
+      "thesis": "If switching from Sonnet to Opus improves your eval set \u2014 stop investing in that workflow. Let the hundreds of billions of R&D investment push you forward. If it DOESN'T improve, that's a signal to invest more in context and data.",
+      "source": "yt_m8y0ftEmbkY",
+      "speaker": "jd_ross",
+      "confidence": "high",
+      "testable": true,
+      "implications": "Build for context quality and data moats, not model capability. Model capability is a rising tide you ride for free."
+    }
+  ],
+  "contradictions": [
+    {
+      "id": "c_dollar_direction",
+      "thesis_a": "t_johnson_milkshake",
+      "thesis_b": "t_taleb_dollar_structural",
+      "description": "Johnson: dollar STRENGTHENS as global system breaks (milkshake vortex). Taleb: dollar WEAKENS structurally as BRICS accumulate gold and de-dollarize. Fundamentally opposed views on dollar trajectory."
+    },
+    {
+      "id": "c_ai_bubble",
+      "thesis_a": "t_wood_not_bubble",
+      "thesis_b": "t_taleb_ai_pioneers_lose",
+      "description": "Wood: AI is NOT a bubble, wall of worry = durable bull market. Taleb: AI pioneers will likely be losers, gains will be eradicated. Wood sees buying opportunity, Taleb sees structural bust."
+    },
+    {
+      "id": "c_btc_gradual",
+      "thesis_a": "t_visser_ai_btc_rails",
+      "thesis_b": "t_alden_btc_own_merits",
+      "description": "Visser: Bitcoin essential as AI payment rails (structural demand driver). Alden: Bitcoin must compete on own merits in gradual print \u2014 no guaranteed macro tailwind."
+    },
+    {
+      "id": "c_autonomous_weapons",
+      "thesis_a": "t_amodei_red_lines",
+      "thesis_b": "t_amodei_congress_gap",
+      "description": "Internal tension: Amodei says autonomous weapons may eventually be needed to match adversaries, but also says AI reliability is insufficient and oversight framework doesn't exist. Both true simultaneously."
+    },
+    {
+      "id": "c_seriousness_meaning",
+      "thesis_a": "t_watts_seriousness",
+      "thesis_b": "t_naval_specific_knowledge",
+      "description": "Watts: seriousness is self-inflicted suffering, let go of purpose addiction. Naval: specific knowledge (deep expertise, accountability) is what makes you irreplaceable. Watts would say Naval's framework is another form of clinging."
+    },
+    {
+      "id": "c_crowd_right",
+      "thesis_a": "t_druck_crowd_right",
+      "thesis_b": "t_druck_paradigm_underreact",
+      "description": "Internal tension: crowd is right 80% of the time (don't be contrarian for ego), BUT in paradigm shifts investors can't keep up (crowd is systematically wrong). Key: distinguishing the 20% paradigm-shift moments."
+    },
+    {
+      "id": "c_energy_future",
+      "thesis_a": "t_musk_energy_currency",
+      "thesis_b": "t_visser_ai_deflation_inflation",
+      "description": "Musk: future currency is literally wattage (energy). Visser: AI is deflationary for services but inflationary for energy. If energy is the constraint AND the currency, energy producers become the new central banks."
+    },
+    {
+      "id": "c_china_threat_opportunity",
+      "thesis_a": "t_musk_china_energy",
+      "thesis_b": "t_wood_china_speeds",
+      "description": "Musk: China at 3x US electricity = fundamental competitive threat. Wood: China competition is GOOD, accelerates US innovation. Both could be true \u2014 threat that catalyzes response."
+    },
+    {
+      "id": "c_print_debate",
+      "thesis_a": "t_alden_no_nuclear_print",
+      "thesis_b": "t_johnson_sovereign_crisis",
+      "description": "Alden: no nuclear print needed in 1-2yr, system can manage with gradual expansion. Johnson: inevitable sovereign debt crisis will force massive dollar demand. Different timeframes but opposing mechanics."
+    },
+    {
+      "id": "c_experience_vs_equality",
+      "thesis_a": "t_druck_courage_decay",
+      "thesis_b": "t_lonsdale_invention_era",
+      "tension": "Druckenmiller says experience accumulates wisdom but courage decays, making veterans less effective. Lonsdale says invention eras reset everyone to equal footing. Both imply experience is less valuable than commonly assumed, but for different reasons."
+    }
+  ],
+  "testable_predictions": [
+    {
+      "id": "p_saylor_corporate_treasury",
+      "video_id": "yt_yQL9yua9Yq0",
+      "thesis": "Corporate treasuries will allocate 35-40% to STRC to double cash flow \u2014 easier board approval than direct Bitcoin (no volatility/mark-to-market)",
+      "speaker": "michael_saylor",
+      "category": "prediction",
+      "confidence": 0.8,
+      "timeframe": "2-5 years"
+    },
+    {
+      "id": "p_saylor_300t",
+      "video_id": "yt_yQL9yua9Yq0",
+      "thesis": "Digital credit captures 5-10% of $300T global credit market = $50-60T opportunity over next decade",
+      "speaker": "michael_saylor",
+      "category": "prediction",
+      "confidence": 0.7,
+      "timeframe": "10 years"
+    },
+    {
+      "id": "p_rfk_three_year_change",
+      "video_id": "yt_wk7DQom821s",
+      "thesis": "US healthcare model will look fundamentally different in 3 years \u2014 price transparency, medical records on phones, no prior authorization, reformed food pyramid driving dietary culture change",
+      "speaker": "rfk_jr",
+      "category": "prediction",
+      "confidence": 0.6,
+      "timeframe": "3 years (by 2029)"
+    },
+    {
+      "id": "p_rfk_regenerative_ag",
+      "video_id": "yt_wk7DQom821s",
+      "thesis": "Laser weed-killing + drone swarms will enable transition off glyphosate \u2014 already economically viable for vegetables ($300/acre vs $1500), row crops need more scaling",
+      "speaker": "rfk_jr",
+      "category": "prediction",
+      "confidence": 0.7,
+      "timeframe": "5-10 years"
+    },
+    {
+      "id": "p_rfk_dyes_removed",
+      "video_id": "yt_wk7DQom821s",
+      "thesis": "All artificial food dyes removed from US food supply by end of 2026 \u2014 industry already cooperating, 7 new vegetable-based dyes fast-tracked by FDA",
+      "speaker": "rfk_jr",
+      "category": "prediction",
+      "confidence": 0.75,
+      "timeframe": "end of 2026"
+    },
+    {
+      "id": "p_rfk_psychedelics",
+      "video_id": "yt_wk7DQom821s",
+      "thesis": "Psilocybin/MDMA/ibogaine will be available in therapeutic settings for PTSD/depression within this administration \u2014 VA already running 21 studies, bipartisan support emerging",
+      "speaker": "rfk_jr",
+      "category": "prediction",
+      "confidence": 0.6,
+      "timeframe": "2-3 years"
+    },
+    {
+      "id": "t_wood_tesla_2600",
+      "video_id": "yt_e4PFobVycTE",
+      "thesis": "Tesla 2029 target: $2,600/share \u2014 and that EXCLUDES Optimus (humanoid robots). May be too conservative on robots, too aggressive on robotaxis. SpaceX/xAI convergence is real",
+      "speaker": "cathie_wood",
+      "category": "prediction",
+      "confidence": 0.6
+    },
+    {
+      "id": "p_druck_copper",
+      "video_id": "yt_z_pk4eBDaLA",
+      "thesis": "Copper faces 8-year supply deficit + AI/data center demand \u2014 long copper futures as structural play",
+      "speaker": "stan_druckenmiller",
+      "category": "prediction",
+      "confidence": 0.8,
+      "timeframe": "3-5 years"
+    },
+    {
+      "id": "p_druck_dollar_top",
+      "video_id": "yt_z_pk4eBDaLA",
+      "thesis": "US dollar at top of purchasing power range \u2014 foreigners overloaded, short USD as structural trade",
+      "speaker": "stan_druckenmiller",
+      "category": "prediction",
+      "confidence": 0.75,
+      "timeframe": "1-2 years"
+    },
+    {
+      "id": "pred_felix_1m",
+      "prediction": "Felix reaches $1M cumulative revenue",
+      "speaker": "nat-eliason",
+      "test_date": "2026-12-31",
+      "video": "yt_vF3dK1TywAk"
+    },
+    {
+      "id": "p_druck_macro_back",
+      "thesis": "Macro investing opportunity set for next 3-4 years is the best in 10-15 years due to massive disruption and change.",
+      "speaker": "stan_druckenmiller",
+      "timeframe": "2026-2029",
+      "falsifiable": "Macro hedge fund returns remain below S&P for 3 years"
+    },
+    {
+      "id": "p_lonsdale_saas_barbell_2yr",
+      "thesis": "Within 2-3 years, college grads will routinely oneshot SaaS tools better than paid subscriptions. Mid-tier SaaS valuations collapse.",
+      "speaker": "jd_ross",
+      "timeframe": "2026-2028",
+      "falsifiable": "Mid-tier SaaS public company multiples hold or increase"
+    },
+    {
+      "id": "p_lonsdale_spam_restructure",
+      "thesis": "Major communication platforms will implement fee-to-reach or trust-chain verification within 2 years as AI spam overwhelms filters.",
+      "speaker": "joe_lonsdale",
+      "timeframe": "2026-2028",
+      "falsifiable": "No major platform implements sender verification fees by 2028"
+    }
+  ]
+}

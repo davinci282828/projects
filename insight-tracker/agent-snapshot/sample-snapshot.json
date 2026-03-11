@@ -1,0 +1,204 @@
+{
+  "meta": {
+    "tool": {
+      "name": "Agent State Snapshot",
+      "version": "1.0.0"
+    },
+    "capturedAt": "2026-03-10T00:00:00.000Z",
+    "openClawVersion": null,
+    "runtime": {
+      "os": "unknown",
+      "browser": "unknown",
+      "userAgent": "(sample)",
+      "timeZone": "UTC",
+      "nodeVersion": null
+    },
+    "model": "unknown",
+    "notes": "Sample snapshot data (static)."
+  },
+  "cronFleet": {
+    "jobs": [
+      {
+        "name": "daily-backup",
+        "id": "cron_001",
+        "schedule": "0 2 * * *",
+        "lastRun": "2026-03-09T02:00:03.000Z",
+        "nextRun": "2026-03-10T02:00:00.000Z",
+        "enabled": true,
+        "delivery": {
+          "channel": "s3",
+          "target": "backups/"
+        },
+        "successCount7d": 7,
+        "failureCount7d": 0
+      },
+      {
+        "name": "weekly-report",
+        "id": "cron_002",
+        "schedule": "0 9 * * 1",
+        "lastRun": "2026-03-09T09:00:10.000Z",
+        "nextRun": "2026-03-16T09:00:00.000Z",
+        "enabled": true,
+        "delivery": {
+          "channel": "email",
+          "target": "ops@example.com"
+        },
+        "successCount7d": 1,
+        "failureCount7d": 0
+      },
+      {
+        "name": "stale-cleaner",
+        "id": "cron_003",
+        "schedule": "*/15 * * * *",
+        "lastRun": "2026-03-10T00:00:00.000Z",
+        "nextRun": "2026-03-10T00:15:00.000Z",
+        "enabled": false,
+        "delivery": {
+          "channel": "log",
+          "target": "stdout"
+        },
+        "successCount7d": 320,
+        "failureCount7d": 8
+      }
+    ],
+    "summary7d": {
+      "totalJobs": 3,
+      "enabledJobs": 2,
+      "disabledJobs": 1,
+      "successCount": 328,
+      "failureCount": 8
+    },
+    "source": {
+      "type": "sample",
+      "details": "No live cron integration in file:// mode."
+    }
+  },
+  "openThreads": {
+    "items": [
+      "Investigate elevated retry rates in ingestion pipeline.",
+      "Document the handover checklist for on-call rotation.",
+      "Decide whether to enable the new cost guardrail threshold."
+    ],
+    "source": {
+      "type": "sample",
+      "details": "If you load MEMORY.md in the tool, it can parse ## Open Threads."
+    }
+  },
+  "costBurn": {
+    "currency": "USD",
+    "total7d": 18.42,
+    "byModel": {
+      "Opus": 6.1,
+      "Sonnet": 10.77,
+      "local": 1.55
+    },
+    "daily": [
+      {
+        "date": "2026-03-04",
+        "cost": 2.31
+      },
+      {
+        "date": "2026-03-05",
+        "cost": 2.77
+      },
+      {
+        "date": "2026-03-06",
+        "cost": 2.43
+      },
+      {
+        "date": "2026-03-07",
+        "cost": 2.66
+      },
+      {
+        "date": "2026-03-08",
+        "cost": 2.51
+      },
+      {
+        "date": "2026-03-09",
+        "cost": 2.94
+      },
+      {
+        "date": "2026-03-10",
+        "cost": 2.8
+      }
+    ],
+    "source": {
+      "type": "sample",
+      "details": "Hook up to real usage logs by loading a JSON export."
+    }
+  },
+  "sessionMetrics": {
+    "totalSessions7d": 11,
+    "totalMinutes7d": 512,
+    "avgSessionMinutes": 46.5,
+    "daily": [
+      {
+        "date": "2026-03-04",
+        "sessions": 1,
+        "minutes": 35
+      },
+      {
+        "date": "2026-03-05",
+        "sessions": 2,
+        "minutes": 83
+      },
+      {
+        "date": "2026-03-06",
+        "sessions": 1,
+        "minutes": 44
+      },
+      {
+        "date": "2026-03-07",
+        "sessions": 2,
+        "minutes": 96
+      },
+      {
+        "date": "2026-03-08",
+        "sessions": 1,
+        "minutes": 38
+      },
+      {
+        "date": "2026-03-09",
+        "sessions": 2,
+        "minutes": 117
+      },
+      {
+        "date": "2026-03-10",
+        "sessions": 2,
+        "minutes": 99
+      }
+    ],
+    "source": {
+      "type": "sample",
+      "details": "Provide session logs via JSON and load them in the tool."
+    }
+  },
+  "fileChangeVelocity": {
+    "method": "sample",
+    "sinceDays": 7,
+    "filesChanged": 12,
+    "linesAdded": 842,
+    "linesRemoved": 615,
+    "topFiles": [
+      {
+        "path": "src/agent.ts",
+        "linesAdded": 220,
+        "linesRemoved": 140
+      },
+      {
+        "path": "src/scheduler.ts",
+        "linesAdded": 180,
+        "linesRemoved": 90
+      },
+      {
+        "path": "README.md",
+        "linesAdded": 45,
+        "linesRemoved": 10
+      }
+    ],
+    "source": {
+      "type": "sample",
+      "details": "Browser cannot run git; load a git-stat JSON export to replace this."
+    }
+  }
+}

@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Find a Therapist in New York (Online, Insurance-Friendly) | MMHC</title>
+  <meta name="description" content="Trying to find a therapist in New York can feel overwhelming. MMHC makes it simple with online therapy statewide, 80+ licensed therapists, most major insurance, and same-week appointments." />
+  <link rel="canonical" href="https://manhattanmentalhealthcounseling.com/find-a-therapist-new-york" />
+
+  <meta property="og:title" content="Find a Therapist in New York — Made Simple | MMHC" />
+  <meta property="og:description" content="Online-only therapy across New York State with 80+ licensed therapists, most major insurance, and same-week availability." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://manhattanmentalhealthcounseling.com/find-a-therapist-new-york" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Find a Therapist in New York — Made Simple | MMHC" />
+  <meta name="twitter:description" content="Online-only therapy across New York State. Insurance-friendly. Same-week appointments." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --green:#1E4129;
+      --accent:#A1E681;
+      --bg:#F5F9F7;
+      --white:#FFFFFF;
+      --text:#2D3436;
+      --muted:#5A6468;
+      --border:rgba(30,65,41,.14);
+      --shadow:0 10px 30px rgba(30,65,41,.10);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:linear-gradient(180deg, var(--bg), #ffffff 65%);
+      line-height:1.6;
+    }
+    a{color:inherit}
+    .wrap{max-width:1080px; margin:0 auto; padding:0 20px;}
+    .content{max-width:800px; margin:0 auto;}
+
+    /* Sticky nav */
+    .nav{
+      position:sticky; top:0; z-index:50;
+      background:rgba(255,255,255,.92);
+      backdrop-filter:saturate(140%) blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px;
+      padding:12px 0;
+    }
+    .brand{
+      display:flex; align-items:baseline; gap:10px;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    .brand b{color:var(--green)}
+    .nav a{
+      text-decoration:none;
+      font-weight:600;
+      color:var(--muted);
+    }
+    .navlinks{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:flex-end;}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:var(--white);
+    }
+
+    /* Hero */
+    .hero{padding:44px 0 18px;}
+    .kicker{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(161,230,129,.28);
+      border:1px solid rgba(30,65,41,.14);
+      color:var(--green);
+      font-weight:700;
+      letter-spacing:.2px;
+      font-size:14px;
+    }
+    h1,h2,h3{font-family:"DM Serif Display", Georgia, serif; line-height:1.15; margin:0 0 12px; color:var(--green);}
+    h1{font-size:44px; letter-spacing:.2px;}
+    .sub{
+      font-size:18px;
+      color:var(--muted);
+      margin:0 0 18px;
+    }
+    .cta-row{display:flex; flex-wrap:wrap; gap:12px; margin-top:18px;}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 16px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:800;
+      border:1px solid transparent;
+      transition:transform .06s ease;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn-primary{background:var(--green); color:var(--white); box-shadow:var(--shadow)}
+    .btn-secondary{background:var(--white); color:var(--green); border-color:var(--border)}
+    .meta{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top:18px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .meta span{padding:8px 10px; background:var(--white); border:1px solid var(--border); border-radius:999px;}
+
+    /* Sections */
+    section{padding:22px 0;}
+    .card{
+      background:var(--white);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:0 1px 0 rgba(0,0,0,.02);
+    }
+    .grid{display:grid; grid-template-columns:1fr; gap:14px;}
+    .lead{font-size:16px; color:var(--muted); margin:0 0 10px;}
+    ul{margin:10px 0 0; padding-left:18px;}
+    li{margin:6px 0;}
+
+    /* FAQ */
+    .faq details{
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:var(--white);
+      padding:12px 14px;
+    }
+    .faq details + details{margin-top:10px;}
+    .faq summary{
+      cursor:pointer;
+      font-weight:800;
+      color:var(--green);
+      list-style:none;
+    }
+    .faq summary::-webkit-details-marker{display:none;}
+    .faq .ans{color:var(--muted); margin-top:8px;}
+
+    /* Footer */
+    footer{
+      padding:28px 0 44px;
+      color:var(--muted);
+      font-size:14px;
+      border-top:1px solid var(--border);
+      margin-top:18px;
+    }
+    .fine{font-size:12px; color:rgba(90,100,104,.92)}
+
+    /* Mobile */
+    @media (max-width:520px){
+      h1{font-size:36px;}
+      .nav-inner{align-items:flex-start; flex-direction:column;}
+      .navlinks{justify-content:flex-start;}
+      .pill{width:100%; justify-content:space-between;}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Manhattan Mental Health Counseling",
+    "url": "https://manhattanmentalhealthcounseling.com",
+    "description": "Online-only therapy practice serving New York State with 80+ licensed therapists. Insurance-friendly with same-week appointments when available.",
+    "areaServed": [{"@type":"State","name":"New York"}],
+    "serviceType": "Online therapy"
+  }
+  </script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <div class="nav-inner">
+        <div class="brand" aria-label="Manhattan Mental Health Counseling">
+          <span><b>MMHC</b></span>
+          <span style="color:var(--muted); font-weight:700;">Online Therapy · NYS</span>
+        </div>
+        <nav class="navlinks" aria-label="Page navigation">
+          <a class="pill" href="#why">Why it’s hard</a>
+          <a class="pill" href="#match">Matching</a>
+          <a class="pill" href="#insurance">Insurance</a>
+          <a class="pill" href="#availability">Same-week</a>
+          <a class="pill" href="#faq">FAQ</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="content">
+      <section class="hero" aria-label="Hero">
+        <span class="kicker">Find a therapist in New York</span>
+        <h1>Finding a therapist shouldn’t feel like a second job.</h1>
+        <p class="sub">If you’re trying to <strong>find a therapist in New York</strong>, you’ve probably seen endless directories, confusing bios, and “not accepting new clients.” We help you get matched with a licensed therapist for online sessions across New York State.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://manhattanmentalhealthcounseling.com">Get started with MMHC</a>
+          <a class="btn btn-secondary" href="https://manhattanmentalhealthcounseling.com">See how matching works</a>
+        </div>
+        <div class="meta" aria-label="Practice highlights">
+          <span>Online-only · New York State</span>
+          <span>80+ licensed therapists</span>
+          <span>Most major insurance</span>
+          <span>Same-week appointments (when available)</span>
+        </div>
+      </section>
+
+      <section id="why" aria-label="Why finding a therapist is hard">
+        <div class="card">
+          <h2>Why finding a therapist is so hard</h2>
+          <p class="lead">When you’re already stretched thin, the search process can feel like it’s designed to wear you down.</p>
+          <div class="grid">
+            <div>
+              <ul>
+                <li><strong>Too many choices</strong> with not enough clarity on fit.</li>
+                <li><strong>Insurance confusion</strong> and unclear costs.</li>
+                <li><strong>Availability dead ends</strong> after you finally reach out.</li>
+                <li><strong>Decision fatigue</strong>—especially when you’re stressed.</li>
+              </ul>
+            </div>
+          </div>
+          <p class="lead" style="margin-top:12px;">MMHC simplifies the process: tell us what you’re looking for and we guide you to a therapist who can meet with you online in New York State.</p>
+        </div>
+      </section>
+
+      <section id="match" aria-label="How MMHC matching works">
+        <div class="card">
+          <h2>How MMHC matching works (simple, human, fast)</h2>
+          <p class="lead">You don’t need to know the “right” modality or the perfect wording. Start where you are.</p>
+          <ol style="margin:10px 0 0; padding-left:18px;">
+            <li><strong>Share what you want help with</strong> (goals, preferences, schedule, insurance).</li>
+            <li><strong>We match you thoughtfully</strong> with a licensed therapist from our team of 80+.</li>
+            <li><strong>Meet online</strong>—from home, work, or wherever you feel comfortable in New York State.</li>
+          </ol>
+          <p class="lead" style="margin-top:12px;">If the first match doesn’t feel right, we’ll help you adjust—because fit matters.</p>
+        </div>
+      </section>
+
+      <section id="insurance" aria-label="Insurance accepted">
+        <div class="card">
+          <h2>Insurance accepted (without the runaround)</h2>
+          <p class="lead">Cost uncertainty can stop people from getting support. We keep it straightforward.</p>
+          <ul>
+            <li>We accept <strong>most major insurance</strong>.</li>
+            <li>We’ll help you understand <strong>coverage and next steps</strong> before you begin.</li>
+            <li>Prefer to pay out of pocket? We’ll clarify options so there are no surprises.</li>
+          </ul>
+          <p class="lead" style="margin-top:12px;">The goal is simple: remove friction so you can focus on the work you came for.</p>
+        </div>
+      </section>
+
+      <section id="availability" aria-label="Same-week availability">
+        <div class="card">
+          <h2>Same-week availability, when you need momentum</h2>
+          <p class="lead">When you finally decide to reach out, waiting weeks can feel discouraging. MMHC offers same-week appointments when available.</p>
+          <ul>
+            <li>Online sessions across New York State</li>
+            <li>Flexible times that can fit around work and family</li>
+            <li>A real plan for getting started—not “check back later”</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="faq" class="faq" aria-label="Frequently asked questions">
+        <h2>FAQ: Find a therapist in New York</h2>
+        <details>
+          <summary>Do you offer in-person sessions?</summary>
+          <div class="ans">MMHC is an <strong>online-only</strong> practice. Sessions are held via secure telehealth for New York State residents.</div>
+        </details>
+        <details>
+          <summary>Do I have to live in NYC to work with MMHC?</summary>
+          <div class="ans">No. We serve clients across <strong>New York State</strong>, not just the city, as long as you’re located in NYS for sessions.</div>
+        </details>
+        <details>
+          <summary>How quickly can I get an appointment?</summary>
+          <div class="ans">Same-week appointments are often available, depending on therapist schedules and your preferences. We’ll help you find the earliest good-fit option.</div>
+        </details>
+        <details>
+          <summary>What if I’m not sure what kind of therapist I need?</summary>
+          <div class="ans">That’s common. You can share what you’re experiencing and what you want to be different, and we’ll match you with a therapist aligned with your goals and preferences.</div>
+        </details>
+        <details>
+          <summary>Do you take insurance?</summary>
+          <div class="ans">We accept <strong>most major insurance</strong>. When you reach out, we’ll help you confirm coverage and understand next steps.</div>
+        </details>
+      </section>
+
+      <section aria-label="Call to action">
+        <div class="card" style="border-color:rgba(161,230,129,.55); background:linear-gradient(180deg, rgba(161,230,129,.20), #ffffff 60%);">
+          <h2>Ready to find a therapist in New York—without the spiral?</h2>
+          <p class="lead">Tell us what you’re looking for. We’ll help you get matched with a licensed therapist for online sessions in New York State.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="https://manhattanmentalhealthcounseling.com">Start now</a>
+            <a class="btn btn-secondary" href="https://manhattanmentalhealthcounseling.com">Questions? Visit MMHC</a>
+          </div>
+          <p class="fine" style="margin-top:10px;">MMHC provides therapy services online for New York State residents. If you’re in immediate danger or need urgent help, contact local emergency services.</p>
+        </div>
+      </section>
+
+      <footer aria-label="Footer">
+        <div class="brand" style="gap:8px; margin-bottom:10px;"><b>MMHC</b><span>Manhattan Mental Health Counseling</span></div>
+        <div>Online-only therapy practice serving New York State · 80+ licensed therapists · Insurance-friendly · Same-week availability (when available)</div>
+        <div class="fine" style="margin-top:10px;">© <span id="year">2026</span> Manhattan Mental Health Counseling. All rights reserved.</div>
+      </footer>
+    </div>
+  </main>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do you offer in-person sessions?",
+        "acceptedAnswer": {"@type": "Answer", "text": "MMHC is an online-only practice. Sessions are held via secure telehealth for New York State residents."}
+      },
+      {
+        "@type": "Question",
+        "name": "Do I have to live in NYC to work with MMHC?",
+        "acceptedAnswer": {"@type": "Answer", "text": "No. MMHC serves clients across New York State as long as you are located in NYS for sessions."}
+      },
+      {
+        "@type": "Question",
+        "name": "How quickly can I get an appointment?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Same-week appointments are often available depending on schedules and preferences. MMHC helps you find the earliest good-fit option."}
+      },
+      {
+        "@type": "Question",
+        "name": "What if I’m not sure what kind of therapist I need?",
+        "acceptedAnswer": {"@type": "Answer", "text": "You can share your goals and preferences, and MMHC will match you with a licensed therapist aligned with what you’re looking for."}
+      },
+      {
+        "@type": "Question",
+        "name": "Do you take insurance?",
+        "acceptedAnswer": {"@type": "Answer", "text": "MMHC accepts most major insurance. The team can help you confirm coverage and understand next steps."}
+      }
+    ]
+  }
+  </script>
+</body>
+</html>
