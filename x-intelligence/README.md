@@ -1,6 +1,6 @@
 # x-intelligence
 
-Deployed: 2026-03-04 14:01:32 UTC
+Deployed: 2026-03-20 23:34:39 UTC
 Source: /Users/davinci/.openclaw/workspace/generated/x-intelligence-dashboard
-Description: Live X Intelligence data — 2026-03-04 09:01
+Description: Live X Intelligence data — 2026-03-20 19:34
 URL: https://davinci282828.github.io/projects/x-intelligence/
