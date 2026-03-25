@@ -1,0 +1,2257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>X Intelligence — Da Vinci Protocol</title>
+  <style>
+    :root{
+      --bg:#0A2540;
+      --panel:#0e2f54;
+      --panel-2:#103a66;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.72);
+      --muted2:rgba(255,255,255,.58);
+      --border:rgba(255,255,255,.12);
+      --border2:rgba(255,255,255,.18);
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+
+      --good:#4CAF50;
+      --warn:#FFD54F;
+      --bad:#F44336;
+      --accent:#6bb7ff;
+
+      --pill:#173d68;
+      --tap:44px;
+      --radius:14px;
+      --radius2:12px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background:radial-gradient(1200px 600px at 20% -10%, rgba(107,183,255,.22), transparent 55%),
+                 radial-gradient(900px 500px at 105% 10%, rgba(255,152,0,.16), transparent 60%),
+                 var(--bg);
+    }
+
+    a{color:#9ad0ff; text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .wrap{max-width:1100px; margin:0 auto; padding:16px; padding-bottom:28px}
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:linear-gradient(to bottom, rgba(10,37,64,.96), rgba(10,37,64,.80));
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .header-inner{max-width:1100px; margin:0 auto; padding:14px 16px 10px 16px}
+
+    .title-row{display:flex; align-items:flex-start; justify-content:space-between; gap:12px}
+    .title{
+      font-weight:800;
+      letter-spacing:.2px;
+      font-size:18px;
+      line-height:1.15;
+      margin:0;
+    }
+    .subtitle{
+      margin:4px 0 0 0;
+      color:var(--muted);
+      font-size:12.5px;
+      line-height:1.3;
+    }
+
+    .meta{
+      text-align:right;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.35;
+      min-width:140px;
+    }
+
+    .stats{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap:10px;
+    }
+    @media (min-width: 720px){
+      .stats{grid-template-columns: repeat(4, minmax(0,1fr));}
+      .title{font-size:20px}
+    }
+
+    .stat{
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:10px 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.18);
+      min-height:54px;
+    }
+    .stat .k{color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.10em}
+    .stat .v{margin-top:5px; font-size:16px; font-weight:800}
+
+    .tabs{
+      margin-top:10px;
+      display:flex;
+      gap:8px;
+      overflow:auto;
+      padding-bottom:6px;
+    }
+    .tabbtn{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      border-radius:999px;
+      padding:10px 12px;
+      font-weight:700;
+      font-size:13px;
+      min-height:var(--tap);
+      white-space:nowrap;
+      cursor:pointer;
+      transition: transform .08s ease, background .15s ease, border-color .15s ease;
+    }
+    .tabbtn:active{transform: scale(.99)}
+    .tabbtn[aria-selected="true"]{
+      background:rgba(107,183,255,.15);
+      border-color:rgba(107,183,255,.55);
+    }
+
+    .panel{
+      margin-top:14px;
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .panel-h{
+      padding:12px 12px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .panel-h h2{
+      margin:0;
+      font-size:14px;
+      letter-spacing:.02em;
+      color:rgba(255,255,255,.92);
+    }
+
+    .controls{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+    .control{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid var(--border);
+      background:rgba(10,37,64,.35);
+      padding:8px 10px;
+      border-radius:12px;
+    }
+    .control label{font-size:12px; color:var(--muted)}
+    select,input[type="date"]{
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--border2);
+      color:var(--text);
+      border-radius:10px;
+      padding:8px 10px;
+      font-weight:700;
+      min-height:var(--tap);
+    }
+
+    .btn{
+      cursor:pointer;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:800;
+      min-height:var(--tap);
+      transition: background .15s ease, border-color .15s ease, transform .08s ease;
+      user-select:none;
+    }
+    .btn:active{transform: scale(.99)}
+    .btn.primary{border-color:rgba(107,183,255,.55); background:rgba(107,183,255,.12)}
+    .btn.danger{border-color:rgba(244,67,54,.55); background:rgba(244,67,54,.10)}
+
+    .panel-b{padding:12px}
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+    @media (min-width: 860px){
+      .grid.two{grid-template-columns: 1fr 1fr;}
+    }
+
+    .card{
+      border:1px solid var(--border);
+      background:rgba(10,37,64,.28);
+      border-radius:var(--radius);
+      padding:12px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    }
+
+    .brief-top{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
+    .pill-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:rgba(255,255,255,.94);
+      line-height:1;
+      white-space:nowrap;
+    }
+    .pill .dot{width:8px; height:8px; border-radius:50%}
+
+    .badge{
+      font-size:12px;
+      font-weight:900;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.07);
+      white-space:nowrap;
+      line-height:1;
+    }
+
+    .handle{
+      font-family:var(--mono);
+      font-weight:900;
+      font-size:12.5px;
+      color:rgba(255,255,255,.92);
+    }
+
+    .claim{margin:10px 0 0 0; font-size:15px; font-weight:900; line-height:1.25}
+    .sowhat{margin:8px 0 0 0; color:rgba(255,255,255,.86); line-height:1.35}
+    .muted{color:var(--muted); font-size:12.5px; line-height:1.35}
+    .micro{color:var(--muted2); font-size:12px; line-height:1.3}
+
+    .actions{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:8px;
+    }
+
+    .btnRate{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.06);
+      min-height:var(--tap);
+      font-weight:900;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btnRate[aria-pressed="true"]{
+      border-color:rgba(107,183,255,.65);
+      background:rgba(107,183,255,.14);
+    }
+
+    .btnRate.sig{border-color:rgba(76,175,80,.55); background:rgba(76,175,80,.10)}
+    .btnRate.noi{border-color:rgba(244,67,54,.55); background:rgba(244,67,54,.10)}
+    .btnRate.unc{border-color:rgba(255,213,79,.55); background:rgba(255,213,79,.10)}
+
+    .action-row{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap:8px;
+      margin-top:8px;
+    }
+    .btnAction{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      border-radius:12px;
+      border:1px solid rgba(107,183,255,.3);
+      background:rgba(107,183,255,.08);
+      min-height:var(--tap);
+      font-size:0.8rem;
+      font-weight:700;
+      cursor:pointer;
+      user-select:none;
+      color:rgba(255,255,255,.85);
+      transition:all .15s;
+    }
+    .btnAction:active{
+      transform:scale(.96);
+      background:rgba(107,183,255,.2);
+    }
+    .btnAction.analyze{border-color:rgba(156,39,176,.5); background:rgba(156,39,176,.1)}
+    .btnAction.repurpose{border-color:rgba(0,188,212,.5); background:rgba(0,188,212,.1)}
+    .btnAction.apply{border-color:rgba(255,152,0,.5); background:rgba(255,152,0,.1)}
+
+    /* Status badges for acted-on items */
+    .status-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      font-size:0.65rem;
+      font-weight:700;
+      padding:2px 8px;
+      border-radius:20px;
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+    }
+    .status-badge.sent{background:rgba(255,152,0,.15);color:#ffb74d;border:1px solid rgba(255,152,0,.3)}
+    .status-badge.complete{background:rgba(76,175,80,.15);color:#81c784;border:1px solid rgba(76,175,80,.3)}
+    .status-badge.dismissed{background:rgba(158,158,158,.15);color:#bdbdbd;border:1px solid rgba(158,158,158,.3)}
+    .status-badge.pending{background:rgba(33,150,243,.15);color:#64b5f6;border:1px solid rgba(33,150,243,.3)}
+
+    .empty{
+      border:1px dashed rgba(255,255,255,.25);
+      border-radius:var(--radius);
+      padding:18px;
+      text-align:center;
+      color:var(--muted);
+      background:rgba(10,37,64,.22);
+    }
+
+    /* Accounts */
+    table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden}
+    th, td{padding:10px 10px; border-bottom:1px solid var(--border); vertical-align:top}
+    th{
+      position:sticky;
+      top:0;
+      background:rgba(10,37,64,.92);
+      z-index:10;
+      text-align:left;
+      font-size:12px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.10em;
+    }
+    .tableWrap{
+      overflow:auto;
+      border-radius:var(--radius);
+      border:1px solid var(--border);
+      background:rgba(10,37,64,.22);
+    }
+
+    .score{
+      font-weight:1000;
+      font-family:var(--mono);
+    }
+
+    .rowSmall{display:none}
+    @media (max-width: 780px){
+      .rowBig{display:none}
+      .rowSmall{display:block}
+      th{position:static}
+    }
+
+    .acctCard{
+      border:1px solid var(--border);
+      background:rgba(10,37,64,.24);
+      border-radius:var(--radius);
+      padding:12px;
+    }
+    .acctHead{display:flex; justify-content:space-between; gap:10px; align-items:flex-start}
+    .acctName{font-weight:1000; margin:0; font-size:14px; line-height:1.2}
+    .acctMeta{margin-top:6px; color:var(--muted); font-size:12.5px; line-height:1.35}
+    .acctGrid{margin-top:10px; display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .kv{border:1px solid var(--border); border-radius:12px; padding:10px; background:rgba(255,255,255,.05)}
+    .kv .k{color:var(--muted2); font-size:11px; text-transform:uppercase; letter-spacing:.10em}
+    .kv .v{margin-top:6px; font-weight:900; font-size:13px}
+
+    /* Discovery */
+    .discRow{display:flex; gap:12px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap}
+    .discLeft{min-width:240px}
+    .discRight{display:flex; gap:8px; align-items:center}
+
+    /* Analytics */
+    .chart{
+      border:1px solid var(--border);
+      background:rgba(10,37,64,.22);
+      border-radius:var(--radius);
+      padding:12px;
+    }
+    .chart h3{margin:0 0 10px 0; font-size:13px; letter-spacing:.02em; color:rgba(255,255,255,.92)}
+
+    .bars{display:flex; gap:8px; align-items:flex-end; height:120px}
+    .bar{
+      flex:1;
+      min-width:18px;
+      border-radius:10px 10px 8px 8px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(107,183,255,.15);
+      position:relative;
+      overflow:hidden;
+    }
+    .bar::before{
+      content:"";
+      position:absolute;
+      left:0; right:0; bottom:0;
+      height: var(--h, 0%);
+      background: linear-gradient(to top, rgba(107,183,255,.75), rgba(107,183,255,.25));
+    }
+    .barLabel{
+      margin-top:8px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      font-size:11.5px;
+      color:var(--muted);
+    }
+
+    .toastWrap{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:16px;
+      z-index:200;
+      pointer-events:none;
+      display:flex;
+      justify-content:center;
+      padding:0 12px;
+    }
+    .toast{
+      pointer-events:none;
+      max-width:720px;
+      width:100%;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(13,48,82,.92);
+      backdrop-filter: blur(10px);
+      color:rgba(255,255,255,.94);
+      border-radius:14px;
+      padding:10px 12px;
+      box-shadow: 0 18px 45px rgba(0,0,0,.35);
+      display:none;
+    }
+    .toast strong{font-weight:1000}
+
+    .foot{
+      margin-top:14px;
+      color:var(--muted2);
+      font-size:12px;
+      line-height:1.35;
+      padding:0 4px;
+    }
+
+    .sr-only{
+      position:absolute;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
+    }
+  </style>
+</head>
+<body>
+<script>/* XI_STATE fallback if xi-state.js not yet generated */
+if(typeof XI_STATE==="undefined"){var XI_STATE={};var XI_FEEDBACK={};}
+</script>
+<script src="xi-state.js" onerror=""></script>
+<!-- Da Vinci Ops — Shared Dashboard Nav -->
+<nav id="dv-nav" style="position:sticky;top:0;z-index:9998;background:#0A2540;border-bottom:1px solid rgba(255,255,255,.1);padding:0 16px;display:flex;align-items:center;gap:4px;height:44px;overflow-x:auto;-webkit-overflow-scrolling:touch;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;white-space:nowrap;">
+  <span style="font-weight:900;color:rgba(255,255,255,.5);margin-right:8px;flex-shrink:0;">🔺 Ops</span>
+  <a href="https://davinci282828.github.io/projects/x-intelligence/" style="padding:10px 12px;color:rgba(255,255,255,.7);text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.dataset.active==='true'?'#fff':'rgba(255,255,255,.7)'">X Intelligence</a>
+  <a href="https://davinci282828.github.io/projects/mmhc-content-factory/" style="padding:10px 12px;color:rgba(255,255,255,.7);text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.dataset.active==='true'?'#fff':'rgba(255,255,255,.7)'">Content Factory</a>
+  <a href="https://davinci282828.github.io/projects/mmhc-reddit-batch/" style="padding:10px 12px;color:rgba(255,255,255,.7);text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.dataset.active==='true'?'#fff':'rgba(255,255,255,.7)'">Reddit Batch</a>
+  <a href="https://davinci282828.github.io/projects/video-knowledge-graph/" style="padding:10px 12px;color:rgba(255,255,255,.7);text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=this.dataset.active==='true'?'#fff':'rgba(255,255,255,.7)'">Video KG</a>
+  <a href="https://davinci282828.github.io/projects/" style="padding:10px 12px;color:rgba(255,255,255,.4);text-decoration:none;border-bottom:2px solid transparent;transition:all .15s;margin-left:auto;flex-shrink:0;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.4)'">All Projects ›</a>
+</nav>
+<script>
+(function(){
+  var nav=document.getElementById('dv-nav');
+  if(!nav)return;
+  var links=nav.querySelectorAll('a');
+  var loc=location.href;
+  links.forEach(function(a){
+    if(loc.indexOf(a.getAttribute('href'))>-1||(a.getAttribute('href')&&loc.indexOf(a.getAttribute('href').replace(/\/$/,''))>-1)){
+      a.style.color='#fff';
+      a.style.borderBottomColor='#6bb7ff';
+      a.style.fontWeight='700';
+      a.dataset.active='true';
+    }
+  });
+})();
+</script>
+
+  <header>
+    <div class="header-inner">
+      <div class="title-row">
+        <div>
+          <h1 class="title">X Intelligence — Da Vinci Protocol</h1>
+          <p class="subtitle">Mobile-first dashboard for reviewing X/Twitter intelligence scans. State is saved to <span style="font-family:var(--mono)">localStorage</span>.</p>
+        </div>
+        <div class="meta" id="metaBox">
+          <div><span class="micro">Framework</span> <strong id="frameworkVer">—</strong></div>
+          <div><span class="micro">Last scan</span> <strong id="lastScan">—</strong></div>
+        </div>
+      </div>
+
+      <div class="stats" role="group" aria-label="Overview statistics">
+        <div class="stat"><div class="k">Total accounts</div><div class="v" id="statAccounts">—</div></div>
+        <div class="stat"><div class="k">Scanned today</div><div class="v" id="statActive">—</div></div>
+        <div class="stat"><div class="k">Today's brief items</div><div class="v" id="statToday">—</div></div>
+        <div class="stat"><div class="k">7-day hit rate</div><div class="v" id="statHitRate">—</div></div>
+      </div>
+
+      <nav class="tabs" role="tablist" aria-label="Dashboard tabs">
+        <button class="tabbtn" id="tab-daily" role="tab" aria-selected="true" data-tab="daily">Daily Brief</button>
+        <button class="tabbtn" id="tab-accounts" role="tab" aria-selected="false" data-tab="accounts">Accounts</button>
+        <button class="tabbtn" id="tab-discovery" role="tab" aria-selected="false" data-tab="discovery">Discovery</button>
+        <button class="tabbtn" id="tab-analytics" role="tab" aria-selected="false" data-tab="analytics">Analytics</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel" id="panel-daily" role="tabpanel" aria-labelledby="tab-daily">
+      <div class="panel-h">
+        <h2>Daily Brief</h2>
+        <div class="controls">
+          <div class="control">
+            <label for="briefDate">Date</label>
+            <input id="briefDate" type="date" />
+          </div>
+          <div class="control">
+            <label for="tagFilter">Tag</label>
+            <select id="tagFilter"></select>
+          </div>
+          <button class="btn primary" id="btnExportBrief" type="button">Export Brief (MD)</button>
+          <button class="btn" id="btnExportRatings" type="button">Export Ratings (JSON)</button>
+        </div>
+      </div>
+      <div class="panel-b">
+        <div id="briefList" class="grid"></div>
+        <div class="foot">Tip: Tap ✓/✗/? to label each item. Ratings persist locally on this device.</div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-accounts" role="tabpanel" aria-labelledby="tab-accounts" hidden>
+      <div class="panel-h">
+        <h2>Accounts</h2>
+        <div class="controls">
+          <div class="control">
+            <label for="acctSort">Sort</label>
+            <select id="acctSort">
+              <option value="tier">Tier (default)</option>
+              <option value="score">Score</option>
+              <option value="tweets">Tweets surfaced (30d)</option>
+            </select>
+          </div>
+          <div class="control">
+            <label for="tierFilter">Tier</label>
+            <select id="tierFilter"></select>
+          </div>
+          <div class="control">
+            <label for="statusFilter">Status</label>
+            <select id="statusFilter"></select>
+          </div>
+        </div>
+      </div>
+      <div class="panel-b">
+        <div class="rowBig">
+          <div class="tableWrap" aria-label="Accounts table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Handle</th>
+                  <th>Name</th>
+                  <th>Tier</th>
+                  <th>Domain</th>
+                  <th>Total Score</th>
+                  <th>Status</th>
+                  <th>Tweets (30d)</th>
+                  <th>Last scored</th>
+                </tr>
+              </thead>
+              <tbody id="acctTbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="rowSmall" id="acctCards" aria-label="Accounts cards"></div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-discovery" role="tabpanel" aria-labelledby="tab-discovery" hidden>
+      <div class="panel-h">
+        <h2>Discovery</h2>
+        <div class="controls">
+          <div class="control">
+            <span class="micro"><strong id="discTotals">—</strong></span>
+          </div>
+          <button class="btn" id="btnClearDiscovery" type="button">Clear Decisions</button>
+        </div>
+      </div>
+      <div class="panel-b">
+        <div id="discList" class="grid"></div>
+        <div class="foot">Accept/reject decisions are stored locally. Export Ratings also includes discovery decisions.</div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-analytics" role="tabpanel" aria-labelledby="tab-analytics" hidden>
+      <div class="panel-h">
+        <h2>Analytics</h2>
+        <div class="controls">
+          <div class="control">
+            <span class="micro">Based on <strong>local</strong> ratings + embedded scan data</span>
+          </div>
+          <button class="btn" id="btnResetRatings" type="button">Reset Ratings</button>
+        </div>
+      </div>
+      <div class="panel-b">
+        <div class="grid two">
+          <div class="chart">
+            <h3>Hit rate over time (weekly)</h3>
+            <div class="bars" id="chartWeekly"></div>
+            <div id="chartWeeklyLabels"></div>
+          </div>
+          <div class="chart">
+            <h3>Items per day (embedded)</h3>
+            <div class="bars" id="chartDaily"></div>
+            <div id="chartDailyLabels"></div>
+          </div>
+        </div>
+
+        <div class="grid two" style="margin-top:12px">
+          <div class="chart">
+            <h3>Tag distribution (Signal counts)</h3>
+            <div id="tagDist"></div>
+          </div>
+          <div class="chart">
+            <h3>Account leaderboard (✓ items)</h3>
+            <div id="acctLeaders"></div>
+          </div>
+        </div>
+
+        <div class="foot">Charts are intentionally lightweight (CSS bars, no chart libraries).</div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toastWrap" aria-live="polite" aria-atomic="true">
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <script>
+  // Single-file offline dashboard.
+  // DATA is intended to be injected by cron in production. This file includes realistic sample data.
+
+  const DATA = {
+  "meta": {
+    "generated": "2026-03-20T23:51:26.041321+00:00",
+    "scan_date": "2026-03-20",
+    "accounts_scanned": 6,
+    "framework_version": "v2",
+    "scan_source": "graphql-scan-20260320_090005.json"
+  },
+  "accounts": [
+    {
+      "handle": "Saboo_Shubham_",
+      "name": "Shubham Saboo",
+      "tier": 0,
+      "domain": "Multi-agent / Google PM",
+      "why": "98K star repo, 8-agent OpenClaw stack",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 9,
+      "status": "active"
+    },
+    {
+      "handle": "julesyoo",
+      "name": "Julie Yoo",
+      "tier": 0,
+      "domain": "Healthcare AI strategy / a16z bio GP",
+      "why": "Investment thesis, digital health trends",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "Dr_Singularity",
+      "name": "Dr Singularity",
+      "tier": 0,
+      "domain": "Clinical AI research / diagnostics",
+      "why": "Breakthrough papers, diagnostic benchmarks",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "NetsmartTech",
+      "name": "Netsmart",
+      "tier": 0,
+      "domain": "Behavioral health EHR + clinical docs",
+      "why": "EHR workflows, clinical documentation",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "watch"
+    },
+    {
+      "handle": "lorenzodoteth",
+      "name": "Lorenzo",
+      "tier": 1,
+      "domain": "Venice / NanoClaw builder",
+      "why": "Agent builder journal + Venice insider",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "rileybrown",
+      "name": "Riley Brown",
+      "tier": 1,
+      "domain": "Narrow agent thesis",
+      "why": "7-10 skill sweet spot, vibecodeapp",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "swyx",
+      "name": "Shawn Wang",
+      "tier": 2,
+      "domain": "AI dev tools",
+      "why": "AI engineering, smol-ai",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "emollick",
+      "name": "Ethan Mollick",
+      "tier": 2,
+      "domain": "AI in orgs / education",
+      "why": "Wharton prof, AI adoption research",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "OpenAI",
+      "name": "OpenAI",
+      "tier": 4,
+      "domain": "Model/platform updates",
+      "why": "Platform changes",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "AnthropicAI",
+      "name": "Anthropic",
+      "tier": 4,
+      "domain": "Model/platform updates",
+      "why": "Platform changes",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "AskVenice",
+      "name": "Venice.ai",
+      "tier": 4,
+      "domain": "Privacy AI platform",
+      "why": "Venice ecosystem",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "openclaw",
+      "name": "OpenClaw",
+      "tier": 4,
+      "domain": "Agent framework",
+      "why": "Our platform",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "statnews",
+      "name": "STAT News",
+      "tier": 3,
+      "domain": "Healthcare news",
+      "why": "Healthcare/pharma coverage",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "NTFabiano",
+      "name": "Nicholas Fabiano, MD",
+      "tier": 5,
+      "domain": "Medical research content",
+      "why": "Viral research format template",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "JoeLonsdale",
+      "name": "Joe Lonsdale",
+      "tier": 3,
+      "domain": "8VC / enterprise AI",
+      "why": "Healthcare + enterprise investing",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "lennysan",
+      "name": "Lenny Rachitsky",
+      "tier": 3,
+      "domain": "Product thinking + AI",
+      "why": "Newsletter surfaces builders",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "Hxlfed14",
+      "name": "Himanshu",
+      "tier": 2,
+      "domain": "Agent architecture research",
+      "why": "Comparative agent analysis",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "trial"
+    },
+    {
+      "handle": "PatrickMcKenzie",
+      "name": "Patrick McKenzie",
+      "tier": 3,
+      "domain": "Startups / operations",
+      "why": "Stripe, ops thinking",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "watch"
+    },
+    {
+      "handle": "polymarket",
+      "name": "Polymarket",
+      "tier": 5,
+      "domain": "Markets / sentiment",
+      "why": "Prediction markets",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "sama",
+      "name": "Sam Altman",
+      "tier": 3,
+      "domain": "OpenAI CEO / AI policy",
+      "why": "Platform direction, policy signals",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 18,
+      "status": "active"
+    },
+    {
+      "handle": "LegionHealth",
+      "name": "Legion Health",
+      "tier": 0,
+      "domain": "AI-native psychiatry / YC",
+      "why": "AI psych practice with insurance — MMHC competitor/playbook",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "mattpavelle",
+      "name": "Matt Pavelle",
+      "tier": 0,
+      "domain": "Doctronic CEO / healthcare tech",
+      "why": "Democratizing healthcare, EHR automation",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "maxmarchione",
+      "name": "Max Marchione",
+      "tier": 0,
+      "domain": "Superpower founder",
+      "why": "New healthcare system, actionable health tech",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "SinaHartung",
+      "name": "Sina Hartung",
+      "tier": 0,
+      "domain": "AskEureka / health+AI",
+      "why": "Healthcare tech + AI, clinical docs",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "roshanpateI",
+      "name": "Roshan Patel",
+      "tier": 0,
+      "domain": "Arrow Payments / healthcare",
+      "why": "Healthcare payments — MMHC billing ops",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "watch"
+    },
+    {
+      "handle": "CarbonHealth",
+      "name": "Carbon Health",
+      "tier": 0,
+      "domain": "Hybrid healthcare provider",
+      "why": "Tech-driven telehealth + group practice model",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "watch"
+    },
+    {
+      "handle": "StealthMedical1",
+      "name": "Stealth Medical",
+      "tier": 0,
+      "domain": "Medical AI / biodefense",
+      "why": "HIPAA, clinical AI compliance",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "tonyztherapy",
+      "name": "Tony Z Therapy",
+      "tier": 0,
+      "domain": "Licensed therapist / practice owner",
+      "why": "Private practice management tips",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "LoriGottlieb1",
+      "name": "Lori Gottlieb",
+      "tier": 0,
+      "domain": "Therapist / NYT author",
+      "why": "Psychotherapy content, MMHC blog fuel",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "alliyoungmd",
+      "name": "Dr. Alli Young",
+      "tier": 0,
+      "domain": "Psychiatrist / FAU professor",
+      "why": "Mental health + lifestyle medicine",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "watch"
+    },
+    {
+      "handle": "moltbook",
+      "name": "Moltbook",
+      "tier": 1,
+      "domain": "OpenClaw community hub",
+      "why": "Front page of agent internet",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "DataChaz",
+      "name": "DataChaz",
+      "tier": 1,
+      "domain": "OpenClaw tinkerer",
+      "why": "LLM/agent tooling, open source",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "bcherny",
+      "name": "Boris Cherny",
+      "tier": 1,
+      "domain": "Claude Code / Anthropic",
+      "why": "Agent-building internals",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "oliverhenry",
+      "name": "Oliver Henry",
+      "tier": 1,
+      "domain": "Larry / OpenClaw skill",
+      "why": "Marketing automation on OpenClaw",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "calebhodges",
+      "name": "Caleb Hodges",
+      "tier": 1,
+      "domain": "GodMode / OpenClaw OS",
+      "why": "Personal AI OS architecture",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "johnrushx",
+      "name": "John Rush",
+      "tier": 1,
+      "domain": "Most automated org",
+      "why": "24 AI agents, metrics and failures",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "itsolelehmann",
+      "name": "Ole Lehmann",
+      "tier": 1,
+      "domain": "AI agents for non-tech",
+      "why": "Business automation, non-tech adoption",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "RocketableInc",
+      "name": "Rocketable",
+      "tier": 1,
+      "domain": "YC W25 / AI-maximalist",
+      "why": "Replaces human teams with agents",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "watch"
+    },
+    {
+      "handle": "_jasonwei",
+      "name": "Jason Wei",
+      "tier": 2,
+      "domain": "Meta AI researcher",
+      "why": "Agent architecture, ex-OpenAI/Google",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "trial"
+    },
+    {
+      "handle": "Yampeleg",
+      "name": "Yam Peleg",
+      "tier": 2,
+      "domain": "AI researcher / thursdai",
+      "why": "Weekly AI news with agent focus",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "trial"
+    },
+    {
+      "handle": "JonathanShedler",
+      "name": "Jonathan Shedler",
+      "tier": 5,
+      "domain": "Psychotherapy professor",
+      "why": "Clinical psychology research",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "DoctorPerin",
+      "name": "Dr. Perin",
+      "tier": 5,
+      "domain": "Private practice psychologist",
+      "why": "Therapy content, practice tips",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "sleepdiplomat",
+      "name": "Matthew Walker",
+      "tier": 5,
+      "domain": "Neuroscience / sleep",
+      "why": "Sleep + mental health research",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "maxlugavere",
+      "name": "Max Lugavere",
+      "tier": 5,
+      "domain": "Brain health / longevity",
+      "why": "Genius Foods, brain health research",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 0,
+      "status": "active"
+    },
+    {
+      "handle": "Hxlf_",
+      "name": "ฮาฟ🐻. | เรียน!",
+      "tier": 5,
+      "domain": "Auto-discovered",
+      "why": "Found in scan, 8 followers",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 13,
+      "status": "trial"
+    },
+    {
+      "handle": "SawyerMerritt",
+      "name": "Sawyer Merritt",
+      "tier": 5,
+      "domain": "Auto-discovered",
+      "why": "Found in scan, 1050119 followers",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 12,
+      "status": "trial"
+    },
+    {
+      "handle": "ChrisJBakke",
+      "name": "Chris Bakke",
+      "tier": 5,
+      "domain": "Auto-discovered",
+      "why": "Found in scan, 365994 followers",
+      "scores": {
+        "specificity": null,
+        "relevance": null,
+        "freshness": null,
+        "total": null
+      },
+      "last_scored": null,
+      "tweets_surfaced_30d": 17,
+      "status": "trial"
+    }
+  ],
+  "daily_brief": [],
+  "discovery_log": [],
+  "weekly_stats": []
+};
+
+  const TAG_COLORS = {
+    "MMHC-OPS": "#4CAF50",
+    "MMHC-CLINICAL": "#2196F3",
+    "AGENT-INFRA": "#FF9800",
+    "AGENT-PRODUCT": "#9C27B0",
+    "LANDSCAPE": "#F44336",
+    "MMHC-CONTENT": "#00BCD4",
+    "POLYMARKET-URGENT": "#FFD700"
+  };
+
+  const TIER_COLORS = {
+    0: "#FF5722",
+    1: "#4CAF50",
+    2: "#2196F3",
+    3: "#9E9E9E",
+    4: "#607D8B",
+    5: "#795548"
+  };
+
+  const CONF_COLORS = {
+    "High": "#4CAF50",
+    "Medium": "#FFD54F",
+    "Speculative": "#FF9800"
+  };
+
+  const LS = {
+    ratings: "xintel_ratings_v1",
+    discovery: "xintel_discovery_v1",
+    ui: "xintel_ui_v1"
+  };
+
+  const state = {
+    tab: "daily",
+    briefDate: DATA.meta.scan_date,
+    tag: "ALL",
+    acctSort: "tier",
+    tierFilter: "ALL",
+    statusFilter: "ALL"
+  };
+
+  function $(id){ return document.getElementById(id); }
+
+  function safeJsonParse(v, fallback){
+    try{ return JSON.parse(v); } catch { return fallback; }
+  }
+
+  function loadUiState(){
+    const s = safeJsonParse(localStorage.getItem(LS.ui) || "", null);
+    if(!s) return;
+    if(s.tab) state.tab = s.tab;
+    if(s.briefDate) state.briefDate = s.briefDate;
+    if(s.tag) state.tag = s.tag;
+    if(s.acctSort) state.acctSort = s.acctSort;
+    if(s.tierFilter) state.tierFilter = s.tierFilter;
+    if(s.statusFilter) state.statusFilter = s.statusFilter;
+  }
+
+  function saveUiState(){
+    localStorage.setItem(LS.ui, JSON.stringify({
+      tab: state.tab,
+      briefDate: state.briefDate,
+      tag: state.tag,
+      acctSort: state.acctSort,
+      tierFilter: state.tierFilter,
+      statusFilter: state.statusFilter
+    }));
+  }
+
+  function getRatings(){
+    return safeJsonParse(localStorage.getItem(LS.ratings) || "{}", {});
+  }
+
+  function setRating(id, rating){
+    const r = getRatings();
+    if(rating === null) delete r[id];
+    else r[id] = rating;
+    localStorage.setItem(LS.ratings, JSON.stringify(r));
+  }
+
+  function getDiscoveryOverrides(){
+    return safeJsonParse(localStorage.getItem(LS.discovery) || "{}", {});
+  }
+
+  function setDiscoveryStatus(key, status){
+    const d = getDiscoveryOverrides();
+    d[key] = status;
+    localStorage.setItem(LS.discovery, JSON.stringify(d));
+  }
+
+  function clearDiscovery(){
+    localStorage.removeItem(LS.discovery);
+  }
+
+  function resetRatings(){
+    localStorage.removeItem(LS.ratings);
+  }
+
+  function toast(html, ms=1600){
+    const t = $("toast");
+    t.innerHTML = html;
+    t.style.display = "block";
+    clearTimeout(toast._tm);
+    toast._tm = setTimeout(()=>{ t.style.display = "none"; }, ms);
+  }
+
+  function fmtNum(n){
+    if(n === null || n === undefined) return "—";
+    const v = Number(n);
+    if(!Number.isFinite(v)) return String(n);
+    return v.toLocaleString(undefined);
+  }
+
+  function clamp(x,a,b){ return Math.max(a, Math.min(b, x)); }
+
+  function getAccount(handle){
+    return DATA.accounts.find(a => a.handle === handle) || null;
+  }
+
+  function tierBadge(tier){
+    const c = TIER_COLORS[tier] || "#9E9E9E";
+    return `<span class="badge" style="border-color:${c}55;background:${c}18">T${tier}</span>`;
+  }
+
+  function tagPill(tag){
+    const c = TAG_COLORS[tag] || "#6bb7ff";
+    return `<span class="pill" title="${escapeHtml(tag)}">
+      <span class="dot" style="background:${c}"></span>
+      <span>${escapeHtml(tag)}</span>
+    </span>`;
+  }
+
+  function confBadge(conf){
+    const c = CONF_COLORS[conf] || "#FFD54F";
+    return `<span class="badge" style="border-color:${c}55;background:${c}16">${escapeHtml(conf)}</span>`;
+  }
+
+  function scoreColor(total){
+    if(total === null || total === undefined) return "#607D8B";
+    if(total >= 12) return "#4CAF50";
+    if(total >= 8) return "#FFD54F";
+    return "#F44336";
+  }
+
+  function escapeHtml(s){
+    return String(s)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#39;");
+  }
+
+  function setTab(tab){
+    state.tab = tab;
+    for(const b of document.querySelectorAll(".tabbtn")){
+      const on = b.dataset.tab === tab;
+      b.setAttribute("aria-selected", on ? "true" : "false");
+    }
+    $("panel-daily").hidden = tab !== "daily";
+    $("panel-accounts").hidden = tab !== "accounts";
+    $("panel-discovery").hidden = tab !== "discovery";
+    $("panel-analytics").hidden = tab !== "analytics";
+    saveUiState();
+    render();
+  }
+
+  function uniq(arr){ return Array.from(new Set(arr)); }
+
+  // --- Status badge system (reads XI_STATE from xi-state.js, falls back to localStorage) ---
+  function getActionStatus(itemId, handle){
+    // 1. Check server-side state (XI_STATE global from xi-state.js)
+    if(typeof XI_STATE !== "undefined"){
+      // Check by exact item id patterns
+      const patterns = [];
+      if(itemId) ["dive","repurpose","apply","dismiss"].forEach(a => patterns.push(`xi_${a}_${itemId}`));
+      if(handle) ["dive","repurpose","apply","dismiss","track"].forEach(a => patterns.push(`xi_${a}_${handle}`));
+      let best = null;
+      for(const key of patterns){
+        const entry = XI_STATE[key];
+        if(entry && (!best || entry.timestamp > best.timestamp)){
+          best = {action: entry.action, timestamp: entry.timestamp, status: entry.status};
+        }
+      }
+      if(best) return best;
+    }
+    // 2. Fall back to localStorage (client-side actions not yet synced)
+    const actions = JSON.parse(localStorage.getItem("xi_actions") || "[]");
+    const matching = actions.filter(a =>
+      a.item_id === itemId || a.handle === handle
+    );
+    if(matching.length === 0) return null;
+    const last = matching[matching.length - 1];
+    return {action: last.action, timestamp: last.timestamp, status: "sent"};
+  }
+
+  function statusBadgeHtml(itemId, handle){
+    const s = getActionStatus(itemId, handle);
+    if(!s) return "";
+    const statusLabels = {
+      pending: {dive:"🔍 Diving…", repurpose:"📝 Repurposing…", apply:"⚡ Applying…", track:"📡 Researching…"},
+      complete: {dive:"✅ Dive done", repurpose:"✅ Repurposed", apply:"✅ Applied", dismiss:"✕ Dismissed", track:"✅ Tracked"},
+      sent: {dive:"🔍 Dive sent", repurpose:"📝 Repurpose sent", apply:"⚡ Apply sent", analyze:"🔍 Dive sent"},
+    };
+    const tier = statusLabels[s.status] || statusLabels.sent;
+    const label = (tier[s.action]) || `${s.action} ${s.status}`;
+    const ago = timeAgo(s.timestamp);
+    return `<span class="status-badge ${s.status}" title="${ago}">${label}</span>`;
+  }
+
+  function timeAgo(ts){
+    if(!ts) return "";
+    const diff = Date.now() - new Date(ts).getTime();
+    const mins = Math.floor(diff / 60000);
+    if(mins < 1) return "just now";
+    if(mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if(hrs < 24) return `${hrs}h ago`;
+    const days = Math.floor(hrs / 24);
+    return `${days}d ago`;
+  }
+
+  function initFilters(){
+    // Tag filter
+    const tags = uniq(DATA.daily_brief.map(x => x.tag)).sort();
+    const tagSel = $("tagFilter");
+    tagSel.innerHTML = `<option value="ALL">All tags</option>` + tags.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join("");
+
+    // Tier filter
+    const tiers = uniq(DATA.accounts.map(a => a.tier)).sort((a,b)=>a-b);
+    const tierSel = $("tierFilter");
+    tierSel.innerHTML = `<option value="ALL">All tiers</option>` + tiers.map(t => `<option value="${t}">T${t}</option>`).join("");
+
+    // Status filter
+    const statuses = uniq(DATA.accounts.map(a => a.status)).sort();
+    const statSel = $("statusFilter");
+    statSel.innerHTML = `<option value="ALL">All statuses</option>` + statuses.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join("");
+  }
+
+  function computeHeaderStats(){
+    const total = DATA.accounts.length;
+    const active = DATA.meta.accounts_scanned || DATA.accounts.filter(a => a.tweets_surfaced_30d > 0).length;
+    const today = state.briefDate || DATA.meta.scan_date;
+    const todaysCount = DATA.daily_brief.filter(b => b.date === today).length;
+    const latestWeek = DATA.weekly_stats[DATA.weekly_stats.length - 1];
+    const hr = latestWeek ? Math.round((latestWeek.hit_rate || 0) * 100) : 0;
+
+    $("statAccounts").textContent = fmtNum(total);
+    $("statActive").textContent = fmtNum(active);
+    $("statToday").textContent = fmtNum(todaysCount);
+    $("statHitRate").textContent = `${fmtNum(hr)}%`;
+
+    $("frameworkVer").textContent = DATA.meta.framework_version || "—";
+    // Format timestamp: "2026-03-03T19:56:36.897840+00:00" → "Mar 3, 2026 2:56 PM ET"
+    if(DATA.meta.generated){
+      try{
+        const d = new Date(DATA.meta.generated);
+        $("lastScan").textContent = d.toLocaleString("en-US", {month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit",timeZoneName:"short",timeZone:"America/New_York"});
+      }catch(e){ $("lastScan").textContent = DATA.meta.generated; }
+    } else { $("lastScan").textContent = "—"; }
+  }
+
+  // Telegram deep link config
+  const TG_BOT = "Davinciff_bot";
+  function tgDeepLink(action, payload){
+    return `https://t.me/${TG_BOT}?start=xi_${action}_${encodeURIComponent(payload)}`;
+  }
+
+  function triggerAction(action, item, btn){
+    let payload, url;
+    if(action === "analyze"){
+      payload = item.handle;
+      url = tgDeepLink("dive", payload);
+    } else if(action === "repurpose"){
+      payload = item.id;
+      url = tgDeepLink("repurpose", payload);
+    } else if(action === "apply"){
+      payload = item.id;
+      url = tgDeepLink("apply", payload);
+    } else if(action === "dismiss"){
+      payload = item.id;
+      url = tgDeepLink("dismiss", payload);
+    } else {
+      return;
+    }
+
+    // Visual feedback
+    const origText = btn.textContent;
+    btn.textContent = action === "dismiss" ? "Dismissed ✕" : "Sent to Da Vinci →";
+    btn.style.opacity = "0.6";
+    btn.style.pointerEvents = "none";
+
+    // Fade the whole card on dismiss
+    if(action === "dismiss"){
+      const card = btn.closest(".card");
+      if(card){ card.style.opacity = "0.35"; card.style.transition = "opacity 0.3s"; }
+    }
+
+    setTimeout(() => { btn.textContent = origText; btn.style.opacity = "1"; btn.style.pointerEvents = "auto"; }, 3000);
+
+    // Log action locally
+    const actions = JSON.parse(localStorage.getItem("xi_actions") || "[]");
+    actions.push({action, item_id: item.id, handle: item.handle, timestamp: new Date().toISOString()});
+    localStorage.setItem("xi_actions", JSON.stringify(actions.slice(-100)));
+
+    // Open Telegram deep link
+    window.open(url, "_blank");
+  }
+
+  function triggerAccountDive(handle, btn){
+    const url = tgDeepLink("dive", handle);
+    const origText = btn.textContent;
+    btn.textContent = "Sent →";
+    btn.style.opacity = "0.6";
+    btn.style.pointerEvents = "none";
+    setTimeout(() => { btn.textContent = origText; btn.style.opacity = "1"; btn.style.pointerEvents = "auto"; }, 3000);
+
+    const actions = JSON.parse(localStorage.getItem("xi_actions") || "[]");
+    actions.push({action: "dive", handle, timestamp: new Date().toISOString()});
+    localStorage.setItem("xi_actions", JSON.stringify(actions.slice(-100)));
+
+    window.open(url, "_blank");
+  }
+
+  function buildActionPrompt(action, item){
+    const acct = getAccount(item.handle);
+    const tier = acct ? `T${acct.tier}` : "T?";
+    const base = `X Intelligence item from @${item.handle} (${tier}, ${item.tag}):\n\nTweet: "${item.tweet_text}"\n\nClaim: ${item.claim}\nSo What: ${item.so_what}\nConfidence: ${item.confidence}\nLink: ${item.link}\n`;
+
+    if(action === "analyze"){
+      return `🔍 X INTEL DEEP ANALYSIS\n\n${base}\n---\nAnalyze this for our use case:\n1. How does this approach/insight apply to MMHC operations or our OpenClaw setup?\n2. Compare what they're doing vs what we're doing — gaps and advantages\n3. Specific recommendations: what should we adopt, adapt, or ignore?\n4. If there's a tool/workflow mentioned, assess effort vs. payoff for us`;
+    }
+    if(action === "repurpose"){
+      return `📝 CONTENT REPURPOSE\n\n${base}\n---\nTurn this insight into content pieces:\n1. MMHC Blog post outline (500-800 words, audience = potential therapy clients)\n2. Instagram post (image concept + caption, MMHC voice)\n3. LinkedIn post (Steven's professional voice, 150-200 words)\n4. Thread format (5-7 tweets, educational tone)\n\nAdapt the core insight for each platform's audience. Don't just rewrite — reframe for mental health / therapy context where relevant.`;
+    }
+    if(action === "apply"){
+      return `⚡ ACTIONABLE NEXT STEPS\n\n${base}\n---\nBased on this intelligence:\n1. What specific change should we make this week? (one concrete action)\n2. What file/config/workflow would change? (be specific with paths)\n3. What's the expected impact? (quantify if possible)\n4. What's the risk of NOT acting on this?\n5. Priority: do this now, queue it, or just note it?`;
+    }
+    return base;
+  }
+
+  function showPromptModal(text){
+    const overlay = document.createElement("div");
+    overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px";
+    const box = document.createElement("div");
+    box.style.cssText = "background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:20px;max-width:600px;max-height:80vh;overflow:auto;width:100%";
+    box.innerHTML = `<p style="margin-bottom:12px;font-weight:700">📋 Copy this prompt:</p><textarea style="width:100%;min-height:200px;background:rgba(255,255,255,.05);color:white;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:14px;resize:vertical" readonly>${text.replace(/</g,'&lt;')}</textarea><div style="margin-top:12px;display:flex;gap:8px"><button onclick="this.closest('div[style*=fixed]').remove()" style="flex:1;padding:12px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.1);color:white;cursor:pointer;font-weight:700">Close</button></div>`;
+    overlay.appendChild(box);
+    overlay.addEventListener("click", (e) => { if(e.target === overlay) overlay.remove(); });
+    document.body.appendChild(overlay);
+    box.querySelector("textarea").select();
+  }
+
+  function renderDaily(){
+    const list = $("briefList");
+    const ratings = getRatings();
+    const date = state.briefDate;
+    const tag = state.tag;
+
+    const items = DATA.daily_brief
+      .filter(x => x.date === date)
+      .filter(x => tag === "ALL" ? true : x.tag === tag);
+
+    if(items.length === 0){
+      list.innerHTML = `<div class="empty">No brief items for this date</div>`;
+      return;
+    }
+
+    list.innerHTML = items.map(item => {
+      const acct = getAccount(item.handle);
+      const tier = acct ? acct.tier : "?";
+      const r = ratings[item.id] || null;
+      const metrics = item.metrics || { views:null, likes:null, reposts:null };
+
+      const linkHtml = item.link ? `<a href="${escapeHtml(item.link)}" target="_blank" rel="noreferrer">Open original</a>` : `<span class="micro">No link</span>`;
+
+      return `
+        <article class="card" data-brief-id="${escapeHtml(item.id)}">
+          <div class="brief-top">
+            <div class="pill-row">
+              ${tagPill(item.tag)}
+              <span class="handle">@${escapeHtml(item.handle)}</span>
+              ${typeof tier === "number" ? tierBadge(tier) : `<span class="badge">T?</span>`}
+              ${confBadge(item.confidence)}
+              ${statusBadgeHtml(item.id, item.handle)}
+            </div>
+            <div class="micro" style="text-align:right">
+              <div>${linkHtml}</div>
+            </div>
+          </div>
+
+          <p class="claim">${escapeHtml(item.claim)}</p>
+          <p class="sowhat">${escapeHtml(item.so_what)}</p>
+
+          <div style="margin-top:10px" class="muted">
+            <div><strong>Tweet</strong> (sample): <span class="micro">${escapeHtml(item.tweet_text || "")}</span></div>
+            <div class="micro" style="margin-top:6px">Views: <strong>${fmtNum(metrics.views)}</strong> · Likes: <strong>${fmtNum(metrics.likes)}</strong> · Reposts: <strong>${fmtNum(metrics.reposts)}</strong></div>
+          </div>
+
+          <div class="actions" role="group" aria-label="Rate item ${escapeHtml(item.id)}">
+            <button type="button" class="btnRate sig" data-rate="signal" aria-pressed="${r === "signal" ? "true" : "false"}">✓ Signal</button>
+            <button type="button" class="btnRate noi" data-rate="noise" aria-pressed="${r === "noise" ? "true" : "false"}">✗ Noise</button>
+            <button type="button" class="btnRate unc" data-rate="unclear" aria-pressed="${r === "unclear" ? "true" : "false"}">? Unclear</button>
+          </div>
+          <div class="action-row">
+            <button type="button" class="btnAction analyze" data-action="analyze">🔍 Analyze</button>
+            <button type="button" class="btnAction repurpose" data-action="repurpose">📝 Repurpose</button>
+            <button type="button" class="btnAction apply" data-action="apply">⚡ Apply</button>
+            <button type="button" class="btnAction dismiss" data-action="dismiss" style="border-color:rgba(158,158,158,.4);background:rgba(158,158,158,.08);font-size:0.7rem">✕ Dismiss</button>
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    // Wire up rating buttons
+    for(const card of list.querySelectorAll("[data-brief-id]")){
+      const id = card.getAttribute("data-brief-id");
+      for(const btn of card.querySelectorAll(".btnRate")){
+        btn.addEventListener("click", () => {
+          const rate = btn.getAttribute("data-rate");
+          const cur = getRatings()[id] || null;
+          const next = (cur === rate) ? null : rate;
+          setRating(id, next);
+          toast(next ? `<strong>Saved</strong> rating: ${escapeHtml(next)}.` : `<strong>Cleared</strong> rating.`);
+          render();
+        });
+      }
+
+      // Wire up action buttons
+      const item = items.find(x => x.id === id);
+      if(!item) continue;
+      for(const btn of card.querySelectorAll(".btnAction")){
+        btn.addEventListener("click", function() {
+          const action = this.getAttribute("data-action");
+          triggerAction(action, item, this);
+        });
+        // Long-press fallback: copy prompt to clipboard
+        let lpTimer;
+        btn.addEventListener("pointerdown", (e) => {
+          lpTimer = setTimeout(() => {
+            const action = btn.getAttribute("data-action");
+            const prompt = buildActionPrompt(action, item);
+            navigator.clipboard.writeText(prompt).then(() => {
+              toast(`📋 Prompt copied to clipboard (long-press fallback).`);
+            }).catch(() => showPromptModal(prompt));
+          }, 600);
+        });
+        btn.addEventListener("pointerup", () => clearTimeout(lpTimer));
+        btn.addEventListener("pointerleave", () => clearTimeout(lpTimer));
+      }
+    }
+  }
+
+  function renderAccounts(){
+    // Filter
+    let rows = [...DATA.accounts];
+    if(state.tierFilter !== "ALL") rows = rows.filter(a => String(a.tier) === String(state.tierFilter));
+    if(state.statusFilter !== "ALL") rows = rows.filter(a => a.status === state.statusFilter);
+
+    // Sort (null scores go to bottom)
+    const sort = state.acctSort;
+    const safeScore = (a) => a.scores?.total ?? -1;
+    rows.sort((a,b) => {
+      if(sort === "tier"){
+        if(a.tier !== b.tier) return a.tier - b.tier;
+        return safeScore(b) - safeScore(a);
+      }
+      if(sort === "score"){
+        return safeScore(b) - safeScore(a);
+      }
+      if(sort === "tweets"){
+        return (b.tweets_surfaced_30d || 0) - (a.tweets_surfaced_30d || 0);
+      }
+      return 0;
+    });
+
+    // Desktop table
+    const tb = $("acctTbody");
+    tb.innerHTML = rows.map(a => {
+      const raw = a.scores?.total;
+      const total = (raw !== null && raw !== undefined) ? raw : null;
+      const sc = scoreColor(total);
+      const scoreDisplay = total !== null ? fmtNum(total) : "—";
+      return `
+        <tr>
+          <td><span class="handle">@${escapeHtml(a.handle)}</span></td>
+          <td>${escapeHtml(a.name)}</td>
+          <td>${tierBadge(a.tier)}</td>
+          <td>${escapeHtml(a.domain)}</td>
+          <td><span class="score" style="color:${sc}">${scoreDisplay}</span></td>
+          <td><span class="badge" style="border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.06)">${escapeHtml(a.status)}</span></td>
+          <td>${fmtNum(a.tweets_surfaced_30d)}</td>
+          <td class="micro">${escapeHtml(a.last_scored || "—")}</td>
+          <td><button type="button" class="btnAction analyze" data-handle="${escapeHtml(a.handle)}" data-acct-dive="true" style="font-size:0.7rem;padding:4px 10px;min-height:auto">🔍 Dive</button>${statusBadgeHtml(null, a.handle)}</td>
+        </tr>
+      `;
+    }).join("");
+
+    // Mobile cards
+    const cards = $("acctCards");
+    cards.innerHTML = rows.map(a => {
+      const raw = a.scores?.total;
+      const total = (raw !== null && raw !== undefined) ? raw : null;
+      const sc = scoreColor(total);
+      const scoreDisplay = total !== null ? fmtNum(total) : "—";
+      const breakdownDisplay = total !== null
+        ? `S:${fmtNum(a.scores?.specificity)} · R:${fmtNum(a.scores?.relevance)} · F:${fmtNum(a.scores?.freshness)}`
+        : "Unscored — calibrates after ratings";
+      return `
+        <div class="acctCard" style="margin-bottom:10px">
+          <div class="acctHead">
+            <div>
+              <p class="acctName">@${escapeHtml(a.handle)} · ${escapeHtml(a.name)}</p>
+              <div class="acctMeta">${escapeHtml(a.domain)}<br/><span class="micro">Why:</span> ${escapeHtml(a.why)}</div>
+            </div>
+            <div style="text-align:right; display:flex; flex-direction:column; gap:8px; align-items:flex-end">
+              ${tierBadge(a.tier)}
+              <span class="badge" style="border-color:${sc}55;background:${sc}16"><span class="sr-only">Score</span><span style="font-family:var(--mono); font-weight:1000">${scoreDisplay}</span></span>
+            </div>
+          </div>
+          <div class="acctGrid">
+            <div class="kv"><div class="k">Status</div><div class="v">${escapeHtml(a.status)}</div></div>
+            <div class="kv"><div class="k">Tweets (30d)</div><div class="v">${fmtNum(a.tweets_surfaced_30d)}</div></div>
+            <div class="kv"><div class="k">Last scored</div><div class="v">${escapeHtml(a.last_scored || "—")}</div></div>
+            <div class="kv"><div class="k">Score breakdown</div><div class="v micro">${breakdownDisplay}</div></div>
+          </div>
+          <div class="action-row" style="margin-top:8px">
+            <button type="button" class="btnAction analyze" data-handle="${escapeHtml(a.handle)}" data-acct-dive="true">🔍 Deep Dive</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    // Wire up account Deep Dive buttons (both table and cards)
+    for(const btn of document.querySelectorAll("[data-acct-dive]")){
+      btn.addEventListener("click", () => {
+        const handle = btn.getAttribute("data-handle");
+        triggerAccountDive(handle, btn);
+      });
+    }
+  }
+
+  function discKey(entry){
+    return `${entry.date}::${entry.source_handle}::${entry.new_handle}`;
+  }
+
+  function renderDiscovery(){
+    const overrides = getDiscoveryOverrides();
+    const list = $("discList");
+
+    const entries = DATA.discovery_log.map(e => {
+      const key = discKey(e);
+      const status = overrides[key] || e.status || "proposed";
+      return { ...e, _key:key, _status:status };
+    });
+
+    const total = entries.length;
+    const accepted = entries.filter(e => e._status === "accepted").length;
+    const rejected = entries.filter(e => e._status === "rejected").length;
+    const pending = entries.filter(e => e._status === "proposed").length;
+    $("discTotals").textContent = `Proposed: ${total} · Accepted: ${accepted} · Rejected: ${rejected} · Pending: ${pending}`;
+
+    list.innerHTML = entries.map(e => {
+      const c = e._status === "accepted" ? "#4CAF50" : (e._status === "rejected" ? "#F44336" : "#6bb7ff");
+      return `
+        <div class="card" data-disc-key="${escapeHtml(e._key)}">
+          <div class="discRow">
+            <div class="discLeft">
+              <div class="pill-row">
+                <span class="badge" style="border-color:${c}55;background:${c}16">${escapeHtml(e._status)}</span>
+                <span class="badge" style="border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.06)">${escapeHtml(e.method)}</span>
+                <span class="badge" style="border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.06)">Score ${fmtNum(e.score)}</span>
+              </div>
+              <div style="margin-top:10px" class="muted">
+                <div><strong>Date</strong>: ${escapeHtml(e.date)}</div>
+                <div><strong>Source</strong>: <span class="handle">@${escapeHtml(e.source_handle)}</span></div>
+                <div><strong>Proposed</strong>: <span class="handle">@${escapeHtml(e.new_handle)}</span></div>
+              </div>
+              <div style="margin-top:10px" class="micro"><strong>Reason</strong>: ${escapeHtml(e.reason)}</div>
+            </div>
+            <div class="discRight" role="group" aria-label="Discovery decision">
+              <button type="button" class="btn primary" data-disc-act="accept">Accept</button>
+              <button type="button" class="btn danger" data-disc-act="reject">Reject</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    for(const card of list.querySelectorAll("[data-disc-key]")){
+      const key = card.getAttribute("data-disc-key");
+      for(const btn of card.querySelectorAll("[data-disc-act]")){
+        btn.addEventListener("click", () => {
+          const act = btn.getAttribute("data-disc-act");
+          const status = act === "accept" ? "accepted" : "rejected";
+          setDiscoveryStatus(key, status);
+          toast(`<strong>${status === "accepted" ? "Accepted" : "Rejected"}</strong> @${escapeHtml(key.split("::").pop())}.`);
+          render();
+        });
+      }
+    }
+  }
+
+  function renderAnalytics(){
+    // Weekly hit rate chart
+    const weekly = DATA.weekly_stats || [];
+    const maxHr = Math.max(1, ...weekly.map(w => w.hit_rate || 0));
+    const chartWeekly = $("chartWeekly");
+    chartWeekly.innerHTML = weekly.map(w => {
+      const h = clamp(((w.hit_rate || 0) / maxHr) * 100, 0, 100);
+      const pct = Math.round((w.hit_rate || 0) * 100);
+      const col = pct >= 65 ? "#4CAF50" : (pct >= 55 ? "#FFD54F" : "#F44336");
+      return `<div class="bar" style="--h:${h}%; border-color:${col}55; background:${col}14" title="${escapeHtml(w.week)}: ${pct}%"></div>`;
+    }).join("");
+    $("chartWeeklyLabels").innerHTML = `<div class="barLabel">${weekly.map(w => `<span style="flex:1; text-align:center">${escapeHtml(w.week.replace("2026-",""))}<br/><strong>${Math.round((w.hit_rate||0)*100)}%</strong></span>`).join("")}</div>`;
+
+    // Items per day (from daily_brief)
+    const byDate = {};
+    for(const item of DATA.daily_brief){ byDate[item.date] = (byDate[item.date] || 0) + 1; }
+    const dates = Object.keys(byDate).sort();
+    const maxC = Math.max(1, ...dates.map(d => byDate[d]));
+    $("chartDaily").innerHTML = dates.map(d => {
+      const h = clamp((byDate[d] / maxC) * 100, 0, 100);
+      return `<div class="bar" style="--h:${h}%" title="${escapeHtml(d)}: ${fmtNum(byDate[d])} items"></div>`;
+    }).join("");
+    $("chartDailyLabels").innerHTML = `<div class="barLabel">${dates.map(d => `<span style="flex:1; text-align:center">${escapeHtml(d.slice(5))}<br/><strong>${fmtNum(byDate[d])}</strong></span>`).join("")}</div>`;
+
+    // Tag distribution (signal counts from local ratings)
+    const ratings = getRatings();
+    const signalIds = Object.entries(ratings).filter(([,v]) => v === "signal").map(([id]) => id);
+    const signalItems = DATA.daily_brief.filter(b => signalIds.includes(b.id));
+    const tagCounts = {};
+    for(const item of signalItems){ tagCounts[item.tag] = (tagCounts[item.tag] || 0) + 1; }
+    const tags = Object.keys(TAG_COLORS);
+    const totalSignals = signalItems.length;
+
+    $("tagDist").innerHTML = `
+      <div class="micro" style="margin-bottom:10px">Signal items rated ✓: <strong>${fmtNum(totalSignals)}</strong></div>
+      ${tags.map(t => {
+        const n = tagCounts[t] || 0;
+        const c = TAG_COLORS[t] || "#6bb7ff";
+        const w = totalSignals ? Math.round((n/totalSignals)*100) : 0;
+        return `
+          <div style="display:flex; align-items:center; gap:10px; margin:10px 0">
+            <div style="min-width:140px">${tagPill(t)}</div>
+            <div style="flex:1; border:1px solid var(--border); border-radius:999px; overflow:hidden; background:rgba(255,255,255,.05)">
+              <div style="height:12px; width:${w}%; background:${c}; opacity:.75"></div>
+            </div>
+            <div class="micro" style="min-width:54px; text-align:right"><strong>${fmtNum(n)}</strong></div>
+          </div>
+        `;
+      }).join("")}
+      <div class="foot" style="margin-top:10px">No ratings yet? Go to Daily Brief and tag items.</div>
+    `;
+
+    // Account leaderboard (signal counts)
+    const acctCounts = {};
+    for(const item of signalItems){ acctCounts[item.handle] = (acctCounts[item.handle] || 0) + 1; }
+    const leaders = Object.entries(acctCounts)
+      .sort((a,b) => b[1]-a[1])
+      .slice(0, 8);
+
+    $("acctLeaders").innerHTML = leaders.length ? leaders.map(([handle,n]) => {
+      const acct = getAccount(handle);
+      const tier = acct ? acct.tier : null;
+      const c = tier !== null ? (TIER_COLORS[tier] || "#6bb7ff") : "#6bb7ff";
+      return `
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; border:1px solid var(--border); border-radius:14px; padding:10px; margin:10px 0; background:rgba(255,255,255,.05)">
+          <div>
+            <div class="handle">@${escapeHtml(handle)}</div>
+            <div class="micro">${acct ? escapeHtml(acct.name) : ""}</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px">
+            ${typeof tier === "number" ? tierBadge(tier) : ""}
+            <span class="badge" style="border-color:${c}55;background:${c}16">✓ ${fmtNum(n)}</span>
+          </div>
+        </div>
+      `;
+    }).join("") : `<div class="empty">No ✓ ratings yet. Leaderboard appears after rating items.</div>`;
+  }
+
+  function render(){
+    computeHeaderStats();
+    if(state.tab === "daily") renderDaily();
+    if(state.tab === "accounts") renderAccounts();
+    if(state.tab === "discovery") renderDiscovery();
+    if(state.tab === "analytics") renderAnalytics();
+  }
+
+  function downloadFile(filename, content, mime){
+    const blob = new Blob([content], { type: mime || "application/octet-stream" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2500);
+  }
+
+  function exportRatings(){
+    const payload = {
+      exported_at: new Date().toISOString(),
+      meta: DATA.meta,
+      ratings: getRatings(),
+      discovery_decisions: getDiscoveryOverrides()
+    };
+    downloadFile(`x_intel_ratings_${(state.briefDate || DATA.meta.scan_date).replaceAll("-", "")}.json`, JSON.stringify(payload, null, 2), "application/json" );
+    toast(`<strong>Exported</strong> ratings JSON.`);
+  }
+
+  function exportBriefMarkdown(){
+    const date = state.briefDate || DATA.meta.scan_date;
+    const ratings = getRatings();
+    const items = DATA.daily_brief.filter(x => x.date === date);
+
+    let md = `# X Intelligence — Daily Brief\n\n`;
+    md += `Date: ${date}\n`;
+    md += `Generated: ${DATA.meta.generated}\n`;
+    md += `Framework: ${DATA.meta.framework_version}\n\n`;
+
+    if(items.length === 0){
+      md += `No brief items for this date.\n`;
+    } else {
+      for(const item of items){
+        const acct = getAccount(item.handle);
+        const tier = acct ? acct.tier : "?";
+        const r = ratings[item.id] || null;
+        md += `---\n\n`;
+        md += `## ${item.tag} — @${item.handle} (T${tier})\n\n`;
+        md += `**CLAIM:** ${item.claim}\n\n`;
+        md += `**SO WHAT:** ${item.so_what}\n\n`;
+        md += `**Confidence:** ${item.confidence}\n\n`;
+        md += `**Metrics:** ${fmtNum(item.metrics?.views)} views, ${fmtNum(item.metrics?.likes)} likes, ${fmtNum(item.metrics?.reposts)} reposts\n\n`;
+        md += `**Link:** ${item.link || ""}\n\n`;
+        md += `**Rating:** ${r || "(unrated)"}\n\n`;
+        md += `**Tweet (sample):** ${item.tweet_text || ""}\n\n`;
+      }
+    }
+
+    downloadFile(`x_intel_brief_${date.replaceAll("-", "")}.md`, md, "text/markdown" );
+    toast(`<strong>Exported</strong> brief markdown.`);
+  }
+
+  function bind(){
+    // Tabs
+    for(const btn of document.querySelectorAll(".tabbtn")){
+      btn.addEventListener("click", () => setTab(btn.dataset.tab));
+    }
+
+    // Daily controls
+    $("briefDate").addEventListener("change", (e) => {
+      state.briefDate = e.target.value;
+      saveUiState();
+      render();
+    });
+    $("tagFilter").addEventListener("change", (e) => {
+      state.tag = e.target.value;
+      saveUiState();
+      render();
+    });
+    $("btnExportRatings").addEventListener("click", exportRatings);
+    $("btnExportBrief").addEventListener("click", exportBriefMarkdown);
+
+    // Accounts controls
+    $("acctSort").addEventListener("change", (e) => {
+      state.acctSort = e.target.value;
+      saveUiState();
+      render();
+    });
+    $("tierFilter").addEventListener("change", (e) => {
+      state.tierFilter = e.target.value;
+      saveUiState();
+      render();
+    });
+    $("statusFilter").addEventListener("change", (e) => {
+      state.statusFilter = e.target.value;
+      saveUiState();
+      render();
+    });
+
+    // Discovery
+    $("btnClearDiscovery").addEventListener("click", () => {
+      clearDiscovery();
+      toast(`<strong>Cleared</strong> discovery decisions.`);
+      render();
+    });
+
+    // Analytics
+    $("btnResetRatings").addEventListener("click", () => {
+      resetRatings();
+      toast(`<strong>Reset</strong> all ratings.`);
+      render();
+    });
+  }
+
+  function init(){
+    loadUiState();
+    initFilters();
+
+    // Fix 3: Always default to scan_date if no items exist for saved date
+    // or if no date was saved (fresh load)
+    const savedDate = state.briefDate;
+    const scanDate = DATA.meta.scan_date;
+    const hasItemsForSaved = DATA.daily_brief.some(b => b.date === savedDate);
+    if(!savedDate || !hasItemsForSaved){
+      // Find most recent date with items, fall back to scan_date
+      const dates = [...new Set(DATA.daily_brief.map(b => b.date))].sort().reverse();
+      state.briefDate = dates[0] || scanDate;
+    }
+
+    // Apply initial control values
+    $("briefDate").value = state.briefDate;
+    $("tagFilter").value = state.tag;
+    $("acctSort").value = state.acctSort;
+    $("tierFilter").value = state.tierFilter;
+    $("statusFilter").value = state.statusFilter;
+
+    bind();
+    setTab(state.tab);
+  }
+
+  init();
+  </script>
+</body>
+</html>

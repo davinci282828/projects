@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Anxiety Therapy — NYC</title>
+  <style>
+    :root{
+      --green:#1e4129;
+      --mint:#effaf3;
+      --accent:#d4a574;
+      --ink:#0f1b14;
+      --paper:#ffffff;
+      --shadow: 0 18px 48px rgba(15, 27, 20, 0.14);
+      --radius: 18px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 600px at 20% 15%, rgba(212,165,116,0.18), transparent 60%),
+        radial-gradient(900px 500px at 70% 25%, rgba(30,65,41,0.10), transparent 62%),
+        var(--mint);
+    }
+
+    .page{
+      min-height: 100svh;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding: 12px;
+    }
+
+    .hero{
+      width: min(1040px, 100%);
+      background: var(--paper);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      align-self:center;
+    }
+
+    .hero-inner{ display:block; }
+
+    /* Desktop accent panel (hidden on mobile) */
+    .accent-panel{
+      display:none;
+      background: linear-gradient(180deg, rgba(30,65,41,1), rgba(30,65,41,0.96));
+      color:#fff;
+      padding: 28px;
+    }
+
+    .stat{ display:flex; flex-direction:column; gap:10px; }
+    .stat-num{
+      font-family: "DM Serif Display", ui-serif, Georgia, "Times New Roman", Times, serif;
+      font-size: 56px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .stat-text{
+      font-size: 15px;
+      line-height: 1.35;
+      max-width: 26ch;
+    }
+    .stat-src{
+      font-size: 12px;
+      line-height: 1.35;
+      opacity: 0.9;
+    }
+
+    .content-panel{ padding: 14px; }
+
+    /* Mobile compact badge (visible on mobile) */
+    .stat-badge{
+      display:inline-flex;
+      align-items:baseline;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(30,65,41,0.08);
+      border: 1px solid rgba(30,65,41,0.14);
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+    .badge-num{
+      font-family: "DM Serif Display", ui-serif, Georgia, "Times New Roman", Times, serif;
+      font-size: 22px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .badge-text{ font-size: 12px; line-height: 1.2; }
+    .badge-text b{ font-weight: 700; }
+
+    h1{
+      margin: 0 0 6px 0;
+      font-family: "DM Serif Display", ui-serif, Georgia, "Times New Roman", Times, serif;
+      font-size: clamp(26px, 7.1vw, 46px);
+      line-height: 1.08;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+    }
+
+    .subtext{
+      margin: 0 0 6px 0;
+      font-size: 13.5px;
+      line-height: 1.32;
+      color: rgba(15, 27, 20, 0.86);
+      max-width: 60ch;
+    }
+
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px 10px;
+      align-items:center;
+      margin: 0 0 8px 0;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      align-items:flex-start;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      padding: 10px 12px;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      text-decoration:none;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease, border-color 120ms ease;
+      white-space:nowrap;
+    }
+
+    .btn-primary{
+      background: var(--green);
+      color:#fff;
+      box-shadow: 0 10px 20px rgba(30,65,41,0.20);
+    }
+    .btn-primary:hover{ transform: translateY(-1px); box-shadow: 0 14px 26px rgba(30,65,41,0.24); }
+    .btn-primary:active{ transform: translateY(0px); box-shadow: 0 10px 18px rgba(30,65,41,0.22); }
+
+    .btn-secondary{
+      background: rgba(30,65,41,0.05);
+      color: var(--green);
+      border-color: rgba(30,65,41,0.18);
+    }
+    .btn-secondary:hover{ border-color: rgba(30,65,41,0.28); background: rgba(30,65,41,0.07); }
+
+    .btn:focus-visible{
+      outline: 3px solid rgba(212,165,116,0.7);
+      outline-offset: 2px;
+    }
+
+    .micro{
+      margin: 0;
+      font-size: 11.5px;
+      line-height: 1.25
+      color: rgba(15, 27, 20, 0.80);
+    }
+
+    /* Desktop-only: keep the other verified stats available without crowding mobile */
+    .data-notes{
+      display:none;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(15,27,20,0.10);
+      color: rgba(15,27,20,0.82);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    .data-notes strong{ color: var(--ink); }
+    .data-notes ul{ margin: 8px 0 0 18px; padding:0; }
+    .data-notes li{ margin: 4px 0; }
+
+    @media (min-width: 520px){
+      .content-panel{ padding: 22px; }
+      .subtext{ font-size: 15px; }
+      .micro{ font-size: 13px; }
+      .btn{ font-size: 15px; padding: 12px 16px; }
+      .badge-text{ font-size: 13px; }
+    }
+
+    @media (min-width: 1120px){
+      .page{ padding: 24px; align-items:center; }
+      .hero-inner{
+        display:grid;
+        grid-template-columns: 340px 1fr;
+        min-height: 440px;
+      }
+      .accent-panel{ display:block; }
+      .content-panel{ padding: 34px 40px; }
+      .stat-badge{ display:none; }
+      h1{ font-size: 44px; line-height: 1.06; }
+      .subtext{ font-size: 16px; margin-bottom: 14px; }
+      .data-notes{ display:block; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .btn{ transition:none; }
+      .btn-primary:hover{ transform:none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-inner">
+        <aside class="accent-panel" aria-label="Key statistic">
+          <div class="stat">
+            <div class="stat-num">52%</div>
+            <div class="stat-text">52% of workers say they're worried about the future impact of AI use in the workplace</div>
+            <div class="stat-src">Pew Research, Oct 2024 survey</div>
+            <div class="stat-text" style="margin-top:8px; font-size:14px; opacity:0.92; max-width:28ch;">More than half of U.S. workers are worried about AI's impact on their jobs</div>
+            <div class="stat-src">Pew Research Center, Feb 2025</div>
+          </div>
+        </aside>
+
+        <div class="content-panel">
+          <div class="stat-badge" aria-label="Key statistic">
+            <div class="badge-num">52%</div>
+            <div class="badge-text"><b>of workers</b> worried about AI's workplace impact — Pew Research, 2025</div>
+          </div>
+
+          <h1 id="hero-title">More Than Half of Workers Are Worried About AI. You Don't Have to Sit With That Alone.</h1>
+
+          <p class="subtext">Our licensed therapists help NYC professionals work through the career anxiety, sleep disruption, and decision paralysis that AI uncertainty creates. Evidence-based therapy — not advice, not coaching.</p>
+
+          <div class="cta-row" role="group" aria-label="Primary actions">
+            <button class="btn btn-primary" type="button">Book a Session</button>
+            <a class="btn btn-secondary" href="tel:+12129608626">(212) 960-8626</a>
+          </div>
+
+          <p class="micro">✓ Insurance accepted · ✓ Online &amp; in-person · ✓ Same-week availability</p>
+
+          <div class="data-notes" aria-label="Verified statistics">
+            <strong>Verified statistics (Pew Research Center):</strong>
+            <ul>
+              <li>"More than half of U.S. workers are worried about AI's impact on their jobs" — Pew Research Center, Feb 2025</li>
+              <li>"52% of workers say they're worried about the future impact of AI use in the workplace" — Pew Research, Oct 2024 survey</li>
+              <li>"33% feel overwhelmed" by workplace AI — same Pew study</li>
+              <li>"32% think AI will lead to fewer job opportunities for them" — same Pew study</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

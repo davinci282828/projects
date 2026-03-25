@@ -1,0 +1,1485 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Real-Time Trading Dashboard</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1620;
+      --panel2:#0c121a;
+      --text:#d6dde7;
+      --muted:#8aa0b6;
+      --grid:rgba(255,255,255,.07);
+      --grid2:rgba(255,255,255,.04);
+      --accent:#4aa3ff;
+      --up:#21c17a;
+      --down:#ff4d4d;
+      --warn:#f2c94c;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 10px 35px rgba(0,0,0,.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    body.light{
+      --bg:#f5f7fb;
+      --panel:#ffffff;
+      --panel2:#f0f4fb;
+      --text:#0f1720;
+      --muted:#4d6075;
+      --grid:rgba(16,24,32,.12);
+      --grid2:rgba(16,24,32,.06);
+      --accent:#1d64ff;
+      --up:#0a9c57;
+      --down:#d33a3a;
+      --warn:#b07b00;
+      --border:rgba(16,24,32,.12);
+      --shadow: 0 10px 35px rgba(16,24,32,.15);
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background:var(--bg);
+      color:var(--text);
+      overflow:hidden;
+    }
+
+    .app{
+      height:100vh;
+      display:flex;
+      gap:12px;
+      padding:12px;
+    }
+
+    .panel{
+      background:linear-gradient(180deg, var(--panel), var(--panel2));
+      border:1px solid var(--border);
+      border-radius:12px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      min-height:0;
+    }
+
+    .sidebar{
+      width:260px;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .sideHeader{
+      padding:12px 12px 10px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+
+    .brand .title{ font-weight:700; letter-spacing:.3px; }
+    .brand .sub{ font-size:12px; color:var(--muted); font-family:var(--mono); }
+
+    .btn{
+      background:transparent;
+      color:var(--text);
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:8px 10px;
+      font-size:12px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{ border-color:rgba(255,255,255,.20); }
+    body.light .btn:hover{ border-color:rgba(16,24,32,.25); }
+
+    .watchlist{
+      padding:8px;
+      overflow:auto;
+    }
+
+    .wlItem{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 10px;
+      border-radius:10px;
+      cursor:pointer;
+      border:1px solid transparent;
+      font-family:var(--mono);
+    }
+
+    .wlItem:hover{ background:rgba(255,255,255,.03); }
+    body.light .wlItem:hover{ background:rgba(16,24,32,.03); }
+
+    .wlItem.active{
+      border-color:rgba(74,163,255,.35);
+      background:rgba(74,163,255,.08);
+    }
+
+    .wlLeft{ display:flex; flex-direction:column; gap:2px; }
+    .wlSym{ font-weight:700; }
+    .wlPx{ font-size:12px; color:var(--muted); }
+
+    .wlRight{ text-align:right; }
+    .wlChg{ font-weight:700; font-size:12px; }
+    .wlChg.up{ color:var(--up); }
+    .wlChg.down{ color:var(--down); }
+    .wlVol{ font-size:11px; color:var(--muted); }
+
+    .main{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-width:0;
+    }
+
+    .topbar{
+      display:flex;
+      gap:12px;
+      align-items:stretch;
+    }
+
+    .header{
+      flex:1;
+      padding:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .headerLeft{ min-width:0; }
+    .tickerLine{
+      display:flex;
+      align-items:baseline;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .tickerName{
+      font-family:var(--mono);
+      font-size:18px;
+      font-weight:800;
+      letter-spacing:.4px;
+    }
+    .priceBig{
+      font-family:var(--mono);
+      font-size:18px;
+      font-weight:800;
+    }
+    .pill{
+      font-family:var(--mono);
+      font-size:12px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+    }
+
+    .headerRight{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-shrink:0;
+    }
+
+    .grid{
+      flex:1;
+      display:grid;
+      grid-template-columns: 1.4fr .8fr;
+      gap:12px;
+      min-height:0;
+    }
+
+    .charts{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-height:0;
+    }
+
+    .chartPanel{
+      padding:10px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      min-height:0;
+    }
+
+    .chartHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-family:var(--mono);
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .canvasWrap{ position:relative; flex:1; min-height:0; }
+    canvas{
+      width:100%;
+      height:100%;
+      display:block;
+      border-radius:10px;
+      background:rgba(0,0,0,.10);
+    }
+    body.light canvas{ background:rgba(16,24,32,.03); }
+
+    .sidePanels{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-height:0;
+    }
+
+    .book, .portfolio{
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height:0;
+    }
+
+    .panelTitle{
+      font-family:var(--mono);
+      font-weight:800;
+      letter-spacing:.3px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .bookGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      align-items:start;
+      min-height:0;
+    }
+
+    .levels{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      font-family:var(--mono);
+      font-size:12px;
+    }
+
+    .lvl{
+      position:relative;
+      display:grid;
+      grid-template-columns: 1fr .9fr .9fr;
+      gap:8px;
+      padding:6px 8px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      overflow:hidden;
+    }
+
+    .depth{
+      position:absolute;
+      top:0; bottom:0;
+      width:0%;
+      opacity:.16;
+      pointer-events:none;
+    }
+    .depth.bid{ left:0; background:var(--up); }
+    .depth.ask{ right:0; background:var(--down); }
+
+    .num{ text-align:right; }
+    .askRow{ border-color: rgba(255,77,77,.22); }
+    .bidRow{ border-color: rgba(33,193,122,.22); }
+
+    .spread{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:space-between;
+      padding:8px 10px;
+      border-radius:10px;
+      border:1px dashed rgba(255,255,255,.20);
+      font-family:var(--mono);
+      color:var(--muted);
+      font-size:12px;
+    }
+    body.light .spread{ border-color: rgba(16,24,32,.25); }
+
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0 8px;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--text);
+    }
+    th{
+      text-align:left;
+      font-size:11px;
+      color:var(--muted);
+      font-weight:700;
+      letter-spacing:.2px;
+      padding:0 8px 6px;
+    }
+    td{
+      padding:10px 8px;
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      background:rgba(255,255,255,.02);
+    }
+    body.light td{ background:rgba(16,24,32,.02); }
+    td:first-child{ border-left:1px solid var(--border); border-top-left-radius:10px; border-bottom-left-radius:10px; }
+    td:last-child{ border-right:1px solid var(--border); border-top-right-radius:10px; border-bottom-right-radius:10px; text-align:right; }
+
+    .pnlPos{ color:var(--up); font-weight:800; }
+    .pnlNeg{ color:var(--down); font-weight:800; }
+    .totals{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:10px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      font-family:var(--mono);
+      color:var(--muted);
+    }
+    .totals .val{ color:var(--text); font-weight:800; }
+
+    .statusBar{
+      height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:0 12px;
+      border-top:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.18));
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+      user-select:none;
+    }
+    body.light .statusBar{ background:linear-gradient(180deg, rgba(255,255,255,0), rgba(16,24,32,.04)); }
+
+    .kv{ display:flex; gap:8px; align-items:baseline; flex-wrap:wrap; }
+    .k{ color:var(--muted); }
+    .v{ color:var(--text); font-weight:700; }
+
+    .mobileOnly{ display:none; }
+
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+      .sidePanels{ flex-direction:row; }
+      .book, .portfolio{ flex:1; }
+    }
+
+    @media (max-width: 820px){
+      .sidebar{ display:none; }
+      .mobileOnly{ display:inline-flex; }
+      .app{ padding:10px; }
+      body{ overflow:auto; }
+      .main{ min-height:calc(100vh - 20px); }
+      .statusBar{ position:sticky; bottom:0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="panel sidebar" id="sidebar">
+      <div class="sideHeader">
+        <div class="brand">
+          <div class="title">MARKET</div>
+          <div class="sub">Real-time dashboard</div>
+        </div>
+        <button class="btn" id="themeToggle">Theme</button>
+      </div>
+      <div class="watchlist" id="watchlist"></div>
+    </aside>
+
+    <main class="main">
+      <div class="panel header">
+        <div class="headerLeft">
+          <div class="tickerLine">
+            <div class="tickerName" id="curTicker">BTC</div>
+            <div class="priceBig" id="curPrice">—</div>
+            <div class="pill" id="curChg">—</div>
+            <div class="pill" id="curVol">VOL —</div>
+          </div>
+          <div style="margin-top:6px; display:flex; gap:8px; flex-wrap:wrap;">
+            <span class="pill">Auto-update: 1.5s</span>
+            <span class="pill">Indicators: RSI(14) · MACD(12,26,9) · BB(20,2) · SMA20/50</span>
+          </div>
+        </div>
+        <div class="headerRight">
+          <button class="btn mobileOnly" id="mobileThemeToggle">Theme</button>
+          <button class="btn" id="resetBtn">Reset</button>
+        </div>
+      </div>
+
+      <section class="grid">
+        <div class="charts">
+          <div class="panel chartPanel" style="flex: 1.8;">
+            <div class="chartHeader">
+              <div>Price · Candles(200) · BB · SMA · Volume</div>
+              <div id="priceMeta">—</div>
+            </div>
+            <div class="canvasWrap"><canvas id="priceCanvas"></canvas></div>
+          </div>
+
+          <div class="panel chartPanel" style="flex: .7;">
+            <div class="chartHeader">
+              <div>RSI(14)</div>
+              <div id="rsiMeta">—</div>
+            </div>
+            <div class="canvasWrap"><canvas id="rsiCanvas"></canvas></div>
+          </div>
+
+          <div class="panel chartPanel" style="flex: .9;">
+            <div class="chartHeader">
+              <div>MACD(12,26,9)</div>
+              <div id="macdMeta">—</div>
+            </div>
+            <div class="canvasWrap"><canvas id="macdCanvas"></canvas></div>
+          </div>
+        </div>
+
+        <div class="sidePanels">
+          <div class="panel book">
+            <div class="panelTitle">
+              <span>ORDER BOOK</span>
+              <span class="pill" id="spreadPill">SPREAD —</span>
+            </div>
+            <div class="bookGrid">
+              <div>
+                <div class="panelTitle" style="font-size:12px; color:var(--muted); font-weight:700;">ASKS</div>
+                <div class="levels" id="asks"></div>
+              </div>
+              <div>
+                <div class="panelTitle" style="font-size:12px; color:var(--muted); font-weight:700;">BIDS</div>
+                <div class="levels" id="bids"></div>
+              </div>
+            </div>
+            <div class="spread" id="spreadRow">
+              <div>Mid</div>
+              <div class="num" id="midPx">—</div>
+              <div class="num" id="spreadPx">—</div>
+            </div>
+          </div>
+
+          <div class="panel portfolio">
+            <div class="panelTitle">
+              <span>PORTFOLIO</span>
+              <span class="pill">4 positions</span>
+            </div>
+            <div style="overflow:auto; min-height:0;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>SYMBOL</th>
+                    <th>QTY</th>
+                    <th>AVG</th>
+                    <th>LAST</th>
+                    <th>P&L</th>
+                  </tr>
+                </thead>
+                <tbody id="posBody"></tbody>
+              </table>
+            </div>
+            <div class="totals">
+              <div>Unrealized</div>
+              <div class="val" id="totPnl">—</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="panel statusBar">
+        <div class="kv" id="statusLeft"></div>
+        <div class="kv" id="statusRight"></div>
+      </footer>
+    </main>
+  </div>
+
+<script>
+(() => {
+  'use strict';
+
+  const TICKERS = [
+    'BTC','ETH','SOL','DOGE','AVAX','AAPL','TSLA','NVDA','MSFT','GOOGL','AMZN','META'
+  ];
+
+  // Per-ticker base and volatility (roughly relative daily-ish movement; tuned for realism in a short demo)
+  const TICKER_CFG = {
+    BTC: { base: 52000, vol: 0.014 },
+    ETH: { base: 2900,  vol: 0.018 },
+    SOL: { base: 110,   vol: 0.028 },
+    DOGE:{ base: 0.18,  vol: 0.040 },
+    AVAX:{ base: 38,    vol: 0.030 },
+    AAPL:{ base: 185,   vol: 0.009 },
+    TSLA:{ base: 220,   vol: 0.018 },
+    NVDA:{ base: 780,   vol: 0.014 },
+    MSFT:{ base: 410,   vol: 0.008 },
+    GOOGL:{base: 150,   vol: 0.010 },
+    AMZN:{ base: 165,   vol: 0.012 },
+    META:{ base: 470,   vol: 0.013 },
+  };
+
+  const UI = {
+    watchlist: document.getElementById('watchlist'),
+    curTicker: document.getElementById('curTicker'),
+    curPrice: document.getElementById('curPrice'),
+    curChg: document.getElementById('curChg'),
+    curVol: document.getElementById('curVol'),
+    priceMeta: document.getElementById('priceMeta'),
+    rsiMeta: document.getElementById('rsiMeta'),
+    macdMeta: document.getElementById('macdMeta'),
+
+    asks: document.getElementById('asks'),
+    bids: document.getElementById('bids'),
+    spreadPill: document.getElementById('spreadPill'),
+    spreadRow: document.getElementById('spreadRow'),
+    midPx: document.getElementById('midPx'),
+    spreadPx: document.getElementById('spreadPx'),
+
+    posBody: document.getElementById('posBody'),
+    totPnl: document.getElementById('totPnl'),
+
+    statusLeft: document.getElementById('statusLeft'),
+    statusRight: document.getElementById('statusRight'),
+
+    themeToggle: document.getElementById('themeToggle'),
+    mobileThemeToggle: document.getElementById('mobileThemeToggle'),
+    resetBtn: document.getElementById('resetBtn'),
+
+    priceCanvas: document.getElementById('priceCanvas'),
+    rsiCanvas: document.getElementById('rsiCanvas'),
+    macdCanvas: document.getElementById('macdCanvas'),
+  };
+
+  const THEME = {
+    get vars(){
+      const s = getComputedStyle(document.body);
+      return {
+        bg: s.getPropertyValue('--bg').trim(),
+        panel: s.getPropertyValue('--panel').trim(),
+        text: s.getPropertyValue('--text').trim(),
+        muted: s.getPropertyValue('--muted').trim(),
+        grid: s.getPropertyValue('--grid').trim(),
+        grid2: s.getPropertyValue('--grid2').trim(),
+        accent: s.getPropertyValue('--accent').trim(),
+        up: s.getPropertyValue('--up').trim(),
+        down: s.getPropertyValue('--down').trim(),
+        warn: s.getPropertyValue('--warn').trim(),
+        border: s.getPropertyValue('--border').trim(),
+      };
+    }
+  };
+
+  // --- Utilities ---
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  const fmt = (x, dp=2) => {
+    if (!Number.isFinite(x)) return '—';
+    const abs = Math.abs(x);
+    if (abs >= 1000) return x.toLocaleString(undefined, { maximumFractionDigits: dp, minimumFractionDigits: dp });
+    if (abs >= 1) return x.toLocaleString(undefined, { maximumFractionDigits: dp, minimumFractionDigits: dp });
+    return x.toLocaleString(undefined, { maximumFractionDigits: Math.max(dp, 4), minimumFractionDigits: Math.min(4, dp) });
+  };
+  const fmtVol = (x) => {
+    if (!Number.isFinite(x)) return '—';
+    if (x >= 1e9) return (x/1e9).toFixed(2) + 'B';
+    if (x >= 1e6) return (x/1e6).toFixed(2) + 'M';
+    if (x >= 1e3) return (x/1e3).toFixed(2) + 'K';
+    return Math.round(x).toString();
+  };
+
+  // Gaussian-ish noise via Box-Muller
+  function randn(){
+    let u = 0, v = 0;
+    while (u === 0) u = Math.random();
+    while (v === 0) v = Math.random();
+    return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+  }
+
+  function scaleCanvas(canvas){
+    const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+    const rect = canvas.getBoundingClientRect();
+    const w = Math.max(1, Math.floor(rect.width));
+    const h = Math.max(1, Math.floor(rect.height));
+    const bw = w * dpr;
+    const bh = h * dpr;
+    if (canvas.width !== bw || canvas.height !== bh){
+      canvas.width = bw;
+      canvas.height = bh;
+    }
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx, w, h };
+  }
+
+  // --- Indicator math (real) ---
+  function sma(values, period){
+    const out = new Array(values.length).fill(null);
+    let sum = 0;
+    for (let i = 0; i < values.length; i++){
+      sum += values[i];
+      if (i >= period) sum -= values[i - period];
+      if (i >= period - 1) out[i] = sum / period;
+    }
+    return out;
+  }
+
+  function stddev(values, period){
+    const out = new Array(values.length).fill(null);
+    let sum = 0, sumSq = 0;
+    for (let i = 0; i < values.length; i++){
+      const x = values[i];
+      sum += x;
+      sumSq += x * x;
+      if (i >= period){
+        const y = values[i - period];
+        sum -= y;
+        sumSq -= y * y;
+      }
+      if (i >= period - 1){
+        const mean = sum / period;
+        const variance = Math.max(0, (sumSq / period) - (mean * mean));
+        out[i] = Math.sqrt(variance);
+      }
+    }
+    return out;
+  }
+
+  // EMA: starts at SMA(period) for first defined point
+  function ema(values, period){
+    const out = new Array(values.length).fill(null);
+    const alpha = 2 / (period + 1);
+    if (values.length < period) return out;
+
+    let sum = 0;
+    for (let i = 0; i < period; i++) sum += values[i];
+    let prev = sum / period;
+    out[period - 1] = prev;
+
+    for (let i = period; i < values.length; i++){
+      const cur = values[i];
+      prev = alpha * cur + (1 - alpha) * prev;
+      out[i] = prev;
+    }
+    return out;
+  }
+
+  // EMA over a series that may contain nulls; begins when it has period non-null values
+  function emaNullable(series, period){
+    const out = new Array(series.length).fill(null);
+    const alpha = 2 / (period + 1);
+
+    // Find first window of period non-null values
+    let start = -1;
+    for (let i = 0; i < series.length; i++){
+      if (series[i] == null) continue;
+      // attempt window ending at i
+      let count = 0;
+      for (let j = i; j >= 0 && count < period; j--){
+        if (series[j] != null) count++;
+        else break;
+        if (count === period){ start = j; break; }
+      }
+      if (start !== -1) break;
+    }
+    if (start === -1) return out;
+
+    // compute initial SMA at endIdx
+    let endIdx = start + period - 1;
+    let sum = 0;
+    for (let k = start; k <= endIdx; k++) sum += series[k];
+    let prev = sum / period;
+    out[endIdx] = prev;
+
+    for (let i = endIdx + 1; i < series.length; i++){
+      const x = series[i];
+      if (x == null) { out[i] = null; continue; }
+      prev = alpha * x + (1 - alpha) * prev;
+      out[i] = prev;
+    }
+    return out;
+  }
+
+  // RSI(14) Wilder smoothing
+  function rsiWilder(closes, period=14){
+    const out = new Array(closes.length).fill(null);
+    if (closes.length < period + 1) return out;
+
+    let gainSum = 0;
+    let lossSum = 0;
+
+    for (let i = 1; i <= period; i++){
+      const change = closes[i] - closes[i - 1];
+      if (change >= 0) gainSum += change;
+      else lossSum += -change;
+    }
+
+    let avgGain = gainSum / period;
+    let avgLoss = lossSum / period;
+    const rs0 = avgLoss === 0 ? Infinity : (avgGain / avgLoss);
+    out[period] = 100 - (100 / (1 + rs0));
+
+    for (let i = period + 1; i < closes.length; i++){
+      const change = closes[i] - closes[i - 1];
+      const gain = change > 0 ? change : 0;
+      const loss = change < 0 ? -change : 0;
+      avgGain = (avgGain * (period - 1) + gain) / period;
+      avgLoss = (avgLoss * (period - 1) + loss) / period;
+      const rs = avgLoss === 0 ? Infinity : (avgGain / avgLoss);
+      out[i] = 100 - (100 / (1 + rs));
+    }
+
+    return out;
+  }
+
+  function macd(closes, fast=12, slow=26, signal=9){
+    const emaFast = ema(closes, fast);
+    const emaSlow = ema(closes, slow);
+    const macdLine = new Array(closes.length).fill(null);
+    for (let i = 0; i < closes.length; i++){
+      if (emaFast[i] == null || emaSlow[i] == null) continue;
+      macdLine[i] = emaFast[i] - emaSlow[i];
+    }
+    const signalLine = emaNullable(macdLine, signal);
+    const hist = new Array(closes.length).fill(null);
+    for (let i = 0; i < closes.length; i++){
+      if (macdLine[i] == null || signalLine[i] == null) continue;
+      hist[i] = macdLine[i] - signalLine[i];
+    }
+    return { macdLine, signalLine, hist };
+  }
+
+  function bollinger(closes, period=20, mult=2){
+    const basis = sma(closes, period);
+    const sd = stddev(closes, period);
+    const upper = new Array(closes.length).fill(null);
+    const lower = new Array(closes.length).fill(null);
+    for (let i = 0; i < closes.length; i++){
+      if (basis[i] == null || sd[i] == null) continue;
+      upper[i] = basis[i] + mult * sd[i];
+      lower[i] = basis[i] - mult * sd[i];
+    }
+    return { basis, upper, lower };
+  }
+
+  // --- Market simulation ---
+  function makeInitialCandles(ticker, count=200){
+    const cfg = TICKER_CFG[ticker];
+    let price = cfg.base;
+
+    const candles = [];
+    let t = Date.now() - (count * 90_000);
+
+    for (let i = 0; i < count; i++){
+      // slight mean reversion to avoid runaway
+      const anchor = cfg.base;
+      const drift = (anchor - price) / anchor * 0.002; // gentle pull
+      const step = drift + randn() * cfg.vol * 0.18;
+      const open = price;
+      let close = Math.max(0.0000001, open * (1 + step));
+
+      const wick = Math.abs(randn()) * cfg.vol * 0.22;
+      const high = Math.max(open, close) * (1 + wick * 0.55);
+      const low  = Math.min(open, close) * (1 - wick * 0.55);
+
+      const volBase = (Math.abs(close - open) / open) * 2.0 + cfg.vol * 0.6;
+      const volume = (0.7 + Math.random() * 1.0) * volBase * (ticker.length <= 4 ? 2.2e6 : 1.1e6);
+
+      candles.push({ t, open, high, low, close, volume });
+      price = close;
+      t += 90_000;
+    }
+
+    return candles;
+  }
+
+  function updateOneCandle(candles, ticker){
+    const cfg = TICKER_CFG[ticker];
+    const last = candles[candles.length - 1];
+    const open = last.close;
+
+    const anchor = cfg.base;
+    const pull = (anchor - open) / anchor * 0.003;
+    const step = pull + randn() * cfg.vol * 0.32;
+    let close = Math.max(0.0000001, open * (1 + step));
+
+    // intra-candle range based on movement + randomness
+    const range = (Math.abs(step) + Math.abs(randn()) * cfg.vol * 0.20);
+    const high = Math.max(open, close) * (1 + range * (0.35 + Math.random() * 0.35));
+    const low  = Math.min(open, close) * (1 - range * (0.35 + Math.random() * 0.35));
+
+    const volume = (0.6 + Math.random() * 1.2) * (Math.abs(step) + cfg.vol * 0.35) * (ticker.length <= 4 ? 2.6e6 : 1.3e6);
+
+    const t = last.t + 90_000;
+    candles.push({ t, open, high, low, close, volume });
+    while (candles.length > 200) candles.shift();
+  }
+
+  // --- Drawing ---
+  function drawGrid(ctx, x, y, w, h, rows=6, cols=8){
+    const { grid, grid2 } = THEME.vars;
+    ctx.save();
+    ctx.translate(x, y);
+
+    // background fade
+    const g = ctx.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, 'rgba(255,255,255,0.03)');
+    g.addColorStop(1, 'rgba(255,255,255,0.00)');
+    if (document.body.classList.contains('light')){
+      g.addColorStop(0, 'rgba(16,24,32,0.03)');
+      g.addColorStop(1, 'rgba(16,24,32,0.00)');
+    }
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.lineWidth = 1;
+    for (let r = 0; r <= rows; r++){
+      const yy = (h * r) / rows;
+      ctx.strokeStyle = (r % 2 === 0) ? grid : grid2;
+      ctx.beginPath();
+      ctx.moveTo(0, yy);
+      ctx.lineTo(w, yy);
+      ctx.stroke();
+    }
+    for (let c = 0; c <= cols; c++){
+      const xx = (w * c) / cols;
+      ctx.strokeStyle = (c % 2 === 0) ? grid2 : grid;
+      ctx.beginPath();
+      ctx.moveTo(xx, 0);
+      ctx.lineTo(xx, h);
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+
+  function drawPriceChart(canvas, candles, ind){
+    const { ctx, w, h } = scaleCanvas(canvas);
+    const { text, muted, grid, accent, up, down, warn } = THEME.vars;
+
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { l: 10, r: 62, t: 10, b: 10 };
+    const innerX = pad.l;
+    const innerY = pad.t;
+    const innerW = w - pad.l - pad.r;
+    const innerH = h - pad.t - pad.b;
+
+    const volH = Math.max(70, Math.floor(innerH * 0.22));
+    const priceH = innerH - volH;
+
+    // Regions
+    drawGrid(ctx, innerX, innerY, innerW, priceH, 6, 10);
+    drawGrid(ctx, innerX, innerY + priceH, innerW, volH, 3, 10);
+
+    // Compute min/max (include BB and SMA)
+    let min = Infinity, max = -Infinity;
+    for (const c of candles){ min = Math.min(min, c.low); max = Math.max(max, c.high); }
+    const extra = [];
+    const lastIdx = candles.length - 1;
+    for (const arr of [ind.bb.upper, ind.bb.lower, ind.sma20, ind.sma50]){
+      for (let i = 0; i < arr.length; i++){
+        const v = arr[i];
+        if (v == null) continue;
+        extra.push(v);
+      }
+    }
+    for (const v of extra){ min = Math.min(min, v); max = Math.max(max, v); }
+
+    const range = Math.max(1e-12, max - min);
+    const padPct = 0.08;
+    min = min - range * padPct;
+    max = max + range * padPct;
+
+    const pxToY = (p) => innerY + (max - p) / (max - min) * priceH;
+
+    // Volume scale
+    let maxVol = 1;
+    for (const c of candles) maxVol = Math.max(maxVol, c.volume);
+
+    const n = candles.length;
+    const gap = 2;
+    const cw = innerW / n;
+    const bodyW = Math.max(2, Math.min(10, cw - gap));
+
+    // Draw BB + SMAs first (behind candles)
+    function drawLine(series, color, width=1.6, alpha=1){
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.beginPath();
+      let started = false;
+      for (let i = 0; i < series.length; i++){
+        const v = series[i];
+        if (v == null) continue;
+        const x = innerX + i * cw + cw / 2;
+        const y = pxToY(v);
+        if (!started){ ctx.moveTo(x, y); started = true; }
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    drawLine(ind.bb.upper, warn, 1.2, 0.75);
+    drawLine(ind.bb.lower, warn, 1.2, 0.75);
+    drawLine(ind.bb.basis, 'rgba(242,201,76,.55)', 1.1, 0.75);
+    drawLine(ind.sma20, accent, 1.7, 0.95);
+    drawLine(ind.sma50, 'rgba(255,255,255,.55)', 1.7, 0.8);
+
+    // Candles + wicks + volume
+    for (let i = 0; i < n; i++){
+      const c = candles[i];
+      const xMid = innerX + i * cw + cw / 2;
+      const isUp = c.close >= c.open;
+      const col = isUp ? up : down;
+
+      // wick
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(xMid, pxToY(c.high));
+      ctx.lineTo(xMid, pxToY(c.low));
+      ctx.stroke();
+
+      // body
+      const yOpen = pxToY(c.open);
+      const yClose = pxToY(c.close);
+      const top = Math.min(yOpen, yClose);
+      const bot = Math.max(yOpen, yClose);
+      const bh = Math.max(1.5, bot - top);
+      ctx.fillStyle = col;
+      ctx.globalAlpha = 0.92;
+      ctx.fillRect(Math.round(xMid - bodyW/2), Math.round(top), Math.round(bodyW), Math.round(bh));
+      ctx.globalAlpha = 1;
+
+      // volume
+      const vH = (c.volume / maxVol) * (volH - 16);
+      const vx = Math.round(xMid - bodyW/2);
+      const vy = innerY + priceH + volH - 10 - vH;
+      ctx.fillStyle = isUp ? 'rgba(33,193,122,.55)' : 'rgba(255,77,77,.55)';
+      if (document.body.classList.contains('light')){
+        ctx.fillStyle = isUp ? 'rgba(10,156,87,.35)' : 'rgba(211,58,58,.35)';
+      }
+      ctx.fillRect(vx, Math.round(vy), Math.round(bodyW), Math.round(vH));
+    }
+
+    // Price axis labels (right)
+    ctx.save();
+    ctx.font = '12px ' + getComputedStyle(document.body).getPropertyValue('--mono');
+    ctx.fillStyle = muted;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+
+    const ticks = 6;
+    for (let i = 0; i <= ticks; i++){
+      const y = innerY + (priceH * i) / ticks;
+      const p = max - (max - min) * (i / ticks);
+      ctx.fillText(fmt(p, priceToDP(p)), innerX + innerW + 8, y);
+    }
+    ctx.restore();
+
+    // Current price dashed line + label
+    const last = candles[lastIdx];
+    const yCur = pxToY(last.close);
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,.65)';
+    if (document.body.classList.contains('light')) ctx.strokeStyle = 'rgba(16,24,32,.60)';
+    ctx.setLineDash([6, 6]);
+    ctx.beginPath();
+    ctx.moveTo(innerX, yCur);
+    ctx.lineTo(innerX + innerW, yCur);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // label box
+    const label = fmt(last.close, priceToDP(last.close));
+    ctx.font = '12px ' + getComputedStyle(document.body).getPropertyValue('--mono');
+    const tw = ctx.measureText(label).width;
+    const bx = innerX + innerW + 6;
+    const by = clamp(yCur - 10, innerY + 2, innerY + priceH - 18);
+    ctx.fillStyle = 'rgba(0,0,0,.55)';
+    if (document.body.classList.contains('light')) ctx.fillStyle = 'rgba(255,255,255,.75)';
+    ctx.strokeStyle = grid;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    roundRect(ctx, bx, by, tw + 10, 18, 7);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = text;
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, bx + 5, by + 9);
+    ctx.restore();
+
+    // Volume label (bottom-right)
+    ctx.save();
+    ctx.font = '12px ' + getComputedStyle(document.body).getPropertyValue('--mono');
+    ctx.fillStyle = muted;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('VOL ' + fmtVol(last.volume), innerX + innerW + 8, innerY + priceH + volH/2);
+    ctx.restore();
+  }
+
+  function drawRSI(canvas, rsiSeries){
+    const { ctx, w, h } = scaleCanvas(canvas);
+    const { text, muted, grid, accent, warn } = THEME.vars;
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { l: 10, r: 62, t: 10, b: 10 };
+    const x0 = pad.l, y0 = pad.t;
+    const iw = w - pad.l - pad.r;
+    const ih = h - pad.t - pad.b;
+
+    drawGrid(ctx, x0, y0, iw, ih, 4, 10);
+
+    const n = rsiSeries.length;
+    const cw = iw / n;
+    const yFrom = (v) => y0 + (100 - v) / 100 * ih;
+
+    // 30/70 zones
+    ctx.save();
+    ctx.fillStyle = 'rgba(242,201,76,.10)';
+    if (document.body.classList.contains('light')) ctx.fillStyle = 'rgba(176,123,0,.08)';
+    ctx.fillRect(x0, yFrom(70), iw, yFrom(30) - yFrom(70));
+
+    ctx.strokeStyle = 'rgba(242,201,76,.55)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4,4]);
+    for (const lvl of [30, 70]){
+      const y = yFrom(lvl);
+      ctx.beginPath();
+      ctx.moveTo(x0, y);
+      ctx.lineTo(x0 + iw, y);
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    // RSI line
+    ctx.save();
+    ctx.strokeStyle = accent;
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    let started = false;
+    for (let i = 0; i < n; i++){
+      const v = rsiSeries[i];
+      if (v == null) continue;
+      const x = x0 + i * cw + cw/2;
+      const y = yFrom(v);
+      if (!started){ ctx.moveTo(x, y); started = true; }
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    // Axis labels
+    ctx.save();
+    ctx.font = '12px ' + getComputedStyle(document.body).getPropertyValue('--mono');
+    ctx.fillStyle = muted;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    for (const lvl of [100, 70, 50, 30, 0]){
+      ctx.fillText(String(lvl), x0 + iw + 8, yFrom(lvl));
+    }
+    ctx.restore();
+  }
+
+  function drawMACD(canvas, macdLine, signalLine, hist){
+    const { ctx, w, h } = scaleCanvas(canvas);
+    const { muted, grid, accent, up, down, text } = THEME.vars;
+    ctx.clearRect(0, 0, w, h);
+
+    const pad = { l: 10, r: 62, t: 10, b: 10 };
+    const x0 = pad.l, y0 = pad.t;
+    const iw = w - pad.l - pad.r;
+    const ih = h - pad.t - pad.b;
+
+    drawGrid(ctx, x0, y0, iw, ih, 4, 10);
+
+    const n = hist.length;
+    const cw = iw / n;
+
+    // scale based on max abs among available values
+    let maxAbs = 1e-9;
+    for (let i = 0; i < n; i++){
+      const a = Math.abs(hist[i] ?? 0);
+      const b = Math.abs(macdLine[i] ?? 0);
+      const c = Math.abs(signalLine[i] ?? 0);
+      maxAbs = Math.max(maxAbs, a, b, c);
+    }
+    maxAbs *= 1.15;
+
+    const yFrom = (v) => y0 + (0.5 - (v / (2 * maxAbs))) * ih;
+    const yZero = yFrom(0);
+
+    // zero line
+    ctx.save();
+    ctx.strokeStyle = grid;
+    ctx.setLineDash([5,5]);
+    ctx.beginPath();
+    ctx.moveTo(x0, yZero);
+    ctx.lineTo(x0 + iw, yZero);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    // histogram
+    for (let i = 0; i < n; i++){
+      const v = hist[i];
+      if (v == null) continue;
+      const xMid = x0 + i * cw + cw/2;
+      const bw = Math.max(2, Math.min(9, cw - 2));
+      const y = yFrom(v);
+      const top = Math.min(y, yZero);
+      const hh = Math.max(1, Math.abs(y - yZero));
+      const isPos = v >= 0;
+      ctx.fillStyle = isPos ? 'rgba(33,193,122,.55)' : 'rgba(255,77,77,.55)';
+      if (document.body.classList.contains('light')){
+        ctx.fillStyle = isPos ? 'rgba(10,156,87,.30)' : 'rgba(211,58,58,.30)';
+      }
+      ctx.fillRect(Math.round(xMid - bw/2), Math.round(top), Math.round(bw), Math.round(hh));
+    }
+
+    // MACD line
+    function drawLine(series, color, width=1.7, alpha=1){
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.beginPath();
+      let started = false;
+      for (let i = 0; i < n; i++){
+        const v = series[i];
+        if (v == null) continue;
+        const x = x0 + i * cw + cw/2;
+        const y = yFrom(v);
+        if (!started){ ctx.moveTo(x, y); started = true; }
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    drawLine(macdLine, accent, 1.8, 0.95);
+    drawLine(signalLine, 'rgba(255,255,255,.65)', 1.6, 0.85);
+
+    // axis labels
+    ctx.save();
+    ctx.font = '12px ' + getComputedStyle(document.body).getPropertyValue('--mono');
+    ctx.fillStyle = muted;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    for (const lvl of [maxAbs, maxAbs/2, 0, -maxAbs/2, -maxAbs]){
+      ctx.fillText(fmt(lvl, 4), x0 + iw + 8, yFrom(lvl));
+    }
+    ctx.restore();
+  }
+
+  function roundRect(ctx, x, y, w, h, r){
+    const rr = Math.min(r, w/2, h/2);
+    ctx.moveTo(x + rr, y);
+    ctx.arcTo(x + w, y, x + w, y + h, rr);
+    ctx.arcTo(x + w, y + h, x, y + h, rr);
+    ctx.arcTo(x, y + h, x, y, rr);
+    ctx.arcTo(x, y, x + w, y, rr);
+    ctx.closePath();
+  }
+
+  function priceToDP(price){
+    if (price >= 1000) return 2;
+    if (price >= 100) return 2;
+    if (price >= 1) return 3;
+    return 5;
+  }
+
+  // --- DOM rendering ---
+  function renderWatchlist(){
+    UI.watchlist.innerHTML = '';
+    for (const sym of TICKERS){
+      const last = state.market[sym].candles.at(-1);
+      const prev = state.market[sym].candles.at(-2);
+      const chg = prev ? (last.close - prev.close) : 0;
+      const pct = prev ? (chg / prev.close) * 100 : 0;
+
+      const el = document.createElement('div');
+      el.className = 'wlItem' + (sym === state.current ? ' active' : '');
+      el.addEventListener('click', () => { state.current = sym; syncHeader(); renderAll(); });
+
+      const left = document.createElement('div');
+      left.className = 'wlLeft';
+      left.innerHTML = `<div class="wlSym">${sym}</div><div class="wlPx">${fmt(last.close, priceToDP(last.close))}</div>`;
+
+      const right = document.createElement('div');
+      right.className = 'wlRight';
+      const cls = chg >= 0 ? 'up' : 'down';
+      right.innerHTML = `<div class="wlChg ${cls}">${chg>=0?'+':''}${pct.toFixed(2)}%</div><div class="wlVol">V ${fmtVol(last.volume)}</div>`;
+
+      el.append(left, right);
+      UI.watchlist.appendChild(el);
+    }
+  }
+
+  function renderOrderBook(){
+    const sym = state.current;
+    const last = state.market[sym].candles.at(-1);
+    const mid = last.close;
+
+    // Spread: tighter for equities, wider for crypto (still small)
+    const isCrypto = ['BTC','ETH','SOL','DOGE','AVAX'].includes(sym);
+    const baseSpread = isCrypto ? (0.0007 + Math.random() * 0.0012) : (0.00012 + Math.random() * 0.00025);
+    const spread = mid * baseSpread;
+
+    const levels = 5;
+    const step = spread * (isCrypto ? 0.95 : 1.25);
+
+    const asks = [];
+    const bids = [];
+    for (let i = 0; i < levels; i++){
+      const askPx = mid + spread/2 + i * step;
+      const bidPx = mid - spread/2 - i * step;
+      const shape = (levels - i) / levels;
+      const askSz = (0.35 + Math.random()) * shape * (isCrypto ? 8.0 : 2200);
+      const bidSz = (0.35 + Math.random()) * shape * (isCrypto ? 8.0 : 2200);
+      asks.push({ px: askPx, sz: askSz });
+      bids.push({ px: bidPx, sz: bidSz });
+    }
+
+    const maxAsk = Math.max(...asks.map(x => x.sz));
+    const maxBid = Math.max(...bids.map(x => x.sz));
+
+    UI.asks.innerHTML = '';
+    UI.bids.innerHTML = '';
+
+    for (let i = levels - 1; i >= 0; i--){
+      const a = asks[i];
+      const row = document.createElement('div');
+      row.className = 'lvl askRow';
+      row.innerHTML = `
+        <div class="depth ask" style="width:${(a.sz/maxAsk)*100}%;"></div>
+        <div class="num">${fmt(a.px, priceToDP(a.px))}</div>
+        <div class="num">${fmt(a.sz, isCrypto?4:0)}</div>
+        <div class="num">${fmt(a.px * a.sz, isCrypto?2:0)}</div>
+      `;
+      UI.asks.appendChild(row);
+    }
+
+    for (let i = 0; i < levels; i++){
+      const b = bids[i];
+      const row = document.createElement('div');
+      row.className = 'lvl bidRow';
+      row.innerHTML = `
+        <div class="depth bid" style="width:${(b.sz/maxBid)*100}%;"></div>
+        <div class="num">${fmt(b.px, priceToDP(b.px))}</div>
+        <div class="num">${fmt(b.sz, isCrypto?4:0)}</div>
+        <div class="num">${fmt(b.px * b.sz, isCrypto?2:0)}</div>
+      `;
+      UI.bids.appendChild(row);
+    }
+
+    UI.midPx.textContent = fmt(mid, priceToDP(mid));
+    UI.spreadPx.textContent = `${fmt(spread, priceToDP(spread))} (${(baseSpread*100).toFixed(3)}%)`;
+    UI.spreadPill.textContent = 'SPREAD ' + fmt(spread, priceToDP(spread));
+  }
+
+  const POSITIONS = [
+    { sym: 'BTC', qty: 0.18, avg: 49650 },
+    { sym: 'AAPL', qty: 65, avg: 178.40 },
+    { sym: 'TSLA', qty: -22, avg: 236.10 }, // short
+    { sym: 'ETH', qty: 1.40, avg: 3055 },
+  ];
+
+  function renderPortfolio(){
+    let total = 0;
+    UI.posBody.innerHTML = '';
+
+    for (const p of POSITIONS){
+      const last = state.market[p.sym].candles.at(-1).close;
+      const pnl = (last - p.avg) * p.qty;
+      total += pnl;
+
+      const tr = document.createElement('tr');
+      const pnlCls = pnl >= 0 ? 'pnlPos' : 'pnlNeg';
+      tr.innerHTML = `
+        <td>${p.sym}</td>
+        <td class="num">${fmt(p.qty, (Math.abs(p.qty) < 1 ? 4 : 0))}</td>
+        <td class="num">${fmt(p.avg, priceToDP(p.avg))}</td>
+        <td class="num">${fmt(last, priceToDP(last))}</td>
+        <td class="num ${pnlCls}">${pnl>=0?'+':''}${fmt(pnl, 2)}</td>
+      `;
+      UI.posBody.appendChild(tr);
+    }
+
+    UI.totPnl.textContent = (total >= 0 ? '+' : '') + fmt(total, 2);
+    UI.totPnl.className = 'val ' + (total >= 0 ? 'pnlPos' : 'pnlNeg');
+  }
+
+  function setStatus(kvsLeft, kvsRight){
+    UI.statusLeft.innerHTML = kvsLeft.map(([k, v]) => `<span class="k">${k}</span><span class="v">${v}</span>`).join(' ');
+    UI.statusRight.innerHTML = kvsRight.map(([k, v]) => `<span class="k">${k}</span><span class="v">${v}</span>`).join(' ');
+  }
+
+  function syncHeader(){
+    const sym = state.current;
+    UI.curTicker.textContent = sym;
+
+    const candles = state.market[sym].candles;
+    const last = candles.at(-1);
+    const prev = candles.at(-2);
+    const chg = prev ? (last.close - prev.close) : 0;
+    const pct = prev ? (chg / prev.close) * 100 : 0;
+
+    UI.curPrice.textContent = fmt(last.close, priceToDP(last.close));
+    UI.curPrice.style.color = chg >= 0 ? THEME.vars.up : THEME.vars.down;
+
+    UI.curChg.textContent = `${chg>=0?'+':''}${fmt(chg, priceToDP(last.close))} (${pct.toFixed(2)}%)`;
+    UI.curChg.style.borderColor = chg >= 0 ? 'rgba(33,193,122,.35)' : 'rgba(255,77,77,.35)';
+    UI.curChg.style.color = chg >= 0 ? THEME.vars.up : THEME.vars.down;
+
+    UI.curVol.textContent = 'VOL ' + fmtVol(last.volume);
+  }
+
+  function computeAllIndicators(candles){
+    const closes = candles.map(c => c.close);
+
+    const rsi = rsiWilder(closes, 14);
+    const m = macd(closes, 12, 26, 9);
+    const bb = bollinger(closes, 20, 2);
+    const sma20 = sma(closes, 20);
+    const sma50 = sma(closes, 50);
+
+    return { closes, rsi, macd: m, bb, sma20, sma50 };
+  }
+
+  function renderCharts(){
+    const sym = state.current;
+    const candles = state.market[sym].candles;
+    const ind = computeAllIndicators(candles);
+
+    drawPriceChart(UI.priceCanvas, candles, ind);
+    drawRSI(UI.rsiCanvas, ind.rsi);
+    drawMACD(UI.macdCanvas, ind.macd.macdLine, ind.macd.signalLine, ind.macd.hist);
+
+    // meta
+    const last = candles.at(-1);
+    const hi = Math.max(...candles.map(c=>c.high));
+    const lo = Math.min(...candles.map(c=>c.low));
+    UI.priceMeta.textContent = `H ${fmt(hi, priceToDP(hi))} · L ${fmt(lo, priceToDP(lo))}`;
+
+    const lastRsi = ind.rsi.at(-1);
+    UI.rsiMeta.textContent = lastRsi == null ? '—' : `RSI ${lastRsi.toFixed(2)}`;
+
+    const macdLast = ind.macd.macdLine.at(-1);
+    const sigLast = ind.macd.signalLine.at(-1);
+    const histLast = ind.macd.hist.at(-1);
+    UI.macdMeta.textContent = (macdLast==null||sigLast==null||histLast==null)
+      ? '—'
+      : `MACD ${macdLast.toFixed(4)} · SIG ${sigLast.toFixed(4)} · HIST ${histLast.toFixed(4)}`;
+
+    // status bar
+    const bbU = ind.bb.upper.at(-1);
+    const bbL = ind.bb.lower.at(-1);
+    const vol = last.volume;
+
+    setStatus(
+      [
+        ['RSI', lastRsi == null ? '—' : lastRsi.toFixed(2)],
+        ['MACD', macdLast == null ? '—' : macdLast.toFixed(4)],
+        ['Signal', sigLast == null ? '—' : sigLast.toFixed(4)],
+      ],
+      [
+        ['BB U/L', (bbU==null||bbL==null) ? '—' : `${fmt(bbU, priceToDP(bbU))} / ${fmt(bbL, priceToDP(bbL))}`],
+        ['Volume', fmtVol(vol)],
+      ]
+    );
+  }
+
+  function renderAll(){
+    renderWatchlist();
+    syncHeader();
+    renderOrderBook();
+    renderPortfolio();
+    renderCharts();
+  }
+
+  // --- App state ---
+  const state = {
+    current: 'BTC',
+    market: Object.create(null),
+    timer: null,
+  };
+
+  function initMarket(){
+    for (const sym of TICKERS){
+      state.market[sym] = { candles: makeInitialCandles(sym, 200) };
+    }
+  }
+
+  function stepMarket(){
+    for (const sym of TICKERS){
+      updateOneCandle(state.market[sym].candles, sym);
+    }
+  }
+
+  function start(){
+    stop();
+    state.timer = setInterval(() => {
+      stepMarket();
+      renderAll();
+    }, 1500);
+  }
+
+  function stop(){
+    if (state.timer) clearInterval(state.timer);
+    state.timer = null;
+  }
+
+  function toggleTheme(){
+    document.body.classList.toggle('light');
+    // redraw canvases with new palette
+    renderAll();
+  }
+
+  // Resize handling
+  let resizeRAF = 0;
+  function onResize(){
+    if (resizeRAF) cancelAnimationFrame(resizeRAF);
+    resizeRAF = requestAnimationFrame(() => renderAll());
+  }
+
+  // --- Wire up ---
+  UI.themeToggle.addEventListener('click', toggleTheme);
+  UI.mobileThemeToggle.addEventListener('click', toggleTheme);
+  UI.resetBtn.addEventListener('click', () => {
+    initMarket();
+    renderAll();
+  });
+
+  window.addEventListener('resize', onResize, { passive: true });
+
+  // init
+  initMarket();
+  renderAll();
+  start();
+
+})();
+</script>
+</body>
+</html>

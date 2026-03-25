@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Counter</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app" aria-label="Counter app">
+      <h1 class="title">Counter</h1>
+
+      <div class="counter" role="group" aria-label="Counter controls">
+        <button id="decrement" class="btn" type="button" aria-label="Decrement">
+          −
+        </button>
+        <output id="value" class="value" aria-live="polite" aria-atomic="true">0</output>
+        <button id="increment" class="btn" type="button" aria-label="Increment">
+          +
+        </button>
+      </div>
+    </main>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

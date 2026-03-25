@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Polymarket Position Tracker</title>
+  <style>
+    :root{
+      --bg0:#090b10;        /* near-zinc */
+      --bg1:#0c1017;        /* slate */
+      --card:#0e1420;       /* slate-ish */
+      --card2:#0b111b;
+      --border:rgba(148,163,184,.18);
+      --muted:#94a3b8;
+      --text:#e5e7eb;
+      --title:#f8fafc;
+      --green:#22c55e;
+      --red:#ef4444;
+      --amber:#f59e0b;
+      --shadow: 0 12px 40px rgba(0,0,0,.45);
+      --radius:16px;
+      --radius2:12px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% 0%, rgba(56,189,248,.12), transparent 60%),
+        radial-gradient(900px 500px at 95% 10%, rgba(34,197,94,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
+
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+    }
+    .brand h1{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: .3px;
+      font-weight: 650;
+      color: var(--title);
+    }
+    .brand .sub{
+      margin:0;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, .35);
+      border-radius: 999px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.22);
+      user-select:none;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    .dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(34,197,94,.9);
+      box-shadow: 0 0 0 4px rgba(34,197,94,.12);
+    }
+
+    .panel{
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(15,23,42,.55), rgba(2,6,23,.25));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .summary{
+      padding: 14px;
+    }
+
+    .summary-grid{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat{
+      background: linear-gradient(180deg, rgba(2,6,23,.30), rgba(2,6,23,.15));
+      border: 1px solid rgba(148,163,184,.14);
+      border-radius: var(--radius2);
+      padding: 12px;
+      min-height: 74px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .stat .k{
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .2px;
+    }
+    .stat .v{
+      font-family: var(--mono);
+      font-size: 18px;
+      color: var(--title);
+      white-space:nowrap;
+    }
+    .stat .s{
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .pnl.pos{ color: var(--green) !important; }
+    .pnl.neg{ color: var(--red) !important; }
+    .pnl.flat{ color: var(--muted) !important; }
+
+    .exposure{
+      margin-top: 12px;
+      padding: 12px;
+      background: rgba(2,6,23,.18);
+      border: 1px solid rgba(148,163,184,.14);
+      border-radius: var(--radius2);
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+
+    .exposure-top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 12px;
+    }
+
+    .exposure-top .label{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .exposure-top .val{
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--text);
+    }
+
+    .bar{
+      height: 10px;
+      background: rgba(148,163,184,.12);
+      border-radius: 999px;
+      overflow:hidden;
+      border: 1px solid rgba(148,163,184,.14);
+    }
+    .bar > .fill{
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(56,189,248,.9), rgba(34,197,94,.9));
+      box-shadow: 0 0 0 3px rgba(56,189,248,.12);
+      transition: width 600ms cubic-bezier(.2,.9,.2,1);
+    }
+
+    .cards{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .card{
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(14,20,32,.85), rgba(11,17,27,.75));
+      border-radius: var(--radius);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+      padding: 14px;
+      position:relative;
+      overflow:hidden;
+      transition: transform 160ms ease, border-color 160ms ease;
+    }
+    .card:hover{
+      transform: translateY(-1px);
+      border-color: rgba(148,163,184,.30);
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-120px -120px auto auto;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle at 30% 30%, rgba(56,189,248,.12), transparent 60%);
+      pointer-events:none;
+    }
+
+    .card-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .market{
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--title);
+    }
+
+    .side{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .2px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,.18);
+      background: rgba(2,6,23,.25);
+      color: var(--muted);
+      white-space:nowrap;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 12px;
+    }
+
+    .row{
+      display:flex;
+      flex-direction:column;
+      gap: 4px;
+      padding: 10px;
+      background: rgba(2,6,23,.18);
+      border: 1px solid rgba(148,163,184,.12);
+      border-radius: var(--radius2);
+    }
+
+    .row .k{
+      font-size: 11.5px;
+      color: var(--muted);
+      letter-spacing: .2px;
+    }
+    .row .v{
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text);
+      white-space:nowrap;
+    }
+
+    .pnlbox{
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(148,163,184,.14);
+      background: linear-gradient(180deg, rgba(2,6,23,.20), rgba(2,6,23,.10));
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 10px;
+    }
+
+    .pnlbox .k{
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+
+    .pnlbox .big{
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 650;
+      white-space:nowrap;
+    }
+
+    .foot{
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 880px){
+      .summary-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cards{ grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 420px){
+      .wrap{ padding: 22px 14px 34px; }
+      header{ flex-direction:column; align-items:stretch; }
+      .chip{ width: fit-content; }
+      .grid{ grid-template-columns: 1fr; }
+      .stat .v{ font-size: 17px; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .bar > .fill{ transition: none; }
+      .card{ transition:none; }
+      .card:hover{ transform:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1>Polymarket Position Tracker</h1>
+        <p class="sub">Live Polymarket prices (CLOB/Gamma) · Auto-refresh: 60s · Positions: <span id="posCount">—</span></p>
+      </div>
+      <div class="chip" aria-label="Last updated">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Last updated <span id="updatedAt">—</span></span>
+        <span id="staleBadge" class="side" style="display:none; padding:6px 10px; border-color: rgba(245,158,11,.35); color: rgba(245,158,11,.95); background: rgba(245,158,11,.08);">STALE</span>
+      </div>
+    </header>
+
+    <section class="panel summary" aria-label="Wallet summary" style="margin-bottom: 14px;">
+      <div class="summary-grid">
+        <div class="stat">
+          <div class="k">Wallet</div>
+          <div class="v" id="walletAddr">—</div>
+          <div class="s">Tracked address</div>
+        </div>
+        <div class="stat">
+          <div class="k">USDC.e Balance</div>
+          <div class="v" id="usdcBal">—</div>
+          <div class="s">Provided estimate</div>
+        </div>
+        <div class="stat">
+          <div class="k">POL Balance</div>
+          <div class="v" id="polBal">—</div>
+          <div class="s">Token units</div>
+        </div>
+        <div class="stat">
+          <div class="k">Total Portfolio Value</div>
+          <div class="v" id="portfolioTotal">—</div>
+          <div class="s">USDC.e + positions (POL excluded)</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel summary" aria-label="Portfolio summary">
+      <div class="summary-grid">
+        <div class="stat">
+          <div class="k">Total Invested</div>
+          <div class="v" id="totalInvested">—</div>
+          <div class="s">Cost basis</div>
+        </div>
+        <div class="stat">
+          <div class="k">Current Value</div>
+          <div class="v" id="totalValue">—</div>
+          <div class="s">Mark-to-market</div>
+        </div>
+        <div class="stat">
+          <div class="k">Total P&amp;L</div>
+          <div class="v pnl" id="totalPnl">—</div>
+          <div class="s">Unrealized</div>
+        </div>
+        <div class="stat">
+          <div class="k">Total P&amp;L %</div>
+          <div class="v pnl" id="totalPnlPct">—</div>
+          <div class="s">(P&amp;L / invested)</div>
+        </div>
+      </div>
+
+      <div class="exposure" aria-label="Portfolio exposure">
+        <div class="exposure-top">
+          <div>
+            <div class="label">Portfolio exposure meter</div>
+            <div class="label">Assumed portfolio size: <span class="val" id="assumed">—</span></div>
+          </div>
+          <div class="val" id="exposureText">—</div>
+        </div>
+        <div class="bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="fill" id="exposureFill"></div>
+        </div>
+      </div>
+    </section>
+
+    <main class="cards" id="cards" aria-label="Positions"></main>
+
+    <div class="foot">
+      P&amp;L is computed as (current price − entry price) × shares. Prices are treated as USD per share for display.
+      <br />Live price fetching uses Polymarket public APIs. If you hit CORS errors when opening via <span style="font-family: var(--mono);">file://</span>, serve this folder over HTTP (a local web server works best).
+    </div>
+  </div>
+
+  <script>
+    // Steven's open positions (NO side)
+    // NOTE: "Entry Price" here is the NO token entry price.
+    const wallet = {
+      address: '0xb76f3D4E8195A964e5F752d44280a1D71cb88F95',
+      usdc_e: 1343, // provided estimate (USD)
+      pol: 45,      // provided estimate (token units)
+    };
+
+    const positions = [
+      { market: 'Trump tweets about alien disclosure', slug: 'trump-alien-disclosure', entry: 0.97, shares: 52, side: 'NO', current: 0.97 },
+      { market: 'Russia uses nuclear weapon in 2025', slug: 'russia-nuclear-weapon-2025', entry: 0.91, shares: 55, side: 'NO', current: 0.91 },
+      { market: 'Alien life confirmed before 2025 ends', slug: 'alien-life-confirmed-2025', entry: 0.95, shares: 53, side: 'NO', current: 0.95 },
+      { market: 'North Korea launches ICBM at US', slug: 'north-korea-icbm-us-2025', entry: 0.96, shares: 52, side: 'NO', current: 0.96 },
+      { market: 'Elon Musk becomes US President in 2025', slug: 'elon-musk-president-2025', entry: 0.97, shares: 52, side: 'NO', current: 0.97 },
+      { market: 'World War 3 officially declared 2025', slug: 'world-war-3-2025', entry: 0.95, shares: 53, side: 'NO', current: 0.95 },
+    ];
+
+    const REFRESH_MS = 60_000;
+    const API = {
+      gammaMarketBySlug: (slug) => `https://gamma-api.polymarket.com/markets?slug=${encodeURIComponent(slug)}`,
+      clobPrices: (tokenIdsCsv) => `https://clob.polymarket.com/prices?token_ids=${encodeURIComponent(tokenIdsCsv)}`,
+    };
+
+    const fmtUSD = new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
+    const fmtPx  = new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const fmtPct = new Intl.NumberFormat(undefined, { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const fmtInt = new Intl.NumberFormat(undefined);
+
+    const state = {
+      tokenIdBySlug: new Map(), // slug -> tokenId (NO token)
+      gammaNoPriceBySlug: new Map(), // slug -> NO price from Gamma (fallback)
+      lastUpdatedAt: null,
+      stale: true,
+      lastError: '',
+    };
+
+    function clsForPnl(x){
+      if (Math.abs(x) < 1e-9) return 'flat';
+      return x > 0 ? 'pos' : 'neg';
+    }
+
+    function compute(p){
+      const invested = p.entry * p.shares;
+      const value = p.current * p.shares;
+      const pnl = value - invested;
+      const pnlPct = invested === 0 ? 0 : pnl / invested;
+      return { invested, value, pnl, pnlPct };
+    }
+
+    function truncateAddr(addr){
+      if (!addr || addr.length < 12) return addr || '—';
+      return `${addr.slice(0,6)}…${addr.slice(-4)}`;
+    }
+
+    function setStaleUI(isStale, errMsg){
+      state.stale = !!isStale;
+      state.lastError = errMsg || '';
+
+      const dot = document.querySelector('.chip .dot');
+      const badge = document.getElementById('staleBadge');
+
+      if (badge) badge.style.display = isStale ? 'inline-flex' : 'none';
+
+      if (dot){
+        if (isStale){
+          dot.style.background = 'rgba(245,158,11,.95)';
+          dot.style.boxShadow = '0 0 0 4px rgba(245,158,11,.12)';
+          dot.title = errMsg ? `Stale: ${errMsg}` : 'Stale data (last refresh failed)';
+        } else {
+          dot.style.background = 'rgba(34,197,94,.9)';
+          dot.style.boxShadow = '0 0 0 4px rgba(34,197,94,.12)';
+          dot.title = 'Live';
+        }
+      }
+    }
+
+    function el(tag, attrs = {}, children = []){
+      const n = document.createElement(tag);
+      for (const [k,v] of Object.entries(attrs)){
+        if (k === 'class') n.className = v;
+        else if (k.startsWith('on') && typeof v === 'function') n.addEventListener(k.slice(2), v);
+        else if (k === 'html') n.innerHTML = v;
+        else n.setAttribute(k, String(v));
+      }
+      for (const c of children){
+        if (c == null) continue;
+        n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
+      }
+      return n;
+    }
+
+    function render(){
+      // Header
+      document.getElementById('posCount').textContent = String(positions.length);
+      document.getElementById('updatedAt').textContent = state.lastUpdatedAt ? state.lastUpdatedAt.toLocaleString() : '—';
+
+      // Wallet summary
+      document.getElementById('walletAddr').textContent = truncateAddr(wallet.address);
+      document.getElementById('usdcBal').textContent = fmtUSD.format(wallet.usdc_e);
+      document.getElementById('polBal').textContent = `~${fmtInt.format(wallet.pol)}`;
+
+      // Totals
+      let totalInvested = 0;
+      let totalValue = 0;
+      let totalPnl = 0;
+
+      // Cards
+      const host = document.getElementById('cards');
+      host.innerHTML = '';
+
+      for (const p of positions){
+        const c = compute(p);
+        totalInvested += c.invested;
+        totalValue += c.value;
+        totalPnl += c.pnl;
+
+        const pnlClass = clsForPnl(c.pnl);
+
+        const card = el('section', { class: 'card', 'aria-label': `Position: ${p.market}` }, [
+          el('div', { class: 'card-top' }, [
+            el('div', { class: 'market' }, [p.market]),
+            el('div', { class: 'side', title: 'Side' }, [p.side || 'NO'])
+          ]),
+          el('div', { class: 'grid' }, [
+            el('div', { class: 'row' }, [
+              el('div', { class: 'k' }, ['Entry Price']),
+              el('div', { class: 'v' }, [fmtPx.format(p.entry)])
+            ]),
+            el('div', { class: 'row' }, [
+              el('div', { class: 'k' }, ['Current Price']),
+              el('div', { class: 'v' }, [fmtPx.format(p.current)])
+            ]),
+            el('div', { class: 'row' }, [
+              el('div', { class: 'k' }, ['Shares']),
+              el('div', { class: 'v' }, [fmtInt.format(p.shares)])
+            ]),
+            el('div', { class: 'row' }, [
+              el('div', { class: 'k' }, ['Cost → Value']),
+              el('div', { class: 'v' }, [`${fmtUSD.format(c.invested)} → ${fmtUSD.format(c.value)}`])
+            ])
+          ]),
+          el('div', { class: 'pnlbox' }, [
+            el('div', {}, [
+              el('div', { class: 'k' }, ['Unrealized P&L']),
+              el('div', { class: `big pnl ${pnlClass}` }, [fmtUSD.format(c.pnl)])
+            ]),
+            el('div', {}, [
+              el('div', { class: 'k', style: 'text-align:right' }, ['P&L %']),
+              el('div', { class: `big pnl ${pnlClass}`, style: 'text-align:right' }, [fmtPct.format(c.pnlPct)])
+            ])
+          ])
+        ]);
+
+        host.appendChild(card);
+      }
+
+      const totalPnlPct = totalInvested === 0 ? 0 : totalPnl / totalInvested;
+      const pnlClassTotal = clsForPnl(totalPnl);
+
+      document.getElementById('totalInvested').textContent = fmtUSD.format(totalInvested);
+      document.getElementById('totalValue').textContent = fmtUSD.format(totalValue);
+
+      // Total portfolio value = wallet stablecoin + positions value
+      const portfolioTotal = wallet.usdc_e + totalValue;
+      document.getElementById('portfolioTotal').textContent = fmtUSD.format(portfolioTotal);
+
+      const totalPnlEl = document.getElementById('totalPnl');
+      totalPnlEl.textContent = fmtUSD.format(totalPnl);
+      totalPnlEl.classList.remove('pos','neg','flat');
+      totalPnlEl.classList.add(pnlClassTotal);
+
+      const totalPnlPctEl = document.getElementById('totalPnlPct');
+      totalPnlPctEl.textContent = fmtPct.format(totalPnlPct);
+      totalPnlPctEl.classList.remove('pos','neg','flat');
+      totalPnlPctEl.classList.add(pnlClassTotal);
+
+      // Exposure (capital deployed vs assumed portfolio)
+      const assumedPortfolio = portfolioTotal;
+      document.getElementById('assumed').textContent = fmtUSD.format(assumedPortfolio);
+      const exposure = assumedPortfolio === 0 ? 0 : (totalInvested / assumedPortfolio);
+      const exposureClamped = Math.max(0, Math.min(1, exposure));
+      const pct = exposureClamped * 100;
+
+      const exposureText = `${fmtUSD.format(totalInvested)} deployed (${pct.toFixed(1)}%)`;
+      document.getElementById('exposureText').textContent = exposureText;
+
+      const fill = document.getElementById('exposureFill');
+      fill.style.width = `${pct}%`;
+
+      const meter = document.querySelector('.bar');
+      meter.setAttribute('aria-valuenow', String(pct.toFixed(1)));
+    }
+
+    function pickFirstMarket(payload){
+      if (!payload) return null;
+      if (Array.isArray(payload)) return payload[0] || null;
+      if (Array.isArray(payload.markets)) return payload.markets[0] || null;
+      if (payload.market) return payload.market;
+      return null;
+    }
+
+    function extractNoTokenId(market){
+      if (!market || typeof market !== 'object') return null;
+
+      // Common shapes
+      if (market.noTokenId) return String(market.noTokenId);
+      if (market.no_token_id) return String(market.no_token_id);
+      if (market.clobTokenIds && (market.clobTokenIds.no || market.clobTokenIds.NO)){
+        return String(market.clobTokenIds.no || market.clobTokenIds.NO);
+      }
+      if (market.clob_token_ids && (market.clob_token_ids.no || market.clob_token_ids.NO)){
+        return String(market.clob_token_ids.no || market.clob_token_ids.NO);
+      }
+
+      const tokens = market.tokens || market.outcomeTokens || market.clobTokens;
+      if (Array.isArray(tokens)){
+        const norm = tokens.map(t => ({
+          raw: t,
+          outcome: (t?.outcome ?? t?.name ?? t?.label ?? '').toString(),
+          tokenId: (t?.token_id ?? t?.tokenId ?? t?.id ?? '').toString(),
+        }));
+        const noTok = norm.find(t => t.tokenId && t.outcome.toLowerCase() === 'no')
+                   || norm.find(t => t.tokenId && t.outcome.toLowerCase().includes('no'));
+        if (noTok) return String(noTok.tokenId);
+      }
+
+      // Gamma sometimes provides outcomes + outcomePrices; no token id available then.
+      return null;
+    }
+
+    function extractNoPriceFromGammaMarket(market){
+      if (!market || typeof market !== 'object') return null;
+
+      // Common Gamma fields: outcomes + outcomePrices (arrays)
+      const outcomes = market.outcomes || market.outcome_names || market.outcomeLabels;
+      const prices = market.outcomePrices || market.outcome_prices || market.outcomesPrices;
+
+      if (Array.isArray(outcomes) && Array.isArray(prices) && outcomes.length === prices.length){
+        for (let i = 0; i < outcomes.length; i++){
+          const o = String(outcomes[i] ?? '').toLowerCase();
+          if (o === 'no'){
+            const n = Number(prices[i]);
+            return Number.isFinite(n) ? n : null;
+          }
+        }
+      }
+
+      // Sometimes prices are keyed by outcome
+      if (market.prices && typeof market.prices === 'object'){
+        const v = market.prices.no ?? market.prices.NO;
+        const n = Number(v);
+        return Number.isFinite(n) ? n : null;
+      }
+
+      return null;
+    }
+
+    async function fetchGammaNoPrice(slug){
+      const res = await fetch(API.gammaMarketBySlug(slug), { cache: 'no-store' });
+      if (!res.ok) throw new Error(`Gamma ${res.status} for ${slug}`);
+      const data = await res.json();
+      const market = pickFirstMarket(data);
+      const px = extractNoPriceFromGammaMarket(market);
+      if (!Number.isFinite(px)) throw new Error(`Could not extract NO price from Gamma for ${slug}`);
+      return px;
+    }
+
+    function parsePriceMapFromClob(payload){
+      // Expected: { prices: { [tokenId]: "0.123" } }
+      // Be liberal in what we accept.
+      if (!payload) return new Map();
+      if (payload.prices && typeof payload.prices === 'object'){
+        const m = new Map();
+        for (const [k,v] of Object.entries(payload.prices)){
+          const n = Number(v);
+          if (Number.isFinite(n)) m.set(String(k), n);
+        }
+        return m;
+      }
+      if (Array.isArray(payload)){
+        const m = new Map();
+        for (const row of payload){
+          const token = row?.token_id ?? row?.tokenId ?? row?.id;
+          const px = row?.price ?? row?.current_price ?? row?.value;
+          const n = Number(px);
+          if (token != null && Number.isFinite(n)) m.set(String(token), n);
+        }
+        return m;
+      }
+      return new Map();
+    }
+
+    async function ensureTokenIds(){
+      const missing = positions.filter(p => p.slug && !state.tokenIdBySlug.has(p.slug));
+      if (missing.length === 0) return;
+
+      await Promise.all(missing.map(async (p) => {
+        const res = await fetch(API.gammaMarketBySlug(p.slug), { cache: 'no-store' });
+        if (!res.ok) throw new Error(`Gamma ${res.status} for ${p.slug}`);
+        const data = await res.json();
+        const market = pickFirstMarket(data);
+        const noTokenId = extractNoTokenId(market);
+        if (noTokenId) state.tokenIdBySlug.set(p.slug, noTokenId);
+
+        // Also store Gamma NO price as a fallback.
+        const noPx = extractNoPriceFromGammaMarket(market);
+        if (Number.isFinite(noPx)) state.gammaNoPriceBySlug.set(p.slug, noPx);
+      }));
+    }
+
+    async function refreshPrices(){
+      try {
+        await ensureTokenIds();
+
+        const tokenIds = positions
+          .map(p => state.tokenIdBySlug.get(p.slug))
+          .filter(Boolean);
+
+        let priceMap = new Map();
+        let clobOk = false;
+        if (tokenIds.length > 0){
+          const res = await fetch(API.clobPrices(tokenIds.join(',')), { cache: 'no-store' });
+          if (!res.ok) throw new Error(`CLOB ${res.status}`);
+          const data = await res.json();
+          priceMap = parsePriceMapFromClob(data);
+          clobOk = true;
+        }
+
+        let anyMissing = false;
+        for (const p of positions){
+          const tok = state.tokenIdBySlug.get(p.slug);
+          const clobPx = (clobOk && tok) ? priceMap.get(String(tok)) : null;
+
+          if (Number.isFinite(clobPx)){
+            p.current = clobPx;
+            continue;
+          }
+
+          // Fallback: Gamma (either cached from ensureTokenIds or live refetch)
+          const cached = state.gammaNoPriceBySlug.get(p.slug);
+          if (Number.isFinite(cached)){
+            p.current = cached;
+            anyMissing = true; // still stale-ish: using fallback cache
+            continue;
+          }
+
+          try {
+            const gpx = await fetchGammaNoPrice(p.slug);
+            state.gammaNoPriceBySlug.set(p.slug, gpx);
+            p.current = gpx;
+            anyMissing = true;
+          } catch {
+            anyMissing = true;
+          }
+        }
+
+        state.lastUpdatedAt = new Date();
+        setStaleUI(anyMissing, anyMissing ? 'Some prices missing / fallback used' : '');
+        render();
+      } catch (err){
+        // Keep last known prices; mark stale.
+        setStaleUI(true, (err && err.message) ? err.message : String(err));
+        // Only update timestamp if we have one already; otherwise set it to now to show first attempt.
+        if (!state.lastUpdatedAt) state.lastUpdatedAt = new Date();
+        render();
+      }
+    }
+
+    // Initial render + refresh loop
+    setStaleUI(true, 'Loading…');
+    render();
+    refreshPrices();
+    setInterval(refreshPrices, REFRESH_MS);
+  </script>
+</body>
+</html>

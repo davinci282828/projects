@@ -1,0 +1,959 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agent Memory Dashboard</title>
+  <style>
+    :root{
+      --bg: #0b0f14;
+      --panel: #0f1621;
+      --panel-2: #0c121b;
+      --border: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.88);
+      --muted: rgba(255,255,255,.62);
+      --faint: rgba(255,255,255,.42);
+      --good: #2dd4bf;
+      --warn: #fbbf24;
+      --bad: #fb7185;
+      --accent: #60a5fa;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 800px at 20% -10%, rgba(96,165,250,.18), transparent 60%),
+        radial-gradient(900px 600px at 110% 10%, rgba(45,212,191,.14), transparent 55%),
+        radial-gradient(700px 500px at 40% 110%, rgba(251,113,133,.10), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      font-family:var(--sans);
+      line-height:1.35;
+    }
+
+    .app{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 22px 18px 28px;
+    }
+
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      padding: 16px 16px 14px;
+      border:1px solid var(--border);
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 12px;
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width: 260px;
+    }
+    .title h1{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: .2px;
+      font-weight: 680;
+    }
+    .subtitle{
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hdr-right{
+      display:flex;
+      align-items:flex-start;
+      justify-content:flex-end;
+      gap:12px;
+      flex-wrap: wrap;
+    }
+
+    .chip{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      border-radius: 14px;
+      padding: 10px 12px;
+      min-height: 44px;
+    }
+
+    .chip .label{
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+    .chip .value{
+      font-size: 13px;
+      color: var(--text);
+      margin-top: 2px;
+    }
+
+    .time-mono{font-family: var(--mono); font-variant-numeric: tabular-nums;}
+
+    .ring{
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      display:grid;
+      place-items:center;
+      background:
+        conic-gradient(var(--ring-color) calc(var(--pct) * 1%), rgba(255,255,255,.08) 0);
+      border:1px solid var(--border);
+    }
+    .ring span{
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: rgba(11,15,20,.95);
+      display:grid;
+      place-items:center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text);
+    }
+
+    .search{
+      min-width: 260px;
+      max-width: 380px;
+      flex: 1 1 300px;
+    }
+    .search label{
+      display:block;
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 6px;
+    }
+    .search .row{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    input[type="search"]{
+      width:100%;
+      appearance:none;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.24);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      outline:none;
+      font-size: 13px;
+    }
+    input[type="search"]::placeholder{color: rgba(255,255,255,.35)}
+    input[type="search"]:focus{border-color: rgba(96,165,250,.55); box-shadow: 0 0 0 3px rgba(96,165,250,.15)}
+
+    .btn{
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      cursor:pointer;
+      white-space: nowrap;
+    }
+    .btn:hover{border-color: rgba(255,255,255,.16)}
+    .btn:active{transform: translateY(1px)}
+
+    main{
+      display:grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+      align-items:start;
+    }
+
+    .panel{
+      border:1px solid var(--border);
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .panel .panel-h{
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid var(--border);
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .panel .panel-h h2{
+      margin:0;
+      font-size: 13px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.72);
+      font-weight: 700;
+    }
+    .panel .panel-h .meta{
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .timeline{
+      padding: 12px 14px 14px;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+
+    .day{
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      border-radius: 14px;
+      overflow:hidden;
+    }
+
+    .day-h{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 12px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .day-h .left{
+      display:flex;
+      flex-direction:column;
+      gap: 4px;
+    }
+
+    .day-h .date{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(255,255,255,.78);
+    }
+    .day-h .summary{
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .badges{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+    .badge{
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.70);
+    }
+
+    .day-b{
+      padding: 10px 12px 12px;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+
+    .notes{
+      color: rgba(255,255,255,.78);
+      font-size: 13px;
+      padding: 10px 10px;
+      border: 1px dashed rgba(255,255,255,.10);
+      border-radius: 12px;
+      background: rgba(0,0,0,.12);
+    }
+
+    .decisions{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+
+    details.card{
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(15,22,33,.55);
+      overflow:hidden;
+    }
+
+    details.card > summary{
+      list-style: none;
+      cursor: pointer;
+      padding: 12px 12px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    details.card > summary::-webkit-details-marker{display:none}
+
+    .card-title{
+      display:flex;
+      flex-direction:column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .card-title .kicker{
+      display:flex;
+      gap: 8px;
+      align-items:center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .card-title .kicker .ts{font-family: var(--mono); color: rgba(255,255,255,.72)}
+
+    .card-title .name{
+      font-size: 14px;
+      color: rgba(255,255,255,.90);
+      font-weight: 650;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pill{
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: rgba(255,255,255,.74);
+      flex: 0 0 auto;
+    }
+
+    /* Filter chips (styled like .pill, but clickable) */
+    .filter-chips{
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    button.pill.filter-chip{
+      appearance:none;
+      cursor:pointer;
+      user-select:none;
+    }
+    button.pill.filter-chip:hover{border-color: rgba(255,255,255,.16)}
+    button.pill.filter-chip:active{transform: translateY(1px)}
+    button.pill.filter-chip:focus-visible{
+      outline:none;
+      border-color: rgba(96,165,250,.55);
+      box-shadow: 0 0 0 3px rgba(96,165,250,.15);
+    }
+
+    button.pill.filter-chip[aria-pressed="true"]{
+      border-color: rgba(96,165,250,.70);
+      color: rgba(96,165,250,.98);
+      background: rgba(96,165,250,.10);
+    }
+
+    .pill.good{border-color: rgba(45,212,191,.26); color: rgba(45,212,191,.95); background: rgba(45,212,191,.06)}
+    .pill.warn{border-color: rgba(251,191,36,.25); color: rgba(251,191,36,.95); background: rgba(251,191,36,.06)}
+    .pill.bad{border-color: rgba(251,113,133,.25); color: rgba(251,113,133,.95); background: rgba(251,113,133,.06)}
+
+    .card-body{
+      padding: 0 12px 12px;
+      color: rgba(255,255,255,.78);
+      font-size: 13px;
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .kv{
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      background: rgba(0,0,0,.14);
+      padding: 10px 10px;
+      min-height: 70px;
+    }
+    .kv .k{font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted)}
+    .kv .v{margin-top: 6px; font-size: 13px; color: rgba(255,255,255,.84)}
+
+    .artifacts{
+      padding: 12px 14px 14px;
+    }
+
+    .table{
+      width:100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      background: rgba(0,0,0,.16);
+    }
+
+    .table th, .table td{
+      padding: 10px 10px;
+      font-size: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      vertical-align: top;
+    }
+
+    .table th{
+      color: rgba(255,255,255,.68);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: 11px;
+      background: rgba(255,255,255,.02);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .table td{color: rgba(255,255,255,.78)}
+    .table tr:last-child td{border-bottom:none}
+
+    .tag{
+      display:inline-block;
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.70);
+      margin-right: 6px;
+      margin-top: 4px;
+      background: rgba(255,255,255,.02);
+      white-space: nowrap;
+    }
+
+    .muted{color: var(--muted)}
+
+    .empty{
+      padding: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      border: 1px dashed rgba(255,255,255,.10);
+      border-radius: 14px;
+      background: rgba(0,0,0,.10);
+    }
+
+    .footer-note{
+      margin-top: 12px;
+      color: rgba(255,255,255,.48);
+      font-size: 12px;
+    }
+
+    @media (max-width: 980px){
+      header{position: static}
+      main{grid-template-columns: 1fr}
+      .search{min-width: 220px; max-width: 100%}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{scroll-behavior:auto}
+      .btn:active{transform:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="app" id="app">
+    <header>
+      <div class="title">
+        <h1>Agent Memory Dashboard</h1>
+        <div class="subtitle">Daily timeline • Decision cards • Artifact log • Health signal</div>
+      </div>
+
+      <div class="hdr-right">
+        <div class="chip" id="healthChip" role="group" aria-label="Memory health">
+          <div class="ring" id="healthRing" style="--pct: 0; --ring-color: var(--warn)" aria-hidden="true"><span id="healthPct">--</span></div>
+          <div>
+            <div class="label">Memory Health</div>
+            <div class="value"><span id="healthStatus">Calculating…</span></div>
+          </div>
+        </div>
+
+        <div class="chip" role="group" aria-label="Range and totals">
+          <div>
+            <div class="label">Range</div>
+            <div class="value time-mono" id="rangeText">—</div>
+          </div>
+          <div style="width:1px;height:30px;background:rgba(255,255,255,.10); margin: 0 2px" aria-hidden="true"></div>
+          <div>
+            <div class="label">Artifacts</div>
+            <div class="value time-mono" id="artifactCount">—</div>
+          </div>
+        </div>
+
+        <div class="search" role="search">
+          <label for="q">Search artifact log</label>
+          <div class="row">
+            <input id="q" type="search" placeholder="type, name, tag, notes…" autocomplete="off" />
+            <button class="btn" id="clearBtn" type="button">Clear</button>
+          </div>
+
+          <div class="filter-chips" role="group" aria-label="Artifact type filter">
+            <button class="pill filter-chip" type="button" data-type="ALL" aria-pressed="true">ALL</button>
+            <button class="pill filter-chip" type="button" data-type="DECISION" aria-pressed="false">DECISION</button>
+            <button class="pill filter-chip" type="button" data-type="TASK" aria-pressed="false">TASK</button>
+            <button class="pill filter-chip" type="button" data-type="FACT" aria-pressed="false">FACT</button>
+            <button class="pill filter-chip" type="button" data-type="LESSON" aria-pressed="false">LESSON</button>
+          </div>
+
+          <div class="footer-note" id="searchMeta">Showing all artifacts</div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel" aria-label="Timeline">
+        <div class="panel-h">
+          <h2>Timeline</h2>
+          <div class="meta">
+            <button class="btn" id="expandAll" type="button">Expand all</button>
+            <button class="btn" id="collapseAll" type="button" style="margin-left:8px">Collapse all</button>
+          </div>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+
+      <section class="panel" aria-label="Artifact log">
+        <div class="panel-h">
+          <h2>Artifact Log</h2>
+          <div class="meta" id="artifactMeta">—</div>
+        </div>
+        <div class="artifacts" id="artifactPanel"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Embedded sample data (no dependencies). Timestamps shown in monospace.
+    const sample = {
+      agent: { name: "Codex Agent", timezone: "Local" },
+      days: [
+        {
+          date: "2026-02-28",
+          headline: "Dashboard implementation and UI stabilization",
+          notes: "Built a single-file dashboard with embedded data, decision cards, and a searchable artifact log. Verified responsiveness and accessibility affordances.",
+          decisions: [
+            {
+              id: "dec-20260228-1",
+              time: "2026-02-28 10:12:05",
+              title: "Render UI from embedded JSON",
+              status: "accepted",
+              rationale: "Keeps the dashboard portable as a single HTML file and enables deterministic demo behavior.",
+              impact: "All timeline and artifact views are generated client-side without external libraries.",
+              risks: "Large datasets would require pagination/virtualization.",
+              owner: "Agent",
+              tags: ["ui", "portability", "no-deps"]
+            },
+            {
+              id: "dec-20260228-2",
+              time: "2026-02-28 10:41:33",
+              title: "Use <details> for expandable decision cards",
+              status: "accepted",
+              rationale: "Native, accessible expand/collapse behavior and minimal JS.",
+              impact: "Decision cards are keyboard-friendly and easy to scan.",
+              risks: "Advanced animations are limited (intentional).",
+              owner: "Agent",
+              tags: ["a11y", "ux", "timeline"]
+            }
+          ],
+          artifacts: [
+            {
+              time: "2026-02-28 10:58:11",
+              type: "file",
+              name: "index.html",
+              notes: "Agent Memory Dashboard (single file).",
+              tags: ["dashboard", "deliverable"],
+              status: "written"
+            },
+            {
+              time: "2026-02-28 10:32:04",
+              type: "metric",
+              name: "memory_health",
+              notes: "Computed from recency and data completeness (demo).",
+              tags: ["health", "signal"],
+              status: "updated"
+            }
+          ]
+        },
+        {
+          date: "2026-02-27",
+          headline: "Retention review + artifact hygiene",
+          notes: "Reviewed recent activity. Consolidated redundant notes and standardized artifact tagging for faster search.",
+          decisions: [
+            {
+              id: "dec-20260227-1",
+              time: "2026-02-27 16:05:20",
+              title: "Standardize artifact tags (kebab-case)",
+              status: "accepted",
+              rationale: "Prevents near-duplicate tags and improves filtering consistency.",
+              impact: "Search results are more predictable.",
+              risks: "Requires occasional tag migration.",
+              owner: "Agent",
+              tags: ["hygiene", "tags"]
+            },
+            {
+              id: "dec-20260227-2",
+              time: "2026-02-27 18:44:02",
+              title: "Store timestamps in local time",
+              status: "accepted",
+              rationale: "Matches how most operators interpret short-range timelines.",
+              impact: "Monospace timestamps remain readable and consistent.",
+              risks: "Cross-timezone correlation requires explicit conversion.",
+              owner: "Agent",
+              tags: ["time", "ops"]
+            }
+          ],
+          artifacts: [
+            {
+              time: "2026-02-27 15:22:10",
+              type: "note",
+              name: "retention_summary",
+              notes: "Summarized recent tasks and open questions.",
+              tags: ["review"],
+              status: "logged"
+            },
+            {
+              time: "2026-02-27 17:18:49",
+              type: "decision",
+              name: "artifact_tagging_policy",
+              notes: "Adopted kebab-case tags and discouraged synonyms.",
+              tags: ["policy", "hygiene"],
+              status: "approved"
+            }
+          ]
+        },
+        {
+          date: "2026-02-26",
+          headline: "Baseline memory snapshot",
+          notes: "Captured a baseline snapshot. Identified two stale areas: unresolved TODOs and unlinked artifacts.",
+          decisions: [
+            {
+              id: "dec-20260226-1",
+              time: "2026-02-26 09:08:13",
+              title: "Track health as a single percent plus label",
+              status: "accepted",
+              rationale: "Operators need a quick glance metric before drilling into details.",
+              impact: "Enables ring meter + status text.",
+              risks: "Over-simplifies nuanced quality signals.",
+              owner: "Agent",
+              tags: ["health", "design"]
+            },
+            {
+              id: "dec-20260226-2",
+              time: "2026-02-26 11:27:50",
+              title: "Log artifacts as immutable events",
+              status: "accepted",
+              rationale: "Event log makes audits easier than mutable state.",
+              impact: "Artifact table can be filtered without losing provenance.",
+              risks: "Requires deduping for user-facing summaries.",
+              owner: "Agent",
+              tags: ["audit", "artifacts"]
+            }
+          ],
+          artifacts: [
+            {
+              time: "2026-02-26 08:55:00",
+              type: "snapshot",
+              name: "memory_baseline",
+              notes: "Initial memory capture for QA.",
+              tags: ["baseline", "snapshot"],
+              status: "created"
+            },
+            {
+              time: "2026-02-26 12:01:09",
+              type: "todo",
+              name: "link_unattached_artifacts",
+              notes: "Backfill references from decisions to artifact IDs.",
+              tags: ["backlog"],
+              status: "open"
+            }
+          ]
+        }
+      ]
+    };
+
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+    function fmtRange(days){
+      const ds = days.map(d => d.date).sort();
+      if(ds.length === 0) return "—";
+      const start = ds[0];
+      const end = ds[ds.length - 1];
+      return start === end ? start : `${start} → ${end}`;
+    }
+
+    function statusPill(status){
+      const s = String(status || "").toLowerCase();
+      const cls = s === "accepted" || s === "done" || s === "written" || s === "approved" ? "good" :
+                  s === "open" || s === "pending" || s === "at-risk" ? "warn" :
+                  s === "rejected" || s === "blocked" ? "bad" : "";
+      return `<span class="pill ${cls}">${escapeHtml(status || "unknown")}</span>`;
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function computeHealth(days){
+      // Demo heuristic: health = 60% completeness + 40% recency
+      // completeness: per day, (notes + decisions + artifacts) presence
+      // recency: last day age relative to a 7-day window.
+      const now = new Date();
+
+      const completeness = days.length ? days.map(d => {
+        let score = 0;
+        score += (d.notes && d.notes.trim().length) ? 1 : 0;
+        score += (Array.isArray(d.decisions) && d.decisions.length) ? 1 : 0;
+        score += (Array.isArray(d.artifacts) && d.artifacts.length) ? 1 : 0;
+        return score / 3;
+      }).reduce((a,b)=>a+b,0) / days.length : 0;
+
+      const last = days.map(d => new Date(d.date + "T12:00:00")).sort((a,b)=>a-b).at(-1);
+      const ageDays = last ? Math.max(0, (now - last) / (1000*60*60*24)) : 999;
+      const recency = clamp(1 - (ageDays / 7), 0, 1);
+
+      const pct = Math.round((0.60 * completeness + 0.40 * recency) * 100);
+      let label = "Needs attention";
+      let color = "var(--warn)";
+      if(pct >= 80){ label = "Healthy"; color = "var(--good)"; }
+      else if(pct >= 55){ label = "Monitoring"; color = "var(--warn)"; }
+      else { label = "Degraded"; color = "var(--bad)"; }
+
+      return { pct, label, color, completeness, recency, ageDays: Math.round(ageDays*10)/10 };
+    }
+
+    function flattenArtifacts(days){
+      const out = [];
+      for(const d of days){
+        for(const a of (d.artifacts || [])){
+          out.push({ ...a, day: d.date });
+        }
+      }
+      // Desc by timestamp string (works with YYYY-MM-DD HH:MM:SS)
+      out.sort((a,b) => (a.time < b.time ? 1 : a.time > b.time ? -1 : 0));
+      return out;
+    }
+
+    function renderTimeline(days){
+      const el = $("#timeline");
+      el.innerHTML = "";
+
+      const sorted = [...days].sort((a,b) => (a.date < b.date ? 1 : -1));
+      for(const d of sorted){
+        const decisionCount = (d.decisions || []).length;
+        const artifactCount = (d.artifacts || []).length;
+
+        const dayEl = document.createElement("article");
+        dayEl.className = "day";
+        dayEl.innerHTML = `
+          <div class="day-h">
+            <div class="left">
+              <div class="date">${escapeHtml(d.date)}</div>
+              <div class="summary">${escapeHtml(d.headline || "")}</div>
+            </div>
+            <div class="badges" aria-label="Day counts">
+              <span class="badge">decisions: ${decisionCount}</span>
+              <span class="badge">artifacts: ${artifactCount}</span>
+            </div>
+          </div>
+          <div class="day-b">
+            <div class="notes">${escapeHtml(d.notes || "")}</div>
+            <div class="decisions" aria-label="Decisions"></div>
+          </div>
+        `;
+
+        const decisionsEl = $(".decisions", dayEl);
+        if(!decisionCount){
+          const empty = document.createElement("div");
+          empty.className = "empty";
+          empty.textContent = "No decisions logged for this day.";
+          decisionsEl.appendChild(empty);
+        } else {
+          for(const dec of d.decisions){
+            const card = document.createElement("details");
+            card.className = "card";
+            card.dataset.decisionId = dec.id;
+            card.innerHTML = `
+              <summary>
+                <div class="card-title">
+                  <div class="kicker">
+                    <span class="ts time-mono">${escapeHtml(dec.time || d.date)}</span>
+                    <span class="muted">•</span>
+                    <span class="time-mono">${escapeHtml(dec.id || "decision")}</span>
+                  </div>
+                  <div class="name">${escapeHtml(dec.title || "Untitled decision")}</div>
+                </div>
+                ${statusPill(dec.status)}
+              </summary>
+              <div class="card-body">
+                <div class="grid2">
+                  <div class="kv"><div class="k">Rationale</div><div class="v">${escapeHtml(dec.rationale || "—")}</div></div>
+                  <div class="kv"><div class="k">Impact</div><div class="v">${escapeHtml(dec.impact || "—")}</div></div>
+                  <div class="kv"><div class="k">Risks</div><div class="v">${escapeHtml(dec.risks || "—")}</div></div>
+                  <div class="kv"><div class="k">Owner</div><div class="v">${escapeHtml(dec.owner || "—")}</div></div>
+                </div>
+                <div style="margin-top:10px">
+                  ${(dec.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("") || `<span class="muted">No tags</span>`}
+                </div>
+              </div>
+            `;
+            decisionsEl.appendChild(card);
+          }
+        }
+
+        el.appendChild(dayEl);
+      }
+    }
+
+    function renderArtifactTable(artifacts){
+      const panel = $("#artifactPanel");
+      const meta = $("#artifactMeta");
+
+      if(!artifacts.length){
+        panel.innerHTML = `<div class="empty">No artifacts match your search.</div>`;
+        meta.textContent = "0 shown";
+        return;
+      }
+
+      meta.textContent = `${artifacts.length} shown`;
+      panel.innerHTML = `
+        <table class="table" aria-label="Artifact log table">
+          <thead>
+            <tr>
+              <th style="width: 132px">Time</th>
+              <th style="width: 90px">Type</th>
+              <th>Name</th>
+              <th style="width: 160px">Tags</th>
+              <th style="width: 96px">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${artifacts.map(a => `
+              <tr>
+                <td class="time-mono">${escapeHtml(a.time)}</td>
+                <td class="time-mono">${escapeHtml(a.type || "—")}</td>
+                <td>
+                  <div style="font-weight:650; color: rgba(255,255,255,.88)">${escapeHtml(a.name || "—")}</div>
+                  <div class="muted" style="margin-top:4px">${escapeHtml(a.notes || "")}</div>
+                  <div class="muted time-mono" style="margin-top:6px">day: ${escapeHtml(a.day || "—")}</div>
+                </td>
+                <td>${(a.tags || []).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("") || `<span class="muted">—</span>`}</td>
+                <td>${statusPill(a.status || "—")}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+        <div class="footer-note">Tip: search supports partial matches across type, name, notes, tags, and day.</div>
+      `;
+    }
+
+    function matchesQuery(artifact, q){
+      if(!q) return true;
+      const hay = [
+        artifact.time,
+        artifact.day,
+        artifact.type,
+        artifact.name,
+        artifact.notes,
+        ...(artifact.tags || [])
+      ].filter(Boolean).join(" \n ").toLowerCase();
+      return hay.includes(q);
+    }
+
+    function matchesType(artifact, type){
+      if(!type || type === "ALL") return true;
+      const t = String(artifact.type || "").trim().toUpperCase();
+      return t === type;
+    }
+
+    function wireUI(days){
+      const allArtifacts = flattenArtifacts(days);
+      $("#artifactCount").textContent = String(allArtifacts.length);
+      $("#rangeText").textContent = fmtRange(days);
+
+      const health = computeHealth(days);
+      $("#healthPct").textContent = `${health.pct}%`;
+      $("#healthStatus").textContent = health.label;
+      const ring = $("#healthRing");
+      ring.style.setProperty("--pct", String(health.pct));
+      ring.style.setProperty("--ring-color", health.color);
+      $("#healthChip").title = `Completeness: ${(health.completeness*100).toFixed(0)}%\nRecency: ${(health.recency*100).toFixed(0)}%\nAge (days): ${health.ageDays}`;
+
+      const q = $("#q");
+      const clearBtn = $("#clearBtn");
+      const searchMeta = $("#searchMeta");
+      const chips = $$(".filter-chip");
+
+      let activeType = "ALL";
+      const setActiveType = (t) => {
+        activeType = t;
+        for(const b of chips){
+          const on = (b.dataset.type === activeType);
+          b.setAttribute("aria-pressed", on ? "true" : "false");
+        }
+        apply();
+      };
+
+      for(const b of chips){
+        b.addEventListener("click", () => setActiveType(b.dataset.type || "ALL"));
+      }
+
+      const apply = () => {
+        const query = q.value.trim().toLowerCase();
+        const filtered = allArtifacts.filter(a => matchesType(a, activeType) && matchesQuery(a, query));
+        renderArtifactTable(filtered);
+
+        const typePart = activeType === "ALL" ? "" : ` • type: ${activeType}`;
+        if(!query && activeType === "ALL"){
+          searchMeta.textContent = `Showing all artifacts`;
+        } else if(!query && activeType !== "ALL"){
+          searchMeta.textContent = `Filtered: ${filtered.length} / ${allArtifacts.length}${typePart}`;
+        } else {
+          searchMeta.textContent = `Filtered: ${filtered.length} / ${allArtifacts.length}${typePart}`;
+        }
+      };
+
+      q.addEventListener("input", apply);
+      clearBtn.addEventListener("click", () => { q.value = ""; q.focus(); apply(); });
+
+      $("#expandAll").addEventListener("click", () => {
+        $$("details.card").forEach(d => d.open = true);
+      });
+      $("#collapseAll").addEventListener("click", () => {
+        $$("details.card").forEach(d => d.open = false);
+      });
+
+      apply();
+    }
+
+    // Boot
+    renderTimeline(sample.days);
+    wireUI(sample.days);
+  </script>
+</body>
+</html>

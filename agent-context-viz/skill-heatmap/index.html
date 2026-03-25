@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Utilization Heatmap</title>
+<style>
+  :root {
+    --bg: #0d1117; --surface: #161b22; --border: #30363d;
+    --text: #e6edf3; --text-dim: #8b949e; --text-bright: #f0f6fc;
+    --green: #3fb950; --green-bg: rgba(63,185,80,0.15);
+    --yellow: #d29922; --yellow-bg: rgba(210,153,34,0.15);
+    --red: #f85149; --red-bg: rgba(248,81,73,0.15);
+    --gray: #484f58; --gray-bg: rgba(72,79,88,0.15);
+    --blue: #58a6ff; --purple: #bc8cff;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; padding:20px; min-height:100vh; }
+  h1 { font-size:1.6em; font-weight:600; margin-bottom:4px; }
+  .subtitle { color:var(--text-dim); font-size:0.85em; margin-bottom:24px; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:28px; }
+  .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; text-align:center; }
+  .stat-num { font-size:2em; font-weight:700; line-height:1.1; }
+  .stat-label { font-size:0.75em; color:var(--text-dim); margin-top:4px; text-transform:uppercase; letter-spacing:0.5px; }
+  .stat-green .stat-num { color:var(--green); }
+  .stat-yellow .stat-num { color:var(--yellow); }
+  .stat-red .stat-num { color:var(--red); }
+  .stat-gray .stat-num { color:var(--gray); }
+  .stat-blue .stat-num { color:var(--blue); }
+  
+  .section-title { font-size:1.1em; font-weight:600; margin:28px 0 12px; display:flex; align-items:center; gap:8px; }
+  .section-title span { font-size:1.2em; }
+
+  .heatmap { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; margin-bottom:28px; }
+  .cell { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; cursor:default; transition:transform 0.15s,border-color 0.15s; position:relative; overflow:hidden; }
+  .cell:hover { transform:translateY(-2px); border-color:var(--text-dim); }
+  .cell::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+  .cell.green::before { background:var(--green); }
+  .cell.yellow::before { background:var(--yellow); }
+  .cell.red::before { background:var(--red); }
+  .cell.gray::before { background:var(--gray); }
+  .cell-name { font-size:0.8em; font-weight:600; margin-bottom:6px; word-break:break-word; line-height:1.3; }
+  .cell-count { font-size:1.5em; font-weight:700; }
+  .cell.green .cell-count { color:var(--green); }
+  .cell.yellow .cell-count { color:var(--yellow); }
+  .cell.red .cell-count { color:var(--red); }
+  .cell.gray .cell-count { color:var(--gray); }
+  .cell-meta { font-size:0.7em; color:var(--text-dim); margin-top:4px; }
+
+  .top-list { background:var(--surface); border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:28px; }
+  .top-item { display:flex; align-items:center; padding:12px 16px; border-bottom:1px solid var(--border); }
+  .top-item:last-child { border-bottom:none; }
+  .top-rank { font-size:1.2em; font-weight:700; color:var(--text-dim); width:32px; text-align:center; }
+  .top-info { flex:1; margin-left:12px; }
+  .top-name { font-weight:600; font-size:0.9em; }
+  .top-detail { font-size:0.75em; color:var(--text-dim); }
+  .top-bar-wrap { width:120px; height:8px; background:var(--border); border-radius:4px; overflow:hidden; margin-left:12px; }
+  .top-bar { height:100%; border-radius:4px; background:linear-gradient(90deg,var(--green),var(--blue)); }
+
+  .legend { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:20px; }
+  .legend-item { display:flex; align-items:center; gap:6px; font-size:0.8em; color:var(--text-dim); }
+  .legend-dot { width:12px; height:12px; border-radius:3px; }
+  .legend-dot.green { background:var(--green); }
+  .legend-dot.yellow { background:var(--yellow); }
+  .legend-dot.red { background:var(--red); }
+  .legend-dot.gray { background:var(--gray); }
+
+  .roi-card { background:linear-gradient(135deg,#161b22,#1c2333); border:1px solid var(--border); border-radius:10px; padding:24px; margin-bottom:28px; }
+  .roi-big { font-size:2.5em; font-weight:700; color:var(--blue); }
+  .roi-sub { color:var(--text-dim); font-size:0.85em; margin-top:4px; }
+  
+  .footer { text-align:center; color:var(--text-dim); font-size:0.75em; padding:20px 0; border-top:1px solid var(--border); margin-top:20px; }
+  
+  @media(max-width:600px) {
+    body { padding:12px; }
+    .stats { grid-template-columns:repeat(2,1fr); }
+    .heatmap { grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:6px; }
+    .cell { padding:8px; }
+    .cell-name { font-size:0.7em; }
+    .top-bar-wrap { width:80px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>🔥 Skill Utilization Heatmap</h1>
+<div class="subtitle">OpenClaw Da Vinci — 46 installed skills · Data from last 14 days of sessions · Updated Mar 24, 2026</div>
+
+<div class="stats" id="stats"></div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot green"></div> Active (7 days)</div>
+  <div class="legend-item"><div class="legend-dot yellow"></div> Stale (7–14 days)</div>
+  <div class="legend-item"><div class="legend-dot red"></div> Dormant (14+ days)</div>
+  <div class="legend-item"><div class="legend-dot gray"></div> Never used</div>
+</div>
+
+<div class="section-title"><span>🏆</span> Top 10 Most Used</div>
+<div class="top-list" id="topList"></div>
+
+<div class="section-title"><span>📊</span> All Skills</div>
+<div class="heatmap" id="heatmap"></div>
+
+<div class="section-title"><span>⏱️</span> Estimated Time Saved</div>
+<div class="roi-card" id="roiCard"></div>
+
+<div class="footer">Skill Utilization Heatmap · Built by Da Vinci · Data auto-extracted from OpenClaw session logs</div>
+
+<script>
+const TODAY = new Date('2026-03-24');
+const SKILLS = [
+  {name:"therapist-bio-optimizer",count:45,lastUsed:"2026-03-20"},
+  {name:"workflow-builder",count:29,lastUsed:"2026-03-24"},
+  {name:"gog",count:24,lastUsed:"2026-03-13"},
+  {name:"mmhc-content-factory",count:23,lastUsed:"2026-03-24"},
+  {name:"summarize",count:18,lastUsed:"2026-03-13"},
+  {name:"github",count:18,lastUsed:"2026-03-13"},
+  {name:"geo-aeo",count:16,lastUsed:"2026-03-24"},
+  {name:"take-the-wheel",count:13,lastUsed:"2026-03-24"},
+  {name:"reddit-growth",count:10,lastUsed:"2026-03-24"},
+  {name:"content-repurposing-engine",count:9,lastUsed:"2026-03-16"},
+  {name:"geo-aeo-v1-backup",count:8,lastUsed:"2026-03-13"},
+  {name:"automation-playbook",count:7,lastUsed:"2026-03-24"},
+  {name:"youtube-full",count:6,lastUsed:"2026-03-13"},
+  {name:"youtube-content-suite",count:6,lastUsed:"2026-03-13"},
+  {name:"slack",count:6,lastUsed:"2026-03-24"},
+  {name:"meta-ads-report",count:6,lastUsed:"2026-03-20"},
+  {name:"awwwards-design",count:6,lastUsed:"2026-03-13"},
+  {name:"adaptlypost",count:5,lastUsed:"2026-03-13"},
+  {name:"quant-toolbox",count:4,lastUsed:"2026-03-13"},
+  {name:"firefly",count:4,lastUsed:"2026-03-23"},
+  {name:"code-factory",count:4,lastUsed:"2026-03-24"},
+  {name:"agent-memory-architecture",count:4,lastUsed:"2026-03-16"},
+  {name:"google-analytics-api",count:3,lastUsed:"2026-03-13"},
+  {name:"ehad-platform-deploy",count:3,lastUsed:"2026-03-24"},
+  {name:"cold-outreach",count:3,lastUsed:"2026-03-13"},
+  {name:"clawhub",count:3,lastUsed:"2026-03-13"},
+  {name:"agent-self-reflection",count:3,lastUsed:"2026-03-13"},
+  {name:"agent-deep-research",count:3,lastUsed:"2026-03-13"},
+  {name:"x-twitter-agent",count:2,lastUsed:"2026-03-13"},
+  {name:"weather",count:2,lastUsed:"2026-03-13"},
+  {name:"video-frames",count:2,lastUsed:"2026-03-13"},
+  {name:"tmux",count:2,lastUsed:"2026-03-13"},
+  {name:"skill-creator",count:2,lastUsed:"2026-03-13"},
+  {name:"polymarket-odds",count:2,lastUsed:"2026-03-13"},
+  {name:"mmhc-ops",count:2,lastUsed:"2026-03-13"},
+  {name:"imsg",count:2,lastUsed:"2026-03-13"},
+  {name:"homepage-audit",count:2,lastUsed:"2026-03-13"},
+  {name:"healthcheck",count:2,lastUsed:"2026-03-13"},
+  {name:"gh-issues",count:2,lastUsed:"2026-03-13"},
+  {name:"email-fortress",count:2,lastUsed:"2026-03-13"},
+  {name:"coding-agent-loops",count:2,lastUsed:"2026-03-13"},
+  {name:"coding-agent",count:2,lastUsed:"2026-03-13"},
+  {name:"build-planner",count:2,lastUsed:"2026-03-24"},
+  {name:"browser-qa",count:2,lastUsed:"2026-03-24"},
+  {name:"ai-council",count:2,lastUsed:"2026-03-24"},
+  {name:"code-health",count:2,lastUsed:"2026-03-21"},
+  // Never used
+  {name:"design-system-generator",count:0,lastUsed:null},
+  {name:"google-ads",count:0,lastUsed:null},
+  {name:"google-ads-audit",count:0,lastUsed:null},
+  {name:"google-ads-intent-map",count:0,lastUsed:null},
+  {name:"google-ads-negatives",count:0,lastUsed:null},
+  {name:"google-ads-search-terms",count:0,lastUsed:null},
+  {name:"google-ads-tracking",count:0,lastUsed:null},
+  {name:"openclaw-update",count:0,lastUsed:null},
+  {name:"skill-capture",count:0,lastUsed:null},
+];
+
+function daysSince(dateStr) {
+  if (!dateStr) return Infinity;
+  return Math.floor((TODAY - new Date(dateStr)) / 86400000);
+}
+
+function getZone(skill) {
+  if (!skill.lastUsed || skill.count === 0) return 'gray';
+  const d = daysSince(skill.lastUsed);
+  if (d <= 7) return 'green';
+  if (d <= 14) return 'yellow';
+  return 'red';
+}
+
+function zoneName(z) {
+  return {green:'Active',yellow:'Stale',red:'Dormant',gray:'Never Used'}[z];
+}
+
+function friendlyName(n) {
+  return n.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+}
+
+// Stats
+const zones = {green:0,yellow:0,red:0,gray:0};
+SKILLS.forEach(s => zones[getZone(s)]++);
+const totalInvocations = SKILLS.reduce((a,s)=>a+s.count,0);
+
+document.getElementById('stats').innerHTML = `
+  <div class="stat-card stat-blue"><div class="stat-num">${SKILLS.length}</div><div class="stat-label">Total Skills</div></div>
+  <div class="stat-card stat-green"><div class="stat-num">${zones.green}</div><div class="stat-label">Active (7d)</div></div>
+  <div class="stat-card stat-yellow"><div class="stat-num">${zones.yellow}</div><div class="stat-label">Stale (14d)</div></div>
+  <div class="stat-card stat-red"><div class="stat-num">${zones.red}</div><div class="stat-label">Dormant</div></div>
+  <div class="stat-card stat-gray"><div class="stat-num">${zones.gray}</div><div class="stat-label">Never Used</div></div>
+  <div class="stat-card stat-blue"><div class="stat-num">${totalInvocations}</div><div class="stat-label">Total Invocations</div></div>
+`;
+
+// Top 10
+const top10 = [...SKILLS].sort((a,b)=>b.count-a.count).slice(0,10);
+const maxCount = top10[0].count;
+document.getElementById('topList').innerHTML = top10.map((s,i) => `
+  <div class="top-item">
+    <div class="top-rank">${i+1}</div>
+    <div class="top-info">
+      <div class="top-name">${friendlyName(s.name)}</div>
+      <div class="top-detail">${s.count} invocations · Last: ${s.lastUsed||'never'}</div>
+    </div>
+    <div class="top-bar-wrap"><div class="top-bar" style="width:${(s.count/maxCount*100).toFixed(0)}%"></div></div>
+  </div>
+`).join('');
+
+// Heatmap — sort: active first (by count desc), then stale, dormant, never
+const zoneOrder = {green:0,yellow:1,red:2,gray:3};
+const sorted = [...SKILLS].sort((a,b) => {
+  const za = zoneOrder[getZone(a)], zb = zoneOrder[getZone(b)];
+  if (za !== zb) return za - zb;
+  return b.count - a.count;
+});
+
+document.getElementById('heatmap').innerHTML = sorted.map(s => {
+  const z = getZone(s);
+  const days = s.lastUsed ? daysSince(s.lastUsed) + 'd ago' : 'never';
+  return `<div class="cell ${z}">
+    <div class="cell-name">${friendlyName(s.name)}</div>
+    <div class="cell-count">${s.count}</div>
+    <div class="cell-meta">${days} · ${zoneName(z)}</div>
+  </div>`;
+}).join('');
+
+// ROI
+const totalMinutes = totalInvocations * 15;
+const hours = Math.floor(totalMinutes / 60);
+const mins = totalMinutes % 60;
+document.getElementById('roiCard').innerHTML = `
+  <div class="roi-big">${hours}h ${mins}m</div>
+  <div class="roi-sub">Estimated time saved across ${totalInvocations} skill invocations (@ 15 min each)</div>
+  <div class="roi-sub" style="margin-top:12px;color:var(--text);">Top savers: ${top10.slice(0,5).map(s=>`${friendlyName(s.name)} (${Math.floor(s.count*15/60)}h)`).join(' · ')}</div>
+`;
+</script>
+</body>
+</html>

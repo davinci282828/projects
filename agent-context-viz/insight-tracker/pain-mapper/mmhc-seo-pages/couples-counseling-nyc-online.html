@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Looking for online couples counseling in NYC? MMHC offers virtual couples therapy across New York State. 80+ therapists, insurance-friendly." />
+  <title>Couples Counseling NYC Online | Manhattan Mental Health Counseling (MMHC)</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Reference CSS (must match exactly) */
+    :root{--green:#1E4129;--accent:#A1E681;--bg:#F5F9F7;--white:#FFFFFF;--text:#2D3436;--muted:#5A6468;--border:rgba(30,65,41,.14);--shadow:0 10px 30px rgba(30,65,41,.10);--radius:16px}*{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:"DM Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);background:linear-gradient(180deg,var(--bg),#fff 65%);line-height:1.6}a{color:inherit}.wrap{max-width:1080px;margin:0 auto;padding:0 20px}.content{max-width:800px;margin:0 auto}
+
+    /* Page layout */
+    .skip{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip:focus{left:20px;top:12px;width:auto;height:auto;padding:10px 12px;background:var(--white);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);z-index:9999}
+
+    header{position:sticky;top:0;z-index:50;background:rgba(245,249,247,.75);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .mark{width:36px;height:36px;border-radius:12px;background:radial-gradient(circle at 30% 30%, var(--accent), #c9f3b8 60%, #e7f8e1 100%);border:1px solid var(--border);box-shadow:0 8px 20px rgba(30,65,41,.10)}
+    .brand strong{display:block;font-weight:800;letter-spacing:.2px}
+    .brand span{display:block;color:var(--muted);font-size:13px;line-height:1.2}
+
+    .navlinks{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .navlinks a{font-size:14px;text-decoration:none;color:var(--muted);padding:8px 10px;border-radius:999px;border:1px solid transparent}
+    .navlinks a:hover{color:var(--text);border-color:var(--border);background:rgba(255,255,255,.6)}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;padding:10px 14px;border:1px solid var(--border);text-decoration:none;font-weight:700;font-size:14px;white-space:nowrap}
+    .btn.primary{background:var(--green);color:var(--white);border-color:rgba(30,65,41,.22);box-shadow:0 12px 26px rgba(30,65,41,.18)}
+    .btn.primary:hover{filter:brightness(1.03)}
+    .btn.ghost{background:rgba(255,255,255,.7)}
+
+    main{padding:26px 0 56px}
+
+    .hero{margin:18px 0 14px}
+    .eyebrow{display:inline-flex;gap:10px;align-items:center;font-size:13px;color:var(--muted);padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.7)}
+    .eyebrow b{color:var(--green)}
+
+    h1,h2,h3{font-family:"DM Serif Display","DM Sans",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--green);margin:0 0 10px}
+    h1{font-size:40px;line-height:1.1;letter-spacing:.2px;margin-top:14px}
+    .lede{font-size:18px;color:var(--text);max-width:64ch;margin:10px 0 18px}
+
+    .heroCard{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+    .heroGrid{display:grid;grid-template-columns:1.4fr .9fr;gap:14px;align-items:stretch}
+    .heroActions{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+
+    .kpis{display:grid;grid-template-columns:1fr;gap:10px}
+    .kpi{background:linear-gradient(180deg,#fff,rgba(245,249,247,.7));border:1px solid var(--border);border-radius:14px;padding:12px}
+    .kpi strong{display:block;color:var(--green);font-size:18px;letter-spacing:.2px}
+    .kpi span{display:block;color:var(--muted);font-size:13px;line-height:1.3;margin-top:4px}
+
+    section{padding:22px 0}
+    .card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .muted{color:var(--muted)}
+    ul{padding-left:18px;margin:10px 0 0}
+    li{margin:8px 0}
+
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+    .step{border:1px solid var(--border);border-radius:14px;background:linear-gradient(180deg,#fff,rgba(245,249,247,.8));padding:12px}
+    .step .n{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:999px;background:var(--accent);color:#12311f;font-weight:900;border:1px solid rgba(30,65,41,.18)}
+    .step strong{display:block;margin-top:10px;color:var(--green)}
+    .step span{display:block;margin-top:6px;color:var(--muted);font-size:13px;line-height:1.35}
+
+    .faq details{border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.8);padding:12px 12px;margin:10px 0}
+    .faq summary{cursor:pointer;font-weight:800;color:var(--green);list-style:none}
+    .faq summary::-webkit-details-marker{display:none}
+    .faq p{margin:10px 0 0;color:var(--text)}
+
+    .cta{background:linear-gradient(180deg,rgba(161,230,129,.35),rgba(245,249,247,.25));border:1px solid rgba(30,65,41,.16);border-radius:calc(var(--radius) + 4px);box-shadow:var(--shadow);padding:20px}
+    .cta h2{margin-bottom:6px}
+    .cta .row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+    .fineprint{font-size:13px;color:var(--muted);margin-top:10px}
+
+    footer{padding:26px 0 40px;color:var(--muted);border-top:1px solid var(--border)}
+    footer .cols{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;justify-content:space-between}
+    footer small{display:block;max-width:70ch}
+
+    /* Responsive */
+    @media (max-width: 860px){
+      .heroGrid{grid-template-columns:1fr}
+      h1{font-size:36px}
+      .steps{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 520px){
+      .navlinks{display:none}
+      h1{font-size:32px}
+      .grid2{grid-template-columns:1fr}
+      .steps{grid-template-columns:1fr}
+      .btn{width:100%}
+      .cta .row{justify-content:flex-start}
+    }
+  </style>
+
+  <!-- Schema: LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Manhattan Mental Health Counseling",
+    "alternateName": "MMHC",
+    "url": "https://manhattanmentalhealthcounseling.com",
+    "description": "Online-only therapy practice serving New York State with 80+ therapists, insurance-friendly options, and same-week appointments.",
+    "areaServed": [{"@type":"State","name":"New York"}],
+    "serviceType": ["Online therapy", "Virtual counseling"],
+    "priceRange": "$$"
+  }
+  </script>
+
+  <!-- Schema: FAQPage (mirrors on-page FAQs) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is online couples counseling effective?",
+        "acceptedAnswer": {"@type":"Answer","text":"Many couples find online counseling helpful because it reduces scheduling friction and lets you practice communication tools in your real environment. What matters most is a good match with a therapist and consistent sessions."}
+      },
+      {
+        "@type": "Question",
+        "name": "Do we need to live in NYC to start virtual couples therapy with MMHC?",
+        "acceptedAnswer": {"@type":"Answer","text":"No. MMHC is online-only and serves clients across New York State, including NYC. If you’re physically located in New York for sessions, you can typically receive care."}
+      },
+      {
+        "@type": "Question",
+        "name": "What if my partner is unsure about therapy?",
+        "acceptedAnswer": {"@type":"Answer","text":"It’s common to start with different levels of motivation. A therapist can help you set shared goals, keep sessions balanced, and make the process feel practical rather than confrontational."}
+      },
+      {
+        "@type": "Question",
+        "name": "Can couples counseling help with recurring arguments?",
+        "acceptedAnswer": {"@type":"Answer","text":"Couples counseling often focuses on patterns: how conflict starts, what keeps it going, and how to slow it down. You’ll work on communication, repair skills, and clearer agreements."}
+      },
+      {
+        "@type": "Question",
+        "name": "Do you take insurance for online couples counseling?",
+        "acceptedAnswer": {"@type":"Answer","text":"MMHC works with most major insurance plans. Coverage varies by plan and therapist, so the team can help you understand options and scheduling."}
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="https://manhattanmentalhealthcounseling.com" aria-label="Manhattan Mental Health Counseling">
+          <div class="mark" aria-hidden="true"></div>
+          <div>
+            <strong>MMHC</strong>
+            <span>Online therapy across New York State</span>
+          </div>
+        </a>
+
+        <nav class="navlinks" aria-label="On-page navigation">
+          <a href="#when">When to start</a>
+          <a href="#how">How it works</a>
+          <a href="#mmhc">What to expect</a>
+          <a href="#started">Getting started</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+
+        <a class="btn primary" href="https://manhattanmentalhealthcounseling.com">Check availability</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="content">
+        <div class="hero">
+          <span class="eyebrow"><b>Couples counseling NYC online</b> • Virtual appointments • Insurance-friendly</span>
+          <h1>You don't need to agree on everything. You need someone to help you hear each other.</h1>
+          <p class="lede">If you’re stuck in the same loop—misunderstandings, shutdowns, rehashing old hurts—online couples counseling can help you slow things down and reconnect. MMHC offers <strong>online-only couples therapy</strong> for clients across <strong>New York State</strong>, including NYC.</p>
+
+          <div class="heroCard">
+            <div class="heroGrid">
+              <div>
+                <h2 style="margin-top:0">Support that feels practical (not performative)</h2>
+                <p class="muted" style="margin:0">You’ll work with a therapist to understand what’s happening beneath the conflict, build communication tools you can actually use, and create a plan for repair when things get tense.</p>
+                <div class="heroActions">
+                  <a class="btn primary" href="https://manhattanmentalhealthcounseling.com">Start online couples therapy</a>
+                  <a class="btn ghost" href="https://manhattanmentalhealthcounseling.com">Use insurance</a>
+                </div>
+                <p class="fineprint">Same-week appointments may be available. MMHC is online-only and serves New York State.</p>
+              </div>
+              <div class="kpis" aria-label="MMHC highlights">
+                <div class="kpi"><strong>80+ therapists</strong><span>Find a fit for your relationship and goals.</span></div>
+                <div class="kpi"><strong>Online-only in NYS</strong><span>Attend from home—no commute, no waiting room.</span></div>
+                <div class="kpi"><strong>Insurance-friendly</strong><span>Most major insurance plans accepted.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section id="when">
+          <div class="card">
+            <h2>When to consider couples counseling</h2>
+            <p class="muted">You don’t have to be “at the breaking point” to get help. Many couples start when they notice a pattern they can’t shift on their own.</p>
+            <div class="grid2" style="margin-top:12px">
+              <div>
+                <h3 style="margin-top:0">Common reasons couples reach out</h3>
+                <ul>
+                  <li>Recurring arguments that escalate quickly or never get resolved</li>
+                  <li>Feeling unheard, dismissed, or like you’re walking on eggshells</li>
+                  <li>Rebuilding trust after a rupture or a long period of distance</li>
+                  <li>Stress transitions: moving, parenting, career changes, finances</li>
+                  <li>Different communication styles (pursue/withdraw, shutdown, defensiveness)</li>
+                </ul>
+              </div>
+              <div>
+                <h3 style="margin-top:0">It can also help when things look “fine”</h3>
+                <ul>
+                  <li>You want stronger repair skills for conflict</li>
+                  <li>You’re making a major decision and want clearer teamwork</li>
+                  <li>You want more emotional closeness and better day-to-day communication</li>
+                  <li>You want a neutral space to talk without spiraling into blame</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="how">
+          <div class="card">
+            <h2>How online couples therapy works</h2>
+            <p class="muted">Virtual couples counseling is designed to be simple: secure video sessions, structured conversations, and actionable takeaways.</p>
+            <div class="steps" aria-label="How it works steps">
+              <div class="step"><span class="n">1</span><strong>Schedule</strong><span>Pick a time that works for both of you—without a commute.</span></div>
+              <div class="step"><span class="n">2</span><strong>Clarify goals</strong><span>Define what “better” looks like: trust, communication, conflict repair, connection.</span></div>
+              <div class="step"><span class="n">3</span><strong>Learn tools</strong><span>Practice skills for listening, de-escalation, and speaking without blame.</span></div>
+              <div class="step"><span class="n">4</span><strong>Bring it home</strong><span>Use what you practice between sessions—small changes add up.</span></div>
+            </div>
+            <p class="fineprint">Online sessions are available for clients located in New York State.</p>
+          </div>
+        </section>
+
+        <section id="mmhc">
+          <div class="card">
+            <h2>What to expect at MMHC</h2>
+            <p class="muted">MMHC is built for access: a large team, online-only care, and scheduling that respects real life.</p>
+            <ul>
+              <li><strong>Therapist matching:</strong> We help pair you with a clinician whose approach fits your relationship and what you want to change.</li>
+              <li><strong>A balanced room:</strong> Sessions are structured so both partners feel heard—without “ganging up” or keeping score.</li>
+              <li><strong>Skills + insight:</strong> Expect practical communication tools along with space to understand deeper patterns.</li>
+              <li><strong>Insurance-friendly care:</strong> MMHC works with most major insurance plans.</li>
+              <li><strong>Same-week availability:</strong> Appointments may be available sooner than you expect.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="started">
+          <div class="card">
+            <h2>Getting started together</h2>
+            <p class="muted">If it’s hard to even agree on therapy, start with one small agreement: <em>we’ll try a few sessions and evaluate</em>.</p>
+            <div class="grid2" style="margin-top:12px">
+              <div>
+                <h3 style="margin-top:0">A simple first conversation</h3>
+                <ul>
+                  <li>What do we want to be different in 3 months?</li>
+                  <li>What keeps going wrong in the same moments?</li>
+                  <li>What would help us feel safer during conflict?</li>
+                  <li>How will we know therapy is helping?</li>
+                </ul>
+              </div>
+              <div>
+                <h3 style="margin-top:0">What you can do today</h3>
+                <ul>
+                  <li>Choose one recurring issue you want to work on first</li>
+                  <li>Pick a weekly time you can protect (even if it’s not perfect)</li>
+                  <li>Decide on one “pause” phrase to de-escalate arguments</li>
+                  <li>Book an intake and let the therapist guide the structure</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" class="faq">
+          <div class="card">
+            <h2>FAQ</h2>
+
+            <details>
+              <summary>Is online couples counseling effective?</summary>
+              <p>Many couples find online counseling effective because it makes consistency easier and keeps sessions grounded in your day-to-day environment. The biggest drivers of progress are a good therapist fit, clear goals, and showing up regularly.</p>
+            </details>
+
+            <details>
+              <summary>Do we need to live in NYC to start virtual couples therapy with MMHC?</summary>
+              <p>No. MMHC is online-only and serves clients across New York State, including NYC. Generally, you’ll want to be physically located in New York for sessions.</p>
+            </details>
+
+            <details>
+              <summary>What if my partner is unsure about therapy?</summary>
+              <p>That’s common. Couples therapy isn’t about proving who’s right—it’s about changing the pattern. A therapist can help you both stay engaged, set shared goals, and make the work feel practical.</p>
+            </details>
+
+            <details>
+              <summary>Can couples counseling help with recurring arguments?</summary>
+              <p>Yes—often by focusing on the pattern rather than the topic. You’ll work on slowing escalation, listening more effectively, and building repair skills so conflict doesn’t linger for days.</p>
+            </details>
+
+            <details>
+              <summary>Do you take insurance for online couples counseling?</summary>
+              <p>MMHC works with most major insurance plans. Coverage can vary by plan and provider, so the team can help you understand your options and next steps.</p>
+            </details>
+          </div>
+        </section>
+
+        <section aria-label="Call to action">
+          <div class="cta">
+            <div class="row">
+              <div>
+                <h2>Ready to try couples counseling online?</h2>
+                <p class="muted" style="margin:0">Find a therapist match and book a virtual appointment—serving NYC and all of New York State.</p>
+              </div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <a class="btn primary" href="https://manhattanmentalhealthcounseling.com">Get started</a>
+                <a class="btn ghost" href="https://manhattanmentalhealthcounseling.com">Visit MMHC</a>
+              </div>
+            </div>
+            <p class="fineprint">If you’re in immediate danger or need urgent help, contact emergency services. This page is for general information and does not replace medical advice.</p>
+          </div>
+        </section>
+      </div>
+
+      <footer>
+        <div class="content">
+          <div class="cols">
+            <div>
+              <strong style="color:var(--green)">Manhattan Mental Health Counseling (MMHC)</strong>
+              <small>Online-only therapy across New York State. 80+ therapists. Most major insurance accepted. Same-week appointments may be available.</small>
+            </div>
+            <div>
+              <a class="btn ghost" href="https://manhattanmentalhealthcounseling.com">Start now</a>
+            </div>
+          </div>
+          <small style="margin-top:12px">© <span id="y"></span> MMHC. All rights reserved.</small>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    // Simple year update (keeps the page standalone)
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

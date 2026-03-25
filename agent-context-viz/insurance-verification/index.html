@@ -1,0 +1,1241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Insurance Verification Dashboard</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1620;
+      --panel2:#0c121a;
+      --text:#d8e1ee;
+      --muted:#92a0b5;
+      --faint:#52627a;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --accent:#7c5cff;
+      --accent2:#2de2a6;
+      --danger:#ff4d6d;
+      --warn:#ffb020;
+      --ok:#2de2a6;
+      --cyan:#2aa7ff;
+      --radius:14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background:
+        radial-gradient(900px 500px at 10% -10%, rgba(124,92,255,.28), transparent 60%),
+        radial-gradient(900px 500px at 110% 10%, rgba(42,167,255,.18), transparent 60%),
+        radial-gradient(900px 500px at 50% 120%, rgba(45,226,166,.14), transparent 60%),
+        var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit}
+    .wrap{max-width:1200px; margin:0 auto; padding:24px 16px 40px}
+    header{
+      display:flex; gap:14px; align-items:flex-start; justify-content:space-between;
+      padding:18px 18px;
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      box-shadow:var(--shadow);
+    }
+    .title h1{margin:0 0 6px; font-size:20px; letter-spacing:.2px}
+    .title p{margin:0; color:var(--muted); font-size:13px; line-height:1.35}
+    .chips{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
+    .chip{
+      font-family:var(--mono);
+      font-size:11px;
+      padding:6px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:rgba(255,255,255,.02);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+
+    .controls{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      align-items:stretch;
+    }
+
+    .panel{
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      box-shadow:var(--shadow);
+    }
+
+    .drop{
+      padding:14px;
+      height:100%;
+      display:flex;
+      gap:12px;
+      align-items:stretch;
+    }
+    .dropZone{
+      flex:1;
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:12px;
+      background:rgba(0,0,0,.18);
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      min-height:110px;
+      transition: border-color .15s, background .15s, transform .15s;
+    }
+    .dropZone.dragover{
+      border-color: rgba(124,92,255,.75);
+      background: rgba(124,92,255,.10);
+      transform: translateY(-1px);
+    }
+    .dropZone strong{font-size:13px}
+    .dropZone span{color:var(--muted); font-size:12px; margin-top:6px; line-height:1.35}
+
+    .actions{
+      width:min(320px, 40%);
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .btnRow{display:flex; gap:10px; flex-wrap:wrap}
+
+    button, .btn{
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      padding:10px 12px;
+      font-size:13px;
+      cursor:pointer;
+      transition: transform .08s, border-color .15s, background .15s;
+      user-select:none;
+    }
+    button:hover{border-color:rgba(255,255,255,.18); background:rgba(255,255,255,.04)}
+    button:active{transform: translateY(1px)}
+    .primary{
+      background: linear-gradient(180deg, rgba(124,92,255,.28), rgba(124,92,255,.12));
+      border-color: rgba(124,92,255,.35);
+    }
+    .primary:hover{border-color: rgba(124,92,255,.55)}
+    .danger{
+      background: linear-gradient(180deg, rgba(255,77,109,.18), rgba(255,77,109,.07));
+      border-color: rgba(255,77,109,.25);
+    }
+
+    input[type=file]{display:none}
+
+    .help{
+      padding:14px 14px 12px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .help h3{margin:0; font-size:13px; letter-spacing:.2px}
+    .help p{margin:0; font-size:12px; color:var(--muted); line-height:1.45}
+    .code{
+      font-family:var(--mono);
+      color:#c9d4e6;
+      background: rgba(0,0,0,.25);
+      border:1px solid var(--border);
+      padding:10px;
+      border-radius:12px;
+      font-size:11px;
+      overflow:auto;
+    }
+
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+
+    .card{
+      padding:14px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .cardHeader{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+    .cardHeader h2{margin:0; font-size:14px; letter-spacing:.2px}
+    .sub{color:var(--muted); font-size:12px; margin-top:3px; line-height:1.35}
+
+    .badge{
+      font-family:var(--mono);
+      font-size:11px;
+      padding:6px 9px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.22);
+      color:var(--muted);
+      white-space:nowrap;
+      height:fit-content;
+    }
+
+    .kpis{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:14px;
+    }
+    .kpi{padding:14px}
+    .kpi .label{font-size:11px; color:var(--muted); letter-spacing:.35px; text-transform:uppercase}
+    .kpi .value{margin-top:6px; font-size:20px; font-weight:650; letter-spacing:.2px}
+    .kpi .hint{margin-top:6px; font-size:12px; color:var(--muted)}
+
+    .chartWrap{margin-top:10px}
+
+    svg.chart{
+      width:100%;
+      height:auto;
+      display:block;
+      background: radial-gradient(900px 200px at 30% 0%, rgba(124,92,255,.07), transparent 55%), rgba(0,0,0,.12);
+      border:1px solid var(--border);
+      border-radius:12px;
+    }
+
+    .legend{
+      margin-top:8px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:12px;
+      align-items:center;
+    }
+    .dot{width:10px; height:10px; border-radius:3px; display:inline-block; margin-right:6px; border:1px solid rgba(255,255,255,.12)}
+
+    .tableWrap{
+      margin-top:12px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      overflow:hidden;
+    }
+    table{width:100%; border-collapse:collapse; font-size:12px}
+    th,td{padding:10px 10px; border-bottom:1px solid rgba(255,255,255,.06); vertical-align:top}
+    th{color:#b9c6da; text-align:left; background:rgba(255,255,255,.02); font-weight:600}
+    td{color:var(--text)}
+    tr:last-child td{border-bottom:none}
+    .muted{color:var(--muted)}
+
+    .status{
+      font-family:var(--mono);
+      font-size:11px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      display:inline-block;
+    }
+    .s-pending{background: rgba(255,176,32,.10); border-color: rgba(255,176,32,.22); color: #ffd18a}
+    .s-verified{background: rgba(45,226,166,.10); border-color: rgba(45,226,166,.22); color: #9ef4d8}
+    .s-denied{background: rgba(255,77,109,.10); border-color: rgba(255,77,109,.22); color: #ffb3c1}
+
+    .footer{
+      margin-top:16px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+      padding:12px 4px 0;
+    }
+
+    @media (max-width: 900px){
+      .controls{grid-template-columns: 1fr}
+      .actions{width:100%}
+      .kpis{grid-template-columns: repeat(2,1fr)}
+    }
+
+    @media (max-width: 768px){
+      .grid{grid-template-columns: 1fr}
+      header{flex-direction:column; align-items:flex-start}
+      .chips{justify-content:flex-start}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none !important}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="panel">
+      <div class="title">
+        <h1>Insurance Verification Dashboard</h1>
+        <p>Track verification backlog by age, turnaround times, and denial patterns by payer. Works offline (file://). Upload CSV/JSON or use sample data.</p>
+      </div>
+      <div class="chips">
+        <div class="chip" id="chipRecords">records: —</div>
+        <div class="chip" id="chipUpdated">updated: —</div>
+        <div class="chip" id="chipSource">source: sample</div>
+      </div>
+    </header>
+
+    <section class="controls">
+      <div class="panel drop">
+        <div class="dropZone" id="dropZone" role="button" tabindex="0" aria-label="Upload data by dropping a file or clicking to browse">
+          <strong>Drag & drop CSV/JSON here</strong>
+          <span>Or click to browse. Supported: <span class="muted">.csv, .json</span>. Your file is processed locally in your browser.</span>
+        </div>
+        <div class="actions">
+          <div class="btnRow">
+            <button class="primary" id="btnBrowse">Browse…</button>
+            <button id="btnSample">Use sample</button>
+            <button class="danger" id="btnClear" title="Revert to sample data">Reset</button>
+          </div>
+          <div class="code" aria-label="Expected fields">
+            Expected fields (flexible names):\n
+            payer, submitted_at, completed_at, status\n
+            Optional: denial_reason\n
+            status values: pending | verified/approved | denied\n
+            Dates: ISO preferred (e.g., 2026-03-20T10:30:00Z)
+          </div>
+        </div>
+        <input id="fileInput" type="file" accept=".csv,.json,application/json,text/csv" />
+      </div>
+
+      <div class="panel help">
+        <h3>How metrics are calculated</h3>
+        <p><span class="muted">Backlog by age</span> counts only <span class="muted">pending</span> items using time since <span class="muted">submitted_at</span>.</p>
+        <p><span class="muted">Average TAT by payer</span> uses records with both <span class="muted">submitted_at</span> and <span class="muted">completed_at</span> and status not pending. Payers are sorted by slowest average turnaround first.</p>
+        <p><span class="muted">Denial rate by payer</span> is <span class="muted">denied / decided</span>, where decided = denied + verified/approved (pending excluded).</p>
+        <p><span class="muted">Top denial reasons</span> shows the top 5 reasons by count (denied records only).</p>
+      </div>
+    </section>
+
+    <section class="kpis">
+      <div class="panel kpi">
+        <div class="label">Pending backlog</div>
+        <div class="value" id="kpiPending">—</div>
+        <div class="hint" id="kpiPendingHint">—</div>
+      </div>
+      <div class="panel kpi">
+        <div class="label">Avg TAT (all payers)</div>
+        <div class="value" id="kpiAvgTat">—</div>
+        <div class="hint" id="kpiAvgTatHint">—</div>
+      </div>
+      <div class="panel kpi">
+        <div class="label">Denial rate (overall)</div>
+        <div class="value" id="kpiDenialRate">—</div>
+        <div class="hint" id="kpiDenialRateHint">—</div>
+      </div>
+      <div class="panel kpi">
+        <div class="label">Most problematic payer</div>
+        <div class="value" id="kpiWorstPayer">—</div>
+        <div class="hint" id="kpiWorstPayerHint">—</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel card">
+        <div class="cardHeader">
+          <div>
+            <h2>Backlog by age (pending)</h2>
+            <div class="sub">0–24h, 1–3 days, 3–7 days, &gt;7 days</div>
+          </div>
+          <div class="badge" id="badgeBacklog">pending: —</div>
+        </div>
+        <div class="chartWrap">
+          <svg class="chart" id="chartBacklog" viewBox="0 0 900 320" role="img" aria-label="Backlog by age chart"></svg>
+          <div class="legend" id="legendBacklog"></div>
+        </div>
+      </div>
+
+      <div class="panel card">
+        <div class="cardHeader">
+          <div>
+            <h2>Average turnaround time by payer</h2>
+            <div class="sub">Sorted by slowest average first</div>
+          </div>
+          <div class="badge" id="badgeTat">payers: —</div>
+        </div>
+        <div class="chartWrap">
+          <svg class="chart" id="chartTat" viewBox="0 0 900 420" role="img" aria-label="Turnaround time by payer chart"></svg>
+          <div class="legend" id="legendTat"></div>
+        </div>
+      </div>
+
+      <div class="panel card">
+        <div class="cardHeader">
+          <div>
+            <h2>Denial rate by payer</h2>
+            <div class="sub">Denied / decided (pending excluded)</div>
+          </div>
+          <div class="badge" id="badgeDenial">payers: —</div>
+        </div>
+        <div class="chartWrap">
+          <svg class="chart" id="chartDenialRate" viewBox="0 0 900 420" role="img" aria-label="Denial rate by payer chart"></svg>
+          <div class="legend" id="legendDenial"></div>
+        </div>
+      </div>
+
+      <div class="panel card">
+        <div class="cardHeader">
+          <div>
+            <h2>Top denial reasons</h2>
+            <div class="sub">Top 5 reasons by count</div>
+          </div>
+          <div class="badge" id="badgeReasons">denials: —</div>
+        </div>
+        <div class="chartWrap">
+          <svg class="chart" id="chartDenialReasons" viewBox="0 0 900 360" role="img" aria-label="Top denial reasons chart"></svg>
+          <div class="legend" id="legendReasons"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel card" style="margin-top:14px">
+      <div class="cardHeader">
+        <div>
+          <h2>Recent records</h2>
+          <div class="sub">Preview of the last 12 submissions (by submitted date)</div>
+        </div>
+        <div class="badge" id="badgePreview">rows: —</div>
+      </div>
+      <div class="tableWrap">
+        <table aria-label="Data preview">
+          <thead>
+            <tr>
+              <th style="width:18%">Payer</th>
+              <th style="width:18%">Submitted</th>
+              <th style="width:18%">Completed</th>
+              <th style="width:12%">Status</th>
+              <th style="width:34%">Denial reason</th>
+            </tr>
+          </thead>
+          <tbody id="previewBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="footer">
+      Notes: This dashboard is intentionally self-contained for offline use. If your CSV uses different column names, the parser will try to map them automatically; open DevTools console to see any warnings.
+    </div>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ----------------------------
+  // Sample data (shown on first load)
+  // ----------------------------
+  // Fields: payer, submitted_at, completed_at, status, denial_reason
+  // status: pending | verified | denied
+  const sampleData = (() => {
+    const now = new Date();
+    const iso = (d) => new Date(d).toISOString();
+    const hoursAgo = (h) => new Date(now.getTime() - h*3600*1000);
+
+    const rows = [
+      // Aetna
+      { payer:"Aetna", submitted_at: iso(hoursAgo(6)), status:"pending" },
+      { payer:"Aetna", submitted_at: iso(hoursAgo(30)), status:"pending" },
+      { payer:"Aetna", submitted_at: iso(hoursAgo(80)), completed_at: iso(hoursAgo(10)), status:"verified" },
+      { payer:"Aetna", submitted_at: iso(hoursAgo(120)), completed_at: iso(hoursAgo(40)), status:"denied", denial_reason:"Member not found" },
+      // Blue Cross
+      { payer:"Blue Cross", submitted_at: iso(hoursAgo(12)), completed_at: iso(hoursAgo(2)), status:"verified" },
+      { payer:"Blue Cross", submitted_at: iso(hoursAgo(36)), completed_at: iso(hoursAgo(12)), status:"denied", denial_reason:"Eligibility inactive" },
+      { payer:"Blue Cross", submitted_at: iso(hoursAgo(200)), status:"pending" },
+      // Cigna
+      { payer:"Cigna", submitted_at: iso(hoursAgo(18)), completed_at: iso(hoursAgo(4)), status:"verified" },
+      { payer:"Cigna", submitted_at: iso(hoursAgo(60)), completed_at: iso(hoursAgo(24)), status:"verified" },
+      { payer:"Cigna", submitted_at: iso(hoursAgo(140)), completed_at: iso(hoursAgo(60)), status:"denied", denial_reason:"Prior authorization required" },
+      // United
+      { payer:"United", submitted_at: iso(hoursAgo(10)), status:"pending" },
+      { payer:"United", submitted_at: iso(hoursAgo(55)), completed_at: iso(hoursAgo(20)), status:"denied", denial_reason:"Coverage terminated" },
+      { payer:"United", submitted_at: iso(hoursAgo(90)), completed_at: iso(hoursAgo(30)), status:"verified" },
+      { payer:"United", submitted_at: iso(hoursAgo(250)), completed_at: iso(hoursAgo(150)), status:"denied", denial_reason:"Out of network" },
+      // Medicaid
+      { payer:"Medicaid", submitted_at: iso(hoursAgo(15)), completed_at: iso(hoursAgo(6)), status:"verified" },
+      { payer:"Medicaid", submitted_at: iso(hoursAgo(75)), status:"pending" },
+      { payer:"Medicaid", submitted_at: iso(hoursAgo(160)), completed_at: iso(hoursAgo(90)), status:"denied", denial_reason:"Missing subscriber ID" },
+      // Medicare
+      { payer:"Medicare", submitted_at: iso(hoursAgo(20)), completed_at: iso(hoursAgo(8)), status:"verified" },
+      { payer:"Medicare", submitted_at: iso(hoursAgo(110)), completed_at: iso(hoursAgo(70)), status:"verified" },
+      { payer:"Medicare", submitted_at: iso(hoursAgo(190)), completed_at: iso(hoursAgo(100)), status:"denied", denial_reason:"Plan not active" },
+      // Humana
+      { payer:"Humana", submitted_at: iso(hoursAgo(26)), completed_at: iso(hoursAgo(10)), status:"verified" },
+      { payer:"Humana", submitted_at: iso(hoursAgo(130)), status:"pending" },
+      { payer:"Humana", submitted_at: iso(hoursAgo(220)), completed_at: iso(hoursAgo(160)), status:"denied", denial_reason:"Authorization required" },
+    ];
+
+    // Add a few more denials to make top-5 reasons meaningful
+    rows.push(
+      { payer:"Aetna", submitted_at: iso(hoursAgo(95)), completed_at: iso(hoursAgo(50)), status:"denied", denial_reason:"Eligibility inactive" },
+      { payer:"United", submitted_at: iso(hoursAgo(105)), completed_at: iso(hoursAgo(65)), status:"denied", denial_reason:"Eligibility inactive" },
+      { payer:"Blue Cross", submitted_at: iso(hoursAgo(115)), completed_at: iso(hoursAgo(85)), status:"denied", denial_reason:"Out of network" }
+    );
+
+    return rows;
+  })();
+
+  // ----------------------------
+  // Utilities
+  // ----------------------------
+  const $ = (sel) => document.querySelector(sel);
+  const el = (tag, attrs={}) => {
+    const n = document.createElement(tag);
+    for (const [k,v] of Object.entries(attrs)) {
+      if (k === "text") n.textContent = v;
+      else if (k === "html") n.innerHTML = v;
+      else n.setAttribute(k, v);
+    }
+    return n;
+  };
+
+  const fmtInt = (n) => Number.isFinite(n) ? new Intl.NumberFormat().format(Math.round(n)) : "—";
+  const fmtPct = (x) => Number.isFinite(x) ? `${(x*100).toFixed(1)}%` : "—";
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  function safeLower(s){ return String(s ?? "").trim().toLowerCase(); }
+
+  function parseDateAny(v){
+    if (v == null || v === "") return null;
+    if (v instanceof Date && !isNaN(v)) return v;
+    // numeric epoch
+    if (typeof v === "number") {
+      const d = new Date(v);
+      return isNaN(d) ? null : d;
+    }
+    const s = String(v).trim();
+    if (!s) return null;
+    // If it looks like epoch seconds/millis as string
+    if (/^\d{10,13}$/.test(s)) {
+      const num = Number(s);
+      const ms = s.length === 10 ? num*1000 : num;
+      const d = new Date(ms);
+      return isNaN(d) ? null : d;
+    }
+    // Try native
+    const d1 = new Date(s);
+    if (!isNaN(d1)) return d1;
+    // Try MM/DD/YYYY or MM/DD/YYYY HH:mm
+    const m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?$/);
+    if (m) {
+      const mm = Number(m[1]) - 1;
+      const dd = Number(m[2]);
+      const yy = Number(m[3].length === 2 ? ("20"+m[3]) : m[3]);
+      const hh = Number(m[4] ?? 0);
+      const mi = Number(m[5] ?? 0);
+      const ss = Number(m[6] ?? 0);
+      const d2 = new Date(yy, mm, dd, hh, mi, ss);
+      return isNaN(d2) ? null : d2;
+    }
+    return null;
+  }
+
+  function hoursBetween(a, b){
+    if (!a || !b) return null;
+    const ms = b.getTime() - a.getTime();
+    if (!Number.isFinite(ms)) return null;
+    return ms / 3600000;
+  }
+
+  function normalizeStatus(v){
+    const s = safeLower(v);
+    if (!s) return "pending";
+    if (["pending","open","in progress","in_progress","queued"].includes(s)) return "pending";
+    if (["verified","approved","complete","completed","done","verified/approved"].includes(s)) return "verified";
+    if (["denied","reject","rejected","failed"].includes(s)) return "denied";
+    // If unknown, treat as pending to avoid inflating denial/verified
+    return "pending";
+  }
+
+  function pickField(obj, candidates){
+    for (const c of candidates){
+      if (obj[c] != null && String(obj[c]).trim() !== "") return obj[c];
+      // try case-insensitive key match
+      const ck = Object.keys(obj).find(k => safeLower(k) === safeLower(c));
+      if (ck && obj[ck] != null && String(obj[ck]).trim() !== "") return obj[ck];
+    }
+    return null;
+  }
+
+  function normalizeRecord(raw){
+    const payer = String(pickField(raw, ["payer","payer_name","insurance","insurance_name","carrier","plan"]) ?? "Unknown").trim() || "Unknown";
+    const submittedRaw = pickField(raw, ["submitted_at","submitted","created_at","created","request_date","requested_at","sent_at","submission_date","submitted date"]);
+    const completedRaw = pickField(raw, ["completed_at","completed","verified_at","verified","response_date","responded_at","resolved_at","decision_date","completed date"]);
+    const statusRaw = pickField(raw, ["status","verification_status","outcome","state","result"]);
+    const denialReason = String(pickField(raw, ["denial_reason","denialreason","denial reason","reason","denial","denial_reason_text"]) ?? "").trim();
+
+    const submitted_at = parseDateAny(submittedRaw);
+    const completed_at = parseDateAny(completedRaw);
+
+    let status = normalizeStatus(statusRaw);
+    // If denial_reason present, treat as denied unless explicitly verified
+    if (denialReason && status !== "verified") status = "denied";
+    // If completed_at exists and still pending, consider it verified (unless denial reason)
+    if (completed_at && status === "pending" && !denialReason) status = "verified";
+
+    return {
+      payer,
+      submitted_at,
+      completed_at,
+      status,
+      denial_reason: denialReason
+    };
+  }
+
+  // Minimal, robust CSV parser (handles quotes, commas, newlines)
+  function parseCSV(text){
+    const rows = [];
+    let i = 0;
+    const s = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+    function readCell(){
+      let out = "";
+      let quoted = false;
+      if (s[i] === '"') { quoted = true; i++; }
+      while (i < s.length) {
+        const ch = s[i];
+        if (quoted) {
+          if (ch === '"') {
+            if (s[i+1] === '"') { out += '"'; i += 2; continue; }
+            i++; // end quote
+            quoted = false;
+            // after quote, consume optional spaces until comma/newline
+            while (i < s.length && s[i] === ' ') i++;
+            if (s[i] === ',') { i++; break; }
+            if (s[i] === '\n') { i++; break; }
+            if (i >= s.length) break;
+            // unexpected char: treat as part of cell until delimiter
+            continue;
+          } else {
+            out += ch;
+            i++;
+          }
+        } else {
+          if (ch === ',') { i++; break; }
+          if (ch === '\n') { i++; break; }
+          out += ch;
+          i++;
+        }
+      }
+      return out;
+    }
+
+    function readRow(){
+      // skip empty lines
+      while (i < s.length && s[i] === '\n') i++;
+      if (i >= s.length) return null;
+      const row = [];
+      while (i <= s.length) {
+        row.push(readCell());
+        // Stop if last read ended at newline or EOF. We detect by looking back 1 char.
+        if (i >= s.length) break;
+        // If previous delimiter was newline, our readCell consumed it and returned.
+        // But we can't easily know; check if the character just consumed was newline by inspecting s[i-1]
+        if (s[i-1] === '\n') break;
+      }
+      return row;
+    }
+
+    const header = readRow();
+    if (!header) return [];
+    const keys = header.map(h => String(h ?? "").trim()).filter(Boolean);
+
+    let row;
+    while ((row = readRow()) !== null) {
+      if (row.every(c => String(c ?? "").trim() === "")) continue;
+      const obj = {};
+      for (let c=0; c<keys.length; c++) obj[keys[c]] = row[c] ?? "";
+      rows.push(obj);
+    }
+    return rows;
+  }
+
+  function parseJSON(text){
+    const obj = JSON.parse(text);
+    if (Array.isArray(obj)) return obj;
+    // common wrapper shapes
+    if (obj && typeof obj === "object") {
+      if (Array.isArray(obj.records)) return obj.records;
+      if (Array.isArray(obj.data)) return obj.data;
+    }
+    throw new Error("JSON must be an array of records (or {records:[...]} / {data:[...]}).");
+  }
+
+  function toNormalizedDataset(rawRecords){
+    const normalized = rawRecords.map(normalizeRecord);
+    // Filter out completely unusable records
+    const usable = normalized.filter(r => r.payer && r.submitted_at instanceof Date && !isNaN(r.submitted_at));
+    if (usable.length < normalized.length) {
+      console.warn("Some records were skipped because submitted_at could not be parsed.", { total: normalized.length, usable: usable.length });
+    }
+    return usable;
+  }
+
+  // ----------------------------
+  // Chart rendering (SVG)
+  // ----------------------------
+  function clearSVG(svg){
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+  }
+
+  function svgEl(tag, attrs={}){
+    const n = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (const [k,v] of Object.entries(attrs)) n.setAttribute(k, String(v));
+    return n;
+  }
+
+  function renderBarChart(svg, items, opts){
+    // items: [{label, value, sublabel?, color?, meta?}]
+    // opts: {title?, valueFormatter?, orientation: "v"|"h", yLabel?, maxItems?, minBarPx?}
+    const {
+      orientation = "v",
+      valueFormatter = (v)=>String(v),
+      showValues = true,
+      gridLines = 4,
+      pad = 34,
+      top = 22,
+      bottom = 34,
+      left = 54,
+      right = 20,
+      barRadius = 8
+    } = opts || {};
+
+    clearSVG(svg);
+
+    const vb = svg.getAttribute("viewBox").split(/\s+/).map(Number);
+    const W = vb[2], H = vb[3];
+    const innerW = W - left - right;
+    const innerH = H - top - bottom;
+
+    // background grid
+    const grid = svgEl("g", { opacity: 1 });
+    for (let i=0; i<=gridLines; i++) {
+      const t = i / gridLines;
+      const y = top + innerH * (1 - t);
+      const line = svgEl("line", {
+        x1: left, x2: left + innerW, y1: y, y2: y,
+        stroke: "rgba(255,255,255,.06)",
+        "stroke-width": 1
+      });
+      grid.appendChild(line);
+    }
+    svg.appendChild(grid);
+
+    const maxVal = Math.max(1e-9, ...items.map(d => (Number.isFinite(d.value) ? d.value : 0)));
+
+    const bars = svgEl("g", {});
+    const labels = svgEl("g", {});
+
+    if (orientation === "v") {
+      const gap = 14;
+      const n = Math.max(1, items.length);
+      const barW = (innerW - gap*(n-1)) / n;
+
+      items.forEach((d, idx) => {
+        const v = Number.isFinite(d.value) ? d.value : 0;
+        const h = clamp((v / maxVal) * (innerH - 6), 0, innerH - 6);
+        const x = left + idx * (barW + gap);
+        const y = top + (innerH - h);
+        const color = d.color || "rgba(124,92,255,.85)";
+
+        const rect = svgEl("rect", {
+          x, y, width: barW, height: h,
+          rx: barRadius, ry: barRadius,
+          fill: color,
+          stroke: "rgba(255,255,255,.10)",
+          "stroke-width": 1
+        });
+        bars.appendChild(rect);
+
+        // value label
+        if (showValues) {
+          const txt = svgEl("text", {
+            x: x + barW/2,
+            y: y - 8,
+            fill: "rgba(216,225,238,.92)",
+            "font-size": 12,
+            "text-anchor": "middle",
+            "font-family": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace"
+          });
+          txt.textContent = valueFormatter(v);
+          labels.appendChild(txt);
+        }
+
+        // x label
+        const lab = svgEl("text", {
+          x: x + barW/2,
+          y: top + innerH + 22,
+          fill: "rgba(146,160,181,.95)",
+          "font-size": 12,
+          "text-anchor": "middle"
+        });
+        lab.textContent = d.label;
+        labels.appendChild(lab);
+      });
+    } else {
+      // horizontal
+      const gap = 12;
+      const n = Math.max(1, items.length);
+      const barH = (innerH - gap*(n-1)) / n;
+
+      items.forEach((d, idx) => {
+        const v = Number.isFinite(d.value) ? d.value : 0;
+        const w = clamp((v / maxVal) * (innerW - 6), 0, innerW - 6);
+        const x = left;
+        const y = top + idx * (barH + gap);
+        const color = d.color || "rgba(42,167,255,.75)";
+
+        const rect = svgEl("rect", {
+          x, y, width: w, height: barH,
+          rx: barRadius, ry: barRadius,
+          fill: color,
+          stroke: "rgba(255,255,255,.10)",
+          "stroke-width": 1
+        });
+        bars.appendChild(rect);
+
+        const lab = svgEl("text", {
+          x: left - 10,
+          y: y + barH/2 + 4,
+          fill: "rgba(146,160,181,.95)",
+          "font-size": 12,
+          "text-anchor": "end"
+        });
+        lab.textContent = d.label;
+        labels.appendChild(lab);
+
+        if (showValues) {
+          const txt = svgEl("text", {
+            x: left + w + 8,
+            y: y + barH/2 + 4,
+            fill: "rgba(216,225,238,.92)",
+            "font-size": 12,
+            "text-anchor": "start",
+            "font-family": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace"
+          });
+          txt.textContent = valueFormatter(v);
+          labels.appendChild(txt);
+        }
+
+        if (d.sublabel) {
+          const sub = svgEl("text", {
+            x: left + 8,
+            y: y + barH - 6,
+            fill: "rgba(146,160,181,.85)",
+            "font-size": 11,
+            "text-anchor": "start"
+          });
+          sub.textContent = d.sublabel;
+          labels.appendChild(sub);
+        }
+      });
+    }
+
+    svg.appendChild(bars);
+    svg.appendChild(labels);
+
+    // axis baseline
+    const axis = svgEl("line", {
+      x1: left,
+      x2: left + innerW,
+      y1: top + innerH,
+      y2: top + innerH,
+      stroke: "rgba(255,255,255,.12)",
+      "stroke-width": 1
+    });
+    svg.appendChild(axis);
+  }
+
+  function setLegend(container, entries){
+    container.innerHTML = "";
+    for (const e of entries){
+      const d = el("span", { class: "muted" });
+      const dot = el("span", { class: "dot" });
+      dot.style.background = e.color;
+      d.appendChild(dot);
+      d.appendChild(document.createTextNode(e.label));
+      container.appendChild(d);
+    }
+  }
+
+  // ----------------------------
+  // Computations
+  // ----------------------------
+  function computeBacklogBuckets(records){
+    const now = new Date();
+    const buckets = [
+      { label:"0–24h", key:"h24", color:"rgba(124,92,255,.82)", count:0 },
+      { label:"1–3d", key:"d3", color:"rgba(42,167,255,.75)", count:0 },
+      { label:"3–7d", key:"d7", color:"rgba(255,176,32,.72)", count:0 },
+      { label:">7d", key:"g7", color:"rgba(255,77,109,.70)", count:0 }
+    ];
+
+    for (const r of records) {
+      if (r.status !== "pending") continue;
+      if (!r.submitted_at) continue;
+      const ageH = hoursBetween(r.submitted_at, now);
+      if (!Number.isFinite(ageH) || ageH < 0) continue;
+      if (ageH <= 24) buckets[0].count++;
+      else if (ageH <= 72) buckets[1].count++;
+      else if (ageH <= 168) buckets[2].count++;
+      else buckets[3].count++;
+    }
+
+    return buckets;
+  }
+
+  function computeTatByPayer(records){
+    const by = new Map();
+
+    for (const r of records){
+      if (r.status === "pending") continue;
+      if (!r.submitted_at || !r.completed_at) continue;
+      const h = hoursBetween(r.submitted_at, r.completed_at);
+      if (!Number.isFinite(h) || h < 0) continue;
+      const payer = r.payer || "Unknown";
+      if (!by.has(payer)) by.set(payer, { payer, n:0, sumH:0, maxH:0 });
+      const o = by.get(payer);
+      o.n++;
+      o.sumH += h;
+      o.maxH = Math.max(o.maxH, h);
+    }
+
+    const out = [...by.values()].map(o => ({
+      payer: o.payer,
+      avgH: o.n ? (o.sumH / o.n) : null,
+      n: o.n,
+      maxH: o.maxH
+    })).filter(x => Number.isFinite(x.avgH));
+
+    // Slowest first (Acceptance Criteria)
+    out.sort((a,b) => b.avgH - a.avgH);
+    return out;
+  }
+
+  function computeDenialRateByPayer(records){
+    const by = new Map();
+
+    for (const r of records){
+      if (r.status === "pending") continue;
+      const payer = r.payer || "Unknown";
+      if (!by.has(payer)) by.set(payer, { payer, denied:0, verified:0 });
+      const o = by.get(payer);
+      if (r.status === "denied") o.denied++;
+      else if (r.status === "verified") o.verified++;
+    }
+
+    const out = [...by.values()].map(o => {
+      const decided = o.denied + o.verified;
+      const rate = decided ? (o.denied / decided) : null;
+      return { payer:o.payer, denied:o.denied, verified:o.verified, decided, rate };
+    }).filter(x => x.decided > 0);
+
+    // Sort by highest denial rate, then by volume
+    out.sort((a,b) => (b.rate - a.rate) || (b.decided - a.decided));
+    return out;
+  }
+
+  function computeTopDenialReasons(records){
+    const counts = new Map();
+    let totalDenials = 0;
+    for (const r of records){
+      if (r.status !== "denied") continue;
+      totalDenials++;
+      const reason = (r.denial_reason || "Unspecified").trim() || "Unspecified";
+      counts.set(reason, (counts.get(reason) || 0) + 1);
+    }
+    const out = [...counts.entries()].map(([reason, count]) => ({ reason, count }));
+    out.sort((a,b) => b.count - a.count);
+    return { totalDenials, top: out.slice(0,5) };
+  }
+
+  function computeOverall(records){
+    const total = records.length;
+    const pending = records.filter(r => r.status === "pending").length;
+
+    const tatRows = records.filter(r => r.status !== "pending" && r.submitted_at && r.completed_at)
+      .map(r => hoursBetween(r.submitted_at, r.completed_at))
+      .filter(h => Number.isFinite(h) && h >= 0);
+    const avgTatH = tatRows.length ? tatRows.reduce((a,b)=>a+b,0) / tatRows.length : null;
+
+    const decided = records.filter(r => r.status === "denied" || r.status === "verified");
+    const denied = decided.filter(r => r.status === "denied").length;
+    const denialRate = decided.length ? (denied / decided.length) : null;
+
+    return { total, pending, avgTatH, decided: decided.length, denied, denialRate };
+  }
+
+  // ----------------------------
+  // Rendering
+  // ----------------------------
+  function renderPreview(records){
+    const tbody = $("#previewBody");
+    tbody.innerHTML = "";
+
+    const sorted = [...records].sort((a,b) => (b.submitted_at?.getTime?.()||0) - (a.submitted_at?.getTime?.()||0));
+    const rows = sorted.slice(0, 12);
+
+    for (const r of rows) {
+      const tr = document.createElement("tr");
+
+      const tdPayer = el("td", { text: r.payer || "Unknown" });
+      const tdSub = el("td", { text: r.submitted_at ? r.submitted_at.toLocaleString() : "—" });
+      const tdComp = el("td", { text: r.completed_at ? r.completed_at.toLocaleString() : "—" });
+
+      const tdStatus = document.createElement("td");
+      const st = el("span", { class: "status" });
+      if (r.status === "pending") { st.classList.add("s-pending"); st.textContent = "pending"; }
+      else if (r.status === "verified") { st.classList.add("s-verified"); st.textContent = "verified"; }
+      else { st.classList.add("s-denied"); st.textContent = "denied"; }
+      tdStatus.appendChild(st);
+
+      const tdReason = el("td", { text: r.denial_reason || "" });
+      if (!r.denial_reason) tdReason.classList.add("muted");
+
+      tr.appendChild(tdPayer);
+      tr.appendChild(tdSub);
+      tr.appendChild(tdComp);
+      tr.appendChild(tdStatus);
+      tr.appendChild(tdReason);
+      tbody.appendChild(tr);
+    }
+
+    $("#badgePreview").textContent = `rows: ${rows.length}`;
+  }
+
+  function renderAll(records, meta){
+    // header chips
+    $("#chipRecords").textContent = `records: ${fmtInt(records.length)}`;
+    $("#chipUpdated").textContent = `updated: ${new Date().toLocaleString()}`;
+    $("#chipSource").textContent = `source: ${meta?.source || "sample"}`;
+
+    // KPIs
+    const overall = computeOverall(records);
+    $("#kpiPending").textContent = fmtInt(overall.pending);
+    $("#kpiPendingHint").textContent = overall.total ? `of ${fmtInt(overall.total)} total` : "—";
+
+    $("#kpiAvgTat").textContent = overall.avgTatH == null ? "—" : `${(overall.avgTatH/24).toFixed(1)}d`;
+    $("#kpiAvgTatHint").textContent = overall.avgTatH == null ? "No completed records" : `${fmtInt(Math.round(overall.avgTatH))}h average`;
+
+    $("#kpiDenialRate").textContent = overall.denialRate == null ? "—" : fmtPct(overall.denialRate);
+    $("#kpiDenialRateHint").textContent = overall.decided ? `${fmtInt(overall.denied)} denied of ${fmtInt(overall.decided)} decided` : "No decided records";
+
+    const denialByPayer = computeDenialRateByPayer(records);
+    const worst = denialByPayer.length ? denialByPayer[0] : null;
+    $("#kpiWorstPayer").textContent = worst ? worst.payer : "—";
+    $("#kpiWorstPayerHint").textContent = worst ? `${fmtPct(worst.rate)} (${fmtInt(worst.denied)}/${fmtInt(worst.decided)})` : "—";
+
+    // Backlog chart
+    const buckets = computeBacklogBuckets(records);
+    $("#badgeBacklog").textContent = `pending: ${fmtInt(overall.pending)}`;
+    renderBarChart($("#chartBacklog"), buckets.map(b => ({
+      label: b.label,
+      value: b.count,
+      color: b.color
+    })), {
+      orientation: "v",
+      valueFormatter: (v) => fmtInt(v),
+      showValues: true,
+      left: 44,
+      right: 18,
+      top: 20,
+      bottom: 42
+    });
+    setLegend($("#legendBacklog"), buckets.map(b => ({ label: b.label, color: b.color })));
+
+    // TAT by payer (slowest first)
+    const tat = computeTatByPayer(records);
+    $("#badgeTat").textContent = `payers: ${fmtInt(tat.length)}`;
+    const tatItems = tat.slice(0, 10).map((t, idx) => {
+      const color = idx === 0 ? "rgba(255,176,32,.78)" : "rgba(42,167,255,.75)";
+      return {
+        label: t.payer,
+        value: t.avgH,
+        color,
+        sublabel: `${fmtInt(t.n)} completed`
+      };
+    });
+    renderBarChart($("#chartTat"), tatItems, {
+      orientation: "h",
+      valueFormatter: (h) => `${(h/24).toFixed(1)}d`,
+      showValues: true,
+      left: 170,
+      right: 60,
+      top: 22,
+      bottom: 26
+    });
+    setLegend($("#legendTat"), [
+      { label: "Average turnaround (days)", color: "rgba(42,167,255,.75)" },
+      { label: "Slowest payer", color: "rgba(255,176,32,.78)" }
+    ]);
+
+    // Denial rate by payer
+    $("#badgeDenial").textContent = `payers: ${fmtInt(denialByPayer.length)}`;
+    const denialItems = denialByPayer.slice(0, 10).map((d, idx) => {
+      const heat = d.rate;
+      const color = heat >= 0.35 ? "rgba(255,77,109,.72)" : heat >= 0.2 ? "rgba(255,176,32,.72)" : "rgba(45,226,166,.62)";
+      return {
+        label: d.payer,
+        value: d.rate,
+        color,
+        sublabel: `${fmtInt(d.denied)} denied / ${fmtInt(d.decided)} decided`
+      };
+    });
+    renderBarChart($("#chartDenialRate"), denialItems, {
+      orientation: "h",
+      valueFormatter: (x) => fmtPct(x),
+      showValues: true,
+      left: 170,
+      right: 70,
+      top: 22,
+      bottom: 26
+    });
+    setLegend($("#legendDenial"), [
+      { label: "<20%", color: "rgba(45,226,166,.62)" },
+      { label: "20–35%", color: "rgba(255,176,32,.72)" },
+      { label: ">=35%", color: "rgba(255,77,109,.72)" }
+    ]);
+
+    // Denial reasons top 5
+    const reasons = computeTopDenialReasons(records);
+    $("#badgeReasons").textContent = `denials: ${fmtInt(reasons.totalDenials)}`;
+    const reasonColors = [
+      "rgba(255,77,109,.72)",
+      "rgba(255,176,32,.72)",
+      "rgba(124,92,255,.72)",
+      "rgba(42,167,255,.70)",
+      "rgba(45,226,166,.62)"
+    ];
+    const reasonItems = reasons.top.map((r, i) => ({
+      label: r.reason.length > 18 ? (r.reason.slice(0, 18) + "…") : r.reason,
+      value: r.count,
+      color: reasonColors[i % reasonColors.length],
+      sublabel: r.reason
+    }));
+    renderBarChart($("#chartDenialReasons"), reasonItems, {
+      orientation: "h",
+      valueFormatter: (v) => fmtInt(v),
+      showValues: true,
+      left: 220,
+      right: 30,
+      top: 22,
+      bottom: 26
+    });
+    setLegend($("#legendReasons"), reasons.top.map((r, i) => ({ label: r.reason, color: reasonColors[i % reasonColors.length] })));
+
+    renderPreview(records);
+  }
+
+  // ----------------------------
+  // File handling
+  // ----------------------------
+  async function loadFile(file){
+    const name = (file?.name || "").toLowerCase();
+    const text = await file.text();
+
+    let raw;
+    if (name.endsWith(".json")) raw = parseJSON(text);
+    else if (name.endsWith(".csv")) raw = parseCSV(text);
+    else {
+      // try JSON first, fallback to CSV
+      try { raw = parseJSON(text); }
+      catch { raw = parseCSV(text); }
+    }
+
+    const records = toNormalizedDataset(raw);
+    if (!records.length) throw new Error("No usable records. Ensure at least payer + submitted_at are present and dates are parseable.");
+    return records;
+  }
+
+  function wireUI(){
+    const dropZone = $("#dropZone");
+    const fileInput = $("#fileInput");
+
+    const openPicker = () => fileInput.click();
+
+    $("#btnBrowse").addEventListener("click", openPicker);
+    dropZone.addEventListener("click", openPicker);
+    dropZone.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openPicker(); }
+    });
+
+    $("#btnSample").addEventListener("click", () => {
+      state.records = toNormalizedDataset(sampleData);
+      state.meta = { source: "sample" };
+      renderAll(state.records, state.meta);
+    });
+
+    $("#btnClear").addEventListener("click", () => {
+      state.records = toNormalizedDataset(sampleData);
+      state.meta = { source: "sample" };
+      renderAll(state.records, state.meta);
+    });
+
+    fileInput.addEventListener("change", async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      await handleFile(file);
+      fileInput.value = "";
+    });
+
+    // Drag & drop
+    ["dragenter","dragover"].forEach(evt => {
+      dropZone.addEventListener(evt, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        dropZone.classList.add("dragover");
+      });
+    });
+    ["dragleave","drop"].forEach(evt => {
+      dropZone.addEventListener(evt, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        dropZone.classList.remove("dragover");
+      });
+    });
+    dropZone.addEventListener("drop", async (e) => {
+      const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (file) await handleFile(file);
+    });
+
+    async function handleFile(file){
+      try {
+        dropZone.querySelector("strong").textContent = `Loading: ${file.name}`;
+        const records = await loadFile(file);
+        state.records = records;
+        state.meta = { source: file.name };
+        renderAll(state.records, state.meta);
+        dropZone.querySelector("strong").textContent = "Drag & drop CSV/JSON here";
+      } catch (err) {
+        console.error(err);
+        alert(`Upload failed: ${err.message || err}`);
+        dropZone.querySelector("strong").textContent = "Drag & drop CSV/JSON here";
+      }
+    }
+  }
+
+  // ----------------------------
+  // Init
+  // ----------------------------
+  const state = {
+    records: toNormalizedDataset(sampleData),
+    meta: { source: "sample" }
+  };
+
+  wireUI();
+  renderAll(state.records, state.meta);
+
+})();
+</script>
+</body>
+</html>

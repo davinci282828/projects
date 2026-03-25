@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>010 — Mycelium Mind</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0a0f; overflow: hidden; touch-action: none; user-select: none; font-family: 'Courier New', monospace; }
+canvas { display: block; }
+#overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: rgba(10,10,15,0.92); z-index: 10; cursor: pointer;
+  transition: opacity 0.8s;
+}
+#overlay h1 { color: #7af; font-size: 2.2em; margin-bottom: 0.3em; font-weight: 300; letter-spacing: 0.1em; }
+#overlay p { color: #889; font-size: 0.9em; max-width: 440px; text-align: center; line-height: 1.6; }
+#overlay .hint { color: #556; font-size: 0.75em; margin-top: 1.5em; }
+#hud {
+  position: fixed; bottom: 12px; left: 12px; color: #445; font-size: 11px;
+  pointer-events: none; z-index: 5; line-height: 1.5;
+}
+#quote {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  color: rgba(120,170,255,0); font-size: 1.1em; text-align: center;
+  pointer-events: none; z-index: 5; transition: color 2s; max-width: 80%;
+  font-style: italic;
+}
+</style>
+</head>
+<body>
+<div id="overlay">
+  <h1>Mycelium Mind</h1>
+  <p>An underground network that thinks. Touch to feed it nutrients. Watch it grow toward what sustains it. The infrastructure is the intelligence.</p>
+  <p class="hint">touch / click to feed · hold to create rich source · spacebar to pulse · S to starve</p>
+</div>
+<canvas id="c"></canvas>
+<div id="hud"></div>
+<div id="quote"></div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const overlay = document.getElementById('overlay');
+const hud = document.getElementById('hud');
+const quoteEl = document.getElementById('quote');
+
+let W, H;
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// --- Audio ---
+let audioCtx, masterGain, droneOsc, droneFilter, droneGain, reverbNode, flowGain;
+let audioStarted = false;
+
+function createImpulse(ctx, duration, decay) {
+  const len = ctx.sampleRate * duration;
+  const buf = ctx.createBuffer(2, len, ctx.sampleRate);
+  for (let ch = 0; ch < 2; ch++) {
+    const d = buf.getChannelData(ch);
+    for (let i = 0; i < len; i++) {
+      d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+  }
+  return buf;
+}
+
+function initAudio() {
+  if (audioStarted) return;
+  audioStarted = true;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0.6;
+  masterGain.connect(audioCtx.destination);
+
+  reverbNode = audioCtx.createConvolver();
+  reverbNode.buffer = createImpulse(audioCtx, 3.0, 2.5);
+  reverbNode.connect(masterGain);
+
+  // Drone — represents the network's aggregate metabolism
+  droneFilter = audioCtx.createBiquadFilter();
+  droneFilter.type = 'lowpass';
+  droneFilter.frequency.value = 200;
+  droneFilter.Q.value = 2;
+  droneFilter.connect(reverbNode);
+  droneFilter.connect(masterGain);
+
+  droneGain = audioCtx.createGain();
+  droneGain.gain.value = 0;
+  droneGain.connect(droneFilter);
+
+  droneOsc = audioCtx.createOscillator();
+  droneOsc.type = 'sine';
+  droneOsc.frequency.value = 55; // A1
+  droneOsc.connect(droneGain);
+  droneOsc.start();
+
+  // Second drone layer — fifth above
+  const drone2Gain = audioCtx.createGain();
+  drone2Gain.gain.value = 0;
+  drone2Gain.connect(droneFilter);
+  const drone2 = audioCtx.createOscillator();
+  drone2.type = 'triangle';
+  drone2.frequency.value = 82.5; // E2
+  drone2.connect(drone2Gain);
+  drone2.start();
+  window._drone2Gain = drone2Gain;
+
+  // Flow sound layer — granular clicks from active transport
+  flowGain = audioCtx.createGain();
+  flowGain.gain.value = 0.15;
+  flowGain.connect(reverbNode);
+}
+
+function playFlowGrain(x, y, energy) {
+  if (!audioCtx || energy < 0.05) return;
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  const pan = audioCtx.createStereoPanner();
+
+  // Pentatonic mapping from position
+  const notes = [55, 65.4, 73.4, 82.4, 98, 110, 130.8, 146.8, 164.8, 196];
+  const idx = Math.floor((y / H) * notes.length) % notes.length;
+  osc.frequency.value = notes[idx] * (1 + (Math.random() - 0.5) * 0.02);
+  osc.type = energy > 0.6 ? 'triangle' : 'sine';
+
+  pan.pan.value = (x / W) * 2 - 1;
+  g.gain.value = 0;
+  g.gain.setValueAtTime(0, now);
+  g.gain.linearRampToValueAtTime(energy * 0.12, now + 0.01);
+  g.gain.exponentialRampToValueAtTime(0.001, now + 0.08 + energy * 0.15);
+
+  osc.connect(g);
+  g.connect(pan);
+  pan.connect(flowGain);
+  osc.start(now);
+  osc.stop(now + 0.3);
+}
+
+function playGrowthTone(x, y) {
+  if (!audioCtx) return;
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  const pan = audioCtx.createStereoPanner();
+  osc.frequency.value = 220 + (y / H) * 220;
+  osc.type = 'sine';
+  pan.pan.value = (x / W) * 2 - 1;
+  g.gain.setValueAtTime(0.08, now);
+  g.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+  osc.connect(g); g.connect(pan); pan.connect(reverbNode);
+  osc.start(now); osc.stop(now + 0.5);
+}
+
+// --- Mycelium Network ---
+const GRID = 4; // cell size for nutrient grid
+let nutrientGrid; // 2D array of nutrient values
+let gridW, gridH;
+
+function initGrid() {
+  gridW = Math.ceil(W / GRID);
+  gridH = Math.ceil(H / GRID);
+  nutrientGrid = [];
+  for (let i = 0; i < gridW; i++) {
+    nutrientGrid[i] = new Float32Array(gridH);
+  }
+}
+initGrid();
+
+// Hyphae tips — the growing ends of the network
+const tips = [];
+// Segments — the permanent network
+const segments = []; // {x1,y1,x2,y2,age,nutrient,width}
+const MAX_SEGMENTS = 3000;
+const MAX_TIPS = 200;
+
+// Nutrient sources — placed by user
+const sources = []; // {x, y, strength, life}
+
+let totalNutrient = 0;
+let networkSize = 0;
+let flowEvents = 0;
+let age = 0;
+
+// Seed initial tips
+function seedNetwork() {
+  const cx = W / 2 + (Math.random() - 0.5) * 100;
+  const cy = H / 2 + (Math.random() - 0.5) * 100;
+  for (let i = 0; i < 5; i++) {
+    const angle = (Math.PI * 2 * i) / 5 + Math.random() * 0.3;
+    tips.push({
+      x: cx, y: cy,
+      angle: angle,
+      speed: 0.8 + Math.random() * 0.4,
+      energy: 1.0,
+      branchProb: 0.015,
+      age: 0,
+      nutrientCarried: 0.5
+    });
+  }
+}
+seedNetwork();
+
+function addNutrientSource(x, y, strength) {
+  sources.push({ x, y, strength: strength || 1.0, life: 1.0, radius: 30 + strength * 20 });
+  // Deposit nutrients into grid
+  const r = Math.floor((30 + strength * 20) / GRID);
+  const gx = Math.floor(x / GRID);
+  const gy = Math.floor(y / GRID);
+  for (let dx = -r; dx <= r; dx++) {
+    for (let dy = -r; dy <= r; dy++) {
+      const nx = gx + dx, ny = gy + dy;
+      if (nx >= 0 && nx < gridW && ny >= 0 && ny < gridH) {
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist <= r) {
+          nutrientGrid[nx][ny] += strength * (1 - dist / r) * 0.5;
+        }
+      }
+    }
+  }
+}
+
+// Sense nutrient gradient at position
+function senseGradient(x, y, angle, radius) {
+  const leftAngle = angle - 0.4;
+  const rightAngle = angle + 0.4;
+  const fwdAngle = angle;
+
+  function sample(a) {
+    const sx = Math.floor((x + Math.cos(a) * radius) / GRID);
+    const sy = Math.floor((y + Math.sin(a) * radius) / GRID);
+    if (sx >= 0 && sx < gridW && sy >= 0 && sy < gridH) {
+      return nutrientGrid[sx][sy];
+    }
+    return 0;
+  }
+
+  const left = sample(leftAngle);
+  const right = sample(rightAngle);
+  const fwd = sample(fwdAngle);
+
+  if (fwd >= left && fwd >= right) return 0;
+  if (left > right) return -0.08;
+  return 0.08;
+}
+
+function updateNetwork(dt) {
+  age += dt;
+
+  // Diffuse nutrients slightly
+  if (Math.random() < 0.1) {
+    for (let x = 1; x < gridW - 1; x++) {
+      for (let y = 1; y < gridH - 1; y++) {
+        const avg = (nutrientGrid[x-1][y] + nutrientGrid[x+1][y] +
+                     nutrientGrid[x][y-1] + nutrientGrid[x][y+1]) * 0.25;
+        nutrientGrid[x][y] = nutrientGrid[x][y] * 0.998 + avg * 0.002;
+      }
+    }
+  }
+
+  // Decay sources
+  for (let i = sources.length - 1; i >= 0; i--) {
+    sources[i].life -= 0.0003 * dt;
+    if (sources[i].life <= 0) sources.splice(i, 1);
+  }
+
+  // Decay nutrients globally (very slow)
+  totalNutrient = 0;
+  for (let x = 0; x < gridW; x++) {
+    for (let y = 0; y < gridH; y++) {
+      nutrientGrid[x][y] *= 0.9999;
+      totalNutrient += nutrientGrid[x][y];
+    }
+  }
+
+  // Update tips
+  for (let i = tips.length - 1; i >= 0; i--) {
+    const tip = tips[i];
+    tip.age += dt;
+
+    // Sense nutrients
+    const turn = senseGradient(tip.x, tip.y, tip.angle, 20);
+    tip.angle += turn + (Math.random() - 0.5) * 0.15;
+
+    // Consume nutrients at position
+    const gx = Math.floor(tip.x / GRID);
+    const gy = Math.floor(tip.y / GRID);
+    if (gx >= 0 && gx < gridW && gy >= 0 && gy < gridH) {
+      const consumed = Math.min(nutrientGrid[gx][gy], 0.02);
+      nutrientGrid[gx][gy] -= consumed;
+      tip.energy += consumed * 2;
+      tip.nutrientCarried += consumed;
+    }
+
+    // Move
+    const prevX = tip.x, prevY = tip.y;
+    tip.x += Math.cos(tip.angle) * tip.speed * dt * 0.3;
+    tip.y += Math.sin(tip.angle) * tip.speed * dt * 0.3;
+
+    // Boundary wrap with padding
+    if (tip.x < 10) tip.angle = Math.abs(tip.angle) < Math.PI/2 ? tip.angle : Math.PI - tip.angle;
+    if (tip.x > W - 10) tip.angle = Math.abs(tip.angle) < Math.PI/2 ? Math.PI - tip.angle : tip.angle;
+    if (tip.y < 10) tip.angle = tip.angle > 0 ? tip.angle : -tip.angle;
+    if (tip.y > H - 10) tip.angle = tip.angle > 0 ? -tip.angle : tip.angle;
+    tip.x = Math.max(5, Math.min(W - 5, tip.x));
+    tip.y = Math.max(5, Math.min(H - 5, tip.y));
+
+    // Leave segment
+    if (segments.length < MAX_SEGMENTS) {
+      const w = 0.5 + tip.nutrientCarried * 2;
+      segments.push({
+        x1: prevX, y1: prevY, x2: tip.x, y2: tip.y,
+        age: 0, nutrient: tip.nutrientCarried, width: Math.min(w, 3),
+        hue: 200 + tip.nutrientCarried * 40
+      });
+    }
+
+    // Branch
+    if (tip.energy > 0.3 && Math.random() < tip.branchProb && tips.length < MAX_TIPS) {
+      const branchAngle = tip.angle + (Math.random() > 0.5 ? 1 : -1) * (0.4 + Math.random() * 0.8);
+      tips.push({
+        x: tip.x, y: tip.y,
+        angle: branchAngle,
+        speed: tip.speed * (0.7 + Math.random() * 0.3),
+        energy: tip.energy * 0.4,
+        branchProb: tip.branchProb * 0.8,
+        age: 0,
+        nutrientCarried: tip.nutrientCarried * 0.3
+      });
+      tip.energy *= 0.6;
+      playGrowthTone(tip.x, tip.y);
+    }
+
+    // Energy decay
+    tip.energy -= 0.001 * dt;
+    tip.nutrientCarried *= 0.999;
+
+    // Die if out of energy
+    if (tip.energy <= 0) {
+      tips.splice(i, 1);
+    }
+  }
+
+  // Transport nutrients through segments (flow)
+  flowEvents = 0;
+  for (const seg of segments) {
+    seg.age += dt;
+    // Nutrient flows along segments toward tips
+    if (seg.nutrient > 0.01 && Math.random() < 0.02) {
+      // Find nearest tip
+      let minDist = Infinity, nearestTip = null;
+      for (const tip of tips) {
+        const d = Math.hypot(tip.x - seg.x2, tip.y - seg.y2);
+        if (d < minDist) { minDist = d; nearestTip = tip; }
+      }
+      if (nearestTip && minDist < 100) {
+        const transfer = seg.nutrient * 0.01;
+        seg.nutrient -= transfer;
+        nearestTip.energy += transfer;
+        flowEvents++;
+        if (Math.random() < 0.03) {
+          playFlowGrain(seg.x2, seg.y2, seg.nutrient);
+        }
+      }
+    }
+  }
+
+  // Prune old thin segments
+  if (segments.length > MAX_SEGMENTS * 0.9) {
+    segments.sort((a, b) => b.nutrient - a.nutrient);
+    segments.length = Math.floor(MAX_SEGMENTS * 0.7);
+  }
+
+  networkSize = segments.length;
+
+  // Auto-seed if network dies
+  if (tips.length === 0 && segments.length > 0) {
+    // Find richest segment and sprout from it
+    let best = segments[0];
+    for (const s of segments) {
+      if (s.nutrient > best.nutrient) best = s;
+    }
+    tips.push({
+      x: best.x2, y: best.y2,
+      angle: Math.random() * Math.PI * 2,
+      speed: 0.8, energy: 0.5 + best.nutrient,
+      branchProb: 0.02, age: 0, nutrientCarried: best.nutrient * 0.5
+    });
+  }
+  if (tips.length === 0 && segments.length === 0) {
+    seedNetwork();
+  }
+
+  // Update drone
+  if (droneGain) {
+    const health = Math.min(1, totalNutrient / 50);
+    const targetGain = 0.05 + health * 0.2;
+    droneGain.gain.value += (targetGain - droneGain.gain.value) * 0.01;
+    droneFilter.frequency.value += ((150 + health * 400) - droneFilter.frequency.value) * 0.01;
+    if (window._drone2Gain) {
+      window._drone2Gain.gain.value += (targetGain * 0.5 - window._drone2Gain.gain.value) * 0.01;
+    }
+  }
+}
+
+// --- Rendering ---
+const quotes = [
+  "The network is the intelligence.",
+  "What you see is the infrastructure. The beauty was always here.",
+  "Mycelium: the internet of the forest, 500 million years early.",
+  "Support structures are not secondary — they are primary.",
+  "The invisible architecture determines everything visible.",
+  "To sustain is to create.",
+  "Roots don't seek light. They seek what sustains.",
+  "The strongest connections are the ones you never see.",
+  "Infrastructure decays in silence. It fails in spectacle.",
+  "Every network is a mind that doesn't know it's thinking."
+];
+let currentQuote = '', quoteTimer = 0, quoteAlpha = 0;
+
+function showQuote() {
+  currentQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  quoteTimer = 300;
+  quoteAlpha = 0;
+}
+
+function draw() {
+  ctx.fillStyle = 'rgba(10, 10, 15, 0.15)';
+  ctx.fillRect(0, 0, W, H);
+
+  // Draw nutrient grid as subtle glow
+  for (let x = 0; x < gridW; x += 3) {
+    for (let y = 0; y < gridH; y += 3) {
+      const n = nutrientGrid[x][y];
+      if (n > 0.02) {
+        const alpha = Math.min(0.25, n * 0.3);
+        ctx.fillStyle = `hsla(${180 + n * 60}, 60%, ${20 + n * 30}%, ${alpha})`;
+        ctx.fillRect(x * GRID, y * GRID, GRID * 3, GRID * 3);
+      }
+    }
+  }
+
+  // Draw segments
+  for (const seg of segments) {
+    const fadeIn = Math.min(1, seg.age / 30);
+    const nutrientAlpha = 0.15 + seg.nutrient * 0.6;
+    const alpha = fadeIn * nutrientAlpha;
+    const hue = seg.hue || 200;
+    const lightness = 40 + seg.nutrient * 30;
+    ctx.strokeStyle = `hsla(${hue}, 50%, ${lightness}%, ${alpha})`;
+    ctx.lineWidth = seg.width;
+    ctx.beginPath();
+    ctx.moveTo(seg.x1, seg.y1);
+    ctx.lineTo(seg.x2, seg.y2);
+    ctx.stroke();
+
+    // Glow for nutrient-rich segments
+    if (seg.nutrient > 0.3) {
+      ctx.strokeStyle = `hsla(${hue}, 70%, 60%, ${alpha * 0.3})`;
+      ctx.lineWidth = seg.width + 3;
+      ctx.beginPath();
+      ctx.moveTo(seg.x1, seg.y1);
+      ctx.lineTo(seg.x2, seg.y2);
+      ctx.stroke();
+    }
+  }
+
+  // Draw tips (growing ends)
+  for (const tip of tips) {
+    const r = 2 + tip.energy * 3;
+    const hue = 180 + tip.nutrientCarried * 80;
+    ctx.beginPath();
+    ctx.arc(tip.x, tip.y, r, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${hue}, 70%, 65%, ${0.6 + tip.energy * 0.4})`;
+    ctx.fill();
+
+    // Glow
+    ctx.beginPath();
+    ctx.arc(tip.x, tip.y, r + 4, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${hue}, 60%, 50%, 0.15)`;
+    ctx.fill();
+  }
+
+  // Draw sources
+  for (const src of sources) {
+    const pulse = 0.7 + 0.3 * Math.sin(age * 0.05);
+    const r = src.radius * src.life * pulse;
+    const grad = ctx.createRadialGradient(src.x, src.y, 0, src.x, src.y, r);
+    grad.addColorStop(0, `hsla(45, 80%, 60%, ${src.life * 0.4})`);
+    grad.addColorStop(1, `hsla(45, 80%, 40%, 0)`);
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(src.x, src.y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Quote
+  if (quoteTimer > 0) {
+    quoteTimer--;
+    if (quoteTimer > 250) quoteAlpha = Math.min(1, quoteAlpha + 0.02);
+    else if (quoteTimer < 50) quoteAlpha = Math.max(0, quoteAlpha - 0.02);
+    quoteEl.style.color = `rgba(120, 170, 255, ${quoteAlpha * 0.5})`;
+    quoteEl.textContent = currentQuote;
+  } else {
+    quoteEl.textContent = '';
+  }
+
+  // HUD
+  hud.textContent = `tips: ${tips.length} · segments: ${segments.length} · nutrients: ${totalNutrient.toFixed(1)} · flow: ${flowEvents}`;
+}
+
+// --- Interaction ---
+let isDown = false;
+let holdTimer = null;
+let holdStrength = 0;
+let pointerX = W / 2, pointerY = H / 2;
+
+function startInteraction(x, y) {
+  isDown = true;
+  pointerX = x; pointerY = y;
+  holdStrength = 0;
+  holdTimer = setInterval(() => {
+    holdStrength = Math.min(3, holdStrength + 0.1);
+    addNutrientSource(pointerX, pointerY, 0.1 + holdStrength * 0.3);
+  }, 100);
+  addNutrientSource(x, y, 0.5);
+  showQuote();
+}
+
+function moveInteraction(x, y) {
+  pointerX = x; pointerY = y;
+  if (isDown) {
+    addNutrientSource(x, y, 0.2 + holdStrength * 0.1);
+  }
+}
+
+function endInteraction() {
+  isDown = false;
+  if (holdTimer) { clearInterval(holdTimer); holdTimer = null; }
+  holdStrength = 0;
+}
+
+// Mouse
+canvas.addEventListener('mousedown', e => { initAudio(); startInteraction(e.clientX, e.clientY); });
+canvas.addEventListener('mousemove', e => moveInteraction(e.clientX, e.clientY));
+canvas.addEventListener('mouseup', endInteraction);
+canvas.addEventListener('mouseleave', endInteraction);
+
+// Touch
+canvas.addEventListener('touchstart', e => {
+  e.preventDefault(); initAudio();
+  const t = e.touches[0];
+  startInteraction(t.clientX, t.clientY);
+}, { passive: false });
+canvas.addEventListener('touchmove', e => {
+  e.preventDefault();
+  const t = e.touches[0];
+  moveInteraction(t.clientX, t.clientY);
+}, { passive: false });
+canvas.addEventListener('touchend', e => { e.preventDefault(); endInteraction(); }, { passive: false });
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space') {
+    e.preventDefault();
+    // Pulse — send energy wave through network
+    for (const seg of segments) {
+      seg.nutrient = Math.min(1, seg.nutrient + 0.2);
+    }
+    for (const tip of tips) {
+      tip.energy = Math.min(1.5, tip.energy + 0.3);
+    }
+    showQuote();
+    // Play pulse sound
+    if (audioCtx) {
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(110, now);
+      osc.frequency.exponentialRampToValueAtTime(55, now + 1.5);
+      g.gain.setValueAtTime(0.2, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 2);
+      osc.connect(g); g.connect(reverbNode);
+      osc.start(now); osc.stop(now + 2);
+    }
+  }
+  if (e.code === 'KeyS') {
+    // Starve — drain all nutrients
+    for (let x = 0; x < gridW; x++) {
+      for (let y = 0; y < gridH; y++) {
+        nutrientGrid[x][y] *= 0.3;
+      }
+    }
+    for (const tip of tips) tip.energy *= 0.5;
+  }
+});
+
+// Overlay
+function dismissOverlay() {
+  initAudio();
+  overlay.style.opacity = '0';
+  setTimeout(() => overlay.style.display = 'none', 800);
+  // Plant initial nutrients
+  for (let i = 0; i < 5; i++) {
+    addNutrientSource(
+      W * 0.2 + Math.random() * W * 0.6,
+      H * 0.2 + Math.random() * H * 0.6,
+      0.8 + Math.random() * 0.5
+    );
+  }
+}
+overlay.addEventListener('click', dismissOverlay);
+overlay.addEventListener('touchstart', e => { e.preventDefault(); dismissOverlay(); }, { passive: false });
+
+// --- Main loop ---
+let lastTime = performance.now();
+function loop(now) {
+  const dt = Math.min(now - lastTime, 50) / 16.67;
+  lastTime = now;
+
+  updateNetwork(dt);
+  draw();
+
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
