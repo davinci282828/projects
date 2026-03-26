@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-03-26T09:13:23Z",
+  "directory": "/Users/davinci/.openclaw/workspace/projects/yolo-builds/2026-03-26-cron-performance",
+  "total_files": 4,
+  "files_by_type": {
+    "python": 0,
+    "javascript": 0,
+    "shell": 0,
+    "html": 1,
+    "json": 0
+  },
+  "result": "PASS",
+  "stages_passed": 4,
+  "stages_warned": 0,
+  "stages_failed": 0,
+  "total_ms": 7167,
+  "stages": ["structure:PASS:30ms","syntax:PASS:35ms","imports:PASS:8ms","smoke:PASS:7060ms"]
+}
