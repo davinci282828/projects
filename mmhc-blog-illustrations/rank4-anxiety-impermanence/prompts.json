@@ -1,0 +1,344 @@
+{
+  "description": "20 prompts illustrating anxiety of impermanence, fear of change as identity threat, strategic vs pathological forgetting, and the substrate that holds across transitions",
+  "hero_pick": {
+    "number": 13,
+    "concept": "The Substrate Beneath",
+    "reason": "Directly visualizes the article's central concept: the stable foundation (substrate/witness) that holds across all change, the continuity of self that allows impermanence without dissolution"
+  },
+  "variance_map": {
+    "composition": {
+      "close-up": 4,
+      "medium": 4,
+      "wide environmental": 4,
+      "overhead/top-down": 3,
+      "over-the-shoulder": 3,
+      "object-only macro": 2
+    },
+    "setting": {
+      "intimate interior": 5,
+      "spacious interior": 4,
+      "outdoor natural": 5,
+      "outdoor liminal": 4,
+      "abstract/textural": 2
+    },
+    "time_light": {
+      "golden morning": 4,
+      "soft afternoon": 4,
+      "golden hour": 4,
+      "twilight": 4,
+      "soft overcast": 3,
+      "dawn/dusk liminal": 1
+    },
+    "symbolic_angle": {
+      "impermanence/erosion": 5,
+      "threshold/paralysis": 4,
+      "substrate/witness": 3,
+      "agency/choice": 3,
+      "time/seasons": 2,
+      "identity-disruption": 2,
+      "release/pruning": 1
+    }
+  },
+  "prompts": [
+    {
+      "number": 1,
+      "concept": "The Frozen Frame",
+      "prompt": "A cinematic 16:9 image of a person standing perfectly still in the middle of a field of tall grass bent by wind, the grass blurred with motion while the figure remains sharply in focus, body rigid and hands at sides. Soft overcast light creates even illumination with no harsh shadows. The grass is golden amber and muted green, the person's clothing simple linen in neutral tones. The scene conveys the attempt to hold still in a system that is always moving, the paralysis of refusing change in a world of impermanence.",
+      "mood": "paralysis, resistance, stillness, tension",
+      "color_palette": "golden amber, muted green, neutral linen",
+      "symbolism": "holding still in a moving system",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure face visible",
+        "setting": "outdoor natural",
+        "time_light": "soft overcast",
+        "symbolic_angle": "threshold/paralysis"
+      }
+    },
+    {
+      "number": 2,
+      "concept": "Strategic Pruning",
+      "prompt": "A cinematic 16:9 close-up of steady hands holding small pruning shears, mid-cut on a branch of a potted plant, golden morning light streaming from the side to illuminate the clean cut and the texture of green leaves. The background is softly blurred warm tones of a window and wooden surface. The severed branch falls gently, still fresh. The image symbolizes strategic forgetting: releasing what no longer serves to make room for new growth, the choice made with care and intention.",
+      "mood": "intentional, careful, generative, release",
+      "color_palette": "warm amber, fresh green, natural wood",
+      "symbolism": "strategic forgetting as healthy pruning",
+      "axes": {
+        "composition": "close-up",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "release/pruning"
+      }
+    },
+    {
+      "number": 3,
+      "concept": "The Weathered Inscription",
+      "prompt": "A cinematic 16:9 object-only macro shot of weathered stone with letters carved deep but worn smooth by time and erosion, some still legible, others reduced to shallow curves. Soft afternoon light rakes across the surface, emphasizing texture and depth variation. The stone is pale gray with warm lichen patches in muted amber. The image conveys selective preservation: some memories remain sharp while others fade, the forced choice of what to save when you cannot save everything.",
+      "mood": "erosion, time, selective, melancholy",
+      "color_palette": "pale gray stone, muted amber lichen, shadow",
+      "symbolism": "selective preservation under erosion",
+      "axes": {
+        "composition": "object-only macro",
+        "subject": "object alone",
+        "setting": "abstract/textural",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "impermanence/erosion"
+      }
+    },
+    {
+      "number": 4,
+      "concept": "Threshold Paralysis",
+      "prompt": "A cinematic 16:9 medium shot of a person standing in an open doorway, one foot raised mid-step but frozen, body weight still on the back foot, face turned toward the room beyond with an expression of hesitation and conflict. Golden hour light pours through the doorway, creating a sharp line of light and shadow bisecting their body. The doorframe is simple wood, the interior warm but the person caught between. The image captures the paralysis at thresholds when change feels like identity dissolution.",
+      "mood": "paralysis, conflict, hesitation, charged",
+      "color_palette": "golden amber, shadow gray, warm wood",
+      "symbolism": "paralysis when change threatens identity",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure face visible",
+        "setting": "spacious interior",
+        "time_light": "golden hour",
+        "symbolic_angle": "threshold/paralysis"
+      }
+    },
+    {
+      "number": 5,
+      "concept": "The Witness Position",
+      "prompt": "A cinematic 16:9 wide environmental shot of a person seated on a simple wooden bench on a hillside, back to camera, overlooking a landscape where seasons blend: one side still autumn with golden trees, the other transitioning to winter with bare branches. Twilight light creates soft blue and warm amber tones across the scene. The person sits still and grounded, observing the change without moving. The image symbolizes self-as-context, the stable observer who watches impermanence without being consumed.",
+      "mood": "witnessing, grounded, contemplative, stable",
+      "color_palette": "twilight blue, golden amber, weathered wood",
+      "symbolism": "the witness that holds across change",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "single figure obscured",
+        "setting": "outdoor natural",
+        "time_light": "twilight",
+        "symbolic_angle": "substrate/witness"
+      }
+    },
+    {
+      "number": 6,
+      "concept": "Three Kinds of Forgetting",
+      "prompt": "A cinematic 16:9 overhead view of three glass jars on a wooden surface: the first contains clear water, the second water with sediment settling, the third shattered with water spilled and spreading. Soft golden morning light illuminates all three from above, creating highlights and shadows that emphasize the progression. The textures are clear glass, aged wood grain, and liquid. The image represents strategic, selective, and pathological forgetting, three distinct processes with different costs.",
+      "mood": "progression, distinction, urgency, clarity",
+      "color_palette": "clear glass, warm wood, golden light",
+      "symbolism": "three forgetting modes: strategic, selective, pathological",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "impermanence/erosion"
+      }
+    },
+    {
+      "number": 7,
+      "concept": "The Old Skin",
+      "prompt": "A cinematic 16:9 close-up of a hand gently holding a piece of shed snakeskin, translucent and delicate, with window light streaming through it to reveal intricate scale patterns. The background is softly blurred warm tones of a natural interior. The skin is held with care, not discarded but acknowledged. The image symbolizes the version of self that was necessary once but has been outgrown, the identity released not because it was wrong but because you've evolved beyond it.",
+      "mood": "reverence, release, transformation, gentle",
+      "color_palette": "translucent amber, soft shadow, warm light",
+      "symbolism": "outgrown identity held with care",
+      "axes": {
+        "composition": "close-up",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "identity-disruption"
+      }
+    },
+    {
+      "number": 8,
+      "concept": "The Erosion Pattern",
+      "prompt": "A cinematic 16:9 wide shot of stone steps leading upward through a hillside, the center of each step worn smooth and concave from countless footsteps over time, edges still sharp. Soft overcast morning light creates even illumination. The stone is pale gray, surrounding landscape muted green. The scene conveys how repetition and time erode what seems permanent, the gradual wearing away that happens too slowly to notice until the pattern is irreversible.",
+      "mood": "gradual, erosion, time, inevitable",
+      "color_palette": "pale gray stone, muted green, soft light",
+      "symbolism": "erosion happening too slowly to resist",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "landscape only",
+        "setting": "outdoor natural",
+        "time_light": "soft overcast",
+        "symbolic_angle": "impermanence/erosion"
+      }
+    },
+    {
+      "number": 9,
+      "concept": "Agency at the Edge",
+      "prompt": "A cinematic 16:9 medium shot of a person standing at the edge of a calm lake at golden hour, holding a small smooth stone in their palm, arm extended as if about to release it into the water. Their face is visible in profile, expression calm and intentional. The light is warm amber reflecting off the water surface. The posture conveys agency: the choice to release, not having it torn away. The moment before strategic forgetting becomes action.",
+      "mood": "intentional, calm, poised, empowered",
+      "color_palette": "golden amber, calm blue water, natural skin tone",
+      "symbolism": "choosing what to release vs. forced loss",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure face visible",
+        "setting": "outdoor liminal",
+        "time_light": "golden hour",
+        "symbolic_angle": "agency/choice"
+      }
+    },
+    {
+      "number": 10,
+      "concept": "The Catalog Loop",
+      "prompt": "A cinematic 16:9 over-the-shoulder shot of a person seated at a desk covered with photographs, journal pages, and small objects spread in overlapping layers, their hand hovering over the collection as if trying to organize what cannot be organized. Soft afternoon light from a window illuminates the desk. The textures are paper, fabric, small trinkets, all in muted tones. The scene symbolizes rumination as cataloging: trying to prevent pathological forgetting by obsessively inventorying what might be lost.",
+      "mood": "overwhelmed, cataloging, anxious, stuck",
+      "color_palette": "muted earth tones, soft paper cream, warm wood",
+      "symbolism": "rumination as obsessive inventory against loss",
+      "axes": {
+        "composition": "over-the-shoulder",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "threshold/paralysis"
+      }
+    },
+    {
+      "number": 11,
+      "concept": "Seasons in One Frame",
+      "prompt": "A cinematic 16:9 wide environmental shot of a single tree with its canopy divided by natural light and shadow: one side still lush green with full leaves, the other already bare branches against twilight sky. The division is organic, created by the angle of fading light. The ground beneath shows the same split: grass on one side, fallen leaves on the other. The image captures impermanence in motion, the transition happening within a single moment, the impossibility of permanence.",
+      "mood": "transition, impermanence, natural, inevitable",
+      "color_palette": "twilight blue, green foliage, amber leaves",
+      "symbolism": "impermanence as constant transition",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "landscape only",
+        "setting": "outdoor natural",
+        "time_light": "twilight",
+        "symbolic_angle": "time/seasons"
+      }
+    },
+    {
+      "number": 12,
+      "concept": "The Mirror Split",
+      "prompt": "A cinematic 16:9 close-up of a handheld mirror with a single crack running through the center, held by a steady hand. The reflection shows a blurred figure behind, split by the crack into two slightly offset versions. Golden morning light streams from the side, highlighting the fracture line. The image symbolizes identity disruption, the moment when the continuity of self feels broken, the fear that if one piece fractures the whole self will shatter.",
+      "mood": "fractured, disruption, fear, fragile",
+      "color_palette": "silver mirror, golden light, soft shadow",
+      "symbolism": "identity continuity threatened by fracture",
+      "axes": {
+        "composition": "close-up",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "identity-disruption"
+      }
+    },
+    {
+      "number": 13,
+      "concept": "The Substrate Beneath",
+      "prompt": "A cinematic 16:9 object-only macro of ancient weathered wood grain, the surface layered with years of change: new moss growing over old lichen, fresh cracks beside healed scars, water stains layered in rings. Soft afternoon light rakes across the surface to emphasize every texture and depth. The palette is warm oak, muted green moss, soft gray, and amber. The image symbolizes the substrate that holds across all change: the foundation remains even as everything on the surface shifts and evolves.",
+      "mood": "grounded, layered, enduring, stable",
+      "color_palette": "warm oak, muted green, soft gray, amber",
+      "symbolism": "the stable substrate beneath impermanence",
+      "axes": {
+        "composition": "object-only macro",
+        "subject": "object alone",
+        "setting": "abstract/textural",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "substrate/witness"
+      }
+    },
+    {
+      "number": 14,
+      "concept": "Pathological Cascade",
+      "prompt": "A cinematic 16:9 overhead view of sand falling through the broken bottom of an hourglass onto a wooden surface, the sand spreading outward in an unstoppable flow, the glass unable to contain it. Golden hour light illuminates the scene from the side, creating long shadows from the glass and highlighting individual grains in the spill. The image conveys pathological forgetting: the cascade that destroys the container itself, loss that takes the substrate with it.",
+      "mood": "cascade, urgent, loss, unstoppable",
+      "color_palette": "warm amber sand, clear glass, shadow",
+      "symbolism": "cascade that destroys substrate itself",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "golden hour",
+        "symbolic_angle": "impermanence/erosion"
+      }
+    },
+    {
+      "number": 15,
+      "concept": "Who Am I Now?",
+      "prompt": "A cinematic 16:9 medium shot of a person standing in front of a window at twilight, their reflection visible in the glass layered over the darkening landscape beyond, creating a double exposure effect. They are touching the glass gently with one hand, face thoughtful and uncertain. The interior is dim, the exterior fading to blue twilight. The image captures the question at the heart of impermanence anxiety: if I am always becoming someone new, who am I right now?",
+      "mood": "uncertain, questioning, liminal, layered",
+      "color_palette": "twilight blue, dim interior amber, glass reflection",
+      "symbolism": "identity question during transition",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure face visible",
+        "setting": "spacious interior",
+        "time_light": "twilight",
+        "symbolic_angle": "identity-disruption"
+      }
+    },
+    {
+      "number": 16,
+      "concept": "The Choosing Hand",
+      "prompt": "A cinematic 16:9 close-up of two hands sorting through a small collection of objects on a linen cloth: some placed carefully into a wooden box, others set aside in a separate pile. Soft golden morning light illuminates the scene from above. The objects are simple and varied: a smooth stone, a dried flower, a small key, a worn button. The image symbolizes agency in forgetting, the active choice of what to preserve and what to release, selective rather than pathological.",
+      "mood": "intentional, sorting, agency, calm",
+      "color_palette": "golden morning light, natural linen, warm wood",
+      "symbolism": "agency: choosing what to preserve",
+      "axes": {
+        "composition": "close-up",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "agency/choice"
+      }
+    },
+    {
+      "number": 17,
+      "concept": "The Quiet Before Release",
+      "prompt": "A cinematic 16:9 wide shot of a person standing at the edge of a cliff or high overlook at soft overcast dawn, holding a bundle of dried flowers loosely in one hand at their side, body relaxed and facing the open air. The landscape beyond is vast and misty, pale blue and muted green. The posture is not tense but grounded, the moment of calm before letting go. The image conveys impermanence acceptance: the capacity to release without collapsing.",
+      "mood": "calm, grounded, acceptance, release",
+      "color_palette": "soft blue-gray, muted green, dried amber",
+      "symbolism": "acceptance of impermanence as grounded release",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "single figure obscured",
+        "setting": "outdoor liminal",
+        "time_light": "dawn/dusk liminal",
+        "symbolic_angle": "agency/choice"
+      }
+    },
+    {
+      "number": 18,
+      "concept": "Clinging to the Frame",
+      "prompt": "A cinematic 16:9 close-up of hands gripping a wooden window frame tightly, knuckles slightly white with tension, while beyond the window golden hour light and wind-blown leaves blur past. The hands are in sharp focus, the motion beyond soft and smudged. The wood grain is detailed and warm. The image symbolizes the attempt to hold onto stability while change happens around you, the exhausting effort of clinging to what's already shifting.",
+      "mood": "tension, resistance, exhaustion, holding",
+      "color_palette": "warm wood grain, golden blur, natural skin tone",
+      "symbolism": "clinging to certainty in impermanence",
+      "axes": {
+        "composition": "close-up",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "golden hour",
+        "symbolic_angle": "threshold/paralysis"
+      }
+    },
+    {
+      "number": 19,
+      "concept": "The Continuity Thread",
+      "prompt": "A cinematic 16:9 overhead view of a single continuous thread laid on a linen surface, looping and weaving through various small objects placed along its path: a stone, a leaf, a button, a key. The thread connects them all without breaking. Soft afternoon light creates gentle shadows. The palette is natural linen cream, varied earth tones of objects, and amber thread. The image symbolizes self-continuity: the stable thread of consciousness that holds across all identity changes.",
+      "mood": "continuity, connection, stable, gentle",
+      "color_palette": "linen cream, earth tones, amber thread",
+      "symbolism": "continuity of self across transitions",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "object alone",
+        "setting": "abstract/textural",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "substrate/witness"
+      }
+    },
+    {
+      "number": 20,
+      "concept": "The River That Holds",
+      "prompt": "A cinematic 16:9 wide environmental shot of a person seated on a smooth river stone at the edge of flowing water, their posture relaxed and grounded, watching the water move past. The water is in motion, slightly blurred, but the stone and the figure remain solid and still. Soft overcast light creates even, gentle illumination. The river is clear with visible pebbles beneath, surrounded by natural greenery. The image conveys the paradox of stability within change: you can be grounded while everything flows.",
+      "mood": "grounded, flowing, stable, accepting",
+      "color_palette": "clear water, smooth gray stone, muted green",
+      "symbolism": "stability within impermanence",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "single figure obscured",
+        "setting": "outdoor natural",
+        "time_light": "soft overcast",
+        "symbolic_angle": "substrate/witness"
+      }
+    }
+  ]
+}

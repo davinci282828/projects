@@ -1,0 +1,344 @@
+{
+  "description": "20 prompts illustrating telehealth burnout reduction through medium-as-mechanism, substrate control, and the screen as democratic boundary",
+  "hero_pick": {
+    "number": 12,
+    "concept": "The Screen as Transitional Space",
+    "reason": "Directly visualizes the study's core finding that the screen functions as a boundary regulating proximity without overwhelming, showing both therapist and patient in their own contexts"
+  },
+  "variance_map": {
+    "composition": {
+      "close-up": 4,
+      "medium": 5,
+      "wide environmental": 4,
+      "overhead/top-down": 3,
+      "over-the-shoulder": 3,
+      "object-only macro": 1
+    },
+    "setting": {
+      "intimate interior": 8,
+      "spacious interior": 4,
+      "outdoor natural": 3,
+      "outdoor liminal": 3,
+      "abstract/textural": 2
+    },
+    "time_light": {
+      "golden morning": 5,
+      "soft afternoon": 5,
+      "golden hour": 4,
+      "twilight": 3,
+      "soft overcast": 2,
+      "lamp-lit interior at dusk": 1
+    },
+    "symbolic_angle": {
+      "medium-as-mechanism": 5,
+      "substrate-control": 4,
+      "boundary-regulation": 3,
+      "decompression": 3,
+      "environmental-sensitivity": 2,
+      "presence-restoration": 2,
+      "infrastructure": 1
+    }
+  },
+  "prompts": [
+    {
+      "number": 1,
+      "concept": "The Institutional Soil",
+      "prompt": "A cinematic 16:9 overhead shot of a worn clinic hallway floor showing scuff marks, overlapping shoe prints in various directions, and fluorescent light reflecting off beige linoleum. The texture is institutional and cold, showing years of accumulated traffic and stress. A doorway is partially visible at the edge, emergency exit signs casting greenish tint. The palette is clinical beige, muted green, cold white light. The image conveys the contaminated substrate, the environment that remembers and biases what passes through it.",
+      "mood": "sterile, worn, institutional, contaminated",
+      "color_palette": "clinical beige, muted green, cold white",
+      "symbolism": "institutional soil that accumulates stress",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "object alone",
+        "setting": "abstract/textural",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "substrate-control"
+      }
+    },
+    {
+      "number": 2,
+      "concept": "The Desk Hierarchy",
+      "prompt": "A cinematic 16:9 wide shot of a traditional therapy office with a heavy wooden desk creating a barrier between two chairs, one behind the desk in shadow, one in front illuminated by cold overhead light. The room feels formal and rigid, the furniture arrangement enforcing spatial hierarchy. Pale institutional walls, dark wood, worn leather chairs. Soft afternoon light from a small window barely softens the scene. The image symbolizes how the medium instructs power dynamics before anyone speaks.",
+      "mood": "hierarchical, formal, rigid, asymmetric",
+      "color_palette": "dark wood, institutional gray, muted shadow",
+      "symbolism": "spatial hierarchy that biases interaction",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "object alone",
+        "setting": "spacious interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "medium-as-mechanism"
+      }
+    },
+    {
+      "number": 3,
+      "concept": "The Screen as Vessel",
+      "prompt": "A cinematic 16:9 close-up of a laptop screen in soft focus showing a video call interface, the screen glowing with warm light in a dimly lit room. The laptop sits on a simple wooden desk with a plant and notebook nearby. Golden hour light filters from a window behind the screen, creating a halo effect. The palette is warm amber, soft shadow, natural wood. The image conveys the screen as a containment vessel that regulates proximity and preserves boundaries.",
+      "mood": "contained, regulated, intimate, bounded",
+      "color_palette": "warm amber, soft shadow, natural wood",
+      "symbolism": "screen as boundary that regulates proximity",
+      "axes": {
+        "composition": "close-up",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "golden hour",
+        "symbolic_angle": "boundary-regulation"
+      }
+    },
+    {
+      "number": 4,
+      "concept": "The Designed Space",
+      "prompt": "A cinematic 16:9 medium shot of a therapist's home office, a calm corner with a comfortable chair, soft textures of woven throw blanket, a bookshelf with carefully chosen books, and a small succulent on the desk. Warm golden morning light streams from a nearby window. The space feels personal and controlled, designed intentionally rather than inherited. Palette of warm cream, soft earth tones, natural wood. The image symbolizes substrate control, the therapist designing the room instead of the room designing them.",
+      "mood": "controlled, intentional, calm, personal",
+      "color_palette": "warm cream, soft earth, natural wood",
+      "symbolism": "designed substrate vs inherited environment",
+      "axes": {
+        "composition": "medium",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "substrate-control"
+      }
+    },
+    {
+      "number": 5,
+      "concept": "The Commute That Erodes",
+      "prompt": "A cinematic 16:9 wide environmental shot of a person walking alone on a crowded urban sidewalk at twilight, surrounded by blurred figures moving in all directions, the person's face showing subtle exhaustion. Harsh streetlights and neon signs create cold, overstimulating light. The palette is cool gray, harsh white, muted urban tones. The scene conveys the sensory overload and depletion of the commute, the therapist exposed to uncontrollable environmental stress before and after each session.",
+      "mood": "exhausted, overstimulated, depleted, chaotic",
+      "color_palette": "cool gray, harsh white, urban blue",
+      "symbolism": "commute as uncontrollable sensory stress",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "single figure obscured",
+        "setting": "outdoor liminal",
+        "time_light": "twilight",
+        "symbolic_angle": "environmental-sensitivity"
+      }
+    },
+    {
+      "number": 6,
+      "concept": "The Closed Laptop at Day's End",
+      "prompt": "A cinematic 16:9 medium shot of a person gently closing a laptop on a wooden desk, their hand resting on the lid in a gesture of completion. Soft golden hour light fills a calm home office, a cup of tea nearby, windows showing trees outside. The person's posture is relaxed, shoulders down, the workday cleanly ended. Palette of warm amber, natural wood, soft green through window. The image symbolizes the clean boundary and decompression enabled by remote work.",
+      "mood": "complete, bounded, relieved, decompressed",
+      "color_palette": "warm amber, natural wood, soft green",
+      "symbolism": "clean disengagement without commute erosion",
+      "axes": {
+        "composition": "medium",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "golden hour",
+        "symbolic_angle": "decompression"
+      }
+    },
+    {
+      "number": 7,
+      "concept": "The Emergency Interruption",
+      "prompt": "A cinematic 16:9 over-the-shoulder shot from behind a therapist seated in a clinic, facing a patient who is mid-sentence, but the therapist's head is turned slightly toward the door where a blurred figure stands in the hallway gesturing urgently. Fluorescent overhead light creates harsh shadows. The scene feels fragmented, the therapist's attention pulled away despite being physically present. Palette of institutional beige, cold white, shadow. The image conveys the uncontrollable disruptions of clinic environment.",
+      "mood": "fragmented, interrupted, divided, stressed",
+      "color_palette": "institutional beige, cold white, harsh shadow",
+      "symbolism": "uncontrollable environmental disruption",
+      "axes": {
+        "composition": "over-the-shoulder",
+        "subject": "paired figure-object",
+        "setting": "spacious interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "substrate-control"
+      }
+    },
+    {
+      "number": 8,
+      "concept": "The Democratic Frame",
+      "prompt": "A cinematic 16:9 overhead view of a laptop screen showing a video call grid with two equal-sized windows, each person visible in their own personal environment, one with books behind them, one with plants. Both spaces feel intimate and chosen. Soft afternoon light illuminates the laptop keyboard below. Palette of warm neutrals, soft greens, natural light. The image symbolizes the democratic medium where power asymmetry softens because both share their contexts.",
+      "mood": "equal, collaborative, intimate, democratic",
+      "color_palette": "warm neutral, soft green, natural light",
+      "symbolism": "democratic medium vs hierarchical clinic",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "medium-as-mechanism"
+      }
+    },
+    {
+      "number": 9,
+      "concept": "The Sensory Sanctuary",
+      "prompt": "A cinematic 16:9 close-up of a therapist's hands adjusting soft noise-canceling headphones on a wooden desk, a small lamp casting warm light, a window showing soft overcast sky beyond. The textures are tactile: woven headphone fabric, smooth wood grain, matte ceramic of a nearby mug. The palette is muted earth tones, soft gray light, warm amber from lamp. The image conveys environmental sensitivity protected, the therapist controlling sensory input rather than enduring institutional overstimulation.",
+      "mood": "protected, controlled, calm, regulated",
+      "color_palette": "muted earth, soft gray, warm amber",
+      "symbolism": "sensory control for highly sensitive therapists",
+      "axes": {
+        "composition": "close-up",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "soft overcast",
+        "symbolic_angle": "environmental-sensitivity"
+      }
+    },
+    {
+      "number": 10,
+      "concept": "The Infrastructure That Holds",
+      "prompt": "A cinematic 16:9 wide shot of fiber optic cables glowing with transmitted light, macro perspective showing the delicate strands carrying data, soft blue and amber light pulsing through transparent filaments against a dark background. The image is abstract and textural, emphasizing the invisible infrastructure that enables connection. Palette of cool blue, warm amber glow, deep black. The symbolism is infrastructure as constitutive, not secondary, the medium participating in what passes through it.",
+      "mood": "invisible, essential, flowing, constitutive",
+      "color_palette": "cool blue, amber glow, deep black",
+      "symbolism": "infrastructure as participant not container",
+      "axes": {
+        "composition": "object-only macro",
+        "subject": "object alone",
+        "setting": "abstract/textural",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "infrastructure"
+      }
+    },
+    {
+      "number": 11,
+      "concept": "The Depersonalized Gaze",
+      "prompt": "A cinematic 16:9 medium shot of a therapist seated at a clinic desk, face visible but expression distant and detached, eyes looking past the camera rather than at it, fluorescent light overhead casting flat, lifeless illumination. The background shows institutional walls, generic art, clinical furniture. The palette is muted institutional colors, cold light, washed-out skin tone. The image conveys depersonalization as protective detachment, the nervous system shutting down to survive the contaminated medium.",
+      "mood": "detached, distant, protective, depleted",
+      "color_palette": "institutional gray, cold white, washed-out",
+      "symbolism": "depersonalization as medium-induced defense",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure face visible",
+        "setting": "spacious interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "medium-as-mechanism"
+      }
+    },
+    {
+      "number": 12,
+      "concept": "The Screen as Transitional Space",
+      "prompt": "A cinematic 16:9 split-perspective image showing a therapist on the left half visible through a laptop screen in their home office with warm natural light and personal touches, and on the right half a patient visible in their own cozy space with plants and soft textures, both looking toward the camera with engaged expressions. The screen edge divides them but doesn't isolate, creating a shared transitional space. Palette of warm amber, soft green, natural wood, cream. The image symbolizes the screen as boundary that regulates proximity without collapse.",
+      "mood": "connected, regulated, democratic, present",
+      "color_palette": "warm amber, soft green, natural wood, cream",
+      "symbolism": "screen as transitional space that softens hierarchy",
+      "axes": {
+        "composition": "medium",
+        "subject": "paired figure-object",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "boundary-regulation"
+      }
+    },
+    {
+      "number": 13,
+      "concept": "The Brain Thinning Under Stress",
+      "prompt": "A cinematic 16:9 close-up of an old tree stump showing visible erosion and weathering, the rings faded and compressed where stress has worn away layers, soft moss growing in the cracks. Soft overcast natural light illuminates the textures. Palette of weathered brown, muted green moss, pale gray. The image is a visual metaphor for prefrontal cortex thinning under uncontrollable workplace stress, the cognitive depletion made tangible.",
+      "mood": "eroded, depleted, worn, damaged",
+      "color_palette": "weathered brown, muted green, pale gray",
+      "symbolism": "prefrontal cortex erosion from chronic stress",
+      "axes": {
+        "composition": "close-up",
+        "subject": "object alone",
+        "setting": "outdoor natural",
+        "time_light": "soft overcast",
+        "symbolic_angle": "substrate-control"
+      }
+    },
+    {
+      "number": 14,
+      "concept": "The Return to Presence",
+      "prompt": "A cinematic 16:9 medium shot of a therapist seated in a comfortable home office chair, leaning forward slightly with engaged posture, hands resting open on knees, face calm and attentive, eyes focused warmly toward the camera. Soft golden morning light illuminates their face from a nearby window. The background shows personal books, a plant, warm textures. Palette of warm amber, soft cream, natural wood. The image conveys presence restored, the therapist able to engage fully without depersonalization.",
+      "mood": "present, engaged, warm, available",
+      "color_palette": "warm amber, soft cream, natural wood",
+      "symbolism": "presence and engagement sustained by controlled medium",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure face visible",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "presence-restoration"
+      }
+    },
+    {
+      "number": 15,
+      "concept": "The Path Dependence",
+      "prompt": "A cinematic 16:9 wide environmental shot of two parallel paths through a forest, one well-worn dirt path showing heavy traffic and erosion, the other barely visible grass path that looks gentler and less traveled. Soft golden hour light filters through trees creating dappled shadows. Palette of forest green, warm earth, golden light. The image symbolizes path dependence, how the substrate biases future interactions, the worn path representing institutional practice patterns.",
+      "mood": "divergent, comparative, revealing, consequential",
+      "color_palette": "forest green, warm earth, golden light",
+      "symbolism": "substrate path dependence shaping outcomes",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "landscape only",
+        "setting": "outdoor natural",
+        "time_light": "golden hour",
+        "symbolic_angle": "substrate-control"
+      }
+    },
+    {
+      "number": 16,
+      "concept": "The Window to Outside While Working",
+      "prompt": "A cinematic 16:9 over-the-shoulder shot from behind a therapist seated at a home desk with laptop open, but their gaze is turned toward a large window showing trees gently moving in breeze, natural golden afternoon light streaming in. The posture is relaxed, shoulders down, the ability to pause and regulate between sessions visible. Palette of warm amber, soft green through window, natural wood desk. The image conveys the decompression and environmental control unavailable in clinic settings.",
+      "mood": "regulated, calm, spacious, controlled",
+      "color_palette": "warm amber, soft green, natural wood",
+      "symbolism": "environmental regulation and micro-decompression",
+      "axes": {
+        "composition": "over-the-shoulder",
+        "subject": "single figure obscured",
+        "setting": "intimate interior",
+        "time_light": "golden hour",
+        "symbolic_angle": "decompression"
+      }
+    },
+    {
+      "number": 17,
+      "concept": "The Colleague Interruption Chaos",
+      "prompt": "A cinematic 16:9 overhead view of a cluttered clinic break room table with multiple coffee cups, scattered papers, a ringing phone, and overlapping hands reaching for different objects, creating visual chaos. Harsh fluorescent overhead light casts flat illumination. Palette of institutional white, beige, scattered color from objects. The scene conveys the uncontrollable workplace stressors and administrative demands that erode clinical presence in traditional settings.",
+      "mood": "chaotic, fragmented, overwhelming, uncontrolled",
+      "color_palette": "institutional white, beige, scattered color",
+      "symbolism": "uncontrollable workplace chaos eroding capacity",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "object alone",
+        "setting": "spacious interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "substrate-control"
+      }
+    },
+    {
+      "number": 18,
+      "concept": "The Mycelium Network",
+      "prompt": "A cinematic 16:9 macro close-up of a mycelium network, delicate white filaments branching and connecting across dark soil, backlit by soft golden morning light creating a glow around the threads. The texture is organic, intricate, showing the network as the organism itself. Palette of pale white, warm amber glow, rich dark earth. The image symbolizes infrastructure as constitutive, the delivery system that is the organism, the medium that participates rather than merely contains.",
+      "mood": "organic, interconnected, essential, constitutive",
+      "color_palette": "pale white, warm amber, dark earth",
+      "symbolism": "infrastructure as organism not container",
+      "axes": {
+        "composition": "close-up",
+        "subject": "object alone",
+        "setting": "outdoor natural",
+        "time_light": "golden morning",
+        "symbolic_angle": "medium-as-mechanism"
+      }
+    },
+    {
+      "number": 19,
+      "concept": "The Continuity Thread",
+      "prompt": "A cinematic 16:9 medium shot of a calendar on a wall showing multiple months with consistent weekly appointment slots marked in soft pencil, no gaps or cancellations, the pattern showing stability. Soft afternoon light from a nearby window illuminates the calendar. The background shows a calm home office. Palette of cream paper, soft graphite marks, warm wood frame, natural light. The image symbolizes treatment continuity enabled by reduced therapist burnout and attrition.",
+      "mood": "stable, continuous, reliable, sustained",
+      "color_palette": "cream, soft graphite, warm wood, natural light",
+      "symbolism": "continuity sustained by medium that protects therapist",
+      "axes": {
+        "composition": "medium",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "presence-restoration"
+      }
+    },
+    {
+      "number": 20,
+      "concept": "The Room That Doesn't Instruct",
+      "prompt": "A cinematic 16:9 wide shot of a simple, uncluttered home therapy space with two equal chairs angled toward each other at comfortable distance, no desk between them, large window with soft natural light, minimal neutral decor. The space feels collaborative rather than hierarchical, intimate rather than institutional. Palette of warm cream walls, natural wood floor, soft gray upholstery, golden afternoon light. The image conveys a medium that supports rather than instructs, a substrate the therapist controls.",
+      "mood": "collaborative, equal, calm, supportive",
+      "color_palette": "warm cream, natural wood, soft gray, golden light",
+      "symbolism": "medium that supports rather than instructs hierarchy",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "golden hour",
+        "symbolic_angle": "boundary-regulation"
+      }
+    }
+  ]
+}

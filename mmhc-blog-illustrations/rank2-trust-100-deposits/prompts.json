@@ -1,0 +1,343 @@
+{
+  "description": "20 prompts illustrating asymmetric trust accumulation and collapse, the channel metaphor, and trust as verified hypothesis requiring slow reconstruction",
+  "hero_pick": {
+    "number": 3,
+    "concept": "The Channel Degraded",
+    "reason": "Directly visualizes the article's core metaphor of the communication channel itself being structurally compromised by betrayal, not just the content"
+  },
+  "variance_map": {
+    "composition": {
+      "close-up": 4,
+      "medium": 4,
+      "wide environmental": 4,
+      "overhead/top-down": 4,
+      "over-the-shoulder": 3,
+      "object-only macro": 1
+    },
+    "setting": {
+      "intimate interior": 7,
+      "spacious interior": 5,
+      "outdoor natural": 4,
+      "outdoor liminal": 3,
+      "abstract/textural": 1
+    },
+    "time_light": {
+      "golden morning": 5,
+      "soft afternoon": 5,
+      "golden hour": 5,
+      "twilight": 3,
+      "soft overcast": 2
+    },
+    "symbolic_angle": {
+      "channel-corruption": 4,
+      "asymmetric-accumulation": 4,
+      "signal-verification": 3,
+      "neural-rewiring": 3,
+      "micro-deposits": 3,
+      "amygdala-cascade": 2,
+      "patience-as-mechanism": 1
+    }
+  },
+  "prompts": [
+    {
+      "number": 1,
+      "concept": "One Hundred Deposits",
+      "prompt": "A cinematic 16:9 close-up of a glass jar filled with smooth river stones in varying shades of gray and white, each one representing a kept promise, sitting on a simple wooden surface. Soft golden morning light illuminates the jar from the side, creating warm glows through the glass and highlighting the texture of each individual stone. The jar is nearly full, the accumulation of years visible in the weight and density of the stones. The palette is warm amber light, cool gray stone, natural wood grain. The image conveys trust as slow accumulation, each deposit barely noticed but cumulatively solid.",
+      "mood": "accumulation, patient, steady, substantial",
+      "color_palette": "warm amber, cool gray stone, natural wood",
+      "symbolism": "trust as savings account, slow deposits",
+      "axes": {
+        "composition": "close-up",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "asymmetric-accumulation"
+      }
+    },
+    {
+      "number": 2,
+      "concept": "The Single Withdrawal",
+      "prompt": "A cinematic 16:9 overhead view of the same glass jar now tipped over on its side, stones cascading out across the wooden surface in all directions, the jar empty, the careful accumulation scattered in seconds. Soft afternoon light casts shadows from each displaced stone. The palette is warm wood, cool gray stones, soft natural light. The asymmetry is visceral: years to fill, seconds to empty. The image captures the catastrophic nature of trust collapse, the bank run that cannot be stopped once it begins.",
+      "mood": "collapse, sudden, irreversible, loss",
+      "color_palette": "warm wood, gray stone, afternoon shadow",
+      "symbolism": "one betrayal erases a hundred deposits",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "asymmetric-accumulation"
+      }
+    },
+    {
+      "number": 3,
+      "concept": "The Channel Degraded",
+      "prompt": "A cinematic 16:9 close-up of a length of clear glass tubing resting on a textured linen surface, with a visible crack running through the middle section, distorting the light passing through it. Golden hour light streams from the left, refracting through the intact sections while fragmenting chaotically at the crack. The image symbolizes the article's core insight: betrayal does not just introduce false information, it structurally compromises the channel itself. Even truth cannot travel cleanly through a corrupted substrate. The palette is golden amber, clear glass, soft linen white.",
+      "mood": "compromised, fragmented, structural damage, clarity lost",
+      "color_palette": "golden amber, clear glass, linen white",
+      "symbolism": "the channel itself degraded by deception",
+      "axes": {
+        "composition": "object-only macro",
+        "subject": "object alone",
+        "setting": "abstract/textural",
+        "time_light": "golden hour",
+        "symbolic_angle": "channel-corruption"
+      }
+    },
+    {
+      "number": 4,
+      "concept": "The Verified Hypothesis",
+      "prompt": "A cinematic 16:9 medium shot of a person seated at a simple wooden table, writing methodically in a notebook, their posture calm and focused. Soft morning light illuminates the page from a nearby window. On the table beside the notebook are small objects: a kept note, a returned book, a photo from a promise fulfilled. Each object is a data point in the ongoing hypothesis test. The person's face is visible in profile, expression thoughtful and evaluative. The image conveys trust as provisional hypothesis requiring repeated verification, never fully settled.",
+      "mood": "evaluative, methodical, provisional, testing",
+      "color_palette": "warm morning light, natural wood, soft fabric",
+      "symbolism": "trust as hypothesis always being tested",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure face visible",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "signal-verification"
+      }
+    },
+    {
+      "number": 5,
+      "concept": "The Amygdala Fires",
+      "prompt": "A cinematic 16:9 close-up of a person's hand gripping the edge of a table, knuckles slightly white with tension, the rest of their body softly blurred in the background. Soft afternoon light from a window creates gentle shadows. The grip is involuntary, the body responding to threat before the mind has fully processed it. The texture is warm wood grain under tense fingers, natural fabric of clothing, skin showing subtle strain. The image captures the immediate amygdala response to betrayal: this person is dangerous. The lesson encoded in the body before words arrive.",
+      "mood": "threat-response, involuntary, visceral, protective",
+      "color_palette": "warm wood, natural skin tone, soft shadow",
+      "symbolism": "amygdala encoding danger instantly",
+      "axes": {
+        "composition": "close-up",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "amygdala-cascade"
+      }
+    },
+    {
+      "number": 6,
+      "concept": "The Liar's Dividend",
+      "prompt": "A cinematic 16:9 over-the-shoulder shot of two people seated across from each other at a table, the near person's shoulder and partial face visible, the far person speaking earnestly but slightly blurred. Golden hour light warms the scene from a window. Between them on the table are honest words being spoken, but the near person's posture is closed, arms loosely crossed, body angled slightly away. The channel is degraded. Even truth cannot land with full weight anymore. The image conveys epistemic vigilance: the listener can no longer trust their own ability to detect deception from this source.",
+      "mood": "guarded, vigilant, doubt, distance",
+      "color_palette": "golden amber, muted earth, warm wood",
+      "symbolism": "truth suspect because the channel is corrupted",
+      "axes": {
+        "composition": "over-the-shoulder",
+        "subject": "paired figure-object",
+        "setting": "intimate interior",
+        "time_light": "golden hour",
+        "symbolic_angle": "channel-corruption"
+      }
+    },
+    {
+      "number": 7,
+      "concept": "Replay Without Context",
+      "prompt": "A cinematic 16:9 medium shot of a person seated in a quiet room, hands covering their face, elbows resting on their knees, soft twilight light filtering through a window casting cool blue tones. The posture is one of intrusive memory, the hippocampus failing to file the betrayal in the past tense. The memory plays as if it is happening now, vivid and untethered from time. The room is simple, minimal furniture, the person alone with the loop. The image conveys how cortisol exposure disrupts temporal context, leaving trauma stuck in present tense.",
+      "mood": "intrusive, stuck, timeless, overwhelmed",
+      "color_palette": "twilight blue, soft shadow, muted gray",
+      "symbolism": "memory replaying without temporal context",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure obscured",
+        "setting": "spacious interior",
+        "time_light": "twilight",
+        "symbolic_angle": "neural-rewiring"
+      }
+    },
+    {
+      "number": 8,
+      "concept": "The Five-to-One Ratio",
+      "prompt": "A cinematic 16:9 overhead view of a simple wooden tray on a linen surface, holding five small smooth white stones on one side and one darker jagged stone on the other, the visual representation of Gottman's ratio. Soft afternoon light casts gentle shadows emphasizing the imbalance. The five white stones represent connection, humor, affection. The one dark stone represents criticism, contempt, defensiveness. The ratio required just to break even. The palette is natural linen, warm wood, soft white and dark gray stone. The asymmetry is stark and quantifiable.",
+      "mood": "imbalance, quantified, effortful, maintenance",
+      "color_palette": "natural linen, warm wood, white and dark stone",
+      "symbolism": "five positive deposits for every negative withdrawal",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "micro-deposits"
+      }
+    },
+    {
+      "number": 9,
+      "concept": "The Coffee Made Without Asking",
+      "prompt": "A cinematic 16:9 close-up of two coffee mugs sitting side by side on a simple wooden table, steam rising gently from both, soft golden morning light illuminating them from the side. One mug is slightly closer to the camera, the other placed just beyond it, the small gesture of making coffee for someone without being asked. The texture is ceramic glaze, warm wood grain, rising steam catching light. The image symbolizes trust rebuilt in micro-moments, the small deposits that accumulate into substrate repair.",
+      "mood": "tender, micro-gesture, caring, accumulation",
+      "color_palette": "golden morning light, ceramic white, warm wood",
+      "symbolism": "micro-deposits rebuilding the channel",
+      "axes": {
+        "composition": "close-up",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "micro-deposits"
+      }
+    },
+    {
+      "number": 10,
+      "concept": "The Text About the Doctor's Appointment",
+      "prompt": "A cinematic 16:9 overhead view of a hand holding a phone, screen visible showing a simple text message: 'How did the appointment go?' The phone rests on a soft fabric surface, late afternoon light warming the scene. The message is a bid for connection, a small test of the channel: does this person still remember what matters to me? Will they respond? The image conveys trust as accumulated bids and responses, not grand gestures but consistent presence in the small details.",
+      "mood": "connection, attention, small bid, presence",
+      "color_palette": "soft afternoon light, muted fabric, screen glow",
+      "symbolism": "bids for connection as channel tests",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "micro-deposits"
+      }
+    },
+    {
+      "number": 11,
+      "concept": "The Substrate Being Tested",
+      "prompt": "A cinematic 16:9 wide shot of a narrow wooden footbridge spanning a calm stream, shot from the near bank looking across. A single figure stands at the threshold of the bridge, one foot on the first plank, weight not yet committed. Soft golden hour light warms the scene from the side, the water below reflecting sky. The bridge is weathered but appears intact. The figure's posture is cautious, testing. The image captures the question the brain asks after betrayal: can this substrate hold weight, or is the structure already compromised?",
+      "mood": "testing, cautious, threshold, uncertainty",
+      "color_palette": "golden hour amber, weathered wood, calm water",
+      "symbolism": "testing the channel before trusting it with weight",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "paired figure-object",
+        "setting": "outdoor liminal",
+        "time_light": "golden hour",
+        "symbolic_angle": "signal-verification"
+      }
+    },
+    {
+      "number": 12,
+      "concept": "Voluntary Vulnerability",
+      "prompt": "A cinematic 16:9 medium shot of a person seated across from someone in a softly lit room, leaning slightly forward, hands open and resting on their knees, posture vulnerable despite visible tension in their shoulders. The other figure is softly blurred in the background. Soft afternoon light from a window creates a sense of openness. The person's face is visible, expression earnest and slightly afraid, choosing honesty when their nervous system is screaming to stay defended. The image conveys patience as active mechanism, not passive waiting.",
+      "mood": "vulnerable, effortful, choosing, brave",
+      "color_palette": "soft afternoon light, warm earth tones, natural fabric",
+      "symbolism": "choosing vulnerability as trust-building work",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure face visible",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "patience-as-mechanism"
+      }
+    },
+    {
+      "number": 13,
+      "concept": "The Channel Cleared One Signal at a Time",
+      "prompt": "A cinematic 16:9 close-up of hands carefully threading thin wire through a series of small glass beads on a textured linen surface, each bead catching soft golden morning light. The threading is slow, methodical, one bead at a time. The image symbolizes trust repair as the painstaking reconstruction of the channel itself, signal by signal, until the substrate can carry truth cleanly again. The palette is warm morning light, clear glass, linen white, delicate wire.",
+      "mood": "methodical, patient, reconstructing, accumulating",
+      "color_palette": "golden morning, clear glass, linen white",
+      "symbolism": "rebuilding the channel one verified signal at a time",
+      "axes": {
+        "composition": "close-up",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "signal-verification"
+      }
+    },
+    {
+      "number": 14,
+      "concept": "The Therapist Remembers",
+      "prompt": "A cinematic 16:9 over-the-shoulder shot from behind a therapist, softly blurred, looking toward a client seated in a comfortable chair across from them. The client's face is visible, showing a flicker of recognition and relief as the therapist references something from three sessions ago without needing to be reminded. Soft afternoon light from a window creates warmth and safety. The room is simple, earth tones, woven textures. The image captures the therapeutic alliance as micro-deposits of attention: remembering what matters is itself a signal that the channel is becoming trustworthy.",
+      "mood": "recognized, seen, safe, trusted",
+      "color_palette": "soft afternoon, warm earth, natural light",
+      "symbolism": "therapist remembering as substrate verification",
+      "axes": {
+        "composition": "over-the-shoulder",
+        "subject": "paired figure-object",
+        "setting": "spacious interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "micro-deposits"
+      }
+    },
+    {
+      "number": 15,
+      "concept": "The Eye Roll That Costs Five",
+      "prompt": "A cinematic 16:9 medium shot of two people seated at a dinner table, the near person visible in profile mid-eye-roll, the far person across the table catching it, expression shifting from open to guarded. Twilight light from a window casts soft blue and amber tones. The table has simple dishes, the setting domestic and familiar. The single dismissive gesture is a withdrawal, and the image captures the moment both people register the cost: five deposits now required just to return to baseline. The asymmetry made relational.",
+      "mood": "dismissive, costly, regret, awareness",
+      "color_palette": "twilight blue, warm amber, muted shadow",
+      "symbolism": "micro-betrayals requiring disproportionate repair",
+      "axes": {
+        "composition": "medium",
+        "subject": "paired figure-object",
+        "setting": "intimate interior",
+        "time_light": "twilight",
+        "symbolic_angle": "asymmetric-accumulation"
+      }
+    },
+    {
+      "number": 16,
+      "concept": "Doubling Back Through the Betrayal",
+      "prompt": "A cinematic 16:9 close-up of a person's hands holding a worn notebook, flipping backward through pages filled with handwriting, revisiting earlier entries with new suspicion. Soft afternoon light illuminates the pages from the side, highlighting the texture of paper and ink. The person's face is not visible, but their posture suggests the cognitive fog of scanning for clues they missed. The image conveys the way betrayal damages not just the present but the past: every prior signal is now suspect, the entire channel history under review.",
+      "mood": "suspicious, scanning, retrospective doubt, fog",
+      "color_palette": "soft afternoon, cream paper, ink gray",
+      "symbolism": "betrayal casting doubt backward through time",
+      "axes": {
+        "composition": "close-up",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "channel-corruption"
+      }
+    },
+    {
+      "number": 17,
+      "concept": "The Negative Bias in the Wild",
+      "prompt": "A cinematic 16:9 wide environmental shot of a hiking trail through a meadow, the path clear and sunlit, but in the foreground a single dark jagged branch lies across the trail. Soft overcast light creates even, gentle illumination. The entire beautiful meadow fades to background; the brain locks onto the obstacle, the threat, the thing that could trip you. The image visualizes negativity bias: bad is stronger than good, and the brain always scans for danger before reward. The palette is muted meadow green, dark wood, soft gray sky.",
+      "mood": "vigilant, threat-focused, bias visible, natural",
+      "color_palette": "meadow green, dark wood, soft overcast gray",
+      "symbolism": "brain prioritizing threat over beauty",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "landscape only",
+        "setting": "outdoor natural",
+        "time_light": "soft overcast",
+        "symbolic_angle": "amygdala-cascade"
+      }
+    },
+    {
+      "number": 18,
+      "concept": "The Slowness Is How It Works",
+      "prompt": "A cinematic 16:9 close-up of a seedling emerging from soil in a simple terracotta pot, the first two leaves just unfurling, sitting on a windowsill with soft golden morning light streaming from the side. The growth is slow, the timeline measured in weeks, the process irreducible. You cannot force it faster without killing it. The image conveys the article's reframe: the slowness of trust repair is not a bug, it is the mechanism itself. The brain needs time to verify that the substrate is reliable again. The palette is warm morning light, rich soil brown, tender green, terracotta orange.",
+      "mood": "patient, organic, irreducible, growing",
+      "color_palette": "golden morning, soil brown, tender green",
+      "symbolism": "timeline as mechanism, not obstacle",
+      "axes": {
+        "composition": "close-up",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "patience-as-mechanism"
+      }
+    },
+    {
+      "number": 19,
+      "concept": "Post-Traumatic Growth",
+      "prompt": "A cinematic 16:9 medium shot of two people seated on a simple bench outdoors at golden hour, bodies angled toward each other in relaxed conversation, the light warm and soft around them. Their postures are open but grounded, not the easy comfort of untested connection but the deeper trust of connection that survived a rupture and came back stronger. In the background, a path through soft grass, a landscape that has been walked through together. The image conveys resilient trust, more nuanced and durable than naive trust ever was.",
+      "mood": "resilient, deepened, earned, grounded",
+      "color_palette": "golden hour amber, soft grass green, natural wood",
+      "symbolism": "trust rebuilt stronger than untested trust",
+      "axes": {
+        "composition": "medium",
+        "subject": "paired figure-object",
+        "setting": "outdoor natural",
+        "time_light": "golden hour",
+        "symbolic_angle": "neural-rewiring"
+      }
+    },
+    {
+      "number": 20,
+      "concept": "Every Session You Show Up",
+      "prompt": "A cinematic 16:9 wide shot of a simple therapy office, two chairs facing each other, a small table between them holding a box of tissues and a glass of water. The chairs are empty but the room is softly lit by golden afternoon light from a window, warm earth tones on the walls, woven textures on the chairs. The space holds the quiet evidence of repeated showing up: the same chairs, the same time, the ritual of presence. The image conveys persistence as accumulation, every session a deposit in the reconstruction of the channel between self and safety, self and other.",
+      "mood": "consistent, ritual, presence, accumulating",
+      "color_palette": "golden afternoon, warm earth, natural fabric",
+      "symbolism": "showing up as the cumulative mechanism of repair",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "object alone",
+        "setting": "spacious interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "neural-rewiring"
+      }
+    }
+  ]
+}

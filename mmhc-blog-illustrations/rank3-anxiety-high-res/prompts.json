@@ -1,0 +1,344 @@
+{
+  "description": "20 prompts illustrating anxiety as high-resolution perception, not malfunction: the stuck zoom function, signal fidelity, fractal structure, and scale-shifting capacity",
+  "hero_pick": {
+    "number": 11,
+    "concept": "The Stuck Zoom Lens",
+    "reason": "Directly embodies the blog's central metaphor: resolution locked at one scale, the zoom function that stopped working, the mechanical precision of perception when flexibility is lost"
+  },
+  "variance_map": {
+    "composition": {
+      "close-up": 4,
+      "medium": 4,
+      "wide environmental": 4,
+      "overhead/top-down": 3,
+      "over-the-shoulder": 3,
+      "object-only macro": 2
+    },
+    "setting": {
+      "intimate interior": 6,
+      "spacious interior": 4,
+      "outdoor natural": 5,
+      "outdoor liminal": 3,
+      "abstract/textural": 2
+    },
+    "time_light": {
+      "golden morning": 4,
+      "soft afternoon": 5,
+      "golden hour": 4,
+      "twilight": 4,
+      "soft overcast": 2,
+      "lamp-lit interior": 1
+    },
+    "symbolic_angle": {
+      "resolution-scale": 5,
+      "signal-noise": 3,
+      "fractal-structure": 3,
+      "zoom-function": 4,
+      "threat-detection": 2,
+      "body-instrument": 2,
+      "pattern-tracking": 1
+    }
+  },
+  "prompts": [
+    {
+      "number": 1,
+      "concept": "The Leaf Mistaken for the Forest",
+      "prompt": "A cinematic 16:9 close-up of a single oak leaf filling the entire frame, every vein visible in sharp detail, brown decay spots along the edges, asymmetrical lobes, surface texture of damaged chlorophyll. Soft golden morning light rakes across the leaf from the side, emphasizing every imperfection. The background is completely blurred into soft green and amber bokeh, no context visible. The image conveys the claustrophobia of being zoomed in so far that the whole world becomes one leaf's damage, the loss of forest-scale perspective that makes disorder feel total.",
+      "mood": "claustrophobic, hyper-detailed, isolated, fragmented",
+      "color_palette": "amber, brown decay, muted green",
+      "symbolism": "perception locked at wrong scale, detail without context",
+      "axes": {
+        "composition": "object-only macro",
+        "subject": "object alone",
+        "setting": "outdoor natural",
+        "time_light": "golden morning",
+        "symbolic_angle": "resolution-scale"
+      }
+    },
+    {
+      "number": 2,
+      "concept": "The Signal in the Noise",
+      "prompt": "A cinematic 16:9 overhead view of a wooden table surface covered with scattered index cards, each with handwritten notes in different inks, overlapping in chaotic layers. One card in the center-left has a single circled word visible. Soft afternoon light streams from a window above, casting subtle shadows between the cards. The textures are paper grain, ink variation, wood beneath. The scene conveys the experience of tracking too much data at once, every signal feeling equally urgent, pattern lost in the volume of information.",
+      "mood": "overwhelmed, searching, fragmented, urgent",
+      "color_palette": "cream paper, varied ink, warm wood",
+      "symbolism": "high-resolution data stream without hierarchy",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "signal-noise"
+      }
+    },
+    {
+      "number": 3,
+      "concept": "The Coastline at Every Scale",
+      "prompt": "A cinematic 16:9 wide environmental shot of a rocky coastline where jagged stone meets water, photographed from slightly elevated perspective showing the fractal edge where chaos repeats at every level of detail. The light is soft overcast, creating even illumination that reveals texture in both stone and water without harsh shadows. Waves create white foam patterns that mirror the rock's irregularity. The palette is muted gray stone, seafoam white, soft blue-gray water. The image embodies fractal structure: disorder that has pattern, chaos that repeats with self-similar form.",
+      "mood": "complex, recursive, ordered-chaos, structural",
+      "color_palette": "gray stone, seafoam white, muted blue",
+      "symbolism": "fractal structure, pattern at every resolution",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "landscape only",
+        "setting": "outdoor natural",
+        "time_light": "soft overcast",
+        "symbolic_angle": "fractal-structure"
+      }
+    },
+    {
+      "number": 4,
+      "concept": "The Instrument Tuned Too Sensitive",
+      "prompt": "A cinematic 16:9 close-up of a vintage analog seismograph needle making contact with slowly rotating paper, the needle trembling with micro-movements, drawing a jagged line that records every vibration. Golden hour light illuminates the brass mechanism and cream paper from the side, creating warm glows and precise shadows. The background is soft bokeh of wood and metal. The image symbolizes the body as instrument calibrated to detect signals most people filter out, sensitivity as both gift and burden, accurate measurement that overwhelms.",
+      "mood": "precise, trembling, sensitive, overwhelmed",
+      "color_palette": "brass gold, cream paper, warm shadow",
+      "symbolism": "body as high-resolution sensor, sensitivity overload",
+      "axes": {
+        "composition": "close-up",
+        "subject": "object alone",
+        "setting": "abstract/textural",
+        "time_light": "golden hour",
+        "symbolic_angle": "body-instrument"
+      }
+    },
+    {
+      "number": 5,
+      "concept": "The Zoom That Won't Release",
+      "prompt": "A cinematic 16:9 medium shot of hands holding a vintage camera with a manual zoom lens, fingers gripping the zoom ring in an attempt to turn it, but the lens is visibly stuck at maximum telephoto extension. The hands show slight tension in the grip. Soft afternoon light from a nearby window illuminates the chrome lens barrel and the texture of the hands. The background is softly blurred warm interior tones. The image captures the mechanical reality of stuck zoom: not a choice to focus close, but the loss of ability to pull back.",
+      "mood": "stuck, tense, mechanical failure, frustrated",
+      "color_palette": "chrome silver, warm skin, soft amber",
+      "symbolism": "zoom function broken, resolution locked",
+      "axes": {
+        "composition": "close-up",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "zoom-function"
+      }
+    },
+    {
+      "number": 6,
+      "concept": "The Threat Detector at Idle",
+      "prompt": "A cinematic 16:9 wide shot of a person standing alone in a spacious, quiet room with tall windows, body angled slightly toward the door, head turned to track something outside the frame. Their posture is alert but not panicked, weight subtly shifted forward, shoulders minutely raised. Golden morning light pours through the windows creating long soft shadows. The room is minimal with natural textures. The scene conveys the vigilance state, the nervous system scanning for threat even when the environment is calm, threat detection running as background process.",
+      "mood": "vigilant, alert, scanning, ready",
+      "color_palette": "golden amber, neutral gray, soft shadow",
+      "symbolism": "threat detection as default mode, hypervigilance",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "single figure face visible",
+        "setting": "spacious interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "threat-detection"
+      }
+    },
+    {
+      "number": 7,
+      "concept": "The Micro-Expression Captured",
+      "prompt": "A cinematic 16:9 over-the-shoulder shot from behind a figure whose face is not visible, looking toward another person across a table whose face is in sharp focus, caught mid-sentence with a subtle eyebrow micro-movement and slight asymmetry in their expression. Soft afternoon light from a side window illuminates the far person's face with clinical clarity. The textures are natural skin, woven fabric, wood table grain. The image conveys the anxious person's superpower and curse: perceiving social signals at resolution most people never access.",
+      "mood": "alert, analytical, hyper-perceptive, isolating",
+      "color_palette": "natural skin tones, soft amber, muted teal",
+      "symbolism": "social signal detection at maximum resolution",
+      "axes": {
+        "composition": "over-the-shoulder",
+        "subject": "paired figure-object",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "resolution-scale"
+      }
+    },
+    {
+      "number": 8,
+      "concept": "The Pattern Emerging from Chaos",
+      "prompt": "A cinematic 16:9 overhead shot of a wooden floor scattered with autumn leaves in seemingly random distribution, but when viewed from this height, a subtle spiral pattern becomes visible in their arrangement. Soft overcast light creates even illumination without harsh shadows. The leaves are amber, rust, and brown against pale wood. The image symbolizes the fractal truth: what looks like chaos at one scale reveals structure at another, the pattern that exists at every resolution if you can shift your viewing distance.",
+      "mood": "revelatory, structured, complex, coherent",
+      "color_palette": "amber leaves, rust, pale wood",
+      "symbolism": "pattern visible only at right scale",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "object alone",
+        "setting": "outdoor liminal",
+        "time_light": "soft overcast",
+        "symbolic_angle": "fractal-structure"
+      }
+    },
+    {
+      "number": 9,
+      "concept": "The Forest from Above",
+      "prompt": "A cinematic 16:9 wide aerial environmental shot of dense forest canopy from above, showing the texture of treetops as a coherent pattern of green with natural variation, individual trees visible but integrated into the larger structure. Soft golden morning light illuminates the canopy from an angle, creating depth through highlights and shadows. The palette is layered greens, warm highlights, soft shadow valleys. The image represents the zoom-out perspective: same data, different scale, chaos resolving into structure.",
+      "mood": "coherent, expansive, integrated, peaceful",
+      "color_palette": "layered greens, golden highlights, soft shadow",
+      "symbolism": "same reality at forest-scale, coherence restored",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "landscape only",
+        "setting": "outdoor natural",
+        "time_light": "golden morning",
+        "symbolic_angle": "resolution-scale"
+      }
+    },
+    {
+      "number": 10,
+      "concept": "The Replay Loop",
+      "prompt": "A cinematic 16:9 medium shot of a person seated at a simple desk, face resting in one hand, the other hand hovering over a paused video player on a laptop screen showing a frozen moment from a conversation. The person's expression is tired but intent, caught in the loop of re-analyzing. Lamp-lit interior with warm golden light pooling on the desk, cool screen glow on their face. Textures are matte laptop surface, natural skin, woven fabric. The scene captures the reconsolidation trap: every replay adding more anxiety to the memory.",
+      "mood": "exhausted, trapped, analyzing, stuck",
+      "color_palette": "warm lamp gold, cool screen blue, shadow",
+      "symbolism": "memory reconsolidation loop, detail adding detail",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure face visible",
+        "setting": "intimate interior",
+        "time_light": "lamp-lit interior",
+        "symbolic_angle": "pattern-tracking"
+      }
+    },
+    {
+      "number": 11,
+      "concept": "The Stuck Zoom Lens",
+      "prompt": "A cinematic 16:9 object-only macro shot of a vintage camera zoom lens barrel photographed from the side, the metal zoom ring visibly seized with a thin layer of oxidation preventing movement, stuck at the longest telephoto extension. Golden hour light rakes across the chrome and black barrel, emphasizing the mechanical failure through shadow and highlight. The background is deep soft bokeh of warm and cool tones. The image is the perfect mechanical metaphor: zoom function broken, resolution locked at maximum, the tool that should enable flexibility frozen in place.",
+      "mood": "mechanical, stuck, precise, broken",
+      "color_palette": "chrome silver, oxidation rust, warm bokeh",
+      "symbolism": "zoom function failure, resolution stuck",
+      "axes": {
+        "composition": "object-only macro",
+        "subject": "object alone",
+        "setting": "abstract/textural",
+        "time_light": "golden hour",
+        "symbolic_angle": "zoom-function"
+      }
+    },
+    {
+      "number": 12,
+      "concept": "The Body's High-Fidelity Report",
+      "prompt": "A cinematic 16:9 close-up of a person's hand resting on their chest, fingers spread to feel the heartbeat, subtle tension visible in the hand muscles. The person's face is out of frame. Soft afternoon light from a side window illuminates the hand and the texture of their shirt. The background is softly blurred warm interior tones. The image captures interoception as high-resolution data stream: the body reporting its own state with fidelity most people filter as noise, the anxious person hearing every signal.",
+      "mood": "introspective, sensing, precise, tense",
+      "color_palette": "warm skin, soft fabric, amber light",
+      "symbolism": "interoceptive sensitivity, body as data source",
+      "axes": {
+        "composition": "close-up",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "body-instrument"
+      }
+    },
+    {
+      "number": 13,
+      "concept": "The Salience Network Firing",
+      "prompt": "A cinematic 16:9 medium shot of a person in a crowded cafe with multiple elements in the frame: other patrons softly blurred in background, ambient objects on tables, but the person's gaze is locked sharply on one specific detail in the mid-ground (another person's hand gesture visible). The lighting is mixed golden hour window light and warm interior lamp glow. The selective focus creates a visual representation of salience network activation: everything else dims while the threat-relevant detail sharpens.",
+      "mood": "hyper-focused, selective, threat-scanning, isolated",
+      "color_palette": "golden amber, warm wood, muted background",
+      "symbolism": "salience network grabbing attention, threat prioritization",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure face visible",
+        "setting": "spacious interior",
+        "time_light": "golden hour",
+        "symbolic_angle": "threat-detection"
+      }
+    },
+    {
+      "number": 14,
+      "concept": "The Scale Shift Practice",
+      "prompt": "A cinematic 16:9 over-the-shoulder shot of a person seated in a comfortable chair, a therapist figure visible but softly blurred across from them, and between them on a small table sits a series of nested wooden boxes of decreasing size. The person's hand hovers over the boxes as if considering which scale to engage with. Soft afternoon light fills the room with warm, safe tones. The image symbolizes therapy as zoom-function training: practicing scale shifts in low-stakes environment.",
+      "mood": "contemplative, safe, learning, supported",
+      "color_palette": "warm amber, natural wood, soft shadow",
+      "symbolism": "learning to shift scales with support",
+      "axes": {
+        "composition": "over-the-shoulder",
+        "subject": "paired figure-object",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "zoom-function"
+      }
+    },
+    {
+      "number": 15,
+      "concept": "The Frequency Too High to Hear",
+      "prompt": "A cinematic 16:9 close-up of a vintage oscilloscope screen showing a waveform oscillating at very high frequency, the peaks and valleys compressed so tightly they almost blur into solid bands of light. The oscilloscope housing is old metal and Bakelite, illuminated by soft golden hour light from the side. Green phosphor glow from the screen. The background is dark soft bokeh. The image represents signal frequency beyond useful processing range: accurate data at a resolution that overwhelms interpretation.",
+      "mood": "technical, overwhelmed, precise, unreadable",
+      "color_palette": "phosphor green, warm metal, shadow",
+      "symbolism": "data frequency too high for processing, signal overload",
+      "axes": {
+        "composition": "close-up",
+        "subject": "object alone",
+        "setting": "abstract/textural",
+        "time_light": "golden hour",
+        "symbolic_angle": "signal-noise"
+      }
+    },
+    {
+      "number": 16,
+      "concept": "The Zoom-Out Breath",
+      "prompt": "A cinematic 16:9 wide environmental shot of a person standing at the edge of an open field at twilight, arms relaxed at their sides, facing toward a distant treeline. The sky is soft gradient of twilight blue and warm peach. The figure is small in the frame, grounded but surrounded by space. The grass around them moves slightly in wind. The scene conveys the physical experience of zoom-out: stepping back from detail-scale, allowing peripheral vision, feeling the body in space instead of tracking internal signals.",
+      "mood": "expansive, grounded, releasing, spacious",
+      "color_palette": "twilight blue, warm peach, muted green",
+      "symbolism": "zoom-out as physical shift, scale change in body",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "single figure obscured",
+        "setting": "outdoor natural",
+        "time_light": "twilight",
+        "symbolic_angle": "zoom-function"
+      }
+    },
+    {
+      "number": 17,
+      "concept": "The Noise That Hides Pattern",
+      "prompt": "A cinematic 16:9 overhead view of a large sheet of paper covered entirely in dense, handwritten text with no paragraph breaks, every inch filled with words in varying directions and sizes, creating visual noise. One small section in the lower right has been highlighted with a transparent yellow marker, revealing a coherent sentence. Soft afternoon light illuminates the page evenly from above. The palette is cream paper, varied ink density, yellow highlight. The image shows signal buried in noise, pattern lost in the volume of data.",
+      "mood": "overwhelming, searching, buried, chaotic",
+      "color_palette": "cream, ink black, yellow highlight",
+      "symbolism": "pattern obscured by data volume, noise-to-signal ratio",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "signal-noise"
+      }
+    },
+    {
+      "number": 18,
+      "concept": "The Fractal Branch",
+      "prompt": "A cinematic 16:9 medium shot of a single bare tree branch photographed against soft overcast sky, showing how the branching structure repeats at every scale: large branches split into medium branches that split into small twigs following the same geometric pattern. The light is even and soft, emphasizing structure over drama. The palette is dark branch silhouette against pale gray sky. The image is pure fractal geometry: the same pattern at every resolution, order that looks like chaos up close but reveals its structure when you see the full branch.",
+      "mood": "structural, geometric, recursive, ordered",
+      "color_palette": "dark branch, pale gray sky, muted",
+      "symbolism": "fractal structure, self-similar pattern at all scales",
+      "axes": {
+        "composition": "medium",
+        "subject": "object alone",
+        "setting": "outdoor natural",
+        "time_light": "soft overcast",
+        "symbolic_angle": "fractal-structure"
+      }
+    },
+    {
+      "number": 19,
+      "concept": "The Wide Lens Finally Turning",
+      "prompt": "A cinematic 16:9 close-up of hands adjusting a manual camera lens, the zoom ring mid-turn, motion blur visible in the rotating metal, pulling back from telephoto toward wide angle. Golden morning light streams across the hands and lens from the side, creating warm highlights on moving chrome. The background is soft bokeh transitioning from tight to expanding as the lens zooms out. The image captures the moment of mechanical recovery: zoom function starting to work again, resolution becoming choice instead of prison.",
+      "mood": "releasing, moving, hopeful, mechanical recovery",
+      "color_palette": "chrome gold, warm skin, expanding bokeh",
+      "symbolism": "zoom function restoring, flexibility returning",
+      "axes": {
+        "composition": "close-up",
+        "subject": "hands/body detail",
+        "setting": "abstract/textural",
+        "time_light": "golden morning",
+        "symbolic_angle": "zoom-function"
+      }
+    },
+    {
+      "number": 20,
+      "concept": "The Coherent Self at Multiple Scales",
+      "prompt": "A cinematic 16:9 wide shot of a person walking on a forest path at twilight, photographed from elevated behind-perspective showing both the figure and the surrounding trees. The person is in focus, the path they walk is visible, and the forest canopy above creates layered depth. Twilight light filters through creating soft blue and warm amber tones. The composition shows the person as both individual detail and part of larger pattern, coherent at every scale. The image represents integrated perception: holding detail and pattern simultaneously.",
+      "mood": "integrated, coherent, peaceful, multi-scale",
+      "color_palette": "twilight blue, warm amber, forest green",
+      "symbolism": "self as fractal pattern, coherent at all resolutions",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "single figure obscured",
+        "setting": "outdoor natural",
+        "time_light": "twilight",
+        "symbolic_angle": "resolution-scale"
+      }
+    }
+  ]
+}

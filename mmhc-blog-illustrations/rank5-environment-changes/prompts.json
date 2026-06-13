@@ -1,0 +1,342 @@
+{
+  "description": "20 prompts illustrating environment as substrate of mental health, rooms as encoded memory, context-dependent emotional processing, and the parallel computation running below conscious thought",
+  "hero_pick": {
+    "number": 11,
+    "concept": "The Room That Remembers",
+    "reason": "Directly visualizes the blog's central metaphor of environmental memory encoding—the room itself as an active participant in emotional processing, not a neutral container"
+  },
+  "variance_map": {
+    "composition": {
+      "close-up": 3,
+      "medium": 5,
+      "wide environmental": 6,
+      "overhead/top-down": 2,
+      "over-the-shoulder": 2,
+      "through doorway/threshold": 2
+    },
+    "setting": {
+      "intimate interior": 8,
+      "spacious interior": 6,
+      "liminal/threshold": 4,
+      "outdoor natural": 2
+    },
+    "time_light": {
+      "harsh fluorescent": 2,
+      "golden morning": 4,
+      "soft afternoon": 5,
+      "golden hour": 4,
+      "twilight": 3,
+      "lamp-lit evening": 2
+    },
+    "symbolic_angle": {
+      "environmental memory": 5,
+      "context-dependent emotion": 4,
+      "parallel computation": 3,
+      "threshold/transition": 3,
+      "infrastructure not background": 3,
+      "small interventions": 2
+    }
+  },
+  "prompts": [
+    {
+      "number": 1,
+      "concept": "The Same Door, The Same Hum",
+      "prompt": "A cinematic 16:9 medium shot from inside a room looking toward an open doorway, warm golden morning light streaming through from the hall beyond. In the foreground, slightly out of focus, the edge of a desk and a familiar coffee mug. The doorway frame is simple wood, slightly worn. The light creates a sense of transition, but the familiar objects in the foreground anchor the viewer to the routine. The scene conveys the moment described in the opening: walking through the same door into the same emotional state, the environment auto-loading yesterday's program.",
+      "mood": "familiar, stuck, auto-pilot, weighted",
+      "color_palette": "warm amber, muted wood, soft shadow",
+      "symbolism": "the door as trigger for emotional reload",
+      "axes": {
+        "composition": "through doorway/threshold",
+        "subject": "paired figure-object",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "environmental memory"
+      }
+    },
+    {
+      "number": 2,
+      "concept": "The Cracked Ceiling Memory",
+      "prompt": "A cinematic 16:9 overhead shot looking up at a ceiling with a single visible crack running diagonally across plaster painted in soft cream. The crack is subtle but present, catching shadow. Soft afternoon light filters from an unseen window, creating gentle gradations of light and shadow across the textured surface. The image is simple, almost abstract, but charged with the recognition that this exact view has been stared at during countless difficult moments. The ceiling as witness and archive.",
+      "mood": "familiar, heavy, encoded, stuck",
+      "color_palette": "cream, soft gray shadow, muted amber",
+      "symbolism": "the unchanging view that holds memory",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "architectural detail",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "environmental memory"
+      }
+    },
+    {
+      "number": 3,
+      "concept": "The Coffee Shop Focus",
+      "prompt": "A cinematic 16:9 medium shot of a person seated at a small round table in a bright coffee shop, back to the camera, facing a laptop with hands poised on the keyboard. Warm golden afternoon light streams through large windows to the left, illuminating dust in the air and creating soft shadows. The table holds a half-full coffee cup, a notebook, scattered papers. The posture is focused, grounded, the body remembering what this space was encoded for. The environment triggering the state, not the other way around.",
+      "mood": "focused, productive, context-activated, grounded",
+      "color_palette": "warm amber, natural wood, cream ceramic",
+      "symbolism": "space as cognitive prime",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure obscured",
+        "setting": "spacious interior",
+        "time_light": "golden afternoon",
+        "symbolic_angle": "context-dependent emotion"
+      }
+    },
+    {
+      "number": 4,
+      "concept": "The Childhood Bedroom Scale",
+      "prompt": "A cinematic 16:9 wide environmental shot of a small bedroom with a single bed, simple wooden desk, and shelf with old books and objects. The perspective is low, shot from adult standing height looking down, making the furniture appear slightly smaller than life-size. Soft twilight light filters through a small window with sheer curtains. The room is tidy but dated, the color palette muted pastels and aged wood. The scene conveys the uncanny feeling of returning to a childhood space and feeling small again, the room reactivating old emotional states through physical scale.",
+      "mood": "small, regressive, encoded, uncanny",
+      "color_palette": "muted pastel, aged wood, twilight blue",
+      "symbolism": "physical space encoding developmental emotion",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "architectural space",
+        "setting": "intimate interior",
+        "time_light": "twilight",
+        "symbolic_angle": "environmental memory"
+      }
+    },
+    {
+      "number": 5,
+      "concept": "The Apartment That Remembers Falling Apart",
+      "prompt": "A cinematic 16:9 medium shot of an empty living room corner with a single chair angled toward a window, soft overcast light creating even, flat illumination. The walls are recently repainted in fresh white, the floor is clean wood, but the spatial arrangement—the chair's exact position, the angle to the window—feels charged. The room is neutral on the surface but the geometry itself is a trigger. The image conveys the blog's point: you can repaint and rearrange, but the room still feels wrong because the context is encoded.",
+      "mood": "neutral surface, charged depth, haunted, clean but wrong",
+      "color_palette": "clean white, pale wood, soft gray light",
+      "symbolism": "context reactivating emotional file despite cosmetic changes",
+      "axes": {
+        "composition": "medium",
+        "subject": "architectural space",
+        "setting": "spacious interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "environmental memory"
+      }
+    },
+    {
+      "number": 6,
+      "concept": "Therapy Insight at the Front Door",
+      "prompt": "A cinematic 16:9 close-up of a hand reaching for a door handle, the door slightly ajar, warm golden hour light visible through the crack. The hand is relaxed, natural skin tone, sleeve visible showing casual fabric texture. The door is simple painted wood. The scene captures the moment between therapeutic clarity and environmental re-encoding: the insight is real, the progress genuine, but the hand is reaching toward a space that runs a different program. The threshold as site of collapse.",
+      "mood": "tentative, transition, fragile, aware",
+      "color_palette": "warm wood, natural skin, golden light",
+      "symbolism": "crossing back into the environment that contradicts therapy",
+      "axes": {
+        "composition": "close-up",
+        "subject": "hands/body detail",
+        "setting": "liminal/threshold",
+        "time_light": "golden hour",
+        "symbolic_angle": "context-dependent emotion"
+      }
+    },
+    {
+      "number": 7,
+      "concept": "The Parallel Computation of Fluorescent Light",
+      "prompt": "A cinematic 16:9 overhead view of a person seated at a simple desk in a room lit by harsh fluorescent ceiling lights, creating flat, slightly greenish illumination with no shadows. The person is writing in a journal or working on a laptop, posture focused but slightly tense. From above, the fluorescent fixture is visible in the frame, casting its even, artificial light. The scene visualizes the blog's concept of parallel computation: conscious cognitive work happening while the lighting itself triggers a low-grade stress response below awareness.",
+      "mood": "tense, artificial, undermined, unaware",
+      "color_palette": "cool white, greenish cast, muted desk surface",
+      "symbolism": "environment processing experience independently of conscious thought",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "single figure obscured",
+        "setting": "intimate interior",
+        "time_light": "harsh fluorescent",
+        "symbolic_angle": "parallel computation"
+      }
+    },
+    {
+      "number": 8,
+      "concept": "The Hospital Room with the Window",
+      "prompt": "A cinematic 16:9 wide shot of a simple hospital-style room with a bed near a large window, natural golden afternoon light pouring through in warm beams. The bed is made with clean white linens, a side table holds a water glass. The window shows soft greenery outside, slightly out of focus. The room is minimal but the light transforms it into something restorative. The image references the blog's hospital study: same room, different window, different outcome. Infrastructure, not background.",
+      "mood": "restorative, bright, simple, infrastructural",
+      "color_palette": "clean white, golden natural light, soft green",
+      "symbolism": "environment as active infrastructure in healing",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "architectural space",
+        "setting": "spacious interior",
+        "time_light": "golden afternoon",
+        "symbolic_angle": "infrastructure not background"
+      }
+    },
+    {
+      "number": 9,
+      "concept": "The New Apartment, Same Patterns",
+      "prompt": "A cinematic 16:9 medium shot of a person unpacking boxes in a bright, unfamiliar apartment with bare walls and fresh paint. Soft morning light streams through uncovered windows. The person is placing objects in the exact same spatial arrangement: laptop on the left side of the desk, chair angled the same way, clutter beginning to form in familiar patterns. The room is new but the associations are being re-encoded in real time. Geographic change without systemic change.",
+      "mood": "hopeful surface, familiar depth, auto-pilot, re-encoding",
+      "color_palette": "clean white, warm morning light, cardboard brown",
+      "symbolism": "recreating context in new space",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure face visible",
+        "setting": "spacious interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "context-dependent emotion"
+      }
+    },
+    {
+      "number": 10,
+      "concept": "Behavioral Activation: The Different Route",
+      "prompt": "A cinematic 16:9 wide environmental shot of a residential street corner at soft morning light, shot from slightly above ground level. A figure walks away from the camera down an unfamiliar side street instead of the main road visible on the right. Trees cast dappled shadows, the pavement is clean, the scene feels ordinary but intentional. The image visualizes behavioral activation research: changing physical routines and contexts as intervention, disrupting the loop by existing in different places.",
+      "mood": "intentional, fresh, simple, disrupting",
+      "color_palette": "soft morning light, muted pavement, green foliage",
+      "symbolism": "environmental disruption as therapeutic intervention",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "single figure obscured",
+        "setting": "outdoor natural",
+        "time_light": "golden morning",
+        "symbolic_angle": "small interventions"
+      }
+    },
+    {
+      "number": 11,
+      "concept": "The Room That Remembers",
+      "prompt": "A cinematic 16:9 wide shot of an empty room with simple furniture—a couch, a side table, a lamp—all perfectly ordinary, but the quality of light and shadow creates a sense of presence, as if the room itself is watching. Soft afternoon light filters through sheer curtains, casting gentle patterns on the wooden floor. The air seems to hold texture, dust visible in the light beams. The image conveys the blog's central concept: the room is not neutral, it is encoded, it remembers, it actively processes your experience. The environment as participant, not container.",
+      "mood": "present, charged, witnessing, encoded",
+      "color_palette": "warm amber, muted fabric, soft wood",
+      "symbolism": "environment as active processor of experience",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "architectural space",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "environmental memory"
+      }
+    },
+    {
+      "number": 12,
+      "concept": "The Uneasy Room Before Conscious Recognition",
+      "prompt": "A cinematic 16:9 medium shot from a person's point of view entering a room, the door just pushed open, revealing an ordinary interior space: table, chairs, window. But something in the composition feels slightly off—the angle of the furniture, a quality of the light, a smell suggested by visual texture (slight haze, a plant in shadow). The viewer feels unease before identifying why. The image visualizes subliminal environmental processing: the body detecting something wrong before conscious thought catches up.",
+      "mood": "uneasy, subliminal, pre-conscious, alert",
+      "color_palette": "muted earth, shadow, ambiguous light",
+      "symbolism": "environmental computation below conscious awareness",
+      "axes": {
+        "composition": "through doorway/threshold",
+        "subject": "architectural space",
+        "setting": "intimate interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "parallel computation"
+      }
+    },
+    {
+      "number": 13,
+      "concept": "The Clutter in Peripheral Vision",
+      "prompt": "A cinematic 16:9 over-the-shoulder shot of a person seated at a clean, minimal desk working on a laptop, hands visible on the keyboard, posture focused. But in soft focus in the periphery of the frame, clutter is visible: stacked papers, unwashed mugs, a pile of clothes on a chair in the background. Golden afternoon light creates warm tones but the disorder in the edges signals noise to the nervous system. The image shows conscious focus contradicted by environmental computation in the background.",
+      "mood": "focused but undermined, tense, split attention",
+      "color_palette": "warm wood, soft clutter, golden light",
+      "symbolism": "peripheral environment signaling disorder below conscious focus",
+      "axes": {
+        "composition": "over-the-shoulder",
+        "subject": "paired figure-object",
+        "setting": "intimate interior",
+        "time_light": "golden afternoon",
+        "symbolic_angle": "parallel computation"
+      }
+    },
+    {
+      "number": 14,
+      "concept": "The Chair Where You Ruminate",
+      "prompt": "A cinematic 16:9 medium shot of a single armchair positioned near a window, lamp-lit in soft evening light with twilight visible through the window behind. The chair is simple fabric, slightly worn, positioned at a familiar angle. A book rests on the armrest, a blanket draped over the back. The chair itself looks inviting but the framing suggests it is encoded as the site of nightly rumination loops. The object has become part of the cognitive pattern, the physical anchor for the mental rut.",
+      "mood": "familiar, encoded, comfortable but stuck, heavy",
+      "color_palette": "warm lamp light, twilight blue, soft fabric",
+      "symbolism": "furniture encoded as trigger for rumination",
+      "axes": {
+        "composition": "medium",
+        "subject": "object alone",
+        "setting": "intimate interior",
+        "time_light": "lamp-lit evening",
+        "symbolic_angle": "environmental memory"
+      }
+    },
+    {
+      "number": 15,
+      "concept": "Changing Where You Sit for Difficult Conversations",
+      "prompt": "A cinematic 16:9 wide shot of a simple living room with two chairs positioned at different angles than expected—not facing each other directly, but angled toward a window with soft golden hour light. One chair is the familiar spot, the other is moved to a new position. The room feels intentionally rearranged, disrupting the usual spatial dynamics. The image visualizes the small intervention strategy: breaking the spatial association between furniture and conflict by changing the geometry.",
+      "mood": "intentional, rearranged, strategic, fresh",
+      "color_palette": "golden hour, warm wood, muted fabric",
+      "symbolism": "spatial disruption as relational intervention",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "architectural space",
+        "setting": "spacious interior",
+        "time_light": "golden hour",
+        "symbolic_angle": "small interventions"
+      }
+    },
+    {
+      "number": 16,
+      "concept": "The Morning Routine's Physical Path",
+      "prompt": "A cinematic 16:9 overhead view of a small kitchen and hallway intersection, shot from above. The floor shows the worn path of daily movement: from bedroom door to coffee maker to table to front door, the route slightly visible in the way light catches texture on the floor. A figure moves through the space in soft morning light, following the exact same trajectory as every other morning. The image shows how physical routine encodes emotional auto-load, the body walking the same path and retrieving yesterday's state.",
+      "mood": "auto-pilot, routine, encoded, looping",
+      "color_palette": "soft morning light, pale floor, muted walls",
+      "symbolism": "physical path as emotional retrieval cue",
+      "axes": {
+        "composition": "overhead/top-down",
+        "subject": "single figure obscured",
+        "setting": "intimate interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "context-dependent emotion"
+      }
+    },
+    {
+      "number": 17,
+      "concept": "Working in a Different Location",
+      "prompt": "A cinematic 16:9 medium shot of a person working at a small outdoor table in a park or garden, laptop open, posture relaxed and engaged. Soft dappled light filters through tree leaves above, creating moving patterns of light and shadow on the table surface. The setting is clearly not their usual workspace—there's a quality of newness, the body held differently, the context fresh. The image shows environmental context shift disrupting cognitive ruts, allowing different thinking in different space.",
+      "mood": "fresh, engaged, disrupted (positive), open",
+      "color_palette": "natural green, dappled light, warm wood table",
+      "symbolism": "context shift enabling cognitive shift",
+      "axes": {
+        "composition": "medium",
+        "subject": "single figure face visible",
+        "setting": "outdoor natural",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "small interventions"
+      }
+    },
+    {
+      "number": 18,
+      "concept": "The Circadian Lighting Intervention",
+      "prompt": "A cinematic 16:9 close-up of a modern desk lamp with warm-toned bulb, positioned beside a laptop on a simple wooden desk. The lamp casts a soft, warm glow in the immediate area while the background fades to cool twilight visible through a window. A hand reaches to adjust the lamp's angle. The scene visualizes the research on lighting and cortisol cycles: small environmental changes in light quality affecting physiological baselines, infrastructure modifications that bypass willpower.",
+      "mood": "intentional, warm, calibrated, physiological",
+      "color_palette": "warm lamp glow, cool twilight, natural wood",
+      "symbolism": "environmental tuning affecting biological regulation",
+      "axes": {
+        "composition": "close-up",
+        "subject": "hands/body detail",
+        "setting": "intimate interior",
+        "time_light": "lamp-lit evening",
+        "symbolic_angle": "infrastructure not background"
+      }
+    },
+    {
+      "number": 19,
+      "concept": "The Living Situation Interview",
+      "prompt": "A cinematic 16:9 over-the-shoulder shot from behind a therapist figure, softly blurred, looking toward a client seated across from them in a simple therapy room. Soft afternoon light from a window to the side illuminates the client's face, expression open and thoughtful, mid-conversation. Between them, a small table holds a notepad where the therapist has sketched a simple floor plan or list. The image conveys the moment a good therapist asks about living situation, daily routines, physical spaces—recognizing the room as part of the treatment, not background to it.",
+      "mood": "attentive, systemic, mapping, collaborative",
+      "color_palette": "soft afternoon light, muted earth, warm wood",
+      "symbolism": "environment as therapeutic variable, not context",
+      "axes": {
+        "composition": "over-the-shoulder",
+        "subject": "paired figure-object",
+        "setting": "spacious interior",
+        "time_light": "soft afternoon",
+        "symbolic_angle": "infrastructure not background"
+      }
+    },
+    {
+      "number": 20,
+      "concept": "Talking From a Different Room",
+      "prompt": "A cinematic 16:9 wide shot of a person seated on a simple chair in a bright, unfamiliar room—perhaps a spare bedroom, a corner they don't usually occupy—laptop open for a video call, soft golden morning light streaming through a window they don't normally sit near. The room is neutral, the posture is calm and engaged. The image visualizes the blog's closing suggestion: sometimes the most therapeutic thing is to talk to someone from a different room, shifting the environmental substrate that supports (or undermines) the internal work.",
+      "mood": "fresh, intentional, supported, infrastructural",
+      "color_palette": "golden morning light, clean neutral space, warm wood",
+      "symbolism": "environmental shift enabling therapeutic shift",
+      "axes": {
+        "composition": "wide environmental",
+        "subject": "single figure face visible",
+        "setting": "spacious interior",
+        "time_light": "golden morning",
+        "symbolic_angle": "small interventions"
+      }
+    }
+  ]
+}
